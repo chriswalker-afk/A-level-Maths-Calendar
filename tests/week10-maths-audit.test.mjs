@@ -18,8 +18,8 @@ const newton=(f,fp,x)=>x-f(x)/fp(x);
 
 test("Pure 1 — consecutive integers, proof and counterexample work for negative integers too",()=>{
  for(let n=-100;n<=100;n++){
-  assert.equal(n*(n+1)*(n+2)%6,0);
-  assert.equal(n*(n+1)%2,0);
+  assert.ok(n*(n+1)*(n+2)%6===0);
+  assert.ok(n*(n+1)%2===0);
  }
  assert.equal((1**2+1)%4,2);
 });
