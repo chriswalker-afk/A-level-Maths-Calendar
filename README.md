@@ -9,6 +9,20 @@ An online independent-study calendar for **Pearson Edexcel A Level Mathematics (
 
 The full authoring specification is [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_BLUEPRINT.md).
 
+## My Specification — Pass 4A
+
+The website now includes a permanent **My specification** page for Pearson Edexcel 9MA0, with **19 official topic groups** (10 Pure, 5 Statistics, 4 Mechanics) and a full original student-friendly *I can…* skills library.
+
+- Search by skill, topic, likely exam demand or Pearson section number.
+- Filter Pure / Statistics / Mechanics.
+- Switch between **Internal exams** (all Pure + Year 1 Applied) and **Full A Level** (including Year 2 Applied).
+- Open each topic and skill to read specific examination demands, common pitfalls and the exact Pearson topic reference.
+- Future-only Applied content is labelled and remains discoverable rather than being presented as part of the internal exam.
+- The three overarching themes of argument/proof, problem solving and modelling are prominent across the course.
+- Stable skill identifiers make the library ready for **4B question-part tagging** and **4C performance analytics**.
+
+**No percentages or practice counts are generated yet**. Accurate data requires question-to-skill tagging and, ideally, marks assigned to individual question parts; we never infer skill mastery from an untagged overall mark. The reference guide is [docs/SPECIFICATION_LIBRARY.md](docs/SPECIFICATION_LIBRARY.md) and the official authority is [Pearson's 9MA0 specification](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf).
+
 ## Week 1 is now complete
 
 The current release has **18 essential questions worth 98 marks** and two additional pathways:
