@@ -87,13 +87,13 @@ test("Week 9 calendar, maths, self-marking and integration skill evidence preser
  assert.match(app.querySelector(".exam-sheet-code").textContent,/W09-P1/);
  assert.equal(app.querySelector("#previous").dataset.targetRoute,"#/study/9/R/9");
  navigate("#/progress/internal");
- assert.equal(app.querySelector(".metric strong").textContent,"10/184");
+ assert.equal(app.querySelector(".metric strong").textContent,"10/205");
  const weeks=app.querySelectorAll(".weekly-progress-group");
  assert.equal(weeks.length,10);
  assert.match(weeks[8].textContent,/Synoptic problem solving/);
  assert.match(weeks[8].textContent,/2 \/ 10 questions marked/);
  assert.ok(weeks[8].querySelector('a[href="#/study/9/R/0"]'));
- assert.match(app.querySelector(".spec-progress-pulse").textContent,/10 \/ 220/);
+ assert.match(app.querySelector(".spec-progress-pulse").textContent,/10 \/ 247/);
  navigate("#/specification/internal/P02");
  assert.match(app.querySelector(".spec-topic-evidence").textContent,/2 \/ /);
  assert.ok(app.querySelector("#P02-015"),"Factor-theorem primary skill evidence exists");
