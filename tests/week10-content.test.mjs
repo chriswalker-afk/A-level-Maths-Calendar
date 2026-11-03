@@ -111,7 +111,7 @@ test("published Week 10 exam questions are indexed and scored without treating m
  assert.deepEqual(getPublishedPracticeForSkill("S04-006"),[],"Year 2 Normal remains unavailable");
  const all=weeks.flat();
  const empty=calculateSpecificationProgress({questions:all,records:{},scope:"internal"});
- assert.equal(empty.summary.releasedQuestions,220);
+ assert.equal(empty.summary.releasedQuestions,247);
  assert.equal(empty.summary.completedQuestions,0);
  const zero=calculateSpecificationProgress({questions:taggedWeek10Questions,records:{"W10-P1":{score:0,status:"I"}},scope:"internal"});
  assert.equal(zero.summary.releasedQuestions,22);
