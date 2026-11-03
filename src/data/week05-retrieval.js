@@ -235,31 +235,31 @@ export const week05Retrieval = [
   {
     "id": "W05-R9",
     "section": "R",
-    "title": "A solid of revolution",
+    "title": "Area under a translated parabola",
     "marks": 2,
     "minutes": 3,
     "ao": {
       "AO1": 2
     },
     "topics": [
-      "volumes of revolution",
+      "area under a curve",
       "definite integrals"
     ],
-    "stem": "The region under \\(y=x+1\\) from \\(x=0\\) to \\(x=2\\) is rotated about the \\(x\\)-axis.",
+    "stem": "The region under \\(y=(x+1)^2\\) and above the \\(x\\)-axis is bounded by \\(x=0\\) and \\(x=2\\).",
     "parts": [
       [
-        "Calculate its exact volume.",
+        "Calculate its exact area.",
         2
       ]
     ],
     "steps": [
-      "The disc method gives \\(V=\\pi\\int_0^2(x+1)^2\\,dx\\). [1]",
-      "Therefore \\(V=\\pi\\left[\\frac{(x+1)^3}{3}\\right]_0^2=\\frac{\\pi}{3}(27-1)=\\frac{26\\pi}{3}\\) cubic units. [1]"
+      "The required area is \\(A=\\int_0^2(x+1)^2\\,dx\\) because \\(y>0\\) throughout the interval. [1]",
+      "Thus \\(A=\\left[\\frac{(x+1)^3}{3}\\right]_0^2=\\frac{27-1}{3}=\\frac{26}{3}\\) square units. [1]"
     ],
-    "answer": "\\(\\frac{26\\pi}{3}\\)",
-    "hint": "Use V = π∫y² dx, not π∫y dx.",
-    "misconception": "The square of a sum is not the sum of the squares; leave (x+1)² intact or expand correctly.",
-    "reflection": "What would rotating the same region around the y-axis require you to reconsider?"
+    "answer": "\\(\\frac{26}{3}\\text{ square units}\\)",
+    "hint": "Integrate the given positive function between the two vertical boundaries.",
+    "misconception": "Area under a curve comes from integrating y, not squaring the ordinate as in a different geometric formula.",
+    "reflection": "How does the area change if the upper x-limit increases from 2 to 3?"
   },
   {
     "id": "W05-R10",
