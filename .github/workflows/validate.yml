@@ -1,0 +1,20 @@
+name: Validate calendar
+on:
+  push:
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check src/app.js
+          node --check src/config.js
+          node --check src/data/programmes.js
+          node --check src/data/week01.js
+      - name: Run content checks
+        run: node --test tests/content.test.mjs
