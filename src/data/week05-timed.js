@@ -43,7 +43,7 @@ export const week05Timed = [
   {
     "id": "W05-T2",
     "section": "T",
-    "title": "One parametric curve, two integrals",
+    "title": "One parametric curve, two exact areas",
     "marks": 12,
     "minutes": 17,
     "ao": {
@@ -52,9 +52,9 @@ export const week05Timed = [
     },
     "topics": [
       "parametric differentiation",
-      "area under parametric curve",
-      "volume of revolution",
-      "method choice"
+      "area under a parametric curve",
+      "fraction of an area",
+      "method selection"
     ],
     "stem": "The parametric curve is given by \\(x=t^2,\\qquad y=4t-t^3\\), where \\(0\\le t\\le2\\). The curve lies on or above the \\(x\\)-axis in this interval. The region between the curve and the \\(x\\)-axis is denoted by \\(R\\).",
     "parts": [
@@ -67,19 +67,19 @@ export const week05Timed = [
         4
       ],
       [
-        "The region \\(R\\) is rotated about the \\(x\\)-axis. Calculate the exact volume of the resulting solid.",
+        "Calculate the exact area under the curve from \\(x=0\\) to the stationary point, and hence show that this accounts for exactly \\(\\frac{2\\sqrt3}{9}\\) of the total area \\(R\\).",
         5
       ]
     ],
-    "hint": "For a parametric curve, \\(\\frac{dy}{dx}=\\frac{dy/dt}{dx/dt}\\). Use \\(A=\\int y\\,\\frac{dx}{dt}\\,dt\\) and \\(V=\\pi\\int y^2\\,\\frac{dx}{dt}\\,dt\\).",
+    "hint": "Use \\(\\frac{dy}{dx}=\\frac{dy/dt}{dx/dt}\\) to find the stationary parameter, then \\(A=\\int y\\,\\frac{dx}{dt}\\,dt\\). For the final fraction, use the stationary parameter as the upper integration limit.",
     "steps": [
-      "For \\(t>0\\), \\(\\frac{dy}{dx}=\\frac{4-3t^2}{2t}\\). This vanishes at \\(t=\\frac2{\\sqrt3}\\), giving \\(x=\\frac43\\) and \\(y=\\frac2{\\sqrt3}\\left(4-\\frac43\\right)=\\frac{16}{3\\sqrt3}\\). Thus the stationary point is \\((\\frac43,\\frac{16\\sqrt3}{9})\\). [3]",
-      "The curve has \\(\\frac{dx}{dt}=2t\\) and \\(y\\ge0\\) for \\(0\\le t\\le2\\). The enclosed area is \\(A=\\int_0^2(4t-t^3)(2t)\\,dt=\\int_0^2(8t^2-2t^4)\\,dt\\). Evaluating \\(\\left[\\frac{8t^3}{3}-\\frac{2t^5}{5}\\right]_0^2=\\frac{64}{3}-\\frac{64}{5}=\\frac{128}{15}\\) square units. [4]",
-      "For revolution about the \\(x\\)-axis, \\(V=\\pi\\int_0^2(4t-t^3)^2(2t)\\,dt\\). Expanding yields \\(V=\\pi\\int_0^2(32t^3-16t^5+2t^7)\\,dt\\). Integrating gives \\(\\pi\\left[8t^4-\\frac83t^6+\\frac{t^8}{4}\\right]_0^2=\\pi\\left(128-\\frac{512}{3}+64\\right)=\\frac{64\\pi}{3}\\) cubic units. [5]"
+      "With \\(t>0\\), \\(\\frac{dy}{dx}=\\frac{4-3t^2}{2t}\\); this is zero at \\(t=\\frac2{\\sqrt3}\\). Hence \\(x=\\frac43\\) and \\(y=\\frac2{\\sqrt3}(4-\\frac43)=\\frac{16\\sqrt3}{9}\\). The stationary point is \\((\\frac43,\\frac{16\\sqrt3}{9})\\). [3]",
+      "As \\(\\frac{dx}{dt}=2t\\) and \\(y\\ge0\\) for \\(0\\le t\\le2\\), \\(A=\\int_0^2(4t-t^3)(2t)\\,dt=\\int_0^2(8t^2-2t^4)\\,dt\\). Therefore \\(A=\\left[\\frac{8t^3}{3}-\\frac{2t^5}{5}\\right]_0^2=\\frac{64}{3}-\\frac{64}{5}=\\frac{128}{15}\\) square units. [4]",
+      "To the stationary point, \\(A_1=\\int_0^{2/\\sqrt3}(8t^2-2t^4)\\,dt\\). Substitution gives \\(A_1=\\frac{64}{9\\sqrt3}-\\frac{64}{45\\sqrt3}=\\frac{256}{45\\sqrt3}=\\frac{256\\sqrt3}{135}\\) square units. Divide by the full area: \\(\\frac{A_1}{A}=\\frac{256\\sqrt3}{135}\\div\\frac{128}{15}=\\frac{2\\sqrt3}{9}\\). [5]"
     ],
-    "answer": "Stationary point \\((\\frac43,\\frac{16\\sqrt3}{9})\\), area \\(\\frac{128}{15}\\) square units and volume \\(\\frac{64\\pi}{3}\\) cubic units.",
-    "misconception": "When integrating a parametric area or volume, the factor dx/dt is essential. For volume, the radius is y and must be squared.",
-    "reflection": "Why is the y-value nonnegative throughout 0 ≤ t ≤ 2, and how does that simplify the area calculation?"
+    "answer": "Stationary point \\((\\frac43,\\frac{16\\sqrt3}{9})\\), total area \\(\\frac{128}{15}\\) square units, and area to the stationary point \\(\\frac{256\\sqrt3}{135}\\), fraction \\(\\frac{2\\sqrt3}{9}\\).",
+    "misconception": "A parametric area integral must include dx/dt. The stationary parameter t = 2/√3 is not the upper x-bound; use it in the t-integral.",
+    "reflection": "Why is the fraction of area accumulated before the maximum height less than one-half?"
   },
   {
     "id": "W05-T3",
