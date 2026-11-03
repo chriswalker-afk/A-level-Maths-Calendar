@@ -58,7 +58,7 @@ export function searchCatalogue(topics,{scope="internal",strand="all",query=""}=
        .some(text=>text.toLocaleLowerCase().includes(search))));
    return {topic,matching,excluded:topic.skills.filter(s=>!inScope(s,scope)).length};
  }).filter(entry=>{
-   if(search)return entry.matching.length>0;
+   if(search)return entry.matching.length>0 || entry.topic.title.toLocaleLowerCase().includes(search) || entry.topic.description.toLocaleLowerCase().includes(search);
    // Even fully year-two topics are visible, but clearly tagged as future-only.
    return true;
  });
