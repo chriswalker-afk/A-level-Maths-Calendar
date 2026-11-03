@@ -21,7 +21,7 @@ const slash=String.fromCharCode(92),start=slash+"(",end=slash+")";
 test("only the eight genuinely authored weeks are released",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
  assert.equal(siteConfig.stage1.releasedWeeks,8);
- assert.ok(programmeOne.weeks.slice(0,8.every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(0,8).every(w=>w.hasPublishedContent));
  assert.ok(programmeOne.weeks.slice(8).every(w=>!w.hasPublishedContent));
  assert.equal(siteConfig.stage2.published,false);
 });
