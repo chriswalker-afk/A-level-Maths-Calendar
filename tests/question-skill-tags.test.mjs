@@ -43,6 +43,8 @@ test("mapping fails closed if a part is untagged or a skill is missing",()=>{
  assert.throws(()=>linkQuestionParts([week01Questions[0]],wrong),/Unknown primary/);
  const duplicate={"W01-R1":[["P02-001",["P02-001"]],["P02-003"]]};
  assert.throws(()=>linkQuestionParts([week01Questions[0]],duplicate),/Primary skill also marked secondary/);
+ const outOfScope={"W01-R1":[["P02-001",["M09-001"]],["P02-003"]]};
+ assert.throws(()=>linkQuestionParts([week01Questions[0]],outOfScope),/Year 2-only secondary/);
  const extra={"W01-R1":week01SkillMap["W01-R1"],"W01-MISSING":[]};
  assert.throws(()=>linkQuestionParts([week01Questions[0]],extra),/unknown question/i);
 });
