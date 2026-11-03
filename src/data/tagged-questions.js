@@ -31,7 +31,9 @@ export function linkQuestionParts(questions, links, lookup=getSpecSkill){
     throw new Error("Invalid or repeated secondary tags at "+q.id);
    for(const id of secondary){
     if(id===primary.id)throw new Error("Primary skill also marked secondary: "+q.id);
-    if(!lookup(id))throw new Error("Unknown secondary skill "+id+" at "+q.id);
+    const secondarySkill=lookup(id);
+    if(!secondarySkill)throw new Error("Unknown secondary skill "+id+" at "+q.id);
+    if(secondarySkill.scope!=="internal")throw new Error("Year 2-only secondary skill in internal exam: "+q.id);
    }
    if(!primary||primary.scope!=="internal")
     throw new Error("Week 1 contains Year 2-only primary skill: "+q.id);
