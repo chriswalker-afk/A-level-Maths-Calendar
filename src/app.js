@@ -180,6 +180,13 @@ function render(){
   if(disposeTransfer){disposeTransfer();disposeTransfer=null;}
   const p=routeInfo();
   const top=p[0]||"home";
+  // Old links to the removed week overview open the exercises immediately.
+  if(top==="week"&&released(Number(p[1]))){
+    const n=Number(p[1]);
+    navigate(firstWeekQuestionRoute(n,allQuestions[n]||[],everCompleted,
+      q=>hasNewAttemptInProgress(q,saved[q.id]||{}))||"#/calendar");
+    return;
+  }
   document.querySelectorAll("[data-nav]").forEach(a=>
     a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"||top==="home"?"calendar":top)));
   if(top==="home")el.innerHTML=overview();
