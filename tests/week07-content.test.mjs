@@ -23,14 +23,14 @@ const core=new Set(["R","P","M","A"]);
 const all=[taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions];
 const slash=String.fromCharCode(92),open=slash+"(",close=slash+")";
 
-test("exactly seven complete weeks publish, without permitting Week 8 or Year 2",()=>{
+test("exactly eight complete weeks publish, without permitting Week 9 or Year 2",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,7);
+ assert.equal(siteConfig.stage1.releasedWeeks,8);
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
- assert.ok(programmeOne.weeks.slice(0,7).every(w=>w.hasPublishedContent));
- assert.ok(programmeOne.weeks.slice(7).every(w=>!w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(0,8.every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(8).every(w=>!w.hasPublishedContent));
  assert.ok(isWeekReleased(7,taggedWeek07Questions));
- assert.equal(isWeekReleased(8,taggedWeek07Questions),false,"Metadata, not just question presence, must gate release");
+ assert.equal(isWeekReleased(9,taggedWeek07Questions),false,"Metadata, not just question presence, must gate release");
  assert.equal(isWeekReleased(7,[]),false,"No phantom content");
  assert.equal(siteConfig.stage2.published,false);
 });
