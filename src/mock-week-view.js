@@ -31,11 +31,12 @@ export function renderMockPaperBanner({section,questions,records={},reflections=
  return '<aside class="mock-paper-banner" aria-label="'+esc(paper.title)+' mock controls">'+
   '<div class="mock-banner-top"><span>'+category+'</span><span>'+paper.marks+' MARKS · '+paper.questionCount+' QUESTIONS</span></div>'+
   '<div class="mock-banner-core"><div><strong>'+esc(paper.title)+'</strong>'+
-  '<p>'+esc(scoreText(total))+'</p></div><div class="mock-banner-clock">'+clock+
+  '<p>'+esc(timer.active?"Timed sitting · marks hidden until you finish":scoreText(total))+'</p></div><div class="mock-banner-clock">'+clock+
   '<span>'+esc(phase)+'</span></div></div>'+
   (section==="A"?'<p class="mock-banner-split">Statistics 25 marks · Mechanics 25 marks</p>':'')+
   '<div class="mock-banner-footer"><div class="mock-banner-actions">'+action+
-  '<a class="btn ghost small" href="'+REVIEW_ROUTE+'">Mark &amp; review both papers</a></div>'+
+  (timer.active?'<span class="mock-banner-locked">Review unlocks after this sitting</span>':
+   '<a class="btn ghost small" href="'+REVIEW_ROUTE+'">Mark &amp; review both papers</a>')+'</div>'+
   '<p>'+(timer.active?'Exam mode hides hints, worked solutions and self-marking until you finish this sitting. Working continues to save locally.':
     'Optional timed mode hides hints, solutions and self-marking during your sitting. Starting or restarting the timer never erases earlier work or scores.')+
   '</p></div></aside>';
@@ -72,6 +73,13 @@ function noteField(key,title,prompt,value){
     esc(value||"")+'</textarea></div>';
 }
 export function renderMockReview({questions,records={},reflections={}}){
+ if(mockTimerInfo(reflections,"P").active||mockTimerInfo(reflections,"A").active){
+  return '<section class="page mock-review-page mock-review-locked">'+
+    '<a class="back" href="'+link(mockTimerInfo(reflections,"P").active?"P":"A")+'">← Return to the active timed paper</a>'+
+    '<span class="eyebrow">WEEK 10 / TIMED EXAM CONDITIONS</span>'+
+    '<h1>Finish the sitting before reviewing.</h1>'+
+    '<p>Marks, solutions and revision recommendations remain hidden while a timed sitting is active. Finish the active paper using its timer control; your working will remain saved.</p></section>';
+ }
  const review=reflections?.week10?.notes||{};
  const p=mockPaperTotals(questions,records,"P"),a=mockPaperTotals(questions,records,"A");
  const priorities=mockRepairPriorities(questions,records);
