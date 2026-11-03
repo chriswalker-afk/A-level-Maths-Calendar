@@ -78,10 +78,25 @@ export function clearBreakdown(record){
 }
 
 /**
- * Only validated, *completed* part marking may support a primary-skill accuracy
- * calculation. Overall-only and partial breakdowns have no precise skill marks.
+ * Only marks that belong unambiguously to one primary skill can support
+ * skill accuracy: completed detailed marking, or a one-part question whose
+ * entire score belongs to its single tagged part. Multi-part whole-question
+ * marks and incomplete breakdowns cannot be allocated precisely.
  */
 export function verifiedPartEvidence(question,record){
+ // A single-part question is an exact exception to the multi-part rule:
+ // the whole score belongs to its only part and therefore its only primary
+ // skill. No allocation or estimate is needed, even for a legacy overall mark.
+ const only=question?.parts?.length===1?question.parts[0]:null;
+ if(only && (record?.scoreSource===undefined||record?.scoreSource==="overall") &&
+    Number.isInteger(record?.score) && record.score>=0 &&
+    question.marks===only[1] && record.score<=only[1] &&
+    only[2]?.primarySkillId && !record.partMarks){
+   return [{questionId:question.id,partKey:partKey(question,0),
+     primarySkillId:only[2].primarySkillId,
+     secondarySkillIds:[...(only[2].secondarySkillIds||[])],
+     earned:record.score,available:only[1]}];
+ }
  if(record?.scoreSource!=="parts")return [];
  const summary=marksBreakdown(question,record.partMarks);
  if(!summary.complete||record.score!==summary.subtotal)return [];
