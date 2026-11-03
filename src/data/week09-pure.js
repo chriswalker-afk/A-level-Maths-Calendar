@@ -13,7 +13,8 @@ export const week09PureProblems = [
       "coordinate geometry",
       "cosine rule",
       "exact surds",
-      "geometric series"
+      "geometric series",
+      "vectors"
     ],
     "stem": "The circle \\(x^2+y^2=25\\) is cut by the line \\(y=x+1\\) at distinct points \\(A\\) and \\(B\\). The centre is \\(O=(0,0)\\). A designer uses chord \\(AB\\) as the first segment of a sequence of decorative strips; each new strip is half the length of the preceding one.",
     "parts": [
@@ -22,7 +23,7 @@ export const week09PureProblems = [
         2
       ],
       [
-        "Find the exact length of chord \\(AB\\).",
+        "Express the displacement \\(\\overrightarrow{BA}\\) as a two-dimensional vector and hence find the exact length of chord \\(AB\\).",
         2
       ],
       [
@@ -37,7 +38,7 @@ export const week09PureProblems = [
     "hint": "Substitute the line into the circle, then use the distance formula. For the angle, the two radii are length 5 and the chord is the opposite side.",
     "steps": [
       "Substitute \\(y=x+1\\) into the circle: \\(x^2+(x+1)^2=25\\); hence \\(2x^2+2x-24=0\\), or \\((x+4)(x-3)=0\\). The intersections are \\(A=(3,4)\\) and \\(B=(-4,-3)\\) in either order. [2]",
-      "Apply the distance formula: \\(AB=\\sqrt{(3+4)^2+(4+3)^2}=\\sqrt{98}=7\\sqrt2\\). [2]",
+      "The displacement vector is \\(\\overrightarrow{BA}=\\begin{pmatrix}3-(-4)\\\\4-(-3)\\end{pmatrix}=\\begin{pmatrix}7\\\\7\\end{pmatrix}\\). Its magnitude is \\(AB=\\sqrt{7^2+7^2}=\\sqrt{98}=7\\sqrt2\\). [2]",
       "Since \\(OA=OB=5\\), the cosine rule gives \\((7\\sqrt2)^2=5^2+5^2-2(5)(5)\\cos\\angle AOB\\). Thus \\(98=50-50\\cos\\angle AOB\\) and \\(\\cos\\angle AOB=-\\frac{24}{25}\\) (an obtuse central angle). [2]",
       "Strip lengths form a GP with \\(a=7\\sqrt2\\) and \\(r=\\frac12\\). Because \\(|r|<1\\), \\(S_\\infty=\\frac{7\\sqrt2}{1-1/2}=14\\sqrt2\\) length units. [2]"
     ],
