@@ -1,7 +1,7 @@
 import {siteConfig} from "./config.js";
 import {isWeekReleased} from "./publication.js";
 import {programmeOne,programmeTwo} from "./data/programmes.js";
-import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions} from "./data/tagged-questions.js";
+import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions} from "./data/tagged-questions.js";
 import {getSpecSkill} from "./data/specification.js";
 import {mountWorkingSpace} from "./working-space.js";
 import {isQuestionFinished,mountQuestionAssessment} from "./question-assessment.js";
@@ -20,7 +20,7 @@ const sections={R:'Quick retrieval',P:'Connected problems',M:'Modelling & reason
 const target={R:10,P:3,M:2,A:3,T:3,X:1};
 const essentialSections=new Set(['R','P','M','A']);
 const studyTimes={R:'30 min',P:'70 min',M:'70 min',A:'50 min',T:'45 min + 15 min marking',X:'40 min + 20 min review'};
-const allQuestions={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions};
+const allQuestions={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions,4:taggedWeek04Questions};
 let disposeWorkspace=null;
 let disposeSpecification=null;
 let disposeHistory=null;

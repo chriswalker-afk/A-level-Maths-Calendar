@@ -39,7 +39,7 @@ The **four-hour essential pathway** retains the blueprint's AO1/AO2/AO3 mark dis
 
 Each Week 2 question includes correctly typeset maths, part-by-part marks, a first-step hint, fully worked solutions, a verified answer, a misconception, a reflection prompt and a permanent primary specification skill for each marked part (with optional connected skills). All the existing Notes / Maths steps / Draw, self-marking, independent/with-help selection, retry history and backup functions work unchanged.
 
-The student calendar now opens **Weeks 1–3 directly into questions**. The 54 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Weeks 4–10 remain locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
+The student calendar now opens **Weeks 1–4 directly into questions**. The 72 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Weeks 5–10 remain locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
 
 Quality gates: `tests/week02-content.test.mjs`, `tests/week02-student-flow.test.mjs` and `tests/publication.test.mjs`, plus the existing MathJax, progress, marking and backup suites.
 
@@ -59,9 +59,29 @@ The complete **Week 3** pack is now authored and released with **22 original que
 
 Week 3 has the planned resource-authoring mark balance of **AO1 26 / AO2 39 / AO3 33**. Students use the same Notes, Maths steps, Draw, first-step hints, step-by-step mark schemes, independence choices, self-marking and reattempt history as before.
 
-All Week 3 marked parts carry **permanent 9MA0 skill tags** across P05 (Trigonometry), S03 (Year 1 probability) and connected algebra/calculus. The calendar now releases **Weeks 1–3**, giving **66 published questions** in all, including **54 essential questions**. My Progress displays a separate record for each week; aggregate and topic accuracy include the third week's validated attempts, without changing earlier saved work. **Weeks 4–10 remain locked**.
+All Week 3 marked parts carry **permanent 9MA0 skill tags** across P05 (Trigonometry), S03 (Year 1 probability) and connected algebra/calculus. At the completion of Week 3, the calendar had **66 published questions** (54 essential); Week 4 expands this to **88 published questions** (72 essential). My Progress displays a separate record for each week; aggregate and topic accuracy include the third week's validated attempts, without changing earlier saved work. **Weeks 5–10 remain locked**.
 
 The QA suite now covers the Week 3 mark allocations and timing, correct MathJax rendering, specification links, exact-value maths audit, manually controlled Brunei release gates and a student end-to-end flow through Week 3 marking and My Progress.
+
+### Week 4 — Differentiation and curve behaviour
+
+Week 4 is authored in full: **22 original exam-style questions**, including complete mark schemes, first-step hints, feedback and exact mathematical notation.
+
+| Section | Questions | Marks | Working time |
+|---|---:|---:|---:|
+| Quick retrieval — first principles, rational indices, chain/product/quotient, implicit/parametric, exponential and log derivatives | 10 | 20 | 30 minutes |
+| Connected Pure — parameterised cubics; implicit tangent and intercept proof; horizontal/vertical parametric tangents and classification | 3 | 30 | 67 minutes |
+| Modelling — minimum material in a radius-constrained container; comparison of two pollutant concentration models using rates and curvature | 2 | 26 | 68 minutes |
+| Year 1 Mechanics — force diagram; two-dimensional force resolution; connected particles followed by motion with a slack string | 3 | 22 | 48 minutes |
+| **Essential core** | **18** | **98** | **213 minutes + 20 marking + 7 buffer = four hours** |
+| Recommended timed problems — exponential stationary point, rational extrema and inequalities, non-parallel force resultant | 3 | 32 | 45 + 15 minutes |
+| Optional A/A* extension — parametric curve with a self-intersection and two distinct tangents | 1 | 14 | 40 + 20 minutes |
+
+The core practice-authoring AO balance is **AO1 26 / AO2 39 / AO3 33** marks (a resource design choice, not the official full-paper AO weightings). All questions use the existing **Notes / Maths steps / Draw**, independent/with-help and numerical self-marking, saved retries and offline progress backup.
+
+**Weeks 1–4 are available on the calendar** with **88 published questions (72 essential)**. Question IDs and part-by-part specification tags use the stable `W04-` and P07/M08 skill namespaces, with connected references back to algebra, exponentials, vectors and kinematics. The separate week record in My Progress and per-skill evidence in My Specification update automatically from these attempts. The release gate keeps **Weeks 5–10 locked**; final-exam programme 2 remains unpublished.
+
+Quality gates: `tests/week04-content.test.mjs` (marks, skills, AO, timing, release routing), `tests/week04-maths-audit.test.mjs` (independent algebraic/physical numerical checks), `tests/week04-student-flow.test.mjs` (four-week calendar, saved work, zero-mark completion, skill evidence), and the extended real MathJax parser suite.
 
 ## My Specification — Pass 4A
 
@@ -73,13 +93,13 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 - Open each topic and skill to read specific examination demands, common pitfalls and the exact Pearson topic reference.
 - Future-only Applied content is labelled and remains discoverable rather than being presented as part of the internal exam.
 - The three overarching themes of argument/proof, problem solving and modelling are prominent across the course.
-- Stable skill identifiers connect every published Week 1–3 question part to a primary and optional related skill; **4C now shows completed attempts, skills encountered and appropriately attributed mark accuracy**.
+- Stable skill identifiers connect every published Week 1–4 question part to a primary and optional related skill; **4C now shows completed attempts, skills encountered and appropriately attributed mark accuracy**.
 
 **Topic-level self-mark accuracy is now available when evidence is assignable to a specific skill.** Multi-part questions need a complete part breakdown; single-part questions can use their exact whole score. Old multi-part whole scores still count toward attempts, without inventing which skill earned the marks. No evidence is shown as *No part accuracy yet*, not 0%. The reference guide is [docs/SPECIFICATION_LIBRARY.md](docs/SPECIFICATION_LIBRARY.md) and the official authority is [Pearson's 9MA0 specification](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf).
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
-All **66 questions in published Weeks 1–3** are now linked to the 9MA0 skill library **part by part**.
+All **88 questions in published Weeks 1–4** are now linked to the 9MA0 skill library **part by part**.
 
 Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
 
@@ -134,7 +154,7 @@ When importing a backup, students see a preview of the saved contents and choose
 
 Invalid, oversized, version-mismatched and malformed backups are rejected. Progress is saved atomically; if browser storage fails, the import is not applied. The backup includes potentially private student notes, so the interface reminds students to store it privately.
 
-**Next:** author Week 4 and build out Weeks 5–10 using the same stable specification tags and evidence rules. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
+**Next:** author Week 5 and build out Weeks 6–10 using the same stable specification tags and evidence rules. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
 
 ## Week 1 is now complete
 
@@ -180,7 +200,7 @@ The repository is GitHub Pages-compatible and needs no frontend build step. Page
 
 ### Progressive weekly release
 
-Edit `src/config.js`: the default is `stage1.releaseMode = "manual"` with `releasedWeeks = 3`. To release a future week:
+Edit `src/config.js`: the default is `stage1.releaseMode = "manual"` with `releasedWeeks = 4`. To release a future week:
 
 1. Fully author and validate that week's questions and mark schemes.
 2. Add its own content module and import it through `src/app.js`.
@@ -225,7 +245,8 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `src/data/week01.js`: original Week 1 content.
 - `src/data/week02.js`, `src/data/week02-retrieval.js`, `src/data/week02-pure.js`, `src/data/week02-modelling.js`, `src/data/week02-applied.js`, `src/data/week02-timed.js`, `src/data/week02-extension.js`: Week 2 content across all six subsections.
 - `src/data/week03.js`, `src/data/week03-retrieval.js`, `src/data/week03-pure.js`, `src/data/week03-modelling.js`, `src/data/week03-applied.js`, `src/data/week03-timed.js`, `src/data/week03-extension.js`: Week 3 content in the same format.
-- `src/data/week01-skill-map.js`, `src/data/week02-skill-map.js`, `src/data/week03-skill-map.js`, `src/data/tagged-questions.js`: permanent, reviewed part-by-part skill tags across both released weeks.
+- `src/data/week04.js`, `src/data/week04-retrieval.js`, `src/data/week04-pure.js`, `src/data/week04-modelling.js`, `src/data/week04-applied.js`, `src/data/week04-timed.js`, `src/data/week04-extension.js`: Week 4 question content in six existing modes.
+- `src/data/week01-skill-map.js`, `src/data/week02-skill-map.js`, `src/data/week03-skill-map.js`, `src/data/week04-skill-map.js`, `src/data/tagged-questions.js`: permanent, reviewed part-by-part skill tags across both released weeks.
 - `src/data/skill-practice-index.js`: links from individual skills to published questions only.
 - `src/part-marking.js`: validated part scores, derived totals and exact primary-skill mark evidence.
 - `src/specification-analytics.js`, `src/specification-progress-view.js`: pure analytics and responsive topic/skill progress UI.
@@ -236,7 +257,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `src/working-state.js`, `src/working-space.js`, `src/workspace-maths.js`, `src/workspace-drawing.js`: working modes and local persistence.
 - `src/question-assessment.js`: score-driven completion, clear independence/help reporting and self-marking.
 - `styles.css`: responsive design, math layout and print styling.
-- `tests/content.test.mjs`, `tests/week02-content.test.mjs`, `tests/week02-student-flow.test.mjs`, `tests/week03-content.test.mjs`, `tests/week03-maths-audit.test.mjs`, `tests/week03-student-flow.test.mjs`, `tests/publication.test.mjs`: content, maths, AO, release gating and two-week interaction audits.
+- `tests/content.test.mjs`, `tests/week02-content.test.mjs`, `tests/week02-student-flow.test.mjs`, `tests/week03-content.test.mjs`, `tests/week03-maths-audit.test.mjs`, `tests/week03-student-flow.test.mjs`, `tests/week04-content.test.mjs`, `tests/week04-maths-audit.test.mjs`, `tests/week04-student-flow.test.mjs`, `tests/publication.test.mjs`: content, maths, AO, release gating and four-week interaction audits.
 - `tests/math-render.test.mjs`: MathJax parse tests against all authored equations.
 - `tests/working-state.test.mjs`, `tests/working-ui.test.mjs`, `tests/question-assessment.test.mjs`: working space and scoring UI regressions.
 - `tests/question-skill-tags.test.mjs`, `tests/part-marking.test.mjs`, `tests/detailed-marking-ui.test.mjs`: skill mapping, legacy marks, complete breakdowns and numeric validation.
@@ -245,7 +266,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Week 4 content:** author differentiation and curve-behaviour practice, including Year 1 forces and Newton's laws, with the same detailed mark schemes and skill mapping.
-2. **Weeks 5–10:** extend the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
+1. **Week 5 content:** author integration and accumulation, including Year 1 binomial probabilities and hypothesis testing, with the same detailed mark schemes and skill mapping.
+2. **Weeks 6–10:** extend the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
 3. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
 4. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.

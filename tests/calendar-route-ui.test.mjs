@@ -38,8 +38,8 @@ test("home calendar opens straight to published questions and sections work in-p
  assert.ok(root.querySelector(".planner-masthead"),"Calendar is first on home");
  assert.ok(root.querySelector(".planner-board"));
  assert.equal(root.querySelectorAll(".planner-cell").length,10);
- assert.equal(root.querySelectorAll("a.planner-cell").length,3);
- assert.equal(root.querySelectorAll("div.planner-cell.is-upcoming").length,7);
+ assert.equal(root.querySelectorAll("a.planner-cell").length,4);
+ assert.equal(root.querySelectorAll("div.planner-cell.is-upcoming").length,6);
  assert.equal(doc.querySelector('[data-nav="calendar"]').classList.contains("active"),true);
  assert.equal(root.querySelector("a.planner-cell.is-open").getAttribute("href"),"#/study/1/R/1",
   "Continue at the first unmarked retrieval question");
@@ -79,6 +79,10 @@ test("home calendar opens straight to published questions and sections work in-p
  assert.equal(window.location.hash,"#/study/3/R/0");
  assert.match(root.querySelector(".exam-sheet-code").textContent,/W03-R1/);
  change("#/week/4");
+ window.dispatchEvent(new window.Event("hashchange"));
+ assert.equal(window.location.hash,"#/study/4/R/0");
+ assert.match(root.querySelector(".exam-sheet-code").textContent,/W04-R1/);
+ change("#/week/5");
  assert.match(root.textContent,/NOT RELEASED/);
  assert.ok(!root.querySelector(".exam-sheet"));
  change("#/calendar");
