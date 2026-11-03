@@ -8,7 +8,8 @@ export const week10Mechanics = [
     "minutes": 6,
     "ao": {
       "AO1": 2,
-      "AO2": 3
+      "AO2": 1,
+      "AO3": 2
     },
     "topics": [
       "velocity–time graphs",
@@ -48,8 +49,9 @@ export const week10Mechanics = [
     "marks": 5,
     "minutes": 6,
     "ao": {
-      "AO1": 2,
-      "AO2": 3
+      "AO1": 3,
+      "AO2": 1,
+      "AO3": 1
     },
     "topics": [
       "vertical motion",
@@ -90,7 +92,8 @@ export const week10Mechanics = [
     "minutes": 7,
     "ao": {
       "AO1": 2,
-      "AO2": 4
+      "AO2": 2,
+      "AO3": 2
     },
     "topics": [
       "integration of acceleration",
@@ -132,7 +135,8 @@ export const week10Mechanics = [
     "minutes": 5,
     "ao": {
       "AO1": 2,
-      "AO2": 2
+      "AO2": 1,
+      "AO3": 1
     },
     "topics": [
       "Newton's second law",
@@ -167,8 +171,9 @@ export const week10Mechanics = [
     "marks": 5,
     "minutes": 6,
     "ao": {
-      "AO1": 1,
-      "AO2": 4
+      "AO1": 3,
+      "AO2": 1,
+      "AO3": 1
     },
     "topics": [
       "connected particles",
