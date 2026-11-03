@@ -112,8 +112,8 @@ function studyPage(n,sec,idx){
  '<header class="study-header"><a class="study-back" href="#/calendar">← CALENDAR</a>'+
  '<div class="study-header-title"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+(mock?' / ORIGINAL MOCK':' / INTERNAL EXAM')+'</span>'+
  '<h1>'+esc(week.title)+'</h1></div>'+
- '<div class="study-header-progress"><strong>'+marked+'<span>/'+all.length+'</span></strong>'+
- '<small>QUESTIONS MARKED</small></div></header>'+
+ '<div class="study-header-progress"><strong>'+(timed?'—':marked)+'<span>/'+all.length+'</span></strong>'+
+ '<small>'+(timed?'MARKING HIDDEN':'QUESTIONS MARKED')+'</small></div></header>'+
  (mock?renderMockPaperBanner({section:sec,questions:all,records:saved,reflections:saved.reflections}):"")+
  sectionNav+
  '<div class="study-layout study-workbench">'+questionNav+
