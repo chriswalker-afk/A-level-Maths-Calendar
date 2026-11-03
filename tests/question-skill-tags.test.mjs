@@ -7,10 +7,10 @@ import {getSpecSkill} from "../src/data/specification.js";
 import {createPracticeIndex,getPublishedPracticeForSkill} from "../src/data/skill-practice-index.js";
 
 test("every published question and every marked part has exactly one primary tag",()=>{
- assert.equal(taggedWeek01Questions.length,22);
- assert.equal(Object.keys(week01SkillMap).length,22);
+ assert.equal(taggedWeek01Questions.length,31);
+ assert.equal(Object.keys(week01SkillMap).length,31);
  const taggedIds=new Set(taggedWeek01Questions.map(q=>q.id));
- assert.equal(taggedIds.size,22);
+ assert.equal(taggedIds.size,31);
  let parts=0,totalMarks=0;
  for(const q of taggedWeek01Questions){
   const raw=week01Questions.find(x=>x.id===q.id);
@@ -33,7 +33,7 @@ test("every published question and every marked part has exactly one primary tag
   }
  }
  assert.ok(parts>=50);
- assert.equal(totalMarks,144,"98 essential + 32 timed + 14 extension");
+ assert.equal(totalMarks,245,"175 essential + 40 timed + 30 extension");
 });
 
 test("mapping fails closed if a part is untagged or a skill is missing",()=>{
