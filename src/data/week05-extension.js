@@ -2,7 +2,7 @@ export const week05Extension = [
   {
     "id": "W05-X1",
     "section": "X",
-    "title": "A solid that gets longer but has a volume limit",
+    "title": "A finite accumulation over an endless interval",
     "marks": 14,
     "minutes": 40,
     "ao": {
@@ -10,45 +10,45 @@ export const week05Extension = [
       "AO2": 11
     },
     "topics": [
-      "solids of revolution",
+      "improper integration as a limit",
       "repeated integration by parts",
-      "improper integrals",
       "numerical methods",
+      "accumulation models",
       "proof"
     ],
-    "stem": "For \\(x\\ge0\\), the curve is \\(y=xe^{-x}\\). The region bounded by the curve, the \\(x\\)-axis and the vertical lines \\(x=0\\) and \\(x=a\\), where \\(a>0\\), is rotated about the \\(x\\)-axis to form a solid of volume \\(V(a)\\).",
+    "stem": "An experimental process has a nonnegative response rate \\(r(t)=t^2e^{-2t}\\), for \\(t\\ge0\\). The accumulated response during the first \\(a>0\\) time units is \\(A(a)=\\int_0^a r(t)\\,dt\\). The measurement units are defined so that this integral gives the total response.",
     "parts": [
       [
-        "Show that \\(V(a)=\\pi\\int_0^ax^2e^{-2x}\\,dx\\).",
+        "Explain why \\(A(a)\\) increases as \\(a\\) increases, and write the exact integral defining the accumulated response.",
         2
       ],
       [
-        "By integrating by parts twice, show that \\(V(a)=\\frac\\pi4\\left[1-e^{-2a}(2a^2+2a+1)\\right]\\).",
+        "By integrating by parts twice, show that \\(A(a)=\\frac14\\left[1-e^{-2a}(2a^2+2a+1)\\right]\\).",
         5
       ],
       [
-        "Prove that \\(V(a)\\) increases for \\(a>0\\) and find its limiting value as \\(a\\to\\infty\\).",
+        "Differentiate \\(A(a)\\) and find the limiting total response as \\(a\\to\\infty\\). Explain why the limit exists.",
         3
       ],
       [
-        "Show that the solid reaches \\(75\\%\\) of its limiting volume when \\(e^{-2a}(2a^2+2a+1)=\\frac14\\) and find the corresponding value of \\(a\\) to two decimal places, justifying that it is unique.",
+        "Show that \\(75\\%\\) of the limiting response is accumulated when \\(e^{-2a}(2a^2+2a+1)=\\frac14\\). Find the corresponding \\(a\\) to two decimal places and justify that it is unique.",
         3
       ],
       [
-        "Explain how the solid can have an increasing length but a finite limiting volume.",
+        "Explain why the response can continue indefinitely but have a finite total accumulation.",
         1
       ]
     ],
-    "hint": "A disc has area \\(\\pi y^2\\). For the integral \\(\\int x^2e^{-2x}\\,dx\\), use integration by parts with \\(u=x^2\\) and then again with \\(u=x\\). To justify the numerical solution, use the monotonicity from the preceding part.",
+    "hint": "Start with the nonnegative rate \\(r(t)=t^2e^{-2t}\\). For the two integrations by parts, first choose \\(u=t^2\\) and then \\(u=t\\). To solve for the 75% threshold, use the strict monotonicity of A.",
     "steps": [
-      "Using discs perpendicular to the \\(x\\)-axis gives \\(V(a)=\\pi\\int_0^a y^2\\,dx=\\pi\\int_0^a x^2e^{-2x}\\,dx\\). [2]",
-      "Integrate \\(\\int x^2e^{-2x}\\,dx\\) by parts with \\(u=x^2,\\ dv=e^{-2x}\\,dx\\), so \\(v=-\\frac12e^{-2x}\\). This gives \\(-\\frac12x^2e^{-2x}+\\int xe^{-2x}\\,dx\\). A second integration by parts yields \\(\\int xe^{-2x}\\,dx=-\\frac12xe^{-2x}-\\frac14e^{-2x}+C\\). Consequently \\(\\int x^2e^{-2x}\\,dx=-\\frac14e^{-2x}(2x^2+2x+1)+C\\). Evaluate at \\(0\\) and \\(a\\): \\(V(a)=\\frac\\pi4[1-e^{-2a}(2a^2+2a+1)]\\). [5]",
-      "Differentiating (or applying the fundamental theorem) gives \\(V'(a)=\\pi a^2e^{-2a}>0\\) for all \\(a>0\\), so the volume is strictly increasing. Because \\(a^2e^{-2a}\\to0\\) and \\(ae^{-2a}\\to0\\) as \\(a\\to\\infty\\), \\(\\lim_{a\\to\\infty}V(a)=\\frac\\pi4\\) cubic units. [3]",
-      "At \\(75\\%\\) of this limit, \\(V(a)=\\frac34\\left(\\frac\\pi4\\right)=\\frac{3\\pi}{16}\\). Equating the formula from part (b) gives \\(e^{-2a}(2a^2+2a+1)=\\frac14\\). Solving numerically (calculator solver or interval search) gives \\(a\\approx1.960201\\) and hence \\(a=1.96\\) to two decimal places. Since \\(V(a)\\) is strictly increasing from \\(V(0)=0\\) towards \\(\\frac\\pi4\\), this level is reached exactly once. [3]",
-      "Although the solid becomes longer as \\(a\\) increases, its disc radii \\(xe^{-x}\\) tend to zero sufficiently rapidly that the added volume approaches zero in total, leaving a finite limit. [1]"
+      "The rate \\(r(t)=t^2e^{-2t}\\) is nonnegative and is positive for \\(t>0\\), so longer intervals add a positive amount. The accumulated response is \\(A(a)=\\int_0^a t^2e^{-2t}\\,dt\\). [2]",
+      "Integrate \\(\\int t^2e^{-2t}\\,dt\\) by parts with \\(u=t^2,\\ dv=e^{-2t}\\,dt\\), so \\(v=-\\frac12e^{-2t}\\). This gives \\(-\\frac12t^2e^{-2t}+\\int te^{-2t}\\,dt\\). A second integration by parts yields \\(\\int te^{-2t}\\,dt=-\\frac12te^{-2t}-\\frac14e^{-2t}+C\\). Hence \\(\\int t^2e^{-2t}\\,dt=-\\frac14e^{-2t}(2t^2+2t+1)+C\\). Evaluate from \\(0\\) to \\(a\\) to obtain \\(A(a)=\\frac14[1-e^{-2a}(2a^2+2a+1)]\\). [5]",
+      "Differentiation gives \\(A'(a)=a^2e^{-2a}>0\\) for \\(a>0\\). Exponential decay dominates polynomial growth, so \\(e^{-2a}(2a^2+2a+1)\\to0\\) as \\(a\\to\\infty\\). Thus \\(A_\\infty=\\lim_{a\\to\\infty}A(a)=\\frac14\\) response units. [3]",
+      "For \\(75\\%\\) of the limiting response, \\(A(a)=\\frac34\\cdot\\frac14=\\frac3{16}\\). The exact formula gives \\(e^{-2a}(2a^2+2a+1)=\\frac14\\). Numerically \\(a=1.960201\\ldots\\) and hence \\(a=1.96\\) to two decimal places. Since \\(A(a)\\) is strictly increasing from \\(0\\) to a value approaching \\(\\frac14\\), there is exactly one solution. [3]",
+      "The response rate becomes very small as \\(t\\) grows; the added contributions shrink sufficiently rapidly that their total is bounded, although the process does not stop at a finite time. [1]"
     ],
-    "answer": "\\(V(a)=\\frac\\pi4[1-e^{-2a}(2a^2+2a+1)]\\). It increases to \\(\\frac\\pi4\\) cubic units; \\(75\\%\\) is reached once at \\(a\\approx1.96\\).",
-    "misconception": "A shape can extend indefinitely while having finite volume. The relevant quantity is the integral of the cross-sectional areas, not the total length of the axis.",
-    "reflection": "What feature of the factor e^{-2x} makes the polynomial factor x² insufficient to force the volume to diverge?"
+    "answer": "\\(A(a)=\\frac14[1-e^{-2a}(2a^2+2a+1)]\\); the limiting response is \\(\\frac14\\) and its \\(75\\%\\) threshold is reached once at \\(a\\approx1.96\\).",
+    "misconception": "An ever-increasing total need not grow without bound. Infinite time does not imply infinite accumulated response when the rate decays sufficiently quickly.",
+    "reflection": "How could you use the formula to show that the accumulated response after time t = 5 is already very close to its final value?"
   }
 ];
