@@ -8,6 +8,8 @@ import {week01Questions} from "./week01.js";
 import {week01SkillMap} from "./week01-skill-map.js";
 import {week02Questions} from "./week02.js";
 import {week02SkillMap} from "./week02-skill-map.js";
+import {week03Questions} from "./week03.js";
+import {week03SkillMap} from "./week03-skill-map.js";
 
 const ALPHABET="abcdefghijklmnopqrstuvwxyz";
 
@@ -52,3 +54,4 @@ export function linkQuestionParts(questions, links, lookup=getSpecSkill){
 }
 export const taggedWeek01Questions=linkQuestionParts(week01Questions,week01SkillMap);
 export const taggedWeek02Questions=linkQuestionParts(week02Questions,week02SkillMap);
+export const taggedWeek03Questions=linkQuestionParts(week03Questions,week03SkillMap);
