@@ -7,6 +7,10 @@ import {isQuestionFinished,mountQuestionAssessment} from "./question-assessment.
 import {mountSpecification} from "./specification-view.js";
 import {calculateSpecificationProgress} from "./specification-analytics.js";
 import {renderTopicProgressDashboard} from "./specification-progress-view.js";
+import {renderRevisionSuggestions} from "./revision-recommendations-view.js";
+import {renderProgressTransfer,mountProgressTransfer} from "./progress-transfer-view.js";
+import {startNewAttempt,latestFinishedRecord,hasNewAttemptInProgress} from "./attempt-history.js";
+import {mountAttemptHistory} from "./attempt-history-view.js";
 
 const $=s=>document.querySelector(s);
 const el=$('#app');
@@ -17,14 +21,19 @@ const studyTimes={R:'30 min',P:'70 min',M:'70 min',A:'50 min',T:'45 min + 15 min
 const allQuestions={1:taggedWeek01Questions};
 let disposeWorkspace=null;
 let disposeSpecification=null;
+let disposeHistory=null;
+let disposeTransfer=null;
+let importNotice="";
 const storageKey=siteConfig.storageKey;
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function read(){try{const s=JSON.parse(localStorage.getItem(storageKey)||'{}');return s&&typeof s==='object'?s:{}}catch{return {}}}
 let saved=read();
 function store(){try{localStorage.setItem(storageKey,JSON.stringify(saved));return true}catch{return false}}
 function completed(q){return isQuestionFinished(saved[q.id],q.marks)}
+function everCompleted(q){return latestFinishedRecord(q,saved[q.id]||{})!==null}
+function lastStatus(q){return latestFinishedRecord(q,saved[q.id]||{})?.status||""}
 function status(q){return saved[q.id]?.status||''}
-function countDone(){return Object.values(allQuestions).flat().filter(q=>essentialSections.has(q.section)&&completed(q)).length}
+function countDone(){return Object.values(allQuestions).flat().filter(q=>essentialSections.has(q.section)&&everCompleted(q)).length}
 function coreQuestions(week){return (allQuestions[week]||[]).filter(q=>essentialSections.has(q.section))}
 function releasedQuestions(){return Object.entries(allQuestions).flatMap(([week,qs])=>released(Number(week))?qs:[])}
 function released(week){const c=siteConfig.stage1;const meta=programmeOne.weeks[week-1];if(!meta?.hasPublishedContent||!allQuestions[week]?.length)return false;if(c.releaseMode==='manual')return week<=c.releasedWeeks;if(c.releaseMode==='scheduled'&&c.startDate){const from=new Date(c.startDate+'T00:00:00+08:00').getTime();const now=new Date(new Date().toLocaleString('en-US',{timeZone:siteConfig.timezone})).getTime();return now>=from+(week-1)*7*86400000}return false}
@@ -70,27 +79,45 @@ function weekPage(n){
  '<div class="progress-grid">'+Object.entries(labels).map(([code,label])=>{const section=qs.filter(q=>q.section===code),scored=section.filter(completed).length;return '<div class="progress-item"><div class="card-head"><span class="eyebrow">'+(essentialSections.has(code)?'ESSENTIAL':code==='T'?'RECOMMENDED':'OPTIONAL')+'</span><span class="pill '+(scored===section.length?'teal':'')+'">'+scored+'/'+section.length+'</span></div><h3>'+esc(label)+'</h3><p>'+time[code]+'</p><div class="meter"><span style="width:'+(100*scored/Math.max(1,section.length))+'%"></span></div><div style="margin-top:14px"><a class="link" href="#/study/'+n+'/'+code+'/0">Open '+esc(label.toLowerCase())+' →</a></div></div>'}).join('')+'</div>'+
  '<div class="banner" style="margin-top:19px"><div><strong>Your four essential hours</strong><p>30 minutes retrieval + 70 connected problems + 70 modelling + 50 Applied + 20 minutes checking. Add the timed set (60 minutes) and, if helpful, extension or targeted repair (60 minutes).</p></div><a class="btn small" href="#/study/'+n+'/R/0">Start Week '+n+' →</a></div></section>';
 }
-function studyPage(n,sec,idx){if(!released(n))return weekPage(n);const qs=(allQuestions[n]||[]).filter(q=>q.section===sec);if(!qs.length){return '<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+'</a><h1>Not yet authored</h1><p>Questions for this section are still in development.</p></section>'}const i=Math.max(0,Math.min(Number(idx)||0,qs.length-1)),q=qs[i];const group=Object.entries(sections).map(([code,label])=>'<button type="button" class="tab" role="tab" aria-selected="'+String(sec===code)+'" data-section="'+code+'" data-week="'+n+'">'+label+' ('+(allQuestions[n]||[]).filter(t=>t.section===code).length+'/'+target[code]+')</button>').join('');const nav=qs.map((item,j)=>'<button type="button" data-jump="'+j+'" class="'+(j===i?'active':'')+'"><span class="qid">'+esc(item.id.split('-')[1])+'</span><span>'+esc(item.title)+'</span>'+'<span class="q-complete-indicator" aria-label="Question finished"'+(completed(item)?'':' hidden')+'>✓</span>'+'</button>').join('');let result='<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+' overview</a><div class="card-head"><span class="eyebrow">Week '+String(n).padStart(2,'0')+' · '+esc(sections[sec]||sec)+'</span><span class="pill teal">ORIGINAL EXAM-STYLE QUESTION</span></div><h1 class="page-title">Practice with purpose.</h1><p class="intro">Attempt independently first. Use a hint only if needed, compare with the worked solution, and record the marks you actually earned.</p><div class="tabs" role="tablist" aria-label="Question categories">'+group+'</div><div class="study-layout"><aside class="side"><h3>Questions in this section</h3><div class="question-links">'+nav+'</div><div class="line"></div><p class="small muted">4-hour essentials · 1 timed set · 1 optional challenge.</p></aside><article class="paper"><div class="card-head"><span class="pill blue">'+esc(q.id)+'</span><span class="small muted">'+q.marks+' marks · ~'+q.minutes+' min</span></div><h2>'+esc(q.title)+'</h2><p class="stem math">'+mathHtml(q.stem)+'</p>'+questionTable(q.table)+'<ol class="parts">'+q.parts.map((p,j)=>'<li><span class="letter">('+'abcdefgh'[j]+')</span><div class="question-part math">'+mathHtml(p[0])+'</div><span class="marks">['+p[1]+']</span></li>').join('')+'</ol><hr><div id="question-working-space"></div><div class="actions" style="margin-top:15px"><button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button><button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div><div id="hint-box" hidden class="helper"><h3>A small nudge</h3><p class="math">'+mathHtml(q.hint)+'</p></div><div id="solution-box" hidden class="helper solution"><h3>Fully worked solution</h3><ol>'+q.steps.map(s=>'<li class="math">'+mathHtml(s)+'</li>').join('')+'</ol><p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p><div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p><p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div>'+relatedSkillsMarkup(q)+'<div id="question-assessment"></div><div class="foot-nav"><button type="button" class="btn ghost small" id="previous" '+(i===0?'disabled':'')+'>← Previous</button><button type="button" class="btn small" id="next" '+(i===qs.length-1?'disabled':'')+'>Next question →</button></div></article></div></section>';return result}
+function studyPage(n,sec,idx){if(!released(n))return weekPage(n);const qs=(allQuestions[n]||[]).filter(q=>q.section===sec);if(!qs.length){return '<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+'</a><h1>Not yet authored</h1><p>Questions for this section are still in development.</p></section>'}const i=Math.max(0,Math.min(Number(idx)||0,qs.length-1)),q=qs[i];const group=Object.entries(sections).map(([code,label])=>'<button type="button" class="tab" role="tab" aria-selected="'+String(sec===code)+'" data-section="'+code+'" data-week="'+n+'">'+label+' ('+(allQuestions[n]||[]).filter(t=>t.section===code).length+'/'+target[code]+')</button>').join('');const nav=qs.map((item,j)=>'<button type="button" data-jump="'+j+'" class="'+(j===i?'active':'')+'"><span class="qid">'+esc(item.id.split('-')[1])+'</span><span>'+esc(item.title)+'</span>'+'<span class="q-complete-indicator" aria-label="Question finished"'+(completed(item)?'':' hidden')+'>✓</span>'+(hasNewAttemptInProgress(item,saved[item.id]||{})?'<span class="q-retrying" aria-label="Reattempt in progress">↻</span>':'')+'</button>').join('');let result='<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+' overview</a><div class="card-head"><span class="eyebrow">Week '+String(n).padStart(2,'0')+' · '+esc(sections[sec]||sec)+'</span><span class="pill teal">ORIGINAL EXAM-STYLE QUESTION</span></div><h1 class="page-title">Practice with purpose.</h1><p class="intro">Attempt independently first. Use a hint only if needed, compare with the worked solution, and record the marks you actually earned.</p><div class="tabs" role="tablist" aria-label="Question categories">'+group+'</div><div class="study-layout"><aside class="side"><h3>Questions in this section</h3><div class="question-links">'+nav+'</div><div class="line"></div><p class="small muted">4-hour essentials · 1 timed set · 1 optional challenge.</p></aside><article class="paper"><div class="card-head"><span class="pill blue">'+esc(q.id)+'</span><span class="small muted">'+q.marks+' marks · ~'+q.minutes+' min</span></div><h2>'+esc(q.title)+'</h2><p class="stem math">'+mathHtml(q.stem)+'</p>'+questionTable(q.table)+'<ol class="parts">'+q.parts.map((p,j)=>'<li><span class="letter">('+'abcdefgh'[j]+')</span><div class="question-part math">'+mathHtml(p[0])+'</div><span class="marks">['+p[1]+']</span></li>').join('')+'</ol><hr><div id="question-working-space"></div><div class="actions" style="margin-top:15px"><button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button><button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div><div id="hint-box" hidden class="helper"><h3>A small nudge</h3><p class="math">'+mathHtml(q.hint)+'</p></div><div id="solution-box" hidden class="helper solution"><h3>Fully worked solution</h3><ol>'+q.steps.map(s=>'<li class="math">'+mathHtml(s)+'</li>').join('')+'</ol><p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p><div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p><p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div>'+relatedSkillsMarkup(q)+'<div id="question-assessment"></div><div id="attempt-history-root"></div><div class="foot-nav"><button type="button" class="btn ghost small" id="previous" '+(i===0?'disabled':'')+'>← Previous</button><button type="button" class="btn small" id="next" '+(i===qs.length-1?'disabled':'')+'>Next question →</button></div></article></div></section>';return result}
 function progressPage(scope="internal",strand="all"){
- const report=calculateSpecificationProgress({questions:releasedQuestions(),records:saved,scope});
- const qs=taggedWeek01Questions,core=coreQuestions(1),attempts=qs.filter(completed),coreAttempts=core.filter(completed);
- const scored=attempts.filter(q=>Number.isInteger(saved[q.id]?.score));
- const total=scored.reduce((s,q)=>s+saved[q.id].score,0),available=scored.reduce((s,q)=>s+q.marks,0);
- const priority=qs.filter(q=>completed(q)&&(status(q)==='P'||status(q)==='S'||saved[q.id].score<q.marks)).slice(0,5);
- return '<section class="page"><span class="eyebrow">Your independent study record</span><h1 class="page-title">My progress</h1><p class="intro">Self-assessed scores and reflection notes live in this browser only. They are not teacher-verified and do not sync across devices.</p><div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong><span>core questions</span></div><div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>status(q)==='I').length+'</strong><span>finished on own</span></div><div class="metric"><span>WITH HELP</span><strong>'+attempts.filter(q=>status(q)==='P').length+'</strong><span>marked with help</span></div><div class="metric"><span>CORE REMAINING</span><strong>'+(core.length-coreAttempts.length)+'</strong><span>essential questions still to mark</span></div></div>'+
+ const published=releasedQuestions();
+ const report=calculateSpecificationProgress({questions:published,records:saved,scope});
+ const qs=taggedWeek01Questions,core=coreQuestions(1),attempts=qs.filter(everCompleted),coreAttempts=core.filter(everCompleted);
+ const scored=attempts.map(q=>({q,mark:latestFinishedRecord(q,saved[q.id]||{})})).filter(item=>Number.isInteger(item.mark?.score));
+ const total=scored.reduce((sum,item)=>sum+item.mark.score,0),available=scored.reduce((sum,item)=>sum+item.q.marks,0);
+ return '<section class="page"><span class="eyebrow">Your independent study record</span><h1 class="page-title">My progress</h1><p class="intro">Self-assessed scores and reflection notes live in this browser only. They are not teacher-verified and do not sync automatically across devices.</p>'+(importNotice?'<p class="import-notice" role="status">'+esc(importNotice)+'</p>':'')+'<div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong><span>core questions</span></div><div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>lastStatus(q)==='I').length+'</strong><span>finished on own</span></div><div class="metric"><span>WITH HELP</span><strong>'+attempts.filter(q=>lastStatus(q)==='P').length+'</strong><span>marked with help</span></div><div class="metric"><span>CORE REMAINING</span><strong>'+(core.length-coreAttempts.length)+'</strong><span>essential questions still to mark</span></div></div>'+
+ renderRevisionSuggestions({questions:published,records:saved,report,scope})+
  renderTopicProgressDashboard(report,{scope,strand})+
- heading('Your Week 1 question record','A valid mark is what makes a question finished')+'<div class="progress-grid">'+Object.entries(sections).map(([code,label])=>{const set=qs.filter(q=>q.section===code),done=set.filter(completed).length;return '<div class="progress-item"><span class="eyebrow">'+code+' · '+esc(label)+'</span><h3>'+done+' / '+set.length+' attempts marked</h3><div class="meter"><span style="width:'+(100*done/(set.length||1))+'%"></span></div><p style="margin-top:10px">'+(essentialSections.has(code)?'Included in the four essential hours.':'Recommended or optional beyond the four essential hours.')+'</p><a class="link" href="#/study/1/'+code+'/0">Open practice →</a></div>'}).join('')+'</div>'+
- (priority.length?heading('Your next targeted reattempts','Questions needing repair')+'<div class="panel"><div class="tag-row">'+priority.map(q=>'<a class="pill '+(status(q)==='S'?'amber':'blue')+'" href="#/study/1/'+q.section+'/'+qs.filter(i=>i.section===q.section).findIndex(i=>i.id===q.id)+'">'+esc(q.id)+' · '+esc(q.title)+'</a>').join('')+'</div><p class="small muted" style="margin-top:12px">Attempt a fresh solution without your old working. Review the first uncertain step and compare again.</p></div>':'')+
+ heading('Your Week 1 question record','A valid mark is what makes a question finished')+'<div class="progress-grid">'+Object.entries(sections).map(([code,label])=>{const set=qs.filter(q=>q.section===code),done=set.filter(everCompleted).length;return '<div class="progress-item"><span class="eyebrow">'+code+' · '+esc(label)+'</span><h3>'+done+' / '+set.length+' attempts marked</h3><div class="meter"><span style="width:'+(100*done/(set.length||1))+'%"></span></div><p style="margin-top:10px">'+(essentialSections.has(code)?'Included in the four essential hours.':'Recommended or optional beyond the four essential hours.')+'</p><a class="link" href="#/study/1/'+code+'/0">Open practice →</a></div>'}).join('')+'</div>'+
  heading('My revision notes','Make your next action specific')+'<div class="panel"><div class="reflection-row"><label for="strength">A method I can now use independently</label><textarea id="strength" class="reflection" placeholder="For example: I check the domain before solving a composite inequality…">'+esc(saved.reflections?.strength||'')+'</textarea></div><div class="reflection-row"><label for="repair">My next misconception to repair</label><textarea id="repair" class="reflection" placeholder="Name the exact step to practise…">'+esc(saved.reflections?.repair||'')+'</textarea></div><div class="reflection-row"><label for="strategy">My strategy for an unfamiliar question</label><textarea id="strategy" class="reflection" placeholder="What will you do when you are unsure where to begin?">'+esc(saved.reflections?.strategy||'')+'</textarea></div><p id="reflection-message" class="small muted">Notes save automatically in this browser.</p></div>'+
- '<div class="panel" style="margin-top:16px"><h3>Recorded self-marks</h3><p>'+(scored.length?total+' / '+available+' available marks across '+scored.length+' scored questions.':'No numerical scores recorded yet. Use the mark scheme to self-award marks after attempting a question.')+' The I / P / S rating measures independence, not just whether the final answer is correct.</p></div></section>';
+ '<div class="panel" style="margin-top:16px"><h3>Recorded self-marks</h3><p>'+(scored.length?total+' / '+available+' available marks across '+scored.length+' scored questions.':'No numerical scores recorded yet. Use the mark scheme to self-award marks after attempting a question.')+' The I / P / S rating measures independence, not just whether the final answer is correct.</p></div>'+renderProgressTransfer(saved)+'</section>';
 }
 function guidePage(){return '<section class="page"><span class="eyebrow">A thoughtful routine</span><h1 class="page-title">How to use the calendar</h1><p class="intro">This is not a race through question numbers. Your goal is to become more independent in deciding which mathematics to use.</p>'+heading('Your four essential hours','Week 1–8 question blueprint')+'<div class="card-grid">'+[['30 min','AO1 quick retrieval','Ten short questions: remember familiar procedures.'],['70 min','Connected problems','Three questions joining two or more techniques.'],['70 min','Mathematical modelling','Two extended questions with context, justification and limitations.'],['50 min','Year 1 Applied','Three questions on Statistics or Mechanics.'],['20 min','Mark and repair','Identify a specific misconception and reattempt the first incorrect step.'],['Optional','The extra two hours','One 60-minute timed set, then an optional 60-minute challenge or targeted repair.']].map(a=>'<article class="card"><span class="pill teal">'+a[0]+'</span><h3>'+a[1]+'</h3><p>'+a[2]+'</p></article>').join('')+'</div>'+heading('How to approach a hard question','Before you open a solution')+'<div class="step-grid"><div class="step"><b>01</b><strong>Understand</strong><p>Underline the required outcome, constraints and units.</p></div><div class="step"><b>02</b><strong>Connect</strong><p>Identify a useful representation and at least one possible method.</p></div><div class="step"><b>03</b><strong>Try</strong><p>Attempt the first step. Reveal only the hint when necessary.</p></div><div class="step"><b>04</b><strong>Repair</strong><p>Self-mark the full method, record the first error, then retry.</p></div></div>'+heading('The assessment objectives','What each means in these resources')+'<div class="panel"><p><strong>AO1:</strong> accurately use techniques and recall facts. <strong>AO2:</strong> reason, communicate mathematics, deduce and prove. <strong>AO3:</strong> solve problems, create and interpret models, and evaluate assumptions and conclusions.</p><p>The revision set intentionally emphasises AO2 and AO3 more than the official final paper weighting. The final mock will be closer to actual examination conditions.</p></div><div class="warning" style="margin-top:15px"><strong>Privacy and access.</strong> Working and progress are stored only in your current browser. Clearing browser storage may remove them. Future question content is withheld until publication; topic previews are visible in advance.</div></section>'}
 function finalPage(){return '<section class="page"><a class="back" href="#/">← Overview</a><span class="eyebrow">Programme 02 · Future expansion</span><h1 class="page-title">The road to the final papers.</h1><p class="intro">A planned 20-week full-course programme from 1 February to 16 June 2027, including Year 2 Statistics and Mechanics, synoptic questions and timed examinations. Question packs are not published yet.</p><div class="banner"><div><strong>The same study system, a wider syllabus</strong><p>Your internal-exam programme stays separate. The future stage can reuse tagged questions and build upon the same progress model.</p></div><span class="pill">PLANNED ONLY</span></div>'+heading('Five phases','1 February – 16 June 2027')+'<div class="phases">'+programmeTwo.phases.map(p=>'<div class="phase"><span class="eyebrow">WEEKS '+p.start+'–'+p.end+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.theme)+'</p></div>').join('')+'</div>'+heading('Official 2027 dates','Pearson timetable · Afternoon session')+programmeTwo.exams.map(x=>{const d=new Date(x.date+'T12:00:00Z');const day=d.toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});return '<div class="exam"><div class="exam-date"><strong>'+day.split(' ')[0]+'</strong>'+day.split(' ')[1].toUpperCase()+'</div><div><strong>'+esc(x.name)+'</strong><p>'+esc(x.code)+' · Wednesday '+esc(x.date)+' · '+esc(x.session)+' · '+esc(x.duration)+'</p></div></div>'}).join('')+'<div class="warning" style="margin-top:18px">These are the published Pearson GCE paper dates. School-specific local start times in Brunei must be confirmed separately. Papers 1 and 2 can both test the entire Pure syllabus.</div></section>'}
 function notFound(){return '<section class="page"><h1>Page not found</h1>'+buttonLink('#/','Return home')+'</section>'}
+function remountHistory(q){
+ const mount=el.querySelector("#attempt-history-root");
+ if(!mount)return;
+ if(disposeHistory){disposeHistory();disposeHistory=null;}
+ disposeHistory=mountAttemptHistory(mount,{
+  question:q,record:saved[q.id]||{},
+  onStart(){
+   const previous=saved[q.id]||{};
+   const next=startNewAttempt(q,previous);
+   saved[q.id]=next;
+   if(!store()){saved[q.id]=previous;return false;}
+   render();
+   return true;
+  }
+ });
+}
 function routeInfo(){const path=(location.hash||'#/').slice(1).split('/').filter(Boolean);return path}
 function render(){
   if(disposeWorkspace){disposeWorkspace();disposeWorkspace=null;}
   if(disposeSpecification){disposeSpecification();disposeSpecification=null;}
+  if(disposeHistory){disposeHistory();disposeHistory=null;}
+  if(disposeTransfer){disposeTransfer();disposeTransfer=null;}
   const p=routeInfo();
   const top=p[0]||"home";
   document.querySelectorAll("[data-nav]").forEach(a=>
@@ -109,6 +136,22 @@ function render(){
     top==="study"?"Practice":top==="week"?"Weekly overview":top==="specification"?"My Specification":
     top.charAt(0).toUpperCase()+top.slice(1))+" — A Level Maths Calendar";
 
+  if(top==="progress"){
+    const mount=el.querySelector("#progress-transfer");
+    if(mount)disposeTransfer=mountProgressTransfer(mount,{
+      getRecords:()=>saved,
+      onImport(records,counts){
+        const previous=saved;
+        saved=records;
+        if(!store()){saved=previous;return false;}
+        importNotice="Backup imported: "+counts.added+" new record(s), "+counts.replaced+
+          " replaced, "+counts.kept+" kept unchanged, "+counts.removed+" removed.";
+        render();
+        return true;
+      }
+    });
+    importNotice="";
+  }
   if(top==="study"){
     const week=Number(p[1]),section=p[2]||"R",index=Number(p[3]||0);
     const items=(allQuestions[week]||[]).filter(q=>q.section===section);
@@ -130,20 +173,33 @@ function render(){
     }
     const assessment=el.querySelector("#question-assessment");
     if(q&&assessment&&released(week)){
+      remountHistory(q);
       mountQuestionAssessment(assessment,{
         question:q,
         record:saved[q.id]||{},
         onChange(marking){
-          const current=saved[q.id]||{};
-          // Do not overwrite newer working-space strokes or maths lines.
+          const previous=saved[q.id]||{};
+          const current={...previous};
+          const priorScore=current.score,priorSource=current.scoreSource,
+            wasFinished=isQuestionFinished(current,q.marks),
+            previousParts=JSON.stringify(current.partMarks||{});
+          // Preserve maths lines, drawings and the separate archived attempt history.
           if(marking.status==="I"||marking.status==="P")current.status=marking.status;
           if(typeof marking.error==="string")current.error=marking.error;
           for(const key of ["score","scoreSource","partMarks"]){
             if(Object.hasOwn(marking,key))current[key]=marking[key];
             else delete current[key];
           }
+          if(isQuestionFinished(current,q.marks)&&
+             (!wasFinished||priorScore!==current.score||priorSource!==current.scoreSource||
+              previousParts!==JSON.stringify(current.partMarks||{}))){
+            current.lastMarkedAt=new Date().toISOString();
+          }
           saved[q.id]=current;
-          return store();
+          const ok=store();
+          if(!ok){saved[q.id]=previous;return false;}
+          remountHistory(q);
+          return true;
         },
         onCompletionChange(finished){
           const jump=el.querySelector('[data-jump="'+Math.max(0,Math.min(index,items.length-1))+'"]');
