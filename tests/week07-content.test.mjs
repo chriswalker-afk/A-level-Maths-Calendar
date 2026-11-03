@@ -29,9 +29,9 @@ test("exactly seven complete weeks publish, without permitting Week 8 or Year 2"
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
  assert.ok(programmeOne.weeks.slice(0,7).every(w=>w.hasPublishedContent));
  assert.ok(programmeOne.weeks.slice(7).every(w=>!w.hasPublishedContent));
- assert.ok(isWeekReleased(6,taggedWeek06Questions));
- assert.equal(isWeekReleased(7,taggedWeek06Questions),false,"Metadata, not just question presence, must gate release");
- assert.equal(isWeekReleased(6,[]),false,"No phantom content");
+ assert.ok(isWeekReleased(7,taggedWeek07Questions));
+ assert.equal(isWeekReleased(8,taggedWeek07Questions),false,"Metadata, not just question presence, must gate release");
+ assert.equal(isWeekReleased(7,[]),false,"No phantom content");
  assert.equal(siteConfig.stage2.published,false);
 });
 test("22 original questions exactly meet six-section quotas and four-hour plan",()=>{
@@ -82,9 +82,9 @@ test("every part has coherent mark allocations, full working and MathJax-ready n
 });
 test("62 marked parts each receive exactly one real in-scope skill without double credit",()=>{
  assert.equal(Object.keys(week07SkillMap).length,22);
- assert.deepEqual(taggedWeek06Questions.map(q=>q.id),week07Questions.map(q=>q.id));
+ assert.deepEqual(taggedWeek07Questions.map(q=>q.id),week07Questions.map(q=>q.id));
  let parts=0,marks=0;
- for(const q of taggedWeek06Questions){
+ for(const q of taggedWeek07Questions){
   assert.equal(week07SkillMap[q.id].length,q.parts.length,q.id);
   for(const [i,[prompt,n,tag]]of q.parts.entries()){
    assert.ok(prompt);
