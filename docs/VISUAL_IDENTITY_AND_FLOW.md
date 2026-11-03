@@ -32,6 +32,62 @@ The CSS tokens are collected at the bottom of \`styles.css\` under **Identity sy
 - Respect \`prefers-reduced-motion\`; use no indispensable animations.
 - Older progress records, score history and maths input remain untouched by the redesign.
 
+
+## Final visual polish layer — all student surfaces
+
+The final polish is maintained in `styles/identity-polish.css`, linked **after**
+`styles.css` in `index.html`. Existing component CSS remains intact as a
+functional baseline. **Use the new design variables and patterns for all new
+components**; do not add more one-off mint-green gradients or unrelated rounded
+card treatments to the legacy file.
+
+### Palette and type
+
+| Token | Use |
+|---|---|
+| `--editorial-ink` | Dark headings, strong rules, primary actions and selected states |
+| `--editorial-paper` | Question paper, writing surfaces and content cards |
+| `--editorial-cream` | Warm graph-paper page background |
+| `--editorial-coral` | Emphasis on dark ink, filled accents and decorative rules |
+| `--editorial-coral-ink` | Accessible coral text when printed *on* paper |
+| `--editorial-lime` | Clearly selected tabs, active pens, completion indicators |
+| `--editorial-cobalt` | Navigation, focus, mathematical input and progress bars |
+| `--editorial-rule` | Secondary borders and graph-paper details |
+| `--editorial-font-display` | Display headings and question titles |
+| `--editorial-font-index` | Question IDs, marks, labels, controls, statistics |
+
+Prefer **sharp 2–4px corners**, strong top or side rules, and clearly selected
+controls. Warm white space is useful for calculations; do not flood every
+surface with accent colours. Preserve the original MathJax and MathLive
+rendering rather than attempting to style equations as text.
+
+### Covered components
+
+- Calendar/home, navigation, global buttons, headings, tags, cards, guide and examination dates.
+- Exam questions, hints, fully worked solutions, data tables and specification links.
+- Working space: notes, line-by-line maths input, the MathLive virtual keyboard colour, line controls, explanations, symbol toolbar and drawing canvas.
+- Drawing: graphite/cobalt/coral active pen swatches, pen widths, eraser, grid, undo/redo, export and saved ink.
+- Self-marking: independently/with-help selections, completion status, numeric marks, detailed part marks, errors and save status.
+- Reattempt history, saved maths/drawing previews and improvement comparison.
+- Specification: syllabus switch, Pure/Statistics/Mechanics accent, search/filter, expandable skills, future-year states and practice links.
+- Progress: summary counters, topic cards, skill evidence and coverage bars.
+- Revision suggestions, backup download/upload, import conflict choices and warnings.
+- Mobile and print states, visible keyboard focus, reduced-motion settings and readable status contrast.
+
+**Compatibility:** old strokes retain their original hex colours when painted
+from saved records. Only the *currently selected pen colour* is remapped to
+graphite/cobalt/coral on load. Storage format, history, notes, scoring and
+question IDs remain unchanged.
+
+### Prevention of style drift
+
+Before merging future additions, check that they use the palette variables,
+index font, input and selection states, and spacing established here.
+Run `npm run check`; `tests/design-system.test.mjs` checks CSS parsing,
+stylesheet load order, component coverage and old-drawing compatibility.
+Use `#/`, Week 1 practice, My Specification and My Progress as the visual
+review route, including 390px mobile.
+
 ## Implementation
 
 - \`src/calendar-view.js\`: pure calendar, week-resume routing, subsection strip and question-index markup.
