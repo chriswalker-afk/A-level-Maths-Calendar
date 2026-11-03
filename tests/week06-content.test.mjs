@@ -115,7 +115,7 @@ test("publication-safe practice navigation and score evidence include Week 6 exa
  assert.deepEqual(getPublishedPracticeForSkill("M09-001"),[],"Year 2 Moments remain unavailable");
  const six=all.flat();
  const report=calculateSpecificationProgress({questions:six,records:{},scope:"internal"});
- assert.equal(report.summary.releasedQuestions,132);
+ assert.equal(report.summary.releasedQuestions,159);
  assert.equal(report.summary.completedQuestions,0);
  const zero=calculateSpecificationProgress({questions:taggedWeek06Questions,records:{"W06-R1":{score:0,status:"I"}},scope:"internal"});
  assert.equal(zero.summary.releasedQuestions,22);
