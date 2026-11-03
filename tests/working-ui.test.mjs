@@ -87,9 +87,32 @@ test("students can switch notes, maths lines and ink without losing previous wor
   state=JSON.parse(window.localStorage.getItem(key))["W01-R1"].workspace;
   assert.equal(state.strokes.length,1);
 
+  // Self-reported independence is separate from completion. A mark of zero
+  // must still count as finished, and should not remove written/drawn work.
+  const finishBadge=document.querySelector("#question-finish-badge");
+  const indicator=document.querySelector('[data-jump="0"] .q-complete-indicator');
+  assert.equal(finishBadge.dataset.finished,"false");
+  assert.equal(indicator.hidden,true);
+  document.querySelector('[data-attempt-support="I"]').click();
+  assert.equal(finishBadge.dataset.finished,"false");
+  let fullRecord=JSON.parse(window.localStorage.getItem(key))["W01-R1"];
+  assert.equal(fullRecord.status,"I");
+  assert.equal(fullRecord.score,undefined);
+  const mark=document.querySelector("#self-mark-input");
+  mark.value="0";
+  mark.dispatchEvent(new window.Event("input",{bubbles:true}));
+  assert.equal(finishBadge.dataset.finished,"true");
+  assert.equal(indicator.hidden,false,"sidebar instantly shows finished status");
+  fullRecord=JSON.parse(window.localStorage.getItem(key))["W01-R1"];
+  assert.equal(fullRecord.score,0);
+  assert.equal(fullRecord.workspace.strokes.length,1,"mark entry retains drawing");
+  assert.equal(fullRecord.workspace.mathLines.length,2,"mark entry retains maths lines");
+
   window.location.hash="#/study/1/R/1";
   await new Promise(resolve=>setTimeout(resolve,10));
   assert.equal(document.querySelector("#work-notes").value,"","different question starts blank");
+  assert.equal(document.querySelector("#question-finish-badge").dataset.finished,"false","unmarked next question is still in progress");
+
   window.location.hash="#/study/1/R/0";
   await new Promise(resolve=>setTimeout(resolve,10));
   assert.equal(document.querySelector("#work-notes").value,"First I factorise");
@@ -97,6 +120,9 @@ test("students can switch notes, maths lines and ink without losing previous wor
   state=JSON.parse(window.localStorage.getItem(key))["W01-R1"].workspace;
   assert.equal(state.strokes.length,1,"drawing survives question navigation");
   assert.equal(state.mode,"draw","chosen mode restored on return");
+  assert.equal(document.querySelector("#question-finish-badge").dataset.finished,"true","recorded zero mark restores completion");
+  assert.equal(document.querySelector("#self-mark-input").value,"0");
+
   dom.window.close();
   delete globalThis.window;
   delete globalThis.document;
