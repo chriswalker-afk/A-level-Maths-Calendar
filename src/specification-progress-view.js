@@ -66,7 +66,7 @@ export function renderSkillEvidence(skill){
       :"You have not yet finished a published question connected with this skill.")+'</span>';
  return '<div class="spec-skill-performance">'+
  '<div class="spec-skill-performance-stats">'+
- '<div><strong>'+skill.attempted.size+'</strong><span>questions practised</span></div>'+
+ '<div><strong>'+skill.attempted.size+'</strong><span>'+(skill.attempted.size===1?"question practised":"questions practised")+'</span></div>'+
  '<div><strong>'+skill.directAttempted.size+'</strong><span>with this as a main skill</span></div>'+
  '<div><strong>'+skill.independent.size+'</strong><span>independent attempts</span></div>'+
  '</div><div class="spec-skill-performance-accuracy">'+accuracy+'</div></div>';
