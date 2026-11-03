@@ -129,7 +129,7 @@ export const week06ExpansionPure = [
     "steps": [
       "\\(u_2=(3+6/3)/2=5/2\\). [1] \\(u_3=(5/2+6/(5/2))/2=(5/2+12/5)/2=49/20\\). [1]",
       "For u>0, \\((u-\\sqrt6)^2\\ge0\\) yields \\(u^2+6\\ge2u\\sqrt6\\). [2] Divide by 2u to get \\(\\frac12(u+6/u)\\ge\\sqrt6\\), so \\(u_{n+1}\\ge\\sqrt6\\). [1]",
-      "\\(u_1=3>\\sqrt6\\) and part (b) keeps all later terms at least √6. [1] Also \\(u_{n+1}-u_n=(6-u_n^2)/(2u_n)\\le0\\) when u_n≥√6. [2] Hence the sequence is nonincreasing and bounded below. [1]",
+      "\\(u_1=3>\\sqrt6\\) and part (b) keeps all later terms at least √6. [1] Also \\(u_{n+1}-u_n=(6-u_n^2)/(2u_n)\\le0\\) when u_n≥√6. [1] Hence the sequence is nonincreasing and bounded below. [1]",
       "The monotone bounded sequence converges to L>0. Substitution in the recurrence gives \\(L=(L+6/L)/2\\), so \\(L^2=6\\). [1] Positivity excludes the negative fixed point, hence \\(L=\\sqrt6\\). [1]"
     ],
     "answer": "\\(u_2=5/2,\\ u_3=49/20\\), and \\(u_n\\downarrow\\sqrt6\\).",
