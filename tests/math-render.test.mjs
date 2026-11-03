@@ -15,6 +15,7 @@ import {week06Questions} from '../src/data/week06.js';
 import {week07Questions} from '../src/data/week07.js';
 import {week08Questions} from '../src/data/week08.js';
 import {week09Questions} from '../src/data/week09.js';
+import {week10Questions} from '../src/data/week10.js';
 
 const adaptor=liteAdaptor();
 RegisterHTMLHandler(adaptor);
@@ -24,9 +25,9 @@ const document=mathjax.document('',{
 });
 const mathFragment=/\\\(([\s\S]*?)\\\)/g;
 
-test('each LaTeX expression in published Weeks 1–9 parses to MathJax without errors',()=>{
+test('each LaTeX expression in published Weeks 1–10 parses to MathJax without errors',()=>{
  let count=0;
- for(const q of [...week01Questions,...week02Questions,...week03Questions,...week04Questions,...week05Questions,...week06Questions,...week07Questions,...week08Questions,...week09Questions]){
+ for(const q of [...week01Questions,...week02Questions,...week03Questions,...week04Questions,...week05Questions,...week06Questions,...week07Questions,...week08Questions,...week09Questions,...week10Questions]){
   const texts=[q.stem,q.hint,q.answer,...q.parts.map(x=>x[0]),...q.steps];
   if(q.table)texts.push(...q.table.header,...q.table.rows.flat());
   for(const line of texts){
