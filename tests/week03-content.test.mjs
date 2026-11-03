@@ -18,11 +18,11 @@ const groups={
 const core=new Set(["R","P","M","A"]);
 const slash=String.fromCharCode(92),start=slash+"(",end=slash+")";
 
-test("only the five genuinely authored weeks are released",()=>{
+test("only the six genuinely authored weeks are released",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,5);
- assert.ok(programmeOne.weeks.slice(0,5).every(w=>w.hasPublishedContent));
- assert.ok(programmeOne.weeks.slice(5).every(w=>!w.hasPublishedContent));
+ assert.equal(siteConfig.stage1.releasedWeeks,6);
+ assert.ok(programmeOne.weeks.slice(0,6).every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(6).every(w=>!w.hasPublishedContent));
  assert.equal(siteConfig.stage2.published,false);
 });
 test("Week 3 fulfils the 4/5/6-hour blueprint and exact section mark quotas",()=>{
