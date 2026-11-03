@@ -7,8 +7,9 @@ export const week10PureB = [
     "marks": 8,
     "minutes": 9,
     "ao": {
-      "AO1": 3,
-      "AO2": 5
+      "AO1": 5,
+      "AO2": 2,
+      "AO3": 1
     },
     "topics": [
       "geometric series",
@@ -53,9 +54,9 @@ export const week10PureB = [
     "marks": 8,
     "minutes": 10,
     "ao": {
-      "AO1": 2,
-      "AO2": 4,
-      "AO3": 2
+      "AO1": 3,
+      "AO2": 1,
+      "AO3": 4
     },
     "topics": [
       "exponential models",
@@ -101,8 +102,9 @@ export const week10PureB = [
     "marks": 9,
     "minutes": 11,
     "ao": {
-      "AO1": 2,
-      "AO2": 7
+      "AO1": 5,
+      "AO2": 4,
+      "AO3": 0
     },
     "topics": [
       "implicit differentiation",
@@ -147,8 +149,9 @@ export const week10PureB = [
     "marks": 8,
     "minutes": 10,
     "ao": {
-      "AO1": 3,
-      "AO2": 5
+      "AO1": 5,
+      "AO2": 3,
+      "AO3": 0
     },
     "topics": [
       "reverse chain rule",
