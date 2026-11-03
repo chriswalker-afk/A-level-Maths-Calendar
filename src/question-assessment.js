@@ -1,3 +1,5 @@
+import {marksBreakdown,applyPartMark,applyOverallMark,clearAllMarks,clearBreakdown,partKey} from "./part-marking.js";
+import {getSpecSkill} from "./data/specification.js";
 /**
  * Finishing a question has two independent signals:
  * - independence: how a learner worked (optional I / P)
@@ -18,6 +20,32 @@ function escapeHtml(value) {
 }
 
 const difficulties=["Technique","Method choice","Reasoning","Interpretation","Calculator","Time"];
+
+function partMarkingMarkup(question,record){
+ if(!Array.isArray(question.parts)||question.parts.length<2)return "";
+ const pieces=question.parts.map((part,index)=>{
+  const key=partKey(question,index);
+  const meta=part[2]||{};
+  const skill=getSpecSkill(meta.primarySkillId);
+  const existing=record.partMarks?.[key];
+  const entered=Number.isInteger(existing)&&existing>=0&&existing<=part[1];
+  return '<div class="detail-part-row"><div class="detail-part-label"><label for="self-part-'+key+'"><strong>Part ('+key+')</strong>'
+   +'<span>'+part[1]+' available mark'+(part[1]===1?'':'s')+'</span></label>'
+   +(skill?'<a href="#/specification/internal/'+escapeHtml(skill.topicId)+'/'+escapeHtml(skill.id)+'" title="See this skill in My Specification">'+escapeHtml(skill.statement)+'</a>':'')+'</div>'
+   +'<div class="detail-part-score"><input id="self-part-'+key+'" data-part-mark="'+key+'"'
+   +' type="number" min="0" max="'+part[1]+'" step="1" inputmode="numeric"'
+   +' aria-label="Marks earned for part ('+key+'), out of '+part[1]+'"'
+   +' value="'+(entered?existing:"")+'"><span>/ '+part[1]+'</span></div></div>';
+ }).join("");
+ return '<details id="mark-by-parts" class="mark-by-parts"'+(record.scoreSource==="parts"?' open':'')+'>'
+  +'<summary><span><strong>Optional: mark each part separately</strong>'
+  +'<small>Useful for seeing which specification skills earned marks</small></span><span class="detail-chevron" aria-hidden="true">⌄</span></summary>'
+  +'<div class="mark-by-parts-body"><p>Enter a mark for every part, including 0 if no marks were earned. When all parts are scored, your total is calculated automatically. Only completed part breakdowns can provide precise skill-accuracy data.</p>'
+  +'<div class="detail-part-grid">'+pieces+'</div>'
+  +'<div class="detail-part-bottom"><span id="detail-part-summary" aria-live="polite" role="status"></span>'
+  +'<button type="button" id="clear-part-breakdown" class="btn ghost small">Clear part scores</button></div>'
+  +'<p id="detail-part-info" class="detail-part-info" role="status" aria-live="polite"></p></div></details>';
+}
 
 function assessmentMarkup(question, record) {
   const marks=question.marks;
@@ -52,6 +80,7 @@ function assessmentMarkup(question, record) {
     +' value="'+escapeHtml(score)+'" aria-describedby="self-mark-message">'
     +'<span class="finish-out-of">/ '+marks+' marks</span>'
     +'<button type="button" class="clear-self-mark" id="clear-self-mark"'+(hasScore?'':' disabled')+'>Clear mark</button></div>'
+    +partMarkingMarkup(question,record)
     +'<p id="self-mark-message" class="finish-mark-message" role="status" aria-live="polite">'
     +(hasScore?'Recorded. This question is finished.':'No mark entered yet. This question is still in progress.')+'</p>'
     +'</div></div></div>'
