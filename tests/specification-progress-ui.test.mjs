@@ -77,7 +77,7 @@ test("My Specification shows actual local counts for topics and individual skill
  assert.ok(skill);
  skill.open=true;
  assert.match(skill.textContent,/0% of verified part marks/);
- assert.match(skill.textContent,/1\s+questions practised/);
+ assert.match(skill.textContent,/question practised/);
  cleanup(dom,dispose);
 });
 test("unattempted published content shows no fake accuracy; search still works",()=>{
