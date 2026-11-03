@@ -4,7 +4,7 @@
  *
  * Add a future week's validated question data only when it is published.
  */
-import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions} from "./tagged-questions.js";
+import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions} from "./tagged-questions.js";
 import {isWeekReleased} from "../publication.js";
 
 export function createPracticeIndex(publishedSets){
@@ -45,7 +45,8 @@ const publishedPractice=createPracticeIndex([
  {week:3,questions:taggedWeek03Questions},
  {week:4,questions:taggedWeek04Questions},
  {week:5,questions:taggedWeek05Questions},
- {week:6,questions:taggedWeek06Questions}
+ {week:6,questions:taggedWeek06Questions},
+ {week:7,questions:taggedWeek07Questions}
 ].filter(set=>isWeekReleased(set.week,set.questions)));
 export function getPublishedPracticeForSkill(skillId){
  return [...(publishedPractice.get(skillId)?.values()||[])];

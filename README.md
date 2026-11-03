@@ -39,7 +39,7 @@ The **four-hour essential pathway** retains the blueprint's AO1/AO2/AO3 mark dis
 
 Each Week 2 question includes correctly typeset maths, part-by-part marks, a first-step hint, fully worked solutions, a verified answer, a misconception, a reflection prompt and a permanent primary specification skill for each marked part (with optional connected skills). All the existing Notes / Maths steps / Draw, self-marking, independent/with-help selection, retry history and backup functions work unchanged.
 
-The student calendar now opens **Weeks 1–6 directly into questions**. The 108 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Weeks 6–10 remain locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
+The student calendar now opens **Weeks 1–7 directly into questions**. The 126 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Weeks 8–10 remain locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
 
 Quality gates: `tests/week02-content.test.mjs`, `tests/week02-student-flow.test.mjs` and `tests/publication.test.mjs`, plus the existing MathJax, progress, marking and backup suites.
 
@@ -108,7 +108,7 @@ Quality gates include `tests/week05-content.test.mjs`, `tests/week05-maths-audit
 
 ### Week 6 — Sequences, series and binomial expansion
 
-Week 6 adds **22 original exam-style questions (144 marks)** with fully worked answers, precise per-part marks, first-step hints, misconceptions, reflections and permanent specification tags. The whole programme now has **132 released questions across six weeks (108 essential)**.
+Week 6 added **22 original exam-style questions (144 marks)** with fully worked answers, precise per-part marks, first-step hints, misconceptions, reflections and permanent specification tags. At the Week 6 release the programme had **132 released questions across six weeks (108 essential)**.
 
 | Section | Questions | Marks | Working time |
 |---|---:|---:|---:|
@@ -124,7 +124,27 @@ The essential mark allocation is **AO1 26 / AO2 39 / AO3 33**, the resource's au
 
 **Curriculum validation:** the official 9MA0 guidance includes the binomial expansion for rational powers with its required |bx/a| < 1 restriction, arithmetic/geometric sums and recurrence, and calculus to recover velocity/displacement in one-dimensional kinematics. The Week 6 Applied questions avoid Year 2-only projectile, friction, moments and vector-calculus problems. [Pearson enhanced guidance](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/pearson-edexcel-l3-advanced-gce-mathematics-9ma0-enhanced-content-guidance-issue-2.pdf).
 
-**Weeks 1–6 are available directly from the calendar**; Weeks 7–10 and the second programme remain unpublished. Existing storage and attempts are not migrated or overwritten. Week 6 is validated by the Week 6 content, maths-audit, student-flow and expanded MathJax tests.
+At the Week 6 release, **Weeks 1–6 were available directly from the calendar**; the second programme remained unpublished. Existing storage and attempts are not migrated or overwritten. Week 6 is validated by the Week 6 content, maths-audit, student-flow and expanded MathJax tests.
+
+
+### Week 7 — Exponentials, logarithms and differential equations
+
+Week 7 contains **22 original exam-style questions (144 marks)** with precise part marks, first-step hints, full worked solutions, final answers, misconceptions, reflections and stable links to the specification. At this stage the calendar has **154 questions, including 126 essential questions**, across seven published weeks.
+
+| Section | Questions | Marks | Working time |
+|---|---:|---:|---:|
+| Retrieval — log laws/equations, logarithmic domains, exponential derivatives and integrals, linearisation, separation and initial conditions | 10 | 20 | 30 min |
+| Connected Pure — log equations and excluded roots; fitting a power law; a separable differential equation with a tangent | 3 | 30 | 67 min (+3 buffer) |
+| Modelling — pollutant decay from data; unlimited versus logistic population growth | 2 | 26 | 68 min (+2 buffer) |
+| Year 1 Applied — interpret a regression; compare predictions before/after an outlier; exact two-tailed binomial test | 3 | 22 | 48 min (+2 buffer) |
+| **Essential four-hour programme** | **18** | **98** | **213 working + 20 marking + 7 buffer = 240 min** |
+| Recommended timed set — exponential maximum and area; power-law integral; regression plus binomial inference | 3 | 32 | 45 min + 15 review |
+| Optional A/A* extension — differential-equation decay, weighted exposure, exact infinite limit and unique numerical threshold | 1 | 14 | 40 min + 20 reflection |
+
+The essential AO marks are **AO1 26 / AO2 39 / AO3 33** (practice-design targets, not examination-paper weights). Every one of **62 marked parts** has one primary permanent skill for accuracy; connected skills are links for retrieval and diagnosis rather than additional marks. Applied tags use **S02** (Year 1 regression) and **S05** (Year 1 binomial hypothesis testing), with no Year 2 correlation-coefficient tests or Normal distribution.
+
+**Release controls:** Weeks 1–7 are directly accessible; Weeks 8–10 remain locked, as does programme two. The local storage key, previous notes/drawings/attempts and backup compatibility are unchanged. Quality gates cover exact mathematics, correct Year 1 scope, all published MathJax, the student marking flow and release-safe specification links.
+
 
 ## My Specification — Pass 4A
 
@@ -142,7 +162,7 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
-All **110 questions in published Weeks 1–5** are now linked to the 9MA0 skill library **part by part**.
+All **154 questions in published Weeks 1–7** are now linked to the 9MA0 skill library **part by part**.
 
 Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
 
@@ -197,7 +217,7 @@ When importing a backup, students see a preview of the saved contents and choose
 
 Invalid, oversized, version-mismatched and malformed backups are rejected. Progress is saved atomically; if browser storage fails, the import is not applied. The backup includes potentially private student notes, so the interface reminds students to store it privately.
 
-**Next:** author Week 6 and build out Weeks 7–10 using the same stable specification tags and evidence rules. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
+**Next:** author Weeks 8–10 using the same stable specification tags and evidence rules. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
 
 ## Week 1 is now complete
 
@@ -310,7 +330,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Week 7 content:** develop logarithms, exponential models and differential equations, with verified Year 1 regression and binomial tests.
-2. **Weeks 7–10:** extend the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
+1. **Week 8 content:** numerical methods and synthesis, including Year 1 connected-particle mechanics.
+2. **Weeks 8–10:** extend the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
 3. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
 4. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.
