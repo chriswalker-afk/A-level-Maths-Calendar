@@ -1,6 +1,6 @@
 # Student-friendly 9MA0 specification and question-skill evidence
 
-**Status:** Pass 4A specification library, Pass 4B question-part tagging and Pass 4C self-marked specification progress are implemented. Pass 4D adds revision recommendations, reattempt history and portability.
+**Status:** Passes 4A–4D are implemented: a student-friendly skill catalogue, tagged question parts, transparent self-marked progress, personalised revision suggestions, protected reattempt history and offline progress transfer.
 
 ## Curriculum authority
 
@@ -139,10 +139,60 @@ The website now calculates browser-local progress from the **actually released**
 - `tests/specification-analytics.test.mjs`: empty data, real zero, multi-part and one-part marks, cross-topic counting, independence, legacy data, scope and evidence.
 - `tests/specification-progress-ui.test.mjs`, `tests/specification-progress-route.test.mjs`: visible states and live routing without modifying saved marks/work.
 
+## Pass 4D — revision, reattempts and offline portability
+
+### Personalised revision choices
+
+\`src/revision-recommendations.js\` accepts the **published questions** and current \`calculateSpecificationProgress\` output. Every recommendation contains a real question URL, an explanation of why it might help, and a link to a stable skill ID. The ranking considers:
+
+- A fresh attempt already started (finish it first).
+- A previously self-marked question that needed help.
+- A previous score with missing marks.
+- A new published question addressing a skill with low **early** part-mark evidence.
+- Skills without completed practice or without precisely attributable marks.
+- Varied topic/section exposure, not only easy AO1 questions.
+
+There are at most five suggestions and the first selection pass avoids overloading one section/topic. Scores are student-reported; the suggestions are **not** grade predictions or permanent labels of weakness. Unpublished questions and Year 2-only Applied skills cannot appear in internal-exam recommendations.
+
+### Reattempt history without double-counting
+
+\`src/attempt-history.js\` makes starting another attempt an **explicit, confirmed student action**. It archives the previous marked record as a separate snapshot, including status, scores, part breakdown, notes, MathLive steps, freehand normalized strokes and any feedback. It then opens a new blank attempt on that question.
+
+The history is visible on the question page with a timeline of marks and read-only previews of earlier working. It stores **up to 20 archived attempts** per question; exceeding the limit fails without deleting anything.
+
+When calculating topic and skill analytics, \`latestFinishedRecord(question,record)\` selects **one** result per question: the current score when valid, otherwise the most recent archived marked score. This means:
+
+- A newly opened, not-yet-finished retry **does not erase** earlier progress.
+- The progress dashboard never counts the same question multiple times, even if it has been attempted repeatedly.
+- New, completed attempts can improve or reduce the current mark and skill evidence; older scores are retained for comparison.
+- The currently active question can still say **Not yet finished** while an archived result counts toward prior syllabus coverage.
+- An earlier question with no original completion timestamp is labelled as saved/archived at a known time, not assigned a fabricated examination date.
+
+### Student-only JSON export and restore
+
+\`src/progress-portability.js\` exports the complete version 1 student record format, including all attempt histories. \`src/progress-transfer-view.js\` displays a local download button, file preview and three explicit import modes:
+
+1. **Keep current records** (default), adding only missing question IDs or reflections.
+2. **Prefer imported for matching records**, with an overwrite warning and no changes to other local records.
+3. **Replace everything** with the backup, requiring explicit confirmation when local content would be replaced or deleted.
+
+Backup files are checked for expected format/version, valid JSON, excessive size, malformed nested history and unsafe property names. Import merges are computed **without modifying** the original local records. The app commits the result only if the browser accepts it into localStorage; otherwise the old dataset remains current.
+
+The file is processed **entirely in the student's browser**. There are no network requests, account logins or teacher dashboards. Backups include handwritten work and potentially private notes; students should store their downloaded files privately. Device-to-device transfer requires the student to move the JSON file themselves.
+
+### QA
+
+- \`tests/revision-recommendations.test.mjs\` verifies publication/scope restrictions and evidence-aware variety.
+- \`tests/attempt-history.test.mjs\` verifies maths notes, drawing preservation, score comparisons and bounded snapshots.
+- \`tests/progress-portability.test.mjs\` verifies round-trip backup content, conflict modes and malformed-file rejection.
+- \`tests/pass4d-student-ui.test.mjs\` exercises actual progress, backup restore, retry controls and updated evidence with local browser storage.
+
 ## Next
 
-**4D — Targeted revision and data portability.** Use the evidence to suggest suitable **published** problems, add reattempt history without overwriting earlier attempts, and implement export/import of saved work and scores for device transfers. Avoid a mastery verdict based on a single question and ensure recommendations can distinguish little evidence from genuinely low accuracy.
+**Release Week 2** with original questions, complete worked solutions, AO1/AO2/AO3 allocations and verified part-level specification tags. The same marking, progress, reattempt and backup systems should then work with the second week without special cases.
 
-**Content scale-out.** Author and release Weeks 2–10 against the stable primary-skill IDs, preserving the original AO1/AO2/AO3 blueprint and adding regression tests for every newly published set.
+**Complete Weeks 3–10** progressively, keeping future material locked until the intended release date.
 
-Teacher monitoring, logins, cloud sync, and cross-device accounts remain separate projects; nothing in Pass 4C exposes individual student data to teachers or other users.
+**Build the full February–June 2027 programme** and release it on the intended schedule with the additional Year 2 Applied questions and official exam-period revision.
+
+Teacher dashboards, cloud sync and student accounts are separate optional projects, not present in the site today.
