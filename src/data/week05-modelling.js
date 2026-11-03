@@ -54,7 +54,7 @@ export const week05Modelling = [
   {
     "id": "W05-M2",
     "section": "M",
-    "title": "A rotating vessel with adjustable size",
+    "title": "The energy of an adjustable sensor pulse",
     "marks": 14,
     "minutes": 36,
     "ao": {
@@ -62,50 +62,50 @@ export const week05Modelling = [
       "AO3": 12
     },
     "topics": [
-      "solids of revolution",
+      "accumulation models",
       "integration by parts",
       "parameter sensitivity",
-      "optimisation",
-      "manufacturing constraints"
+      "energy index",
+      "model restrictions"
     ],
-    "stem": "A designer uses the curve \\(y=a\\sqrt{x}\\,e^{-x/4}\\), where \\(0\\le x\\le4\\) and \\(a>0\\), to describe the inner radius of a rotationally symmetric vessel. All lengths are in centimetres, with the scale parameter \\(a\\) chosen in consistent units. The region under the curve is rotated about the \\(x\\)-axis. The vessel's internal volume must not exceed \\(9\\pi(4-12e^{-2})\\) cubic centimetres.",
+    "stem": "A sensor records a short pulse described by \\(s_a(t)=a\\sqrt{t}\\,e^{-t/4}\\) for \\(0\\le t\\le4\\), where \\(a>0\\) is an adjustable amplitude parameter. A dimensionless accumulated energy index is defined to be the integral of the square of the signal, \\(E(a)=\\int_0^4s_a(t)^2\\,dt\\). For this design, the index must not exceed \\(9(4-12e^{-2})\\).",
     "parts": [
       [
-        "Show that the internal volume is \\(V(a)=\\pi a^2\\int_0^4 xe^{-x/2}\\,dx\\).",
+        "Show that \\(E(a)=a^2\\int_0^4te^{-t/2}\\,dt\\).",
         2
       ],
       [
-        "Use integration by parts to show that \\(\\int_0^4 xe^{-x/2}\\,dx=4-12e^{-2}\\).",
+        "Use integration by parts to prove \\(\\int_0^4te^{-t/2}\\,dt=4-12e^{-2}\\).",
         4
       ],
       [
-        "Hence express \\(V(a)\\) exactly and differentiate it with respect to \\(a\\).",
+        "Find the exact expression for \\(E(a)\\) and its derivative \\(E'(a)\\).",
         2
       ],
       [
-        "Find all allowable values of \\(a\\) under the capacity restriction, explaining the inequality you use.",
+        "Find all permissible values of \\(a\\) and justify the inequality used.",
         2
       ],
       [
-        "If \\(a\\) increases by exactly \\(10\\%\\), calculate the exact percentage increase in volume.",
+        "Calculate the exact percentage increase in the energy index when \\(a\\) increases by \\(10\\%\\).",
         2
       ],
       [
-        "Find where the vessel's inner radius is greatest, and state its maximum radius in terms of \\(a\\).",
+        "Find the time at which the sensor pulse has its maximum amplitude, and express that amplitude in terms of \\(a\\).",
         2
       ]
     ],
-    "hint": "Use the disc formula V = π∫y² dx. For the definite integral take u = x and dv = e^{-x/2}dx. When the radius scale a changes, the cross-sectional area changes as a².",
+    "hint": "Square the pulse model before integrating. Choose \\(u=t\\) and \\(dv=e^{-t/2}\\,dt\\) for integration by parts. The index is proportional to the square of the scale parameter.",
     "steps": [
-      "Squaring the radius gives \\(y^2=a^2xe^{-x/2}\\). Revolving about the x-axis and integrating discs gives \\(V(a)=\\pi\\int_0^4y^2\\,dx=\\pi a^2\\int_0^4xe^{-x/2}\\,dx\\). [2]",
-      "Apply parts to \\(\\int xe^{-x/2}\\,dx\\) with \\(u=x\\) and \\(dv=e^{-x/2}\\,dx\\); then \\(du=dx\\) and \\(v=-2e^{-x/2}\\). Therefore \\(\\int xe^{-x/2}\\,dx=-2xe^{-x/2}+2\\int e^{-x/2}\\,dx=-2(x+2)e^{-x/2}+C\\). Evaluate at \\(x=4\\) and \\(x=0\\): \\(-12e^{-2}-(-4)=4-12e^{-2}\\). [4]",
-      "Consequently \\(V(a)=\\pi a^2(4-12e^{-2})\\) and \\(V'(a)=2\\pi a(4-12e^{-2})\\). The constant factor is positive because \\(e^2>3\\). [2]",
-      "The capacity restriction becomes \\(\\pi a^2(4-12e^{-2})\\le9\\pi(4-12e^{-2})\\). Cancel the positive common factor to get \\(a^2\\le9\\). Together with \\(a>0\\), the allowed range is \\(0<a\\le3\\). [2]",
-      "The volume is proportional to \\(a^2\\). Replacing \\(a\\) by \\(1.1a\\) multiplies it by \\((1.1)^2=1.21\\), a \\(21\\%\\) increase. [2]",
-      "For \\(x>0\\), differentiate the radius: \\(y'=\\frac{ae^{-x/4}}{4\\sqrt{x}}(2-x)\\). The derivative is positive before \\(x=2\\) and negative afterwards; with \\(y(0)=0\\), the maximum is at \\(x=2\\), where \\(y_{\\max}=a\\sqrt2\\,e^{-1/2}\\) cm. [2]"
+      "By definition \\(E(a)=\\int_0^4s_a(t)^2\\,dt\\) and \\(s_a(t)^2=a^2te^{-t/2}\\). Since \\(a\\) is independent of \\(t\\), \\(E(a)=a^2\\int_0^4te^{-t/2}\\,dt\\). [2]",
+      "Use parts with \\(u=t\\) and \\(dv=e^{-t/2}\\,dt\\), so \\(du=dt\\) and \\(v=-2e^{-t/2}\\). Therefore \\(\\int te^{-t/2}\\,dt=-2te^{-t/2}+2\\int e^{-t/2}\\,dt=-2(t+2)e^{-t/2}+C\\). Evaluating from \\(0\\) to \\(4\\) gives \\(-12e^{-2}-(-4)=4-12e^{-2}\\). [4]",
+      "Hence \\(E(a)=a^2(4-12e^{-2})\\) and \\(E'(a)=2a(4-12e^{-2})\\). The constant is positive because \\(e^2>3\\). [2]",
+      "The cap is \\(a^2(4-12e^{-2})\\le9(4-12e^{-2})\\). Dividing by the positive factor gives \\(a^2\\le9\\). With \\(a>0\\), the range is \\(0<a\\le3\\). [2]",
+      "As \\(E(a)\\) is proportional to \\(a^2\\), changing to \\(1.1a\\) multiplies the index by \\(1.1^2=1.21\\). Its percentage increase is \\(21\\%\\). [2]",
+      "For \\(t>0\\), differentiate the signal: \\(s_a'(t)=\\frac{ae^{-t/4}}{4\\sqrt t}(2-t)\\). The derivative changes from positive to negative at \\(t=2\\), and \\(s_a(0)=0\\); hence the maximum is \\(s_a(2)=a\\sqrt2e^{-1/2}\\). [2]"
     ],
-    "answer": "\\(V(a)=\\pi a^2(4-12e^{-2})\\) cm³; permissible \\(0<a\\le3\\); increasing \\(a\\) by \\(10\\%\\) increases volume by \\(21\\%\\); greatest radius \\(a\\sqrt2e^{-1/2}\\) cm at \\(x=2\\).",
-    "misconception": "Rotating a region creates discs with area πy²; integrating y alone would calculate an ordinary planar area, not vessel volume. Increasing every radius by 10% does not increase volume by only 10%.",
-    "reflection": "What engineering assumptions are hidden in treating the wall thickness as negligible and the inner radius as a perfectly smooth mathematical function?"
+    "answer": "\\(E(a)=a^2(4-12e^{-2})\\), permitted \\(0<a\\le3\\); increasing amplitude by \\(10\\%\\) increases the index by \\(21\\%\\); maximum pulse \\(a\\sqrt2e^{-1/2}\\) at \\(t=2\\).",
+    "misconception": "The model defines the energy index by integrating the square of a pulse; it is not a geometric volume. Increasing amplitude by 10% increases a squared-amplitude accumulation by 21%.",
+    "reflection": "What assumptions would need checking before treating this simplified energy index as a real measurement of energy transferred by a sensor?"
   }
 ];
