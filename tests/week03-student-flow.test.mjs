@@ -91,13 +91,13 @@ test("Week 3 calendar, working, marks and 9MA0 evidence work without changing ol
  assert.equal(root.querySelector("#previous").dataset.targetRoute,"#/study/3/R/9");
 
  navigate("#/progress/internal");
- assert.equal(root.querySelector(".metric strong").textContent,"4/184");
+ assert.equal(root.querySelector(".metric strong").textContent,"4/205");
  assert.equal(root.querySelectorAll(".weekly-progress-group").length,10);
  const groups=root.querySelectorAll(".weekly-progress-group");
  assert.match(groups[2].textContent,/Trigonometry and periodic models/);
  assert.match(groups[2].textContent,/2 \/ 10 questions marked/);
  assert.ok(groups[2].querySelector('a[href="#/study/3/R/0"]'));
- assert.match(root.querySelector(".spec-progress-pulse").textContent,/4 \/ 220/);
+ assert.match(root.querySelector(".spec-progress-pulse").textContent,/4 \/ 247/);
  navigate("#/specification/internal/P05");
  assert.match(root.querySelector(".spec-topic-evidence").textContent,/2 \/ /);
  assert.match(root.querySelector("#P05-002").textContent,/0% of verified part marks/);
