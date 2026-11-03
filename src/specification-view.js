@@ -27,9 +27,9 @@ function sourceNote(){
 }
 function intro(scope){
  const count=specificationCounts(scope);
- return '<section class="spec-hero"><div><span class="eyebrow">Your personal mathematics syllabus map</span>'+
+ return '<section class="spec-hero"><div><span class="eyebrow">9MA0 / TOPIC CHECKLIST</span>'+
  '<h1 class="page-title">My Specification</h1>'+
- '<p class="intro">Know what you could be asked to do. Explore the skills behind each topic, see what a question might demand, and discover the parts of the course still to come.</p>'+
+ '<p class="intro">Topic skills, example examination demands and your recorded practice.</p>'+
  '<div class="spec-hero-metrics">'+
  '<div><strong>'+count.totalTopics+'</strong><span>topic groups</span></div>'+
  '<div><strong>'+count.visibleSkills+'</strong><span>skills in this programme</span></div>'+
