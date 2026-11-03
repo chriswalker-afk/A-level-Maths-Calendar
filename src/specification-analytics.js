@@ -14,6 +14,7 @@
 import {specificationTopics} from "./data/specification.js";
 import {verifiedPartEvidence} from "./part-marking.js";
 import {isQuestionFinished} from "./question-assessment.js";
+import {latestFinishedRecord} from "./attempt-history.js";
 
 const allowedScope=(scope)=>scope==="full"?"full":"internal";
 const inScope=(skill,scope)=>scope==="full"||skill.scope==="internal";
@@ -81,7 +82,8 @@ export function calculateSpecificationProgress({questions=[],records={},scope="i
  };
  for(const q of uniqueQuestions.values()){
   if(!Array.isArray(q.parts))continue;
-  const record=safeRecord(records,q.id);
+  const current=safeRecord(records,q.id);
+  const record=latestFinishedRecord(q,current)||current;
   const finished=isQuestionFinished(record,q.marks);
   // A skill can occur in several parts of the same question: use sets
   // to count one question, rather than one occurrence, per skill.
