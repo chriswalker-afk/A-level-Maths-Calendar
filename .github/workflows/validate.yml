@@ -10,13 +10,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install math validation dependencies
+      - name: Install validation dependencies
         run: npm install --ignore-scripts --no-audit --no-fund
-      - name: Check JavaScript syntax
-        run: |
-          node --check src/app.js
-          node --check src/config.js
-          node --check src/data/programmes.js
-          node --check src/data/week01.js
-      - name: Run content and MathJax typesetting tests
-        run: npm test
+      - name: Check JavaScript syntax and run tests
+        run: npm run check
