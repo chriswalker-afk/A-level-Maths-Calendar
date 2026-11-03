@@ -65,7 +65,7 @@ export const week01Questions = [
     "section": "R",
     "title": "Functions and inverses",
     "marks": 2,
-    "minutes": 4,
+    "minutes": 3,
     "ao": {
       "AO1": 2
     },
@@ -93,7 +93,7 @@ export const week01Questions = [
     "section": "R",
     "title": "Algebraic restrictions",
     "marks": 2,
-    "minutes": 4,
+    "minutes": 3,
     "ao": {
       "AO1": 2
     },
@@ -180,7 +180,7 @@ export const week01Questions = [
     "section": "R",
     "title": "Partial fractions",
     "marks": 2,
-    "minutes": 4,
+    "minutes": 3,
     "ao": {
       "AO1": 2
     },
@@ -617,7 +617,7 @@ export const week01Questions = [
       "sampling",
       "estimation"
     ],
-    "stem": "A voluntary survey of 120 students recorded travel time \\(t\\) to school, in minutes. The grouped results are:\n\n| Travel time (min) | \\(0\\le t<10\\) | \\(10\\le t<20\\) | \\(20\\le t<40\\) | \\(40\\le t<70\\) |\n|---|---:|---:|---:|---:|\n| Frequency | 18 | 48 | 36 | 18 |\n\nA histogram would use frequency density on its vertical axis.",
+    "stem": "A voluntary survey of 120 students recorded travel time \\(t\\) to school, in minutes. The grouped results are given in the table. A histogram would use frequency density on its vertical axis.",
     "parts": [
       [
         "Calculate the frequency densities for the classes \\(20\\le t<40\\) and \\(40\\le t<70\\).",
@@ -645,7 +645,26 @@ export const week01Questions = [
     ],
     "answer": "Frequency densities 1.8 and 0.6; estimated median 18.75 minutes; estimated proportion over 30 minutes 30%; with stated modelling and sampling limitations.",
     "misconception": "With unequal class widths, histogram heights must use frequency density, not raw frequency. Estimates inside classes depend on assumptions.",
-    "reflection": "How could a stratified random sample improve the reliability of the conclusion?"
+    "reflection": "How could a stratified random sample improve the reliability of the conclusion?",
+    "table": {
+      "caption": "Travel time to school, voluntary sample of 120 students",
+      "header": [
+        "Travel time (minutes)",
+        "\\(0\\le t<10\\)",
+        "\\(10\\le t<20\\)",
+        "\\(20\\le t<40\\)",
+        "\\(40\\le t<70\\)"
+      ],
+      "rows": [
+        [
+          "Frequency",
+          "18",
+          "48",
+          "36",
+          "18"
+        ]
+      ]
+    }
   },
   {
     "id": "W01-T1",
@@ -748,7 +767,7 @@ export const week01Questions = [
       "statistics",
       "estimation"
     ],
-    "stem": "A sixth form has 240 Year 12 students and 160 Year 13 students. A researcher takes a stratified random sample of 40 students, proportional to year-group size. The sampled students report their journeys to school; grouped distances are:\n\n| Distance \\(d\\) (km) | \\(0\\le d<5\\) | \\(5\\le d<10\\) | \\(10\\le d<20\\) |\n|---|---:|---:|---:|\n| Frequency | 10 | 18 | 12 |",
+    "stem": "A sixth form has 240 Year 12 students and 160 Year 13 students. A researcher takes a stratified random sample of 40 students, proportional to year-group size. The sampled students report their journeys to school; grouped distances appear in the table.",
     "parts": [
       [
         "Determine how many students should be sampled from each year group.",
@@ -776,7 +795,24 @@ export const week01Questions = [
     ],
     "answer": "24 Year 12, 16 Year 13; mean ≈ 8.5 km; median ≈ 7.78 km.",
     "misconception": "Using equal numbers in the two year groups is not proportional stratification.",
-    "reflection": "How could you improve the reliability of the estimates with the same sampling budget?"
+    "reflection": "How could you improve the reliability of the estimates with the same sampling budget?",
+    "table": {
+      "caption": "Journey distance to school, stratified sample of 40 students",
+      "header": [
+        "Distance (km)",
+        "\\(0\\le d<5\\)",
+        "\\(5\\le d<10\\)",
+        "\\(10\\le d<20\\)"
+      ],
+      "rows": [
+        [
+          "Frequency",
+          "10",
+          "18",
+          "12"
+        ]
+      ]
+    }
   },
   {
     "id": "W01-X1",
