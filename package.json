@@ -4,7 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "test": "node --test tests/content.test.mjs",
+    "test": "node --test tests/*.test.mjs",
     "check": "node --check src/app.js && node --check src/data/programmes.js && node --check src/data/week01.js && npm test"
+  },
+  "devDependencies": {
+    "mathjax-full": "3.2.2"
   }
 }
