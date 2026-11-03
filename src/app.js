@@ -261,6 +261,7 @@ function remountHistory(q){
 }
 function routeInfo(){const path=(location.hash||'#/').slice(1).split('/').filter(Boolean);return path}
 function render(){
+  if(mockClockId!==null){window.clearInterval(mockClockId);mockClockId=null;}
   if(disposeWorkspace){disposeWorkspace();disposeWorkspace=null;}
   if(disposeSpecification){disposeSpecification();disposeSpecification=null;}
   if(disposeHistory){disposeHistory();disposeHistory=null;}
@@ -275,11 +276,12 @@ function render(){
     return;
   }
   document.querySelectorAll("[data-nav]").forEach(a=>
-    a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"||top==="home"?"calendar":top)));
+    a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"||top==="home"||top==="mock-review"?"calendar":top)));
   if(top==="home")el.innerHTML=overview();
   else if(top==="calendar")el.innerHTML=calendar();
   else if(top==="week")el.innerHTML=weekPage(Number(p[1]));
   else if(top==="study")el.innerHTML=studyPage(Number(p[1]),p[2]||"R",p[3]||0);
+  else if(top==="mock-review")el.innerHTML=Number(p[1])===10&&released(10)?renderMockReview({questions:allQuestions[10],records:saved,reflections:saved.reflections}):notFound();
   else if(top==="progress")el.innerHTML=progressPage(p[1]||"internal",p[2]||"all");
   else if(top==="specification")disposeSpecification=mountSpecification(el,{scope:p[1]||"internal",topicId:p[2]||null,skillId:p[3]||null,questions:releasedQuestions(),records:saved});
   else if(top==="guide")el.innerHTML=guidePage();
@@ -287,7 +289,7 @@ function render(){
   else el.innerHTML=notFound();
 
   document.title=(top==="home"?"A Level Maths Calendar":
-    top==="study"?"Questions":top==="week"?"Weekly questions":top==="specification"?"My Specification":
+    top==="study"?"Questions":top==="mock-review"?"Mock marking & review":top==="week"?"Weekly questions":top==="specification"?"My Specification":
     top.charAt(0).toUpperCase()+top.slice(1))+" — A Level Maths Calendar";
 
   if(top==="progress"){
@@ -378,6 +380,21 @@ function render(){
       }
     }
   }
+  if(top==="study"&&Number(p[1])===10){
+    const section=p[2];
+    const timer=mockPaperForSection(section)?mockTimerInfo(saved.reflections,section):null;
+    const clock=el.querySelector("#mock-clock");
+    if(timer?.active&&clock){
+      const updateClock=()=>{
+        const info=mockTimerInfo(saved.reflections,section);
+        clock.textContent=formatMockClock(info.remainingSeconds);
+        clock.classList.toggle("mock-clock-expired",info.overtime);
+        clock.setAttribute("aria-label",info.overtime?"Allocated time elapsed":"Time remaining");
+      };
+      updateClock();
+      mockClockId=window.setInterval(updateClock,1000);
+    }
+  }
   typeset();
 }
 window.addEventListener('hashchange',()=>{
@@ -388,6 +405,19 @@ window.addEventListener('hashchange',()=>{
   if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true});}
 });
 document.addEventListener('click',event=>{
+ const timedPaper=event.target.closest("button[data-mock-action]");
+ if(timedPaper){
+   const section=timedPaper.dataset.mockSection;
+   if(released(10)&&mockPaperForSection(section)){
+     const previous=saved.reflections;
+     try{
+       saved.reflections=mockTimerUpdate(saved.reflections||{},section,timedPaper.dataset.mockAction);
+       if(!store()){saved.reflections=previous;return;}
+       render();
+     }catch(err){saved.reflections=previous;console.warn("Unable to change mock sitting",err);}
+   }
+   return;
+ }
  const week=event.target.closest('button[data-week]');if(week){navigate(week.dataset.destination||'#/study/'+week.dataset.week+'/R/0');return}
  const section=event.target.closest('[data-section]');if(section){navigate('#/study/'+section.dataset.week+'/'+section.dataset.section+'/0');return}
  const jump=event.target.closest('[data-jump]');if(jump){const p=routeInfo();navigate('#/study/'+p[1]+'/'+p[2]+'/'+jump.dataset.jump);return}
@@ -396,6 +426,14 @@ document.addEventListener('click',event=>{
  const prev=event.target.closest('#previous,#next');if(prev&&!prev.disabled){const destination=prev.dataset.targetRoute;if(destination)navigate(destination);return;}
 });
 document.addEventListener('input',event=>{
+ const note=event.target.dataset?.mockNote;
+ if(released(10)&&["firstError","repairMethod","reattemptPlan"].includes(note)){
+   saved.reflections??={};saved.reflections.week10??={};saved.reflections.week10.notes??={};
+   saved.reflections.week10.notes[note]=event.target.value;
+   const ok=store(),message=$('#mock-review-save');
+   if(message)message.textContent=ok?"Review notes saved to this browser.":"Could not save these notes. Check browser storage and export a backup.";
+   return;
+ }
  if(['strength','repair','strategy'].includes(event.target.id)){saved.reflections??={};saved.reflections[event.target.id]=event.target.value;store();const msg=$('#reflection-message');if(msg)msg.textContent='Notes saved on this device.'}
 });
 render();
