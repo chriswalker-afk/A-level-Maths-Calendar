@@ -6,9 +6,9 @@ export const week02Applied = [
     "marks": 4,
     "minutes": 8,
     "ao": {
-      "AO1": 3,
-      "AO3": 1
-    },
+    "AO1": 2,
+    "AO3": 2
+  },
     "topics": [
       "mechanics",
       "units",
@@ -46,10 +46,10 @@ export const week02Applied = [
     "marks": 8,
     "minutes": 18,
     "ao": {
-      "AO1": 4,
-      "AO2": 2,
-      "AO3": 2
-    },
+    "AO1": 2,
+    "AO2": 2,
+    "AO3": 4
+  },
     "topics": [
       "mechanics",
       "SUVAT",
@@ -93,10 +93,10 @@ export const week02Applied = [
     "marks": 10,
     "minutes": 22,
     "ao": {
-      "AO1": 3,
-      "AO2": 3,
-      "AO3": 4
-    },
+    "AO1": 2,
+    "AO2": 3,
+    "AO3": 5
+  },
     "topics": [
       "vertical motion",
       "SUVAT",
