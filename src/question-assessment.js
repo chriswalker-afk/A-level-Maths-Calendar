@@ -40,12 +40,13 @@ function assessmentMarkup(question, record) {
     +'<strong>How did you complete this question?</strong>'
     +'<p>Select one. This records whether you needed support, but does <strong>not</strong> mark the question as finished.</p>'
     +'<div class="assessment-choices" role="group" aria-label="How independently did you work?">'
-    +choice("I","Independently","I did not use a hint, notes, the solution or another person.","◇")
-    +choice("P","With help","I used a hint, notes, the solution or someone’s help.","✦")
+    +choice("I","Independently","I worked it out without hints, notes or help during my attempt.","◇")
+    +choice("P","With help","I needed a hint, notes, a worked example or someone’s help during my attempt.","✦")
     +'</div></div></div>'
     +'<div class="finish-step"><div class="finish-number" aria-hidden="true">2</div><div class="finish-step-content">'
     +'<strong>How many marks did you earn?</strong>'
     +'<p>Open the worked solution, check each part and enter your mark. <strong>Entering a mark—including 0—automatically finishes the question.</strong></p>'
+    +'<button type="button" class="btn ghost small finish-review-button" id="mark-view-solution">View the worked solution ↑</button>'
     +'<div class="finish-score-row"><label for="self-mark-input">Your mark</label>'
     +'<input id="self-mark-input" class="finish-score" type="number" min="0" max="'+marks+'" step="1" inputmode="numeric"'
     +' value="'+escapeHtml(score)+'" aria-describedby="self-mark-message">'
@@ -93,6 +94,16 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
       :"No mark entered yet. This question is still in progress.");
     if(typeof onCompletionChange==="function")onCompletionChange(finished);
   }
+  const review=root.querySelector("#mark-view-solution");
+  review.addEventListener("click",()=>{
+    const solution=root.ownerDocument.querySelector("#solution-box");
+    const toggle=root.ownerDocument.querySelector("#solution-toggle");
+    if(solution?.hidden && toggle)toggle.click();
+    if(solution && !solution.hidden){
+      solution.scrollIntoView?.({block:"start",behavior:"smooth"});
+      review.textContent="View worked solution again ↑";
+    }
+  });
   root.querySelectorAll("[data-attempt-support]").forEach(button=>{
     button.addEventListener("click",()=>{
       state.status=button.dataset.attemptSupport;
