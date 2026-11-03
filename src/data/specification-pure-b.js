@@ -34,7 +34,7 @@ export const pureTopicsB=[
   makeTopic("P",7,"Differentiation","Differentiate complex functions, analyse curve behaviour and translate rates of change into conclusions.",[
     {ref:"7.1",skills:[
       ["I can explain a derivative as a gradient and a rate of change.","Interpret a derivative in the context of changing distance, price or volume."],
-      ["I can use first principles to differentiate simple functions.","Derive the gradient function of a quadratic from a limit."],
+      ["I can use first principles to differentiate powers and basic trigonometric functions.","Derive the gradient function of a quadratic or demonstrate a first-principles argument for sine or cosine."],
       ["I can connect the graph of a function with the graph of its derivative.","Sketch a derivative using stationary points and signs of gradient."],
       ["I can use a second derivative to discuss curvature and inflection.","Identify concave/convex intervals and explain a possible inflection point."]
     ]},
@@ -82,7 +82,7 @@ export const pureTopicsB=[
       ["I can find an area under a parametric curve.","Rewrite a parametric area integral in terms of the parameter."]
     ]},
     {ref:"8.4",skills:[
-      ["I can find a volume formed by rotating a region about an axis.","Set up and evaluate a definite integral for a solid of revolution."]
+      ["I can interpret a definite integral as a limit of sums of narrow strips.","Explain why the sum of narrow rectangle areas approaches an exact integral as the width tends to zero."]
     ]},
     {ref:"8.5",skills:[
       ["I can recognise an integrand requiring reverse chain rule or substitution.","Choose a substitution that turns a complicated integral into a standard form."],
@@ -118,7 +118,12 @@ export const pureTopicsB=[
     ]},
     {ref:"9.4",skills:[
       ["I can use the trapezium rule to approximate a definite integral.","Estimate area from equally spaced ordinates or a table of values."],
-      ["I can assess whether a numerical integration estimate is an overestimate or underestimate.","Use the shape of a curve to justify the likely direction of the error."]
+      ["I can assess whether a numerical integration estimate is an overestimate or underestimate.","Use the shape of a curve to justify the likely direction of the error."],
+      ["I can use two numerical estimates to give bounds on a required area.","Determine reasonable upper and lower limits for an area from numerical strips."]
+    ]},
+    {ref:"9.5",skills:[
+      ["I can select a numerical method to answer an equation arising in context.","Explain why a numerical iteration is appropriate when an analytic solution is unavailable."],
+      ["I can interpret the accuracy and limitations of a numerical answer in a model.","State a suitably rounded solution with units and assess how much confidence to place in it."]
     ]}
   ]),
   makeTopic("P",10,"Vectors","Represent magnitude and direction accurately, and use vector reasoning to prove geometry and solve problems.",[
