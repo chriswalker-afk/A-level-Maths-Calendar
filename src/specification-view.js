@@ -116,7 +116,7 @@ function skillCard(skill,scope,report){
    (practice.length>5?'<p class="spec-practice-more">Showing five of '+practice.length+' published questions.</p>':'')
    :'<p>No published questions are tagged to this skill yet. It has not been scored as 0%.</p>')+
  '</div><div class="spec-evidence-note"><span class="spec-evidence-dot" aria-hidden="true"></span>'+
- 'Your scores are stored only in your browser. A whole-question score counts as an attempt but cannot be allocated to one skill without detailed marking.</div></div></details>';
+ 'Your scores are stored only in your browser. A whole-question mark counts as an attempt. For questions with just one part, the mark also belongs precisely to that part’s main skill; multi-part questions need a completed detailed breakdown.</div></div></details>';
 }
 function renderTopic(scope,topicId,report){
  const topic=getSpecTopic(topicId);
