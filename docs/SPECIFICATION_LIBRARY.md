@@ -187,9 +187,27 @@ The file is processed **entirely in the student's browser**. There are no networ
 - \`tests/progress-portability.test.mjs\` verifies round-trip backup content, conflict modes and malformed-file rejection.
 - \`tests/pass4d-student-ui.test.mjs\` exercises actual progress, backup restore, retry controls and updated evidence with local browser storage.
 
+## Week 2 — expanded published evidence
+
+The internal-exam calendar now has **two released weeks** (44 original questions, of which 36 are essential). Every new question part has one immutable **primary skill ID**, with secondary IDs representing related practice only.
+
+Week 2 adds direct question evidence to:
+
+- **P03 Coordinate geometry:** line equations, perpendicularity, circles, tangents and line–circle discriminants.
+- **P10 Vectors:** component arithmetic, magnitudes, unit vectors, displacement/position vectors, ratios and proof.
+- **M06 Quantities and units:** conversions, consistent units and model limitations.
+- **M07 Kinematics:** constant acceleration, sign conventions, distance/displacement, velocity-time graphs, multi-stage and vertical motion.
+- **Spaced earlier skills:** discriminants, quadratic restrictions, optimisation and elementary differentiation where used to justify Week 2 models.
+
+My Progress now shows cumulative completion across **both weeks**, plus a separate six-section record for each released week. My Specification calculates topic and skill evidence from the union of published questions; the self-marked accuracy rules are unchanged. Old Week 1 marks, notes and drawings remain untouched.
+
+The shared `src/publication.js` release gate is used for both calendar access and syllabus practice-link availability. This means changing the manual release count (or later scheduling releases) does not leave hidden exercises accessible through their skill references.
+
+**Week 2 quality checks** include all six section quotas (98 marks essential, 144 marks overall), the core AO1/AO2/AO3 breakdown **26/39/33**, part-by-part tags, MathJax parsing, independent numerical verification of tangency, circular constraints, motion and vector proof, and a browser test that starts Week 2, self-marks, then revisits My Progress and My Specification.
+
 ## Next
 
-**Release Week 2** with original questions, complete worked solutions, AO1/AO2/AO3 allocations and verified part-level specification tags. The same marking, progress, reattempt and backup systems should then work with the second week without special cases.
+**Create Week 3** (trigonometry and periodic models, plus Year 1 probability), with the same standard of original questions, complete solutions, per-part skill tags and evidence-safe publication.
 
 **Complete Weeks 3–10** progressively, keeping future material locked until the intended release date.
 
