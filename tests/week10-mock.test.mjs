@@ -90,7 +90,11 @@ test("timed banner describes locked help and review; user notes are escaped rath
  assert.match(html,/id="mock-clock"/);
  assert.match(html,/100 MARKS/);
  assert.match(html,/hides hints, worked solutions and self-marking/);
- assert.match(html,/#\/mock-review\/10/);
+ assert.doesNotMatch(html,/#\/mock-review\/10/,"Review link stays hidden in timed sitting");
+ const locked=renderMockReview({questions:week10Questions,records:{"W10-P1":{score:4}},reflections:state});
+ assert.match(locked,/Finish the sitting before reviewing/);
+ assert.doesNotMatch(locked,/4 \/ 6/);
+ assert.doesNotMatch(locked,/mock-score-table/);
  const reviewed=renderMockReview({questions:week10Questions,records:{},reflections:{week10:{notes:{
   firstError:'<img src=x onerror="alert(1)">',repairMethod:"Use the derivative",reattemptPlan:"W10-P2"
  }}}});
