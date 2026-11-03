@@ -73,7 +73,7 @@ export const programmeOne = {
       "id": "week-05",
       "title": "Integration and accumulation",
       "subtitle": "Recognise structures before integrating.",
-      "pure": "Reverse chain, substitution, by parts, partial fractions, area, parametric integration, volumes and sums.",
+      "pure": "Reverse chain, substitution, by parts, partial fractions, area, parametric integration and limits of sums.",
       "applied": "Binomial probabilities and hypothesis testing.",
       "challenge": "Accumulation and average-rate model.",
       "hours": [
@@ -98,7 +98,7 @@ export const programmeOne = {
         6
       ],
       "targetMarks": 98,
-      "hasPublishedContent": false
+      "hasPublishedContent": true
     },
     {
       "number": 7,
