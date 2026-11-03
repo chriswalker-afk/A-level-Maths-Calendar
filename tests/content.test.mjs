@@ -5,6 +5,7 @@ import {siteConfig} from '../src/config.js';
 import {week01Questions} from '../src/data/week01.js';
 import {week02Questions} from '../src/data/week02.js';
 import {week03Questions} from '../src/data/week03.js';
+import {week04Questions} from '../src/data/week04.js';
 
 const coreGroups=['R','P','M','A'];
 const expected={
@@ -22,15 +23,17 @@ test('two programmes are distinct and correctly sized',()=>{
  assert.equal(programmeTwo.startDate,'2027-02-01');
  assert.equal(programmeTwo.endDate,'2027-06-16');
 });
-test('exactly Weeks 1–3 are authored and released',()=>{
+test('exactly Weeks 1–4 are authored and released',()=>{
  assert.equal(siteConfig.stage1.releaseMode,'manual');
- assert.equal(siteConfig.stage1.releasedWeeks,3);
+ assert.equal(siteConfig.stage1.releasedWeeks,4);
  assert.ok(programmeOne.weeks[0].hasPublishedContent);
  assert.equal(programmeOne.weeks[1].hasPublishedContent,true);
  assert.equal(programmeOne.weeks[2].hasPublishedContent,true);
- assert.ok(programmeOne.weeks.slice(3).every(w=>!w.hasPublishedContent));
+ assert.equal(programmeOne.weeks[3].hasPublishedContent,true);
+ assert.ok(programmeOne.weeks.slice(4).every(w=>!w.hasPublishedContent));
  assert.equal(week02Questions.length,22);
  assert.equal(week03Questions.length,22);
+ assert.equal(week04Questions.length,22);
  assert.equal(siteConfig.stage2.published,false);
 });
 test('complete four-hour Week 1 core, recommended timed set and optional extension',()=>{
