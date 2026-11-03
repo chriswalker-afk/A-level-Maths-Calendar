@@ -21,6 +21,7 @@
   --editorial-paper: #fffefa;
   --editorial-cream: #f2f0e7;
   --editorial-coral: #f36d4d;
+  --editorial-coral-ink: #c5442c; /* readable coral text on paper */
   --editorial-orange: #f36d4d;
   --editorial-lime: #dcf48a;
   --editorial-cobalt: #2948b9;
@@ -163,6 +164,15 @@ body { accent-color: var(--editorial-cobalt); }
   padding:24px;font:700 12px var(--editorial-font-index);
   color:var(--editorial-ink);
 }
+
+/* Large coral numerals are printed on warm paper rather than dark ink.
+   Use the darker coral only in that context for stronger text contrast. */
+.planner-cell.is-open .planner-cell-number,
+.planner-shortcut-num,.guide-routine-index {
+  color:var(--editorial-coral-ink);
+}
+.planner-cell-flag.future { color:#546664;border-color:#a8b5ad; }
+.planner-cell.is-upcoming h3 { color:#4d605e; }
 
 /* 01 / Question sheet / hints / data */
 .study-workbench .paper.exam-sheet {
