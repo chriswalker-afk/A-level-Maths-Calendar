@@ -1,6 +1,8 @@
 import {siteConfig} from "./config.js";
 import {programmeOne,programmeTwo} from "./data/programmes.js";
 import {week01Questions} from "./data/week01.js";
+import {mountWorkingSpace} from "./working-space.js";
+import {isQuestionFinished,mountQuestionAssessment} from "./question-assessment.js";
 
 const $=s=>document.querySelector(s);
 const el=$('#app');
@@ -9,12 +11,13 @@ const target={R:10,P:3,M:2,A:3,T:3,X:1};
 const essentialSections=new Set(['R','P','M','A']);
 const studyTimes={R:'30 min',P:'70 min',M:'70 min',A:'50 min',T:'45 min + 15 min marking',X:'40 min + 20 min review'};
 const allQuestions={1:week01Questions};
+let disposeWorkspace=null;
 const storageKey=siteConfig.storageKey;
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function read(){try{const s=JSON.parse(localStorage.getItem(storageKey)||'{}');return s&&typeof s==='object'?s:{}}catch{return {}}}
 let saved=read();
 function store(){try{localStorage.setItem(storageKey,JSON.stringify(saved));return true}catch{return false}}
-function completed(q){return saved[q.id]?.status==='I'||saved[q.id]?.status==='P'||saved[q.id]?.status==='S'}
+function completed(q){return isQuestionFinished(saved[q.id],q.marks)}
 function status(q){return saved[q.id]?.status||''}
 function countDone(){return Object.values(allQuestions).flat().filter(q=>essentialSections.has(q.section)&&completed(q)).length}
 function coreQuestions(week){return (allQuestions[week]||[]).filter(q=>essentialSections.has(q.section))}
@@ -49,14 +52,14 @@ function weekPage(n){
  '<div class="progress-grid">'+Object.entries(labels).map(([code,label])=>{const section=qs.filter(q=>q.section===code),scored=section.filter(completed).length;return '<div class="progress-item"><div class="card-head"><span class="eyebrow">'+(essentialSections.has(code)?'ESSENTIAL':code==='T'?'RECOMMENDED':'OPTIONAL')+'</span><span class="pill '+(scored===section.length?'teal':'')+'">'+scored+'/'+section.length+'</span></div><h3>'+esc(label)+'</h3><p>'+time[code]+'</p><div class="meter"><span style="width:'+(100*scored/Math.max(1,section.length))+'%"></span></div><div style="margin-top:14px"><a class="link" href="#/study/'+n+'/'+code+'/0">Open '+esc(label.toLowerCase())+' →</a></div></div>'}).join('')+'</div>'+
  '<div class="banner" style="margin-top:19px"><div><strong>Your four essential hours</strong><p>30 minutes retrieval + 70 connected problems + 70 modelling + 50 Applied + 20 minutes checking. Add the timed set (60 minutes) and, if helpful, extension or targeted repair (60 minutes).</p></div><a class="btn small" href="#/study/'+n+'/R/0">Start Week '+n+' →</a></div></section>';
 }
-function studyPage(n,sec,idx){if(!released(n))return weekPage(n);const qs=(allQuestions[n]||[]).filter(q=>q.section===sec);if(!qs.length){return '<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+'</a><h1>Not yet authored</h1><p>Questions for this section are still in development.</p></section>'}const i=Math.max(0,Math.min(Number(idx)||0,qs.length-1)),q=qs[i];const entry=saved[q.id]||{};const group=Object.entries(sections).map(([code,label])=>'<button type="button" class="tab" role="tab" aria-selected="'+String(sec===code)+'" data-section="'+code+'" data-week="'+n+'">'+label+' ('+(allQuestions[n]||[]).filter(t=>t.section===code).length+'/'+target[code]+')</button>').join('');const nav=qs.map((item,j)=>'<button type="button" data-jump="'+j+'" class="'+(j===i?'active':'')+'"><span class="qid">'+esc(item.id.split('-')[1])+'</span><span>'+esc(item.title)+'</span>'+(completed(item)?'<span aria-label="Marked">✓</span>':'')+'</button>').join('');let result='<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+' overview</a><div class="card-head"><span class="eyebrow">Week '+String(n).padStart(2,'0')+' · '+esc(sections[sec]||sec)+'</span><span class="pill teal">ORIGINAL EXAM-STYLE QUESTION</span></div><h1 class="page-title">Practice with purpose.</h1><p class="intro">Attempt independently first. Use a hint only if needed, compare with the worked solution, and record the marks you actually earned.</p><div class="tabs" role="tablist" aria-label="Question categories">'+group+'</div><div class="study-layout"><aside class="side"><h3>Questions in this section</h3><div class="question-links">'+nav+'</div><div class="line"></div><p class="small muted">4-hour essentials · 1 timed set · 1 optional challenge.</p></aside><article class="paper"><div class="card-head"><span class="pill blue">'+esc(q.id)+'</span><span class="small muted">'+q.marks+' marks · ~'+q.minutes+' min</span></div><h2>'+esc(q.title)+'</h2><p class="stem math">'+mathHtml(q.stem)+'</p>'+questionTable(q.table)+'<ol class="parts">'+q.parts.map((p,j)=>'<li><span class="letter">('+'abcdefgh'[j]+')</span><div class="question-part math">'+mathHtml(p[0])+'</div><span class="marks">['+p[1]+']</span></li>').join('')+'</ol><hr><label class="working-label" for="working">Your working (saved on this device)</label><textarea class="working" id="working" placeholder="Start with your own method…" aria-label="Your mathematical working">'+esc(entry.working||'')+'</textarea><div class="actions" style="margin-top:15px"><button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button><button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div><div id="hint-box" hidden class="helper"><h3>A small nudge</h3><p class="math">'+mathHtml(q.hint)+'</p></div><div id="solution-box" hidden class="helper solution"><h3>Fully worked solution</h3><ol>'+q.steps.map(s=>'<li class="math">'+mathHtml(s)+'</li>').join('')+'</ol><p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p><div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p><p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div><div class="assessment"><h3>Mark your own attempt</h3><p>Compare your mathematical working against the full solution before recording a result. Choose one status.</p><div class="assessment-options">'+[['I','Independent'],['P','Needed a prompt'],['S','Still stuck']].map(a=>'<button type="button" class="'+(entry.status===a[0]?'selected':'')+'" data-status="'+a[0]+'" aria-pressed="'+String(entry.status===a[0])+'">'+a[1]+'</button>').join('')+'</div><div class="form-row"><label for="score">Marks awarded</label><input id="score" type="number" min="0" max="'+q.marks+'" value="'+(Number.isInteger(entry.score)?entry.score:'')+'"><span class="small muted">/ '+q.marks+'</span><label for="error">Main difficulty</label><select id="error"><option value="">Select if relevant…</option>'+['Technique','Method choice','Reasoning','Interpretation','Calculator','Time'].map(x=>'<option value="'+x+'" '+(entry.error===x?'selected':'')+'>'+x+'</option>').join('')+'</select></div><div id="save-message" class="small muted" aria-live="polite" style="margin-top:9px">Progress is saved on this device.</div></div><div class="foot-nav"><button type="button" class="btn ghost small" id="previous" '+(i===0?'disabled':'')+'>← Previous</button><button type="button" class="btn small" id="next" '+(i===qs.length-1?'disabled':'')+'>Next question →</button></div></article></div></section>';return result}
+function studyPage(n,sec,idx){if(!released(n))return weekPage(n);const qs=(allQuestions[n]||[]).filter(q=>q.section===sec);if(!qs.length){return '<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+'</a><h1>Not yet authored</h1><p>Questions for this section are still in development.</p></section>'}const i=Math.max(0,Math.min(Number(idx)||0,qs.length-1)),q=qs[i];const group=Object.entries(sections).map(([code,label])=>'<button type="button" class="tab" role="tab" aria-selected="'+String(sec===code)+'" data-section="'+code+'" data-week="'+n+'">'+label+' ('+(allQuestions[n]||[]).filter(t=>t.section===code).length+'/'+target[code]+')</button>').join('');const nav=qs.map((item,j)=>'<button type="button" data-jump="'+j+'" class="'+(j===i?'active':'')+'"><span class="qid">'+esc(item.id.split('-')[1])+'</span><span>'+esc(item.title)+'</span>'+'<span class="q-complete-indicator" aria-label="Question finished"'+(completed(item)?'':' hidden')+'>✓</span>'+'</button>').join('');let result='<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+' overview</a><div class="card-head"><span class="eyebrow">Week '+String(n).padStart(2,'0')+' · '+esc(sections[sec]||sec)+'</span><span class="pill teal">ORIGINAL EXAM-STYLE QUESTION</span></div><h1 class="page-title">Practice with purpose.</h1><p class="intro">Attempt independently first. Use a hint only if needed, compare with the worked solution, and record the marks you actually earned.</p><div class="tabs" role="tablist" aria-label="Question categories">'+group+'</div><div class="study-layout"><aside class="side"><h3>Questions in this section</h3><div class="question-links">'+nav+'</div><div class="line"></div><p class="small muted">4-hour essentials · 1 timed set · 1 optional challenge.</p></aside><article class="paper"><div class="card-head"><span class="pill blue">'+esc(q.id)+'</span><span class="small muted">'+q.marks+' marks · ~'+q.minutes+' min</span></div><h2>'+esc(q.title)+'</h2><p class="stem math">'+mathHtml(q.stem)+'</p>'+questionTable(q.table)+'<ol class="parts">'+q.parts.map((p,j)=>'<li><span class="letter">('+'abcdefgh'[j]+')</span><div class="question-part math">'+mathHtml(p[0])+'</div><span class="marks">['+p[1]+']</span></li>').join('')+'</ol><hr><div id="question-working-space"></div><div class="actions" style="margin-top:15px"><button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button><button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div><div id="hint-box" hidden class="helper"><h3>A small nudge</h3><p class="math">'+mathHtml(q.hint)+'</p></div><div id="solution-box" hidden class="helper solution"><h3>Fully worked solution</h3><ol>'+q.steps.map(s=>'<li class="math">'+mathHtml(s)+'</li>').join('')+'</ol><p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p><div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p><p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div><div id="question-assessment"></div><div class="foot-nav"><button type="button" class="btn ghost small" id="previous" '+(i===0?'disabled':'')+'>← Previous</button><button type="button" class="btn small" id="next" '+(i===qs.length-1?'disabled':'')+'>Next question →</button></div></article></div></section>';return result}
 function progressPage(){
  const qs=week01Questions,core=coreQuestions(1),attempts=qs.filter(completed),coreAttempts=core.filter(completed);
  const scored=attempts.filter(q=>Number.isInteger(saved[q.id]?.score));
  const total=scored.reduce((s,q)=>s+saved[q.id].score,0),available=scored.reduce((s,q)=>s+q.marks,0);
- const priority=qs.filter(q=>status(q)==='S').concat(qs.filter(q=>status(q)==='P')).slice(0,5);
- return '<section class="page"><span class="eyebrow">Your independent study record</span><h1 class="page-title">My progress</h1><p class="intro">Self-assessed scores and reflection notes live in this browser only. They are not teacher-verified and do not sync across devices.</p><div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong><span>core questions</span></div><div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>status(q)==='I').length+'</strong><span>questions marked I</span></div><div class="metric"><span>NEEDED SUPPORT</span><strong>'+attempts.filter(q=>status(q)==='P').length+'</strong><span>questions marked P</span></div><div class="metric"><span>REQUIRES RETRY</span><strong>'+attempts.filter(q=>status(q)==='S').length+'</strong><span>questions marked S</span></div></div>'+
- heading('Your question record','Revisit the first mistake, not every page')+'<div class="progress-grid">'+Object.entries(sections).map(([code,label])=>{const set=qs.filter(q=>q.section===code),done=set.filter(completed).length;return '<div class="progress-item"><span class="eyebrow">'+code+' · '+esc(label)+'</span><h3>'+done+' / '+set.length+' attempts marked</h3><div class="meter"><span style="width:'+(100*done/(set.length||1))+'%"></span></div><p style="margin-top:10px">'+(essentialSections.has(code)?'Included in the four essential hours.':'Recommended or optional beyond the four essential hours.')+'</p><a class="link" href="#/study/1/'+code+'/0">Open practice →</a></div>'}).join('')+'</div>'+
+ const priority=qs.filter(q=>completed(q)&&(status(q)==='P'||status(q)==='S'||saved[q.id].score<q.marks)).slice(0,5);
+ return '<section class="page"><span class="eyebrow">Your independent study record</span><h1 class="page-title">My progress</h1><p class="intro">Self-assessed scores and reflection notes live in this browser only. They are not teacher-verified and do not sync across devices.</p><div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong><span>core questions</span></div><div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>status(q)==='I').length+'</strong><span>finished on own</span></div><div class="metric"><span>WITH HELP</span><strong>'+attempts.filter(q=>status(q)==='P').length+'</strong><span>marked with help</span></div><div class="metric"><span>CORE REMAINING</span><strong>'+(core.length-coreAttempts.length)+'</strong><span>essential questions still to mark</span></div></div>'+
+ heading('Your question record','A valid mark is what makes a question finished')+'<div class="progress-grid">'+Object.entries(sections).map(([code,label])=>{const set=qs.filter(q=>q.section===code),done=set.filter(completed).length;return '<div class="progress-item"><span class="eyebrow">'+code+' · '+esc(label)+'</span><h3>'+done+' / '+set.length+' attempts marked</h3><div class="meter"><span style="width:'+(100*done/(set.length||1))+'%"></span></div><p style="margin-top:10px">'+(essentialSections.has(code)?'Included in the four essential hours.':'Recommended or optional beyond the four essential hours.')+'</p><a class="link" href="#/study/1/'+code+'/0">Open practice →</a></div>'}).join('')+'</div>'+
  (priority.length?heading('Your next targeted reattempts','Questions needing repair')+'<div class="panel"><div class="tag-row">'+priority.map(q=>'<a class="pill '+(status(q)==='S'?'amber':'blue')+'" href="#/study/1/'+q.section+'/'+qs.filter(i=>i.section===q.section).findIndex(i=>i.id===q.id)+'">'+esc(q.id)+' · '+esc(q.title)+'</a>').join('')+'</div><p class="small muted" style="margin-top:12px">Attempt a fresh solution without your old working. Review the first uncertain step and compare again.</p></div>':'')+
  heading('My revision notes','Make your next action specific')+'<div class="panel"><div class="reflection-row"><label for="strength">A method I can now use independently</label><textarea id="strength" class="reflection" placeholder="For example: I check the domain before solving a composite inequality…">'+esc(saved.reflections?.strength||'')+'</textarea></div><div class="reflection-row"><label for="repair">My next misconception to repair</label><textarea id="repair" class="reflection" placeholder="Name the exact step to practise…">'+esc(saved.reflections?.repair||'')+'</textarea></div><div class="reflection-row"><label for="strategy">My strategy for an unfamiliar question</label><textarea id="strategy" class="reflection" placeholder="What will you do when you are unsure where to begin?">'+esc(saved.reflections?.strategy||'')+'</textarea></div><p id="reflection-message" class="small muted">Notes save automatically in this browser.</p></div>'+
  '<div class="panel" style="margin-top:16px"><h3>Recorded self-marks</h3><p>'+(scored.length?total+' / '+available+' available marks across '+scored.length+' scored questions.':'No numerical scores recorded yet. Use the mark scheme to self-award marks after attempting a question.')+' The I / P / S rating measures independence, not just whether the final answer is correct.</p></div></section>';
@@ -65,7 +68,70 @@ function guidePage(){return '<section class="page"><span class="eyebrow">A thoug
 function finalPage(){return '<section class="page"><a class="back" href="#/">← Overview</a><span class="eyebrow">Programme 02 · Future expansion</span><h1 class="page-title">The road to the final papers.</h1><p class="intro">A planned 20-week full-course programme from 1 February to 16 June 2027, including Year 2 Statistics and Mechanics, synoptic questions and timed examinations. Question packs are not published yet.</p><div class="banner"><div><strong>The same study system, a wider syllabus</strong><p>Your internal-exam programme stays separate. The future stage can reuse tagged questions and build upon the same progress model.</p></div><span class="pill">PLANNED ONLY</span></div>'+heading('Five phases','1 February – 16 June 2027')+'<div class="phases">'+programmeTwo.phases.map(p=>'<div class="phase"><span class="eyebrow">WEEKS '+p.start+'–'+p.end+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.theme)+'</p></div>').join('')+'</div>'+heading('Official 2027 dates','Pearson timetable · Afternoon session')+programmeTwo.exams.map(x=>{const d=new Date(x.date+'T12:00:00Z');const day=d.toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});return '<div class="exam"><div class="exam-date"><strong>'+day.split(' ')[0]+'</strong>'+day.split(' ')[1].toUpperCase()+'</div><div><strong>'+esc(x.name)+'</strong><p>'+esc(x.code)+' · Wednesday '+esc(x.date)+' · '+esc(x.session)+' · '+esc(x.duration)+'</p></div></div>'}).join('')+'<div class="warning" style="margin-top:18px">These are the published Pearson GCE paper dates. School-specific local start times in Brunei must be confirmed separately. Papers 1 and 2 can both test the entire Pure syllabus.</div></section>'}
 function notFound(){return '<section class="page"><h1>Page not found</h1>'+buttonLink('#/','Return home')+'</section>'}
 function routeInfo(){const path=(location.hash||'#/').slice(1).split('/').filter(Boolean);return path}
-function render(){const p=routeInfo();const top=p[0]||'home';document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===(top==='week'||top==='study'?'calendar':top)));if(top==='home')el.innerHTML=overview();else if(top==='calendar')el.innerHTML=calendar();else if(top==='week')el.innerHTML=weekPage(Number(p[1]));else if(top==='study')el.innerHTML=studyPage(Number(p[1]),p[2]||'R',p[3]||0);else if(top==='progress')el.innerHTML=progressPage();else if(top==='guide')el.innerHTML=guidePage();else if(top==='final')el.innerHTML=finalPage();else el.innerHTML=notFound();document.title=(top==='home'?'A Level Maths Calendar':top==='study'?'Practice':top==='week'?'Weekly overview':top.charAt(0).toUpperCase()+top.slice(1))+' — A Level Maths Calendar';typeset();}
+function render(){
+  if(disposeWorkspace){disposeWorkspace();disposeWorkspace=null;}
+  const p=routeInfo();
+  const top=p[0]||"home";
+  document.querySelectorAll("[data-nav]").forEach(a=>
+    a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"?"calendar":top)));
+  if(top==="home")el.innerHTML=overview();
+  else if(top==="calendar")el.innerHTML=calendar();
+  else if(top==="week")el.innerHTML=weekPage(Number(p[1]));
+  else if(top==="study")el.innerHTML=studyPage(Number(p[1]),p[2]||"R",p[3]||0);
+  else if(top==="progress")el.innerHTML=progressPage();
+  else if(top==="guide")el.innerHTML=guidePage();
+  else if(top==="final")el.innerHTML=finalPage();
+  else el.innerHTML=notFound();
+
+  document.title=(top==="home"?"A Level Maths Calendar":
+    top==="study"?"Practice":top==="week"?"Weekly overview":
+    top.charAt(0).toUpperCase()+top.slice(1))+" — A Level Maths Calendar";
+
+  if(top==="study"){
+    const week=Number(p[1]),section=p[2]||"R",index=Number(p[3]||0);
+    const items=(allQuestions[week]||[]).filter(q=>q.section===section);
+    const q=items[Math.max(0,Math.min(index,items.length-1))];
+    const mount=el.querySelector("#question-working-space");
+    if(q&&mount&&released(week)){
+      disposeWorkspace=mountWorkingSpace(mount,{
+        initial:saved[q.id]?.workspace,
+        legacyWorking:saved[q.id]?.working||"",
+        questionId:q.id,
+        onChange(workspace){
+          saved[q.id]??={};
+          saved[q.id].workspace=workspace;
+          // Preserve the old plain-text field for backwards compatibility.
+          saved[q.id].working=workspace.notes;
+          return store();
+        }
+      });
+    }
+    const assessment=el.querySelector("#question-assessment");
+    if(q&&assessment&&released(week)){
+      mountQuestionAssessment(assessment,{
+        question:q,
+        record:saved[q.id]||{},
+        onChange(marking){
+          const current=saved[q.id]||{};
+          // Do not overwrite newer working-space strokes or maths lines.
+          if(marking.status==="I"||marking.status==="P")current.status=marking.status;
+          if(typeof marking.error==="string")current.error=marking.error;
+          if(Object.hasOwn(marking,"score"))current.score=marking.score;
+          else delete current.score;
+          saved[q.id]=current;
+          return store();
+        },
+        onCompletionChange(finished){
+          const jump=el.querySelector('[data-jump="'+Math.max(0,Math.min(index,items.length-1))+'"]');
+          const indicator=jump?.querySelector(".q-complete-indicator");
+          if(indicator)indicator.hidden=!finished;
+          jump?.classList.toggle("finished",finished);
+        }
+      });
+    }
+  }
+  typeset();
+}
 window.addEventListener('hashchange',()=>{render();window.scrollTo({top:0,behavior:'instant'})});
 document.addEventListener('click',event=>{
  const week=event.target.closest('[data-week]');if(week){navigate('#/week/'+week.dataset.week);return}
@@ -73,11 +139,9 @@ document.addEventListener('click',event=>{
  const jump=event.target.closest('[data-jump]');if(jump){const p=routeInfo();navigate('#/study/'+p[1]+'/'+p[2]+'/'+jump.dataset.jump);return}
  const hint=event.target.closest('#hint-toggle');if(hint){const box=$('#hint-box');box.hidden=!box.hidden;hint.setAttribute('aria-expanded',String(!box.hidden));hint.textContent=box.hidden?'Show first-step hint':'Hide first-step hint';if(!box.hidden){const p=routeInfo(),q=(allQuestions[Number(p[1])]||[]).filter(q=>q.section===p[2])[Number(p[3])||0];if(q){saved[q.id]??={};saved[q.id].hintSeen=true;store()}}return}
  const solution=event.target.closest('#solution-toggle');if(solution){const box=$('#solution-box');box.hidden=!box.hidden;solution.setAttribute('aria-expanded',String(!box.hidden));solution.textContent=box.hidden?'Show worked solution':'Hide worked solution';if(!box.hidden)typeset();return}
- const stat=event.target.closest('[data-status]');if(stat){const p=routeInfo(),q=(allQuestions[Number(p[1])]||[]).filter(q=>q.section===p[2])[Number(p[3])||0];if(!q)return;saved[q.id]??={};saved[q.id].status=stat.dataset.status;const sc=$('#score');if(sc?.value!=='')saved[q.id].score=Number(sc.value);saved[q.id].error=$('#error')?.value||'';store();document.querySelectorAll('[data-status]').forEach(x=>{x.classList.toggle('selected',x===stat);x.setAttribute('aria-pressed',String(x===stat))});$('#save-message').textContent='Status saved on this device.';return}
  const prev=event.target.closest('#previous,#next');if(prev){const p=routeInfo(),n=Number(p[3]||0)+(prev.id==='next'?1:-1);navigate('#/study/'+p[1]+'/'+p[2]+'/'+n);}
 });
 document.addEventListener('input',event=>{
- if(event.target.id==='working'||event.target.id==='score'||event.target.id==='error'){const p=routeInfo();if(p[0]!=='study')return;const q=(allQuestions[Number(p[1])]||[]).filter(x=>x.section===p[2])[Number(p[3])||0];if(!q)return;saved[q.id]??={};if(event.target.id==='working')saved[q.id].working=event.target.value;if(event.target.id==='score'){const v=event.target.value;if(v!==''){saved[q.id].score=Math.min(q.marks,Math.max(0,Number(v)))}else delete saved[q.id].score}if(event.target.id==='error')saved[q.id].error=event.target.value;store();const msg=$('#save-message');if(msg)msg.textContent='Saved on this device.'}
  if(['strength','repair','strategy'].includes(event.target.id)){saved.reflections??={};saved.reflections[event.target.id]=event.target.value;store();const msg=$('#reflection-message');if(msg)msg.textContent='Notes saved on this device.'}
 });
 render();

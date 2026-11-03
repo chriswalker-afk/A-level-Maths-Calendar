@@ -63,9 +63,32 @@ Edit `src/config.js`: the default is `stage1.releaseMode = "manual"` with `relea
 
 Future-week topics may be previewed but **unreleased question files must not be bundled in the public website**. Merely hiding a loaded JavaScript question object with a browser lock is not a secure embargo.
 
-## Student progress and privacy
+## Student working space (Pass 3)
 
-Students self-mark against full working. The website records an honest **I / P / S** status (Independent / Needed a prompt / Still stuck), manually awarded marks, an error category and study reflections. These are stored **only in local browser storage** and do not sync between students or devices. Clearing browser data may remove them.
+Each question offers three complementary working modes. All three remain saved when switching tabs or navigating away from the question.
+
+- **Notes** is the original free-text scratchpad. Previously saved text is migrated without loss.
+- **Maths steps** is a line-by-line editor using a touch-friendly [MathLive](https://mathlive.io/mathlive/) mathematical keyboard (pinned CDN version). Students can enter fractions, indices, roots, inequalities and integrals without writing LaTeX manually; they can insert/remove lines and annotate each mathematical step. If MathLive cannot load, plain LaTeX entry with a MathJax preview remains available.
+- **Draw** supports mouse, finger and stylus using a resolution-independent vector drawing canvas. There are three ink colours, three widths, an optional grid, pen/eraser tools, undo/redo, a clear confirmation and PNG export. Content is saved per question.
+
+The working modes keep data separately within the same question's record. Work is not uploaded to a server, graded automatically or shared with teachers. An **Expand space** control gives extra room for longer solutions and diagrams.
+
+## Question completion and self-marking (Pass 3)
+
+At the end of each question, students follow two clearly numbered steps:
+
+1. **How did you complete it?** Select **Independently** or **With help** to record how they worked **during the attempt**, before reading the solution.
+2. **How many marks did you earn?** Open the full worked solution and enter a whole-number score, from **0** to the question's available marks.
+
+**Completion is determined exclusively by entering a valid mark.** Zero is a valid mark and means the question is finished; merely choosing an independence option never completes a question. Students may clear their mark to set the question back to "Not yet finished." Entering an invalid/out-of-range score does not count.
+
+The progress dashboard and sidebar ticks use this score-based completion rule. Independence/help is recorded separately to help students reflect. Previous I/P/S data remains readable; older "Still stuck" statuses are preserved, but they do not make a question finished without a score.
+
+An optional error category and study reflections help guide reattempts.
+
+## Student data and privacy
+
+Working, drawing strokes, self-awarded marks and reflections live **only in local browser storage**. They do not automatically sync between students or devices. Clearing browser data may remove them; saved drawings can also be exported as PNG. Students should not treat a local-browser save as a permanent backup.
 
 ## Source layout
 
@@ -74,9 +97,12 @@ Students self-mark against full working. The website records an honest **I / P /
 - `src/data/programmes.js`: week titles, curricula and 2027 final programme preview.
 - `src/data/week01.js`: completed Week 1 content, including T and X extension sections.
 - `src/app.js`: calendar, question navigator, MathJax typesetting, solutions and progress tracking.
+- `src/working-state.js`, `src/working-space.js`, `src/workspace-maths.js`, `src/workspace-drawing.js`: working modes and local persistence.
+- `src/question-assessment.js`: score-driven completion, clear independence/help reporting and self-marking.
 - `styles.css`: responsive design, math layout and print styling.
 - `tests/content.test.mjs`: content, maths delimiters, AO marks and time audits.
 - `tests/math-render.test.mjs`: MathJax parse tests against all authored equations.
+- `tests/working-state.test.mjs`, `tests/working-ui.test.mjs`, `tests/question-assessment.test.mjs`: working space and scoring UI regressions.
 
 ## Next passes
 
