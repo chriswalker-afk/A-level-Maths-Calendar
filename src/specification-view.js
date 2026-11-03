@@ -182,7 +182,7 @@ export function mountSpecification(root,{scope="internal",topicId=null,skillId=n
  }
  function onToggle(event){
   if(!event.target.open||!(event.target.matches?.(".spec-skill")))return;
-  const jax=window.MathJax;
+  const jax=event.target.ownerDocument.defaultView?.MathJax;
   if(typeof jax?.typesetPromise==="function")
    jax.typesetPromise([event.target]).catch(()=>{});
  }
