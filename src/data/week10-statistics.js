@@ -8,6 +8,7 @@ export const week10Statistics = [
     "minutes": 5,
     "ao": {
       "AO1": 2,
+      "AO2": 0,
       "AO3": 2
     },
     "topics": [
@@ -43,8 +44,9 @@ export const week10Statistics = [
     "marks": 5,
     "minutes": 6,
     "ao": {
-      "AO1": 2,
-      "AO2": 3
+      "AO1": 3,
+      "AO2": 1,
+      "AO3": 1
     },
     "topics": [
       "histogram frequency density",
@@ -84,8 +86,9 @@ export const week10Statistics = [
     "marks": 6,
     "minutes": 7,
     "ao": {
-      "AO1": 2,
-      "AO2": 4
+      "AO1": 3,
+      "AO2": 2,
+      "AO3": 1
     },
     "topics": [
       "probability union",
@@ -125,8 +128,9 @@ export const week10Statistics = [
     "marks": 5,
     "minutes": 6,
     "ao": {
-      "AO1": 3,
-      "AO2": 2
+      "AO1": 4,
+      "AO2": 0,
+      "AO3": 1
     },
     "topics": [
       "binomial distribution",
@@ -168,8 +172,8 @@ export const week10Statistics = [
     "minutes": 6,
     "ao": {
       "AO1": 2,
-      "AO2": 1,
-      "AO3": 2
+      "AO2": 0,
+      "AO3": 3
     },
     "topics": [
       "one-tailed binomial hypothesis test",
