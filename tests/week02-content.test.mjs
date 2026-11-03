@@ -24,9 +24,9 @@ const close=(a,b,eps=1e-8)=>Math.abs(a-b)<=eps;
 const slash=String.fromCharCode(92);
 const texOpen=slash+"(",texClose=slash+")";
 
-test("Weeks 1–9 are published and no unauthored future weeks are exposed",()=>{
+test("Weeks 1–10 are published and no unauthored future weeks are exposed",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,9);
+ assert.equal(siteConfig.stage1.releasedWeeks,10);
  assert.equal(programmeOne.weeks[0].hasPublishedContent,true);
  assert.equal(programmeOne.weeks[1].hasPublishedContent,true);
  assert.equal(programmeOne.weeks[2].hasPublishedContent,true);
@@ -36,7 +36,8 @@ test("Weeks 1–9 are published and no unauthored future weeks are exposed",()=>
  assert.equal(programmeOne.weeks[6].hasPublishedContent,true);
  assert.equal(programmeOne.weeks[7].hasPublishedContent,true);
  assert.equal(programmeOne.weeks[8].hasPublishedContent,true);
- assert.equal(programmeOne.weeks.slice(9).every(w=>!w.hasPublishedContent),true);
+ assert.equal(programmeOne.weeks[9].hasPublishedContent,true);
+ assert.equal(programmeOne.weeks.slice(10).every(w=>!w.hasPublishedContent),true);
  assert.equal(siteConfig.stage2.published,false);
 });
 test("Week 2 meets every section's count, mark and time envelope",()=>{
