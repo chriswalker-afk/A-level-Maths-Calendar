@@ -100,16 +100,21 @@ function studyPage(n,sec,idx){
  const next=adjacentQuestionRoute(n,all,sec,i,1);
  const nextSection=next?.split("/")[3]!==sec;
  const previousSection=prev?.split("/")[3]!==sec;
- const sectionNav=renderSectionNavigation({week:n,section:sec,questions:all,isFinished:everCompleted});
- const questionNav=renderQuestionIndex({section:sec,questions:qs,index:i,isFinished:completed,
+ const mock=n===10&&Boolean(mockPaperForSection(sec));
+ const timed=mock&&mockTimerInfo(saved.reflections,sec).active;
+ const sectionNav=renderSectionNavigation({week:n,section:sec,questions:all,
+   isFinished:timed?()=>false:everCompleted,
+   labels:mock?{P:"Pure mock · 100 marks",A:"Applied mini-mock · 50 marks"}:undefined});
+ const questionNav=renderQuestionIndex({section:sec,questions:qs,index:i,isFinished:timed?()=>false:completed,
    isRetrying:item=>hasNewAttemptInProgress(item,saved[item.id]||{})});
  const marked=all.filter(everCompleted).length;
  return '<section class="page study-page">'+
  '<header class="study-header"><a class="study-back" href="#/calendar">← CALENDAR</a>'+
- '<div class="study-header-title"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+' / INTERNAL EXAM</span>'+
+ '<div class="study-header-title"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+(mock?' / ORIGINAL MOCK':' / INTERNAL EXAM')+'</span>'+
  '<h1>'+esc(week.title)+'</h1></div>'+
  '<div class="study-header-progress"><strong>'+marked+'<span>/'+all.length+'</span></strong>'+
  '<small>QUESTIONS MARKED</small></div></header>'+
+ (mock?renderMockPaperBanner({section:sec,questions:all,records:saved,reflections:saved.reflections}):"")+
  sectionNav+
  '<div class="study-layout study-workbench">'+questionNav+
  '<article class="paper exam-sheet">'+
@@ -126,6 +131,7 @@ function studyPage(n,sec,idx){
   '<div class="question-part math">'+mathHtml(part[0])+'</div>'+
   '<span class="marks">['+part[1]+']</span></li>').join('')+'</ol>'+
  '<hr><div id="question-working-space"></div>'+
+ (timed?'<div class="mock-exam-lock" role="note"><strong>Exam conditions are active.</strong><p>Hints, worked solutions, specification links, marks and attempt history are hidden while the timed paper is running. Your working is saved automatically. Use <strong>Finish timed paper</strong> above to unlock marking and review.</p></div>':
  '<div class="actions" style="margin-top:15px">'+
  '<button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button>'+
  '<button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div>'+
@@ -136,7 +142,7 @@ function studyPage(n,sec,idx){
   '<div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p>'+
   '<p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div>'+
  relatedSkillsMarkup(q)+
- '<div id="question-assessment"></div><div id="attempt-history-root"></div>'+
+ '<div id="question-assessment"></div><div id="attempt-history-root"></div>')+
  '<div class="foot-nav">'+
  '<button type="button" class="btn ghost small" id="previous"'+(prev?' data-target-route="'+prev+'"':' disabled')+'>'+
    (previousSection?'← Previous section':'← Previous question')+'</button>'+
