@@ -101,11 +101,13 @@ export const pureTopicsA=[
     ]},
     {ref:"4.4",skills:[
       ["I can find the nth term and sum of an arithmetic progression.","Find how many payments are needed to reach a savings target."],
-      ["I can use information about an arithmetic series to find missing parameters.","Determine the first term and common difference from two conditions."]
+      ["I can use information about an arithmetic series to find missing parameters.","Determine the first term and common difference from two conditions."],
+      ["I can prove the sum formula for an arithmetic progression.","Pair the terms from opposite ends to justify the formula for the first n terms."]
     ]},
     {ref:"4.5",skills:[
       ["I can find terms and finite sums of a geometric progression.","Find a geometric ratio and a specified partial sum."],
-      ["I can identify when an infinite geometric sum exists and calculate it.","Explain why a proposed infinite sum is invalid if the ratio is too large."]
+      ["I can identify when an infinite geometric sum exists and calculate it.","Explain why a proposed infinite sum is invalid if the ratio is too large."],
+      ["I can prove the sum formula for a finite geometric progression.","Subtract the original sum from the sum multiplied by the common ratio."]
     ]},
     {ref:"4.6",skills:[
       ["I can model repeated additions or repeated proportional changes with a series.","Compare a fixed annual payment model with one that grows by a percentage."],
@@ -138,6 +140,7 @@ export const pureTopicsA=[
     ]},
     {ref:"5.6",skills:[
       ["I can use compound-angle formulae to expand and simplify expressions.","Find an exact value of the sine or cosine of a sum of angles."],
+      ["I can explain a geometrical proof of a compound-angle formula.","Construct an argument relating projections in a diagram to the sine or cosine addition formula."],
       ["I can apply double-angle identities in algebraic and trigonometric problems.","Rewrite a squared trig expression using a double angle."],
       ["I can rewrite a linear combination of sine and cosine as a single shifted function.","Express a sine-plus-cosine model in the form \\(R\\sin(\\theta+\\alpha)\\)."]
     ]},
