@@ -61,7 +61,7 @@ function renderGroups(scope,report){
  for(const strand of strandOrder){
   const slice=entries.filter(e=>e.topic.strand===strand);
   if(!slice.length)continue;
-  html+='<section class="spec-group"><div class="spec-group-title"><div><span class="eyebrow">'+escape(STRANDS[strand].paper)+'</span><h2>'+escape(STRANDS[strand].name)+'</h2></div>'+
+  html+='<section class="spec-group" data-spec-strand="'+strand+'"><div class="spec-group-title"><div><span class="eyebrow">'+escape(STRANDS[strand].paper)+'</span><h2>'+escape(STRANDS[strand].name)+'</h2></div>'+
   '<span class="spec-group-count">'+slice.length+' topic'+(slice.length===1?'':'s')+'</span></div>'+
   '<div class="spec-topic-grid">'+slice.map(entry=>topicCard(entry,scope,searchTerm,report)).join('')+'</div></section>';
  }
