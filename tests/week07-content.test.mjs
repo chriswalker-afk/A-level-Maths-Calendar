@@ -27,7 +27,7 @@ test("exactly eight complete weeks publish, without permitting Week 9 or Year 2"
  assert.equal(siteConfig.stage1.releaseMode,"manual");
  assert.equal(siteConfig.stage1.releasedWeeks,8);
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
- assert.ok(programmeOne.weeks.slice(0,8.every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(0,8).every(w=>w.hasPublishedContent));
  assert.ok(programmeOne.weeks.slice(8).every(w=>!w.hasPublishedContent));
  assert.ok(isWeekReleased(7,taggedWeek07Questions));
  assert.equal(isWeekReleased(9,taggedWeek07Questions),false,"Metadata, not just question presence, must gate release");
