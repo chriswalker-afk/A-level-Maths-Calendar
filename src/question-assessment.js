@@ -142,35 +142,103 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
       persist();
     });
   });
+  const detail=root.querySelector("#mark-by-parts");
+  const partInputs=[...root.querySelectorAll("[data-part-mark]")];
+  const detailSummary=root.querySelector("#detail-part-summary");
+  const detailInfo=root.querySelector("#detail-part-info");
+
+  function replaceMarkState(next){
+    for(const key of ["score","scoreSource","partMarks"])delete state[key];
+    for(const key of ["score","scoreSource","partMarks"])
+      if(Object.prototype.hasOwnProperty.call(next,key))state[key]=next[key];
+  }
+  function refreshDetailed(message=""){
+    if(!detail)return;
+    const result=marksBreakdown(question,state.partMarks);
+    const derived=state.scoreSource==="parts";
+    score.readOnly=derived||detail.open;
+    score.setAttribute("aria-readonly",String(score.readOnly));
+    if(derived)score.title="This total is calculated from the individual parts. Edit those parts or clear the breakdown.";
+    else if(detail.open)score.title="Close detailed marking to edit the overall total.";
+    else score.removeAttribute("title");
+    if(detailSummary)
+      detailSummary.textContent=result.entered+" / "+result.count+" parts marked · subtotal "+result.subtotal+" / "+question.marks;
+    if(detailInfo){
+      detailInfo.textContent=message||
+        (result.complete&&derived?"All parts marked. The total has been calculated automatically.":
+         isQuestionFinished(state,question.marks)&&!derived
+          ?"Your previous overall mark stays recorded until you finish the part breakdown."
+          :"Fill in every part (including 0s) to calculate a total and finish.");
+    }
+  }
+  function refreshMark(message="",invalid=false){
+    const finished=isQuestionFinished(state,question.marks);
+    score.value=finished?String(state.score):"";
+    updateCompletion(message);
+    markMessage.classList.toggle("mark-error",invalid);
+    refreshDetailed();
+  }
   function readMark(){
-    const raw=score.value.trim();
-    if(raw===""){
-      delete state.score;
-      persist();updateCompletion();
-      return;
-    }
-    const value=Number(raw);
-    if(!Number.isInteger(value)||value<0||value>question.marks){
-      delete state.score;
-      persist();
-      updateCompletion("Enter a whole number from 0 to "+question.marks+" to finish this question.");
-      markMessage.classList.add("mark-error");
-      return;
-    }
-    state.score=value;
-    persist();updateCompletion();
+    if(score.readOnly)return;
+    const {record:next,invalid}=applyOverallMark(state,question,score.value);
+    replaceMarkState(next);
+    // A manual total deliberately supersedes partial marks.
+    for(const input of partInputs)input.value="";
+    persist();
+    refreshMark(invalid
+      ?"Enter a whole number from 0 to "+question.marks+" to finish this question.":"",invalid);
   }
   score.addEventListener("input",readMark);
   score.addEventListener("change",readMark);
+
+  for(const input of partInputs){
+    input.addEventListener("input",()=>{
+      const key=input.dataset.partMark;
+      const {record:next,summary,invalid}=applyPartMark(state,question,key,input.value);
+      replaceMarkState(next);
+      input.setAttribute("aria-invalid",String(invalid));
+      persist();
+      const message=invalid
+        ?"Enter a whole number between 0 and "+input.max+" for part ("+key+")."
+        :summary.complete
+          ?"All parts marked. Total: "+summary.subtotal+" out of "+question.marks+". Question finished."
+          :summary.entered+" of "+summary.count+" parts marked. Finish every part to calculate the total.";
+      refreshMark(
+        invalid?message:
+        summary.complete?"All parts marked. The question is finished.":"",
+        invalid
+      );
+      if(detailInfo)detailInfo.textContent=message;
+      if(invalid&&detailInfo)detailInfo.classList.add("mark-error");
+      else detailInfo?.classList.remove("mark-error");
+    });
+  }
+  detail?.addEventListener("toggle",()=>refreshDetailed());
+  detail?.querySelector("#clear-part-breakdown")?.addEventListener("click",()=>{
+    const next=clearBreakdown(state);
+    replaceMarkState(next);
+    for(const input of partInputs){
+      input.value="";
+      input.removeAttribute("aria-invalid");
+    }
+    persist();
+    refreshMark();
+  });
   clear.addEventListener("click",()=>{
+    replaceMarkState(clearAllMarks(state));
     score.value="";
-    delete state.score;
-    persist();updateCompletion();
-    score.focus();
+    for(const input of partInputs){
+      input.value="";
+      input.removeAttribute("aria-invalid");
+    }
+    persist();refreshMark();
+    if(detail&&!detail.open)score.focus();
+    else partInputs[0]?.focus();
   });
   root.querySelector("#self-error").addEventListener("change",event=>{
     state.error=event.target.value;
     persist();
   });
   updateCompletion();
+  refreshDetailed();
 }
