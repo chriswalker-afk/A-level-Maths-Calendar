@@ -11,12 +11,12 @@ import {calculateSpecificationProgress} from "../src/specification-analytics.js"
 import {recommendRevision} from "../src/revision-recommendations.js";
 
 const groups={
- R:{n:10,marks:20,minutes:30},
- P:{n:3,marks:30,minutes:70},
- M:{n:2,marks:26,minutes:70},
- A:{n:3,marks:22,minutes:50},
- T:{n:3,marks:32,minutes:45},
- X:{n:1,marks:14,minutes:40}
+ R:{n:10,marks:20,minutes:24},
+ P:{n:7,marks:70,minutes:84},
+ M:{n:3,marks:40,minutes:48},
+ A:{n:5,marks:45,minutes:54},
+ T:{n:4,marks:40,minutes:48},
+ X:{n:2,marks:30,minutes:36}
 };
 const coreSections=new Set(["R","P","M","A"]);
 const find=id=>week02Questions.find(q=>q.id===id);
@@ -41,12 +41,12 @@ test("Weeks 1–10 are published and no unauthored future weeks are exposed",()=
  assert.equal(siteConfig.stage2.published,false);
 });
 test("Week 2 meets every section's count, mark and time envelope",()=>{
- assert.equal(week02Questions.length,22);
- assert.equal(new Set(week02Questions.map(q=>q.id)).size,22);
+ assert.equal(week02Questions.length,31);
+ assert.equal(new Set(week02Questions.map(q=>q.id)).size,31);
  const core=week02Questions.filter(q=>coreSections.has(q.section));
- assert.equal(core.length,18);
- assert.equal(core.reduce((n,q)=>n+q.marks,0),98);
- assert.equal(week02Questions.reduce((n,q)=>n+q.marks,0),144);
+ assert.equal(core.length,25);
+ assert.equal(core.reduce((n,q)=>n+q.marks,0),175);
+ assert.equal(week02Questions.reduce((n,q)=>n+q.marks,0),245);
  for(const [section,expected] of Object.entries(groups)){
   const qs=week02Questions.filter(q=>q.section===section);
   assert.equal(qs.length,expected.n,section+" questions");
@@ -55,8 +55,8 @@ test("Week 2 meets every section's count, mark and time envelope",()=>{
   assert.deepEqual(qs.map(q=>q.id),qs.map((_,i)=>"W02-"+section+(i+1)));
  }
  const minutes=core.reduce((n,q)=>n+q.minutes,0);
- assert.ok(minutes<=220,"Reserve at least 20 minutes in the 240-minute core for marking");
- assert.ok(240-20-minutes<=10,"Do not under-fill the planned four hours");
+ assert.equal(minutes,210,"210 working minutes plus 30 for marking and reflection");
+ assert.equal(minutes+30,240);
 });
 test("Week 2 AO1/AO2/AO3 balance matches the authoring target, not paper weightings",()=>{
  const core=week02Questions.filter(q=>coreSections.has(q.section));
@@ -64,8 +64,8 @@ test("Week 2 AO1/AO2/AO3 balance matches the authoring target, not paper weighti
   for(const [key,value]of Object.entries(q.ao))acc[key]=(acc[key]||0)+value;
   return acc;
  },{AO1:0,AO2:0,AO3:0});
- assert.deepEqual(a,{AO1:26,AO2:39,AO3:33});
- assert.equal(Object.values(a).reduce((n,v)=>n+v,0),98);
+ assert.deepEqual(a,{AO1:42,AO2:76,AO3:57});
+ assert.equal(Object.values(a).reduce((n,v)=>n+v,0),175);
 });
 test("every Week 2 item has complete parts, worked marking, genuine TeX and feedback",()=>{
  for(const q of week02Questions){
@@ -87,9 +87,9 @@ test("every Week 2 item has complete parts, worked marking, genuine TeX and feed
   }
  }
 });
-test("all 22 Week 2 questions have valid, in-scope primary and connected skill tags",()=>{
+test("all 31 Week 2 questions have valid, in-scope primary and connected skill tags",()=>{
  assert.deepEqual(taggedWeek02Questions.map(q=>q.id),week02Questions.map(q=>q.id));
- assert.equal(Object.keys(week02SkillMap).length,22);
+ assert.equal(Object.keys(week02SkillMap).length,31);
  let parts=0,marks=0;
  for(const q of taggedWeek02Questions){
   assert.ok(q.primarySkillIds.length>0,q.id);
@@ -110,7 +110,7 @@ test("all 22 Week 2 questions have valid, in-scope primary and connected skill t
   }
  }
  assert.ok(parts>=50);
- assert.equal(marks,144);
+ assert.equal(marks,245);
  // Two spaced-retrieval connections to Week 1 algebra are intentionally retained.
  assert.ok(taggedWeek02Questions.filter(q=>q.section==="R")
   .filter(q=>q.connectedSkillIds.some(id=>id.startsWith("P02"))).length>=2);
@@ -125,7 +125,7 @@ test("cross-week specification practice links use the correct week and local que
  assert.deepEqual(getPublishedPracticeForSkill("M09-001"),[]);
  const report=calculateSpecificationProgress({questions:taggedWeek02Questions,records:{"W02-R1":{score:2,status:"I"}},scope:"internal"});
  assert.equal(report.summary.completedQuestions,1);
- assert.equal(report.summary.releasedQuestions,22);
+ assert.equal(report.summary.releasedQuestions,31);
  const suggestions=recommendRevision({questions:[...taggedWeek01Questions,...taggedWeek02Questions],
   records:{},scope:"internal",report:calculateSpecificationProgress({
     questions:[...taggedWeek01Questions,...taggedWeek02Questions],records:{},scope:"internal"
