@@ -153,8 +153,45 @@ function progressPage(scope="internal",strand="all"){
  heading('My revision notes','Make your next action specific')+'<div class="panel"><div class="reflection-row"><label for="strength">A method I can now use independently</label><textarea id="strength" class="reflection" placeholder="For example: I check the domain before solving a composite inequality…">'+esc(saved.reflections?.strength||'')+'</textarea></div><div class="reflection-row"><label for="repair">My next misconception to repair</label><textarea id="repair" class="reflection" placeholder="Name the exact step to practise…">'+esc(saved.reflections?.repair||'')+'</textarea></div><div class="reflection-row"><label for="strategy">My strategy for an unfamiliar question</label><textarea id="strategy" class="reflection" placeholder="What will you do when you are unsure where to begin?">'+esc(saved.reflections?.strategy||'')+'</textarea></div><p id="reflection-message" class="small muted">Notes save automatically in this browser.</p></div>'+
  '<div class="panel" style="margin-top:16px"><h3>Recorded self-marks</h3><p>'+(scored.length?total+' / '+available+' available marks across '+scored.length+' scored questions.':'No numerical scores recorded yet. Use the mark scheme to self-award marks after attempting a question.')+' The I / P / S rating measures independence, not just whether the final answer is correct.</p></div>'+renderProgressTransfer(saved)+'</section>';
 }
-function guidePage(){return '<section class="page"><span class="eyebrow">A thoughtful routine</span><h1 class="page-title">How to use the calendar</h1><p class="intro">This is not a race through question numbers. Your goal is to become more independent in deciding which mathematics to use.</p>'+heading('Your four essential hours','Week 1–8 question blueprint')+'<div class="card-grid">'+[['30 min','AO1 quick retrieval','Ten short questions: remember familiar procedures.'],['70 min','Connected problems','Three questions joining two or more techniques.'],['70 min','Mathematical modelling','Two extended questions with context, justification and limitations.'],['50 min','Year 1 Applied','Three questions on Statistics or Mechanics.'],['20 min','Mark and repair','Identify a specific misconception and reattempt the first incorrect step.'],['Optional','The extra two hours','One 60-minute timed set, then an optional 60-minute challenge or targeted repair.']].map(a=>'<article class="card"><span class="pill teal">'+a[0]+'</span><h3>'+a[1]+'</h3><p>'+a[2]+'</p></article>').join('')+'</div>'+heading('How to approach a hard question','Before you open a solution')+'<div class="step-grid"><div class="step"><b>01</b><strong>Understand</strong><p>Underline the required outcome, constraints and units.</p></div><div class="step"><b>02</b><strong>Connect</strong><p>Identify a useful representation and at least one possible method.</p></div><div class="step"><b>03</b><strong>Try</strong><p>Attempt the first step. Reveal only the hint when necessary.</p></div><div class="step"><b>04</b><strong>Repair</strong><p>Self-mark the full method, record the first error, then retry.</p></div></div>'+heading('The assessment objectives','What each means in these resources')+'<div class="panel"><p><strong>AO1:</strong> accurately use techniques and recall facts. <strong>AO2:</strong> reason, communicate mathematics, deduce and prove. <strong>AO3:</strong> solve problems, create and interpret models, and evaluate assumptions and conclusions.</p><p>The revision set intentionally emphasises AO2 and AO3 more than the official final paper weighting. The final mock will be closer to actual examination conditions.</p></div><div class="warning" style="margin-top:15px"><strong>Privacy and access.</strong> Working and progress are stored only in your current browser. Clearing browser storage may remove them. Future question content is withheld until publication; topic previews are visible in advance.</div></section>'}
-function finalPage(){return '<section class="page"><a class="back" href="#/">← Overview</a><span class="eyebrow">Programme 02 · Future expansion</span><h1 class="page-title">The road to the final papers.</h1><p class="intro">A planned 20-week full-course programme from 1 February to 16 June 2027, including Year 2 Statistics and Mechanics, synoptic questions and timed examinations. Question packs are not published yet.</p><div class="banner"><div><strong>The same study system, a wider syllabus</strong><p>Your internal-exam programme stays separate. The future stage can reuse tagged questions and build upon the same progress model.</p></div><span class="pill">PLANNED ONLY</span></div>'+heading('Five phases','1 February – 16 June 2027')+'<div class="phases">'+programmeTwo.phases.map(p=>'<div class="phase"><span class="eyebrow">WEEKS '+p.start+'–'+p.end+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.theme)+'</p></div>').join('')+'</div>'+heading('Official 2027 dates','Pearson timetable · Afternoon session')+programmeTwo.exams.map(x=>{const d=new Date(x.date+'T12:00:00Z');const day=d.toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});return '<div class="exam"><div class="exam-date"><strong>'+day.split(' ')[0]+'</strong>'+day.split(' ')[1].toUpperCase()+'</div><div><strong>'+esc(x.name)+'</strong><p>'+esc(x.code)+' · Wednesday '+esc(x.date)+' · '+esc(x.session)+' · '+esc(x.duration)+'</p></div></div>'}).join('')+'<div class="warning" style="margin-top:18px">These are the published Pearson GCE paper dates. School-specific local start times in Brunei must be confirmed separately. Papers 1 and 2 can both test the entire Pure syllabus.</div></section>'}
+function guidePage(){
+ const plan=[
+  ["01","30 min","Retrieval","10 short AO1 questions"],
+  ["02","70 min","Connected problems","3 multi-skill questions"],
+  ["03","70 min","Modelling & reasoning","2 extended questions"],
+  ["04","50 min","Year 1 Applied","3 Statistics or Mechanics questions"],
+  ["05","20 min","Self-mark & repair","Mark your work and identify the first error"],
+  ["06","Optional","Timed / Extension","One timed set and an optional challenge"]
+ ];
+ return '<section class="page guide-page"><a class="back" href="#/calendar">← Calendar</a>'+
+ '<span class="eyebrow">9MA0 / REFERENCE</span><h1 class="page-title">Study guide</h1>'+
+ '<p class="intro">Open a week, work through its sections, then record your marks. Your progress saves on this device.</p>'+
+ heading("Weekly structure","4 essential hours + optional practice")+
+ '<div class="guide-routine">'+plan.map(row=>'<div class="guide-routine-row">'+
+   '<span class="guide-routine-index">'+row[0]+'</span>'+
+   '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
+ heading("Using a question","Working, hints and marking")+
+ '<div class="guide-instructions">'+
+ '<div><b>1</b><strong>Work independently</strong><p>Use Notes, Maths steps or Draw. Work is saved for each question.</p></div>'+
+ '<div><b>2</b><strong>Check the solution</strong><p>Use a hint when needed, then compare your working with the mark scheme.</p></div>'+
+ '<div><b>3</b><strong>Record your mark</strong><p>Enter an overall mark, or optionally score each part. Even 0 marks counts as finished.</p></div>'+
+ '<div><b>4</b><strong>Retry or move on</strong><p>Archived attempts preserve previous working. Use My Progress to find questions to revisit.</p></div></div>'+
+ heading("Assessment objectives","What the questions assess")+
+ '<div class="guide-ao"><div><strong>AO1</strong><p>Recall and carry out mathematical procedures.</p></div>'+
+ '<div><strong>AO2</strong><p>Reason, explain, deduce and prove.</p></div>'+
+ '<div><strong>AO3</strong><p>Model, solve problems, interpret and evaluate.</p></div></div>'+
+ '<div class="warning guide-privacy"><strong>Saved locally.</strong> Marks and working remain in this browser. Use <a href="#/progress">My Progress</a> to download a backup if you change devices.</div></section>';
+}
+function finalPage(){
+ return '<section class="page final-page"><a class="back" href="#/calendar">← Calendar</a>'+
+ '<span class="eyebrow">FULL A LEVEL / NOT YET RELEASED</span>'+
+ '<h1 class="page-title">Final examination preparation</h1>'+
+ '<p class="intro">Planned from 1 February to 16 June 2027. This stage will include Year 2 Statistics and Mechanics. Its questions are not available yet.</p>'+
+ heading("Programme phases","20-week plan")+
+ '<div class="phases">'+programmeTwo.phases.map(p=>'<div class="phase"><span class="eyebrow">WEEKS '+p.start+'–'+p.end+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.theme)+'</p></div>').join('')+'</div>'+
+ heading("Exam dates","Pearson 9MA0 · 2027")+
+ programmeTwo.exams.map(x=>{const d=new Date(x.date+'T12:00:00Z');const day=d.toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});return '<div class="exam"><div class="exam-date"><strong>'+day.split(' ')[0]+'</strong>'+day.split(' ')[1].toUpperCase()+'</div><div><strong>'+esc(x.name)+'</strong><p>'+esc(x.code)+' · Wednesday '+esc(x.date)+' · '+esc(x.session)+' · '+esc(x.duration)+'</p></div></div>'}).join('')+
+ '<div class="warning" style="margin-top:18px">Confirm examination start times with your centre in Brunei. Both Pure papers can assess the full Pure syllabus.</div></section>';
+}
 function notFound(){return '<section class="page"><h1>Page not found</h1>'+buttonLink('#/','Return home')+'</section>'}
 function remountHistory(q){
  const mount=el.querySelector("#attempt-history-root");
