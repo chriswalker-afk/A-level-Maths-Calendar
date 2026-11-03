@@ -1,0 +1,49 @@
+/**
+ * Resolve a published question's mark-bearing parts to permanent specification
+ * skill IDs. One primary skill may earn a part's marks; secondary skills are
+ * connections/exposure only, so a single mark is never counted multiple times.
+ */
+import {getSpecSkill} from "./specification.js";
+import {week01Questions} from "./week01.js";
+import {week01SkillMap} from "./week01-skill-map.js";
+
+const ALPHABET="abcdefghijklmnopqrstuvwxyz";
+
+export function linkQuestionParts(questions, links, lookup=getSpecSkill){
+ const authoredIds=new Set(questions.map(q=>q.id));
+ const taggedIds=Object.keys(links);
+ for(const id of taggedIds){
+  if(!authoredIds.has(id))throw new Error("Tag map includes unknown question: "+id);
+ }
+ return questions.map(q=>{
+  const tagged=links[q.id];
+  if(!Array.isArray(tagged)||tagged.length!==q.parts.length)
+   throw new Error("Missing or incorrect number of part skill tags: "+q.id);
+  if(q.parts.length>ALPHABET.length)throw new Error("Too many parts for stable labels: "+q.id);
+  const parts=q.parts.map((part,index)=>{
+   const spec=tagged[index];
+   if(!Array.isArray(spec)||typeof spec[0]!=="string")
+    throw new Error("Missing primary skill on "+q.id+" part "+(index+1));
+   const primary=lookup(spec[0]);
+   if(!primary)throw new Error("Unknown primary skill "+spec[0]+" at "+q.id);
+   const secondary=spec[1]??[];
+   if(!Array.isArray(secondary)||new Set(secondary).size!==secondary.length)
+    throw new Error("Invalid or repeated secondary tags at "+q.id);
+   for(const id of secondary){
+    if(id===primary.id)throw new Error("Primary skill also marked secondary: "+q.id);
+    if(!lookup(id))throw new Error("Unknown secondary skill "+id+" at "+q.id);
+   }
+   if(!primary||primary.scope!=="internal")
+    throw new Error("Week 1 contains Year 2-only primary skill: "+q.id);
+   return [part[0],part[1],{
+    key:ALPHABET[index],
+    primarySkillId:primary.id,
+    secondarySkillIds:[...secondary]
+   }];
+  });
+  const primarySkillIds=[...new Set(parts.map(p=>p[2].primarySkillId))];
+  const connectedSkillIds=[...new Set(parts.flatMap(p=>p[2].secondarySkillIds))].filter(id=>!primarySkillIds.includes(id));
+  return {...q,parts,primarySkillIds,connectedSkillIds};
+ });
+}
+export const taggedWeek01Questions=linkQuestionParts(week01Questions,week01SkillMap);
