@@ -19,9 +19,9 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 - Open each topic and skill to read specific examination demands, common pitfalls and the exact Pearson topic reference.
 - Future-only Applied content is labelled and remains discoverable rather than being presented as part of the internal exam.
 - The three overarching themes of argument/proof, problem solving and modelling are prominent across the course.
-- Stable skill identifiers now connect every Week 1 question part to one primary skill and optional related skills; **4C performance analytics** is next.
+- Stable skill identifiers connect every Week 1 question part to a primary and optional related skill; **4C now shows completed attempts, skills encountered and appropriately attributed mark accuracy**.
 
-**No topic-level accuracy percentages are generated yet.** Every Week 1 question part is now tagged, and the new optional part-marking system can collect precise evidence. Previously saved whole-question scores remain valid, but are not misrepresented as accurate marks for particular skills. The reference guide is [docs/SPECIFICATION_LIBRARY.md](docs/SPECIFICATION_LIBRARY.md) and the official authority is [Pearson's 9MA0 specification](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf).
+**Topic-level self-mark accuracy is now available when evidence is assignable to a specific skill.** Multi-part questions need a complete part breakdown; single-part questions can use their exact whole score. Old multi-part whole scores still count toward attempts, without inventing which skill earned the marks. No evidence is shown as *No part accuracy yet*, not 0%. The reference guide is [docs/SPECIFICATION_LIBRARY.md](docs/SPECIFICATION_LIBRARY.md) and the official authority is [Pearson's 9MA0 specification](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf).
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
@@ -39,7 +39,24 @@ Students can optionally expand **Mark each part separately** while self-marking:
 
 In **My Specification**, individual skills now link to published questions that practise them. On each question, students can optionally reveal which skills were used. Future weeks are **not** released by these links.
 
-Actual skill percentage accuracy is intentionally deferred to **Pass 4C** so that analysis uses only verified individual-part marks, not overall-only scores misallocated across topics. See [the specification and evidence guide](docs/SPECIFICATION_LIBRARY.md) for the permanent skill-ID schema and scoring rules.
+Skill percentage accuracy and per-topic results are available from **Pass 4C**, calculated only when each mark can be assigned to one primary specification skill. Multi-part total-only scores remain counted as attempts without misallocating their marks. See [the specification and evidence guide](docs/SPECIFICATION_LIBRARY.md) for the permanent skill-ID schema and scoring rules.
+
+## Pass 4C — Personal progress by specification topic
+
+**My Progress** now provides a syllabus-wide overview with switching between **Internal exams** and **Full A Level**, and filtering by **Pure**, **Statistics**, or **Mechanics**.
+
+Students can see:
+
+- Distinct questions completed for each topic, including mixed-topic questions; the overall count is **never** calculated by adding the topic counts.
+- Skills encountered out of the relevant syllabus total. This measures **practice exposure**, not mastery.
+- Independent / with-help completions, based on the student's choice rather than assumptions about their working.
+- Topic-level and individual-skill **self-marked accuracy** only where marks can be assigned to a unique primary skill. A full detailed marking breakdown is required for multi-part questions. A one-part question's whole score is itself an exact part mark.
+- The marks and number of questions supporting an accuracy estimate, plus a warning when evidence is limited.
+- Clear **No part accuracy yet** and **No published practice yet** states instead of false 0% readings.
+
+**My Specification** now includes the same progress evidence on topic cards, topic pages and individual skill details, alongside the existing search, examination demands and links to published questions.
+
+Everything is calculated locally from the existing browser storage. There is no new account, teacher monitoring or server-side data transfer. The full rules and known limitations are documented in [docs/SPECIFICATION_LIBRARY.md](docs/SPECIFICATION_LIBRARY.md). **Pass 4D** will turn these data into suggested revision and allow progress to be exported and restored between devices.
 
 ## Week 1 is now complete
 
@@ -130,7 +147,8 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `src/data/week01.js`: original Week 1 question content, including T and X extension sections.
 - `src/data/week01-skill-map.js`, `src/data/tagged-questions.js`: verified part-by-part skill tags.
 - `src/data/skill-practice-index.js`: links from individual skills to published questions only.
-- `src/part-marking.js`: validated part scores, derived totals, and future accuracy evidence.
+- `src/part-marking.js`: validated part scores, derived totals and exact primary-skill mark evidence.
+- `src/specification-analytics.js`, `src/specification-progress-view.js`: pure analytics and responsive topic/skill progress UI.
 - `src/app.js`: calendar, question navigator, MathJax typesetting, solutions and progress tracking.
 - `src/working-state.js`, `src/working-space.js`, `src/workspace-maths.js`, `src/workspace-drawing.js`: working modes and local persistence.
 - `src/question-assessment.js`: score-driven completion, clear independence/help reporting and self-marking.
@@ -139,10 +157,10 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `tests/math-render.test.mjs`: MathJax parse tests against all authored equations.
 - `tests/working-state.test.mjs`, `tests/working-ui.test.mjs`, `tests/question-assessment.test.mjs`: working space and scoring UI regressions.
 - `tests/question-skill-tags.test.mjs`, `tests/part-marking.test.mjs`, `tests/detailed-marking-ui.test.mjs`: skill mapping, legacy marks, complete breakdowns and numeric validation.
+- `tests/specification-analytics.test.mjs`, `tests/specification-progress-ui.test.mjs`, `tests/specification-progress-route.test.mjs`: accurate topic evidence, no-data states, release scope and live routing.
 
 ## Next passes
 
-1. **4C — Personal specification dashboard:** distinct questions attempted per topic; mark accuracy calculated only from validated primary-part evidence; independent/help indicators and coverage. Clearly distinguish *No evidence* from 0%, and show evidence counts and caveats.
-2. **4D — Suggested revision and portability:** recommend published questions for skills needing attention, preserve a history of reattempts and support progress export/import.
-3. **Scale content:** review the first week's interactions and author Weeks 2–10 in a steady sequence, retaining the same stable skill IDs and part-marking tests.
-4. **Full 2027 programme:** extend the same data model to Year 2 Applied and final examination preparation.
+1. **4D — Smart revision and student data portability:** recommend only published questions for under-practised or low-accuracy skills; add reattempt history, and support progress export/import for another device.
+2. **Scale content:** review the Week 1 student experience and create Weeks 2–10 in a steady sequence, tagging each new question's marked parts to permanent skill IDs.
+3. **Full 2027 programme:** extend the data model to Year 2 Applied and final examination preparation, using the same local tracking rules.
