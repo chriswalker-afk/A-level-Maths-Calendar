@@ -39,7 +39,7 @@ The **four-hour essential pathway** retains the blueprint's AO1/AO2/AO3 mark dis
 
 Each Week 2 question includes correctly typeset maths, part-by-part marks, a first-step hint, fully worked solutions, a verified answer, a misconception, a reflection prompt and a permanent primary specification skill for each marked part (with optional connected skills). All the existing Notes / Maths steps / Draw, self-marking, independent/with-help selection, retry history and backup functions work unchanged.
 
-The student calendar now opens **Weeks 1–7 directly into questions**. The 126 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Weeks 8–10 remain locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
+The student calendar now opens **Weeks 1–8 directly into questions**. The 144 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Weeks 9–10 remain locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
 
 Quality gates: `tests/week02-content.test.mjs`, `tests/week02-student-flow.test.mjs` and `tests/publication.test.mjs`, plus the existing MathJax, progress, marking and backup suites.
 
@@ -143,8 +143,31 @@ Week 7 contains **22 original exam-style questions (144 marks)** with precise pa
 
 The essential AO marks are **AO1 26 / AO2 39 / AO3 33** (practice-design targets, not examination-paper weights). Every one of **62 marked parts** has one primary permanent skill for accuracy; connected skills are links for retrieval and diagnosis rather than additional marks. Applied tags use **S02** (Year 1 regression) and **S05** (Year 1 binomial hypothesis testing), with no Year 2 correlation-coefficient tests or Normal distribution.
 
-**Release controls:** Weeks 1–7 are directly accessible; Weeks 8–10 remain locked, as does programme two. The local storage key, previous notes/drawings/attempts and backup compatibility are unchanged. Quality gates cover exact mathematics, correct Year 1 scope, all published MathJax, the student marking flow and release-safe specification links.
+**At the Week 7 release**, Weeks 1–7 were directly accessible; programme two remained unpublished. The local storage key, previous notes/drawings/attempts and backup compatibility are unchanged. Quality gates cover exact mathematics, correct Year 1 scope, all published MathJax, the student marking flow and release-safe specification links.
 
+
+
+### Week 8 — Numerical methods and synthesis
+
+Week 8 adds **22 original exam-style questions (144 marks)** with complete worked schemes, first-step hints, robust MathJax notation, identified misconceptions, reflection prompts and permanent primary per-part specification skills. The programme now has **176 released questions across eight weeks (144 essential)**.
+
+| Section | Questions | Marks | Working time |
+|---|---:|---:|---:|
+| Quick retrieval — sign changes/continuity, iterations and staircase behaviour, Newton steps, trapezia, error direction and interpreted roots | 10 | 20 | 30 minutes |
+| Connected Pure — Newton root with an accuracy check; exponential trapezium versus exact area; two algebraically equivalent iterations with different stability | 3 | 30 | 67 minutes (+3 buffer) |
+| Modelling — optimum treatment duration requiring a numerical root; exact versus sampled excess-exposure predictions and threshold | 2 | 26 | 68 minutes (+2 buffer) |
+| Year 1 Mechanics — separate smooth-pulley force diagrams; acceleration and tension; two-stage travel after the hanging particle reaches the floor and the string becomes slack | 3 | 22 | 48 minutes (+2 buffer) |
+| **Essential four-hour programme** | **18** | **98** | **213 solving + 20 marking + 7 buffer = 240 minutes** |
+| Recommended timed — bracketed root, concave logarithmic trapezium error, motion model with Newton threshold | 3 | 32 | 45 minutes + 15 review |
+| Optional A/A* extension — derive Newton's method for √2, prove convergence, obtain exact rational error bounds and certify five decimal places | 1 | 14 | 40 minutes + 20 reflection |
+
+The essential resource-design allocation remains **AO1 26 / AO2 39 / AO3 33**, rather than Pearson's full-examination AO weightings. Each of the **63 marked parts** has one stable primary specification skill; connected skills provide navigation without awarding its marks again.
+
+**Curriculum scope:** Pure practice focuses on **P09 numerical methods**, supported by algebra, differentiation and integration. Applied questions use Year 1 **M08-008 connected particles, light strings and smooth pulleys**, along with constant-acceleration kinematics, and deliberately exclude Year 2 friction, inclined-plane dynamics, moments and projectile motion. The A/A* Newton proof develops an optional higher-level justification rather than assuming it is required in every 9MA0 examination answer.
+
+**Publication:** Weeks **1–8** are released directly from the calendar; Weeks **9–10** remain inaccessible until authored. The 2027 programme stays unpublished. Existing working spaces, student mark records (including zero), attempts, revision advice, backups and the unchanged local storage key all remain compatible.
+
+Quality gates include the new `tests/week08-content.test.mjs`, `tests/week08-maths-audit.test.mjs`, `tests/week08-student-flow.test.mjs` and expanded real MathJax parser coverage. A detailed mathematical and curriculum audit is at `docs/WEEK08_AUTHORING_AUDIT.md`.
 
 ## My Specification — Pass 4A
 
@@ -162,7 +185,7 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
-All **154 questions in published Weeks 1–7** are now linked to the 9MA0 skill library **part by part**.
+All **176 questions in published Weeks 1–8** are now linked to the 9MA0 skill library **part by part**.
 
 Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
 
@@ -217,7 +240,7 @@ When importing a backup, students see a preview of the saved contents and choose
 
 Invalid, oversized, version-mismatched and malformed backups are rejected. Progress is saved atomically; if browser storage fails, the import is not applied. The backup includes potentially private student notes, so the interface reminds students to store it privately.
 
-**Next:** author Weeks 8–10 using the same stable specification tags and evidence rules. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
+**Next:** author Weeks 9–10 using the same stable specification tags and evidence rules. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
 
 ## Week 1 is now complete
 
@@ -330,7 +353,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Week 8 content:** numerical methods and synthesis, including Year 1 connected-particle mechanics.
-2. **Weeks 8–10:** extend the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
+1. **Week 9 content:** mixed Pure reasoning and full Year 1 Applied synthesis, following the blueprint and official specification.
+2. **Weeks 9–10:** extend the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
 3. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
 4. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.
