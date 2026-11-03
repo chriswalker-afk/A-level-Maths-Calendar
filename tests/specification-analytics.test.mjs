@@ -135,6 +135,38 @@ test("internal vs full syllabus scopes keep unreleased Year 2 Applied unscored",
  assert.equal(a.topicMap.get("M09").skillsTotal,0);
 });
 
+test("future Year 2-only questions cannot inflate internal-exam completion or marks",()=>{
+ const source=question("W01-R2");
+ const q={...source,id:"W99-Y2",parts:source.parts.map(p=>[
+  p[0],p[1],{key:"a",primarySkillId:"M09-001",secondarySkillIds:["P02-006"]}
+ ])};
+ const records={[q.id]:{score:1,status:"I"}};
+ const internal=calculate({questions:[q],records,scope:"internal"});
+ const full=calculate({questions:[q],records,scope:"full"});
+ assert.equal(internal.summary.releasedQuestions,0);
+ assert.equal(internal.summary.completedQuestions,0);
+ assert.equal(internal.summary.verifiedAvailable,0);
+ assert.equal(full.summary.releasedQuestions,1);
+ assert.equal(full.summary.verifiedAvailable,2);
+ assert.equal(full.topicMap.get("M09").accuracy,50);
+});
+test("mixed Y1/Y2 questions count only the in-scope primary part's mark evidence",()=>{
+ const source=question("W01-P2");
+ const q={...source,id:"W99-MIX",parts:source.parts.map((part,index)=>[
+  part[0],part[1],{key:"abc"[index],
+  primarySkillId:index===0?"P02-020":"M09-001",secondarySkillIds:[]}
+ ])};
+ const records={[q.id]:{status:"P",score:6,scoreSource:"parts",partMarks:{a:1,b:2,c:3}}};
+ const internal=calculate({questions:[q],records,scope:"internal"});
+ const full=calculate({questions:[q],records,scope:"full"});
+ assert.equal(internal.summary.completedQuestions,1);
+ assert.equal(internal.summary.verifiedParts,1);
+ assert.equal(internal.summary.verifiedEarned,1);
+ assert.equal(internal.summary.verifiedAvailable,2);
+ assert.equal(full.summary.verifiedParts,3);
+ assert.equal(full.summary.verifiedEarned,6);
+ assert.equal(full.summary.verifiedAvailable,10);
+});
 test("status is optional; its absence must not be treated as help or independence",()=>{
  const q=question("W01-R1");
  const p=calculate({questions:[q],records:{[q.id]:{score:2}}});
