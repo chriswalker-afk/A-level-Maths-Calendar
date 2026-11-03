@@ -17,7 +17,9 @@ export const programmeOne = {
         5,
         6
       ],
-      "targetMarks": 98,
+      "targetMarks": 175,
+      "recommendedMarks": 215,
+      "optionalMarks": 245,
       "hasPublishedContent": true
     },
     {
@@ -33,7 +35,9 @@ export const programmeOne = {
         5,
         6
       ],
-      "targetMarks": 98,
+      "targetMarks": 175,
+      "recommendedMarks": 215,
+      "optionalMarks": 245,
       "hasPublishedContent": true
     },
     {
@@ -49,7 +53,9 @@ export const programmeOne = {
         5,
         6
       ],
-      "targetMarks": 98,
+      "targetMarks": 175,
+      "recommendedMarks": 215,
+      "optionalMarks": 245,
       "hasPublishedContent": true
     },
     {
