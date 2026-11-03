@@ -224,13 +224,13 @@ function guidePage(){
  return '<section class="page guide-page"><a class="back" href="#/calendar">← Calendar</a>'+
  '<span class="eyebrow">9MA0 / REFERENCE</span><h1 class="page-title">Study guide</h1>'+
  '<p class="intro">Open a week, work through its sections, then record your marks. Your progress saves on this device.</p>'+
- heading("Expanded Weeks 1–3","175 essential marks · 215 recommended · 245 optional")+
+ heading("Expanded Weeks 1–6","175 essential marks · 215 recommended · 245 optional")+
  '<p>These are examination-paced planning targets at approximately 1.2 working minutes per mark, not measured completion times. A four-hour core includes 30 minutes of marking and reflection. The additional hour for each optional pathway also includes review.</p>'+
  '<div class="guide-routine">'+expandedPlan.map(row=>'<div class="guide-routine-row">'+
    '<span class="guide-routine-index">'+row[0]+'</span>'+
    '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
- heading("Weeks 4–9","Original 98-mark essential allocation · expansion planned")+
- '<p>These weeks retain the earlier allocations while the next development passes build out their mathematics. Do not mistake the old four-hour plan for an exam-paced mark total.</p>'+
+ heading("Weeks 7–9","Original 98-mark essential allocation · expansion planned")+
+ '<p>Weeks 7–9 retain the earlier four-hour allocations until the next development pass expands their mathematical challenge and mark density.</p>'+
  '<div class="guide-routine">'+plan.map(row=>'<div class="guide-routine-row">'+
    '<span class="guide-routine-index">'+row[0]+'</span>'+
    '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
