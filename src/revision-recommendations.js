@@ -21,15 +21,18 @@ export function recommendRevision({questions=[],records={},report,scope="interna
  for(const q of questions){
   if(!q?.id||unique.has(q.id)||!Array.isArray(q.parts))continue;
   unique.add(q.id);
-  const sectionIndex=groupIndex[q.section]||0;
-  groupIndex[q.section]=sectionIndex+1;
+  const weekNumber=Number(q.id.match(/^W(\d+)-/)?.[1])||1;
+  // An index is local to its own week's subsection, not cumulative.
+  const key=weekNumber+"-"+q.section;
+  const sectionIndex=groupIndex[key]||0;
+  groupIndex[key]=sectionIndex+1;
   const primaries=[...new Set(q.parts.map(part=>part?.[2]?.primarySkillId).filter(Boolean))];
   const target=primaries.map(id=>getSpecSkill(id)).filter(s=>isScope(s,scope));
   if(!target.length)continue;
   const own=records?.[q.id]||{};
   const latest=latestFinishedRecord(q,own);
   const reattemptPending=hasNewAttemptInProgress(q,own);
-  const qUrl="#/study/"+(Number(q.id.match(/^W(\d+)-/)?.[1])||1)+"/"+q.section+"/"+sectionIndex;
+  const qUrl="#/study/"+weekNumber+"/"+q.section+"/"+sectionIndex;
   let score=0,kind="",reason="",skill=target[0];
   if(reattemptPending){
    kind="Finish your reattempt";score=130;
