@@ -5,7 +5,9 @@
  * A mode is only a view: notes, equations and drawing are retained together.
  */
 export const WORKING_MODES = Object.freeze(["notes", "maths", "draw"]);
-export const INK_COLOURS = Object.freeze(["#183a46", "#197a70", "#ba554a"]);
+export const INK_COLOURS = Object.freeze(["#17262e", "#2948b9", "#e65c3e", "#183a46", "#197a70", "#ba554a"]);
+// Stored strokes retain their original hues; map the old active pen to the new palette.
+const LEGACY_PEN_COLOURS = Object.freeze({"#183a46":"#17262e","#197a70":"#2948b9","#ba554a":"#e65c3e"});
 export const INK_WIDTHS = Object.freeze([2, 4, 7]);
 export const MAX_MATH_LINES = 80;
 export const MAX_INK_STROKES = 180;
@@ -69,7 +71,7 @@ export function normalizeWorkspace(input, legacyText = "") {
     notes: typeof w.notes === "string" ? w.notes : String(legacyText ?? ""),
     mathLines: uniqueLines.length ? uniqueLines : [newMathLine()],
     strokes,
-    colour: INK_COLOURS.includes(w.colour) ? w.colour : INK_COLOURS[0],
+    colour: LEGACY_PEN_COLOURS[w.colour] || (INK_COLOURS.includes(w.colour) ? w.colour : INK_COLOURS[0]),
     penWidth: INK_WIDTHS.includes(w.penWidth) ? w.penWidth : INK_WIDTHS[1],
     tool: w.tool === "eraser" ? "eraser" : "pen",
     grid: w.grid !== false
