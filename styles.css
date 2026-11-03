@@ -1593,3 +1593,53 @@ footer b{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.03
  .study-workbench .paper.exam-sheet{padding:0}
  .study-workbench .question-index{display:none!important}
 }
+
+
+/* Practical reference pages, not marketing landing pages */
+.guide-routine{border:2px solid var(--editorial-ink);background:var(--editorial-paper)}
+.guide-routine-row{
+ display:grid;grid-template-columns:54px 105px minmax(145px,.85fr) minmax(200px,1.4fr);
+ gap:14px;align-items:center;padding:13px 17px;border-bottom:1px solid #bbc6be
+}
+.guide-routine-row:last-child{border-bottom:0}
+.guide-routine-index{
+ font:700 25px "Space Grotesk",sans-serif;color:var(--editorial-orange)
+}
+.guide-routine-row>strong{font:700 12px "IBM Plex Mono",monospace}
+.guide-routine-row>span:nth-of-type(2){font:700 14px "Space Grotesk",sans-serif}
+.guide-routine-row p{font-size:12px;margin:0}
+.guide-instructions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.guide-instructions>div{
+ background:#fffefa;border-top:4px solid var(--editorial-ink);
+ border-left:1px solid var(--line);border-right:1px solid var(--line);
+ border-bottom:1px solid var(--line);padding:17px
+}
+.guide-instructions b{
+ display:block;font:700 30px "Space Grotesk",sans-serif;
+ color:var(--editorial-orange);margin-bottom:10px
+}
+.guide-instructions strong{font-size:13px}
+.guide-instructions p{font-size:11px;line-height:1.6;margin:6px 0 0}
+.guide-ao{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.guide-ao>div{padding:17px;background:#e9f0df;border:1px solid #c4d1c0}
+.guide-ao strong{font:700 19px "Space Grotesk",sans-serif;color:var(--editorial-cobalt)}
+.guide-ao p{font-size:12px;margin:5px 0 0}
+.guide-privacy{margin:27px 0}
+.guide-privacy a{font-weight:800;color:var(--editorial-cobalt)}
+.final-page .phase{
+ border-top:4px solid var(--editorial-ink);background:var(--editorial-paper);
+ border-radius:2px
+}
+.final-page .exam{border-radius:2px;background:var(--editorial-paper)}
+.final-page .exam-date{font-family:"IBM Plex Mono",monospace}
+@media(max-width:1050px){
+ .guide-routine-row{grid-template-columns:42px 100px minmax(120px,1fr)}
+ .guide-routine-row p{grid-column:3}
+ .guide-instructions{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+ .guide-routine-row{grid-template-columns:32px 1fr;gap:8px 12px;padding:12px}
+ .guide-routine-row>span:nth-of-type(2){grid-column:2}
+ .guide-routine-row p{grid-column:2}
+ .guide-instructions,.guide-ao{grid-template-columns:1fr}
+}
