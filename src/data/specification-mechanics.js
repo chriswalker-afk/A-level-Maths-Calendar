@@ -26,7 +26,9 @@ export const mechanicsTopics=[
     {ref:"7.3",year:1,skills:[
       ["I can use and derive equations for constant acceleration in one dimension.","Choose a suitable SUVAT equation for a vehicle accelerating uniformly."],
       ["I can solve vertical motion problems with an appropriate gravity sign.","Find the greatest height and total time for an object thrown vertically."],
-      ["I can link consecutive motion stages with consistent initial and final values.","Analyse an object which accelerates and then slows down."],
+      ["I can link consecutive motion stages with consistent initial and final values.","Analyse an object which accelerates and then slows down."]
+    ]},
+    {ref:"7.3",year:2,skills:[
       ["I can use vector components to describe constant acceleration in two dimensions.","Solve a constant-acceleration problem using horizontal and vertical vector components."]
     ]},
     {ref:"7.4",year:1,skills:[
