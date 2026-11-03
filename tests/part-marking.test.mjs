@@ -55,7 +55,7 @@ test("clearing or invalidating a derived part score clears completion, not notes
  assert.equal(invalid.record.working,"old");
 });
 test("scores cannot exceed the marks on that part or contain fractions",()=>{
- for(const bad of ["3.5","-1","3","NaN",""]) {
+ for(const bad of ["3.5","-1","3","NaN","0x1","1e0",""]) {
   const result=mark({},"a",bad);
   assert.equal(result.record.partMarks?.a,undefined);
   assert.equal(result.invalid,bad!=="");
