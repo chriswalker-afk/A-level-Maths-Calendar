@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {programmeOne,programmeTwo} from '../src/data/programmes.js';
 import {siteConfig} from '../src/config.js';
 import {week01Questions} from '../src/data/week01.js';
+import {week02Questions} from '../src/data/week02.js';
 
 const coreGroups=['R','P','M','A'];
 const expected={
@@ -20,11 +21,13 @@ test('two programmes are distinct and correctly sized',()=>{
  assert.equal(programmeTwo.startDate,'2027-02-01');
  assert.equal(programmeTwo.endDate,'2027-06-16');
 });
-test('only genuinely authored Week 1 material is available',()=>{
+test('exactly Weeks 1 and 2 are authored and released',()=>{
  assert.equal(siteConfig.stage1.releaseMode,'manual');
- assert.equal(siteConfig.stage1.releasedWeeks,1);
+ assert.equal(siteConfig.stage1.releasedWeeks,2);
  assert.ok(programmeOne.weeks[0].hasPublishedContent);
- assert.ok(programmeOne.weeks.slice(1).every(w=>!w.hasPublishedContent));
+ assert.equal(programmeOne.weeks[1].hasPublishedContent,true);
+ assert.ok(programmeOne.weeks.slice(2).every(w=>!w.hasPublishedContent));
+ assert.equal(week02Questions.length,22);
  assert.equal(siteConfig.stage2.published,false);
 });
 test('complete four-hour Week 1 core, recommended timed set and optional extension',()=>{
