@@ -21,47 +21,29 @@ The full authoring specification is [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_B
 
 ## Published study weeks
 
-**Week 1 — Algebra, functions and proof** remains available with all its existing questions and saved work.
+### Pass 1 expansion — Weeks 1–3 (November 2026)
 
-**Week 2 — Coordinate geometry and vectors** is now fully authored and available from the calendar, with **22 original questions**:
+Weeks 1, 2 and 3 have been **expanded to 31 original questions each** while retaining **all 22 earlier question IDs and marked parts** in their original section positions. The expanded work is designed to be more demanding and more exam-paced; 1.2 working minutes per mark is a **planning benchmark**, not a measured student-completion time. Student work is still saved to the original `alevel-maths-calendar-progress-v1` key.
 
-| Section | Questions | Marks | Planned working |
+| Section | Questions per week | Marks | Planned working |
 |---|---:|---:|---:|
-| Retrieval: lines, circles, 2D/3D vectors | 10 | 20 | 30 min |
-| Connected Pure: tangency, ratios, circle proof | 3 | 30 | 67 min (+3 min buffer) |
-| Modelling: a route around a circular reserve and constrained garden area | 2 | 26 | 68 min (+2 min buffer) |
-| Year 1 Mechanics: units, signed motion, vertical motion | 3 | 22 | 48 min (+2 min buffer) |
-| **Essential core** | **18** | **98** | **Up to 220 min, plus 20 min marking** |
-| Recommended timed problems: circumcircle, 3D parallelogram, velocity-time graph | 3 | 32 | 45 min (+15 min review) |
-| Optional extension: two circles and their common chord | 1 | 14 | 40 min (+20 min review) |
+| Quick retrieval (R1–R10) | 10 | 20 | 24 min |
+| Connected Pure (P1–P7) | 7 | 70 | 84 min |
+| Modelling & reasoning (M1–M3) | 3 | 40 | 48 min |
+| Year 1 Applied (A1–A5) | 5 | 45 | 54 min |
+| **Four-hour essential** | **25** | **175** | **210 working + 30 marking/reflection = 240 min** |
+| Recommended timed work (T1–T4) | 4 | 40 | 48 working + 12 marking |
+| **Five-hour cumulative** | **29** | **215** | **300 min including review** |
+| Optional A/A* extensions (X1–X2) | 2 | 30 | 36 working + 24 reflection |
+| **Six-hour cumulative** | **31** | **245** | **360 min including review** |
 
-The **four-hour essential pathway** retains the blueprint's AO1/AO2/AO3 mark distribution: **26 / 39 / 33**. These are resource-authoring proportions, not the 9MA0 paper-wide assessment weighting.
+The new parts have full worked mark schemes, independent first-step hints, misconceptions, reflection questions and primary specification skill IDs. Secondary linked skills remain practice-only. The new content includes proof by contradiction, domain/transform order, repeated poles, nonlinear constraints, constrained optimisation, codified data and outlier judgment in Week 1; parametric geometry, 3D vector proof, circular tangents, route restrictions and multi-stage Year 1 mechanics in Week 2; and advanced trig, exact circle intersection, approximation, periodic threshold decisions and Year 1 probability modelling in Week 3.
 
-Each Week 2 question includes correctly typeset maths, part-by-part marks, a first-step hint, fully worked solutions, a verified answer, a misconception, a reflection prompt and a permanent primary specification skill for each marked part (with optional connected skills). All the existing Notes / Maths steps / Draw, self-marking, independent/with-help selection, retry history and backup functions work unchanged.
+**Weeks 4–9 are still at their original 22-question / 98-essential-mark allocation** until their own expansion passes. **Week 10 remains the 100-mark Pure and 50-mark Year 1 Applied mock**, plus 60 minutes of diagnostic review. The calendar still links directly to questions, and the February–June 2027 full A Level course remains unpublished.
 
-The student calendar now opens **all ten weeks directly into questions**. Weeks 1–9 have **162 essential practice questions** (18 per week). Week 10 adds **22 authentic mock questions** (100 Pure marks + 50 Year 1 Applied marks) and a dedicated diagnostic review. Across all ten weeks there are **220 published questions, 184 essential**; topic accuracy counts precise evidence only once per finished question. Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
+Across the ten published weeks the updated programme contains **247 questions**, including **205 essential**. Earlier scores, working, drawing, attempt history, specification progress links, recommendations and backups are preserved.
 
-Quality gates: `tests/week02-content.test.mjs`, `tests/week02-student-flow.test.mjs` and `tests/publication.test.mjs`, plus the existing MathJax, progress, marking and backup suites.
-
-### Week 3 — Trigonometry and periodic models
-
-The complete **Week 3** pack is now authored and released with **22 original questions (144 marks overall)**, organised exactly like the earlier weeks:
-
-| Section | Questions | Marks | Working time |
-|---|---:|---:|---:|
-| Quick retrieval — exact values, radians, trig graphs, identities, compound/double angles, R-sine and small angles | 10 | 20 | 30 minutes |
-| Connected Pure — identity proof/domain, shifted-sine inequality, ambiguous sine-rule triangles | 3 | 30 | 67 minutes |
-| Modelling — ferry-ramp tide access intervals; signal stationary points and approximation error | 2 | 26 | 68 minutes |
-| Year 1 Applied — independent/exclusive events, counters without replacement, overlapping clubs and two selections | 3 | 22 | 48 minutes |
-| **Essential core** | **18** | **98** | **213 minutes + 20 marking + 7 buffer = four hours** |
-| Recommended timed set — sector/segment, double-angle inequality, common-condition probability tree | 3 | 32 | 45 + 15 minutes |
-| Optional A/A* extension — parameterised sine-wave threshold and tangency proof | 1 | 14 | 40 + 20 minutes |
-
-Week 3 has the planned resource-authoring mark balance of **AO1 26 / AO2 39 / AO3 33**. Students use the same Notes, Maths steps, Draw, first-step hints, step-by-step mark schemes, independence choices, self-marking and reattempt history as before.
-
-All Week 3 marked parts carry **permanent 9MA0 skill tags** across P05 (Trigonometry), S03 (Year 1 probability) and connected algebra/calculus. At the completion of Week 3, the calendar had **66 published questions** (54 essential); Week 4 expands this to **88 published questions** (72 essential). My Progress displays a separate record for each week; aggregate and topic accuracy include the third week's validated attempts, without changing earlier saved work. **Weeks 7–10 remain locked**.
-
-The QA suite now covers the Week 3 mark allocations and timing, correct MathJax rendering, specification links, exact-value maths audit, manually controlled Brunei release gates and a student end-to-end flow through Week 3 marking and My Progress.
+For the updated target and quality criteria see [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_BLUEPRINT.md), and for the independent mathematics and safety audit see [docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md](docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md).
 
 ### Week 4 — Differentiation and curve behaviour
 
@@ -233,7 +215,7 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
-All **220 questions in published Weeks 1–10** are now linked to the 9MA0 skill library **part by part**.
+All **247 questions in published Weeks 1–10** are now linked to the 9MA0 skill library **part by part**.
 
 Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
 
@@ -290,22 +272,9 @@ Invalid, oversized, version-mismatched and malformed backups are rejected. Progr
 
 **Next:** conduct a full release-quality and accessibility audit of Weeks 1–10; then build the February–June 2027 final-exam preparation programme without making unreleased Year 2 content accessible. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
 
-## Week 1 is now complete
+## Earlier Week 1 launch record (before Pass 1)
 
-The current release has **18 essential questions worth 98 marks** and two additional pathways:
-
-| Section | Questions | Marks | Time |
-|---|---:|---:|---:|
-| R — AO1 Retrieval | 10 | 20 | 30 min |
-| P — Connected problems | 3 | 30 | 70 min |
-| M — Extended modelling | 2 | 26 | 70 min |
-| A — Year 1 Statistics | 3 | 22 | 50 min |
-| Self-marking and correction | — | — | 20 min |
-| **Essential** | **18** | **98** | **240 min** |
-| T — Timed mixed set | 3 | 32 | 45 min attempt + 15 min marking |
-| X — A/A* extension | 1 | 14 | 40 min attempt + 20 min review |
-
-All questions are original Edexcel-style practice, **not official Pearson past-paper questions**. Each question has full step-by-step solutions, an optional first-step hint, a misconception prompt and a reflection question.
+The original Week 1 comprised 22 questions and an essential 98-mark core. That release design is retained as historical context only; the **current** Week 1 has 31 questions and an expanded 175-mark essential core, as documented above. Previously assigned marks, attempts and student work remain attached to the original question IDs.
 
 ## Mathematical notation
 
@@ -376,12 +345,13 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `docs/QUESTION_BLUEPRINT.md`: required week-by-week curriculum and authoring guidance.
 - `src/config.js`, `src/publication.js`: teacher-controlled release settings, shared publication gating, local storage key and Brunei timezone.
 - `src/data/programmes.js`: week titles, curricula and 2027 final programme preview.
-- `src/data/week01.js`: original Week 1 content.
+- `src/data/week01.js`: preserved original Week 1 questions combined with the additive expansion and pacing metadata.
+- `src/data/expanded-week-budget.js`, `src/data/week01-expansion-*.js`, `src/data/week02-expansion-*.js`, `src/data/week03-expansion-*.js`: Pass 1 original challenge additions, per-part specification tags and exam-paced four/five/six-hour allocations.
 - `src/data/week02.js`, `src/data/week02-retrieval.js`, `src/data/week02-pure.js`, `src/data/week02-modelling.js`, `src/data/week02-applied.js`, `src/data/week02-timed.js`, `src/data/week02-extension.js`: Week 2 content across all six subsections.
 - `src/data/week03.js`, `src/data/week03-retrieval.js`, `src/data/week03-pure.js`, `src/data/week03-modelling.js`, `src/data/week03-applied.js`, `src/data/week03-timed.js`, `src/data/week03-extension.js`: Week 3 content in the same format.
 - `src/data/week04.js`, `src/data/week04-retrieval.js`, `src/data/week04-pure.js`, `src/data/week04-modelling.js`, `src/data/week04-applied.js`, `src/data/week04-timed.js`, `src/data/week04-extension.js`: Week 4 question content in six existing modes.
 - `src/data/week05.js`, `src/data/week05-retrieval.js`, `src/data/week05-pure.js`, `src/data/week05-modelling.js`, `src/data/week05-applied.js`, `src/data/week05-timed.js`, `src/data/week05-extension.js`: Week 5 material across six existing subsections.
-- `src/data/week01-skill-map.js`, `src/data/week02-skill-map.js`, `src/data/week03-skill-map.js`, `src/data/week04-skill-map.js`, `src/data/week05-skill-map.js`, `src/data/tagged-questions.js`: permanent, reviewed part-by-part skill tags across both released weeks.
+- `src/data/week01-skill-map.js`, `src/data/week02-skill-map.js`, `src/data/week03-skill-map.js`, `src/data/week04-skill-map.js`, `src/data/week05-skill-map.js`, `src/data/tagged-questions.js`: permanent, reviewed part-by-part skill tags; later weeks and additive Pass 1 mappings are loaded through the same shared tagging system.
 - `src/data/skill-practice-index.js`: links from individual skills to published questions only.
 - `src/part-marking.js`: validated part scores, derived totals and exact primary-skill mark evidence.
 - `src/specification-analytics.js`, `src/specification-progress-view.js`: pure analytics and responsive topic/skill progress UI.
@@ -401,7 +371,8 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Release-quality audit:** inspect the complete Week 1–10 maths, student experience, mobile rendering, marking and backup/restore after merging the Week 10 PR.
-2. **Consolidation:** review topic-specification coverage and adjust future-targeted reattempt guidance without overwriting student results.
-3. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
-4. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.
+1. **Pass 2 — expand Weeks 4–6:** add genuinely connected AO2/AO3 problems, modelling and Year 1 Applied depth to the same 175/215/245-mark targets, while preserving all existing IDs and marks.
+2. **Pass 3 — expand Weeks 7–9:** increase deliberately unstructured synoptic work and further specification skill coverage.
+3. **Pass 4 — final quality audit:** independently verify mathematics, moderate AO attributions, address remaining skills without directly assessed evidence, and pilot honest student timing before release.
+4. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
+5. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.

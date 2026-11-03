@@ -1,3 +1,4 @@
+import {week03ExpansionSkillMap} from "./week03-expansion-skill-map.js";
 /**
  * Reviewed, part-by-part Edexcel 9MA0 Week 3 skill map.
  * One primary skill owns the mark allocation. Connected skills are exposure,
@@ -305,5 +306,6 @@ export const week03SkillMap = {
     [
       "P05-006"
     ]
-  ]
+  ],
+  ...week03ExpansionSkillMap
 };

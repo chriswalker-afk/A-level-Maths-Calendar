@@ -15,12 +15,12 @@ import {week10Questions} from '../src/data/week10.js';
 
 const coreGroups=['R','P','M','A'];
 const expected={
- R:{n:10,marks:20,minutes:30},
- P:{n:3,marks:30,minutes:70},
- M:{n:2,marks:26,minutes:70},
- A:{n:3,marks:22,minutes:50},
- T:{n:3,marks:32,minutes:45},
- X:{n:1,marks:14,minutes:40}
+ R:{n:10,marks:20,minutes:24},
+ P:{n:7,marks:70,minutes:84},
+ M:{n:3,marks:40,minutes:48},
+ A:{n:5,marks:45,minutes:54},
+ T:{n:4,marks:40,minutes:48},
+ X:{n:2,marks:30,minutes:36}
 };
 
 test('two programmes are distinct and correctly sized',()=>{
@@ -43,8 +43,8 @@ test('exactly Weeks 1–10 are authored and released',()=>{
  assert.equal(programmeOne.weeks[8].hasPublishedContent,true);
  assert.equal(programmeOne.weeks[9].hasPublishedContent,true);
  assert.ok(programmeOne.weeks.slice(10).every(w=>!w.hasPublishedContent));
- assert.equal(week02Questions.length,22);
- assert.equal(week03Questions.length,22);
+ assert.equal(week02Questions.length,31);
+ assert.equal(week03Questions.length,31);
  assert.equal(week04Questions.length,22);
  assert.equal(week05Questions.length,22);
  assert.equal(week06Questions.length,22);
@@ -56,9 +56,9 @@ test('exactly Weeks 1–10 are authored and released',()=>{
 });
 test('complete four-hour Week 1 core, recommended timed set and optional extension',()=>{
  const core=week01Questions.filter(q=>coreGroups.includes(q.section));
- assert.equal(core.length,18);
- assert.equal(core.reduce((sum,q)=>sum+q.marks,0),98);
- assert.equal(week01Questions.length,22);
+ assert.equal(core.length,25);
+ assert.equal(core.reduce((sum,q)=>sum+q.marks,0),175);
+ assert.equal(week01Questions.length,31);
  for(const [section,exp] of Object.entries(expected)){
   const questions=week01Questions.filter(q=>q.section===section);
   assert.equal(questions.length,exp.n,section+' number of questions');
@@ -66,7 +66,7 @@ test('complete four-hour Week 1 core, recommended timed set and optional extensi
   assert.ok(questions.reduce((sum,q)=>sum+q.minutes,0)<=exp.minutes,section+' time budget');
   assert.deepEqual(questions.map(q=>q.id),questions.map((q,i)=>'W01-'+section+(i+1)),section+' contiguous IDs');
  }
- assert.equal(new Set(week01Questions.map(q=>q.id)).size,22);
+ assert.equal(new Set(week01Questions.map(q=>q.id)).size,31);
 });
 test('all questions have verified mark allocations and full support',()=>{
  for(const q of week01Questions){

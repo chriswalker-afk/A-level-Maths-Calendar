@@ -1,4 +1,7 @@
-export const week01Questions = [
+import {week01Expansion} from "./week01-expansion.js";
+import {pacedExpandedWeek} from "./expanded-week-budget.js";
+
+const originalWeek01Questions = [
   {
     "id": "W01-R1",
     "section": "R",
@@ -866,3 +869,13 @@ export const week01Questions = [
     "reflection": "Can you obtain the constant tangency height again using differentiation instead of a discriminant?"
   }
 ];
+
+/** Additions are placed AFTER each original section, never changing prior IDs/part letters. */
+export const week01Questions=pacedExpandedWeek([
+ ...originalWeek01Questions.filter(q=>q.section==="R"),
+ ...originalWeek01Questions.filter(q=>q.section==="P"),...week01Expansion.P,
+ ...originalWeek01Questions.filter(q=>q.section==="M"),...week01Expansion.M,
+ ...originalWeek01Questions.filter(q=>q.section==="A"),...week01Expansion.A,
+ ...originalWeek01Questions.filter(q=>q.section==="T"),...week01Expansion.T,
+ ...originalWeek01Questions.filter(q=>q.section==="X"),...week01Expansion.X
+]);

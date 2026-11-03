@@ -49,7 +49,8 @@ test("next and previous move across subsections without a week-overview intersti
  assert.equal(adjacentQuestionRoute(1,q,"R",8,1),"#/study/1/R/9");
  assert.equal(adjacentQuestionRoute(1,q,"R",9,1),"#/study/1/P/0");
  assert.equal(adjacentQuestionRoute(1,q,"P",0,-1),"#/study/1/R/9");
- assert.equal(adjacentQuestionRoute(1,q,"X",0,1),null);
+ assert.equal(adjacentQuestionRoute(1,q,"X",0,1),"#/study/1/X/1");
+ assert.equal(adjacentQuestionRoute(1,q,"X",1,1),null);
  assert.equal(adjacentQuestionRoute(1,q,"M",0,42),null);
  assert.equal(adjacentQuestionRoute(1,q,"Q",0,1),null);
 });

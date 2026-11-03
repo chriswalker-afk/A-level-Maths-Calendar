@@ -1,3 +1,4 @@
+import {week02ExpansionSkillMap} from "./week02-expansion-skill-map.js";
 /**
  * Independently reviewed Week 2 part-level skill tags (Pearson Edexcel 9MA0).
  * One primary skill receives the part's marks; any secondary tags only
@@ -333,5 +334,6 @@ export const week02SkillMap = {
         "P02-015"
       ]
     ]
-  ]
+  ],
+  ...week02ExpansionSkillMap
 };

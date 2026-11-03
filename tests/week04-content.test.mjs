@@ -110,7 +110,7 @@ test("My Specification practice and recommendation links use correct Week 4 subs
  assert.equal(report.summary.releasedQuestions,22);
  assert.equal(report.summary.completedQuestions,1,"A recorded zero is completed evidence");
  const overall=calculateSpecificationProgress({questions:all,records:{},scope:"internal"});
- assert.equal(overall.summary.releasedQuestions,88);
+ assert.equal(overall.summary.releasedQuestions,115);
  const suggestions=recommendRevision({questions:all,records:{},report:overall,scope:"internal"});
  for(const ref of suggestions){
   const q=all.find(x=>x.id===ref.questionId);assert.ok(q);
