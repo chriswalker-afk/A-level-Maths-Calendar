@@ -90,7 +90,7 @@ test("all 66 part-level primary skills are unique per part, in scope and give no
    assert.ok(!tag.secondarySkillIds.includes(tag.primarySkillId));
    for(const secondary of tag.secondarySkillIds)
     assert.equal(getSpecSkill(secondary)?.scope,"internal",q.id+" "+secondary);
-   if(primary?.strand!=="P")assert.equal(primary.year,1,q.id+" Year 1 Applied scope only");
+   if(!primary.topicId.startsWith("P"))assert.equal(primary.year,1,q.id+" Year 1 Applied scope only");
    if(q.section==="A")assert.ok(["S01","S02","S05","M07","M08"].includes(primary.topicId),q.id+" Year 1 Applied attribution");
    partCount++;score+=marks;
   }
