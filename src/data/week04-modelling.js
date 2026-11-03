@@ -68,7 +68,7 @@ export const week04Modelling = [
       "proof",
       "model comparison"
     ],
-    "stem": "Two teams model a pollutant concentration \\(C\\) (in mg L\\(^{-1}\\)) after treatment begins at time \\(t\\) hours. They agree that \\(t\\ge0\\), but propose different functions: \\(A(t)=10+20e^{-t/4}\\) and \\(B(t)=10+\\frac{20}{1+t/4}\\). Lower concentrations are preferable. Assume the models are used only for nonnegative time.",
+    "stem": "Two teams model a pollutant concentration \\(C\\) (in \\(\\mathrm{mg\\,L^{-1}}\\)) after treatment begins at time \\(t\\) hours. They agree that \\(t\\ge0\\), but propose different functions: \\(A(t)=10+20e^{-t/4}\\) and \\(B(t)=10+\\frac{20}{1+t/4}\\). Lower concentrations are preferable. Assume the models are used only for nonnegative time.",
     "parts": [
       [
         "Show that the models predict the same initial concentration and the same long-term limiting concentration.",
@@ -93,13 +93,13 @@ export const week04Modelling = [
     ],
     "hint": "For B, use the chain rule on \\((1+t/4)^{-1}\\). To prove the inequality, show \\(g(0)=0\\) and \\(g'(u)>0\\) when \\(u>0\\); then take reciprocals of positive expressions.",
     "steps": [
-      "At \\(t=0\\), both models give \\(10+20=30\\) mg L\\(^{-1}\\). As \\(t\\to\\infty\\), both \\(e^{-t/4}\\) and \\((1+t/4)^{-1}\\) tend to zero, giving common limit \\(10\\) mg L\\(^{-1}\\). [2]",
-      "Differentiate: \\(A'(t)=-5e^{-t/4}\\) and \\(B'(t)=-5(1+t/4)^{-2}\\). At \\(t=0\\), \\(A'(0)=B'(0)=-5\\) mg L\\(^{-1}\\) h\\(^{-1}\\). Their initial decreases are numerically identical. [4]",
-      "Differentiate again: \\(A''(t)=\\frac54e^{-t/4}\\) and \\(B''(t)=\\frac52(1+t/4)^{-3}\\). Thus \\(A''(0)=\\frac54\\) and \\(B''(0)=\\frac52\\) in mg L\\(^{-1}\\) h\\(^{-2}\\). As both are positive, their initially negative rates become less negative; B's rate does so twice as quickly at the start. [3]",
+      "At \\(t=0\\), both models give \\(10+20=30\\) \\(\\mathrm{mg\\,L^{-1}}\\). As \\(t\\to\\infty\\), both \\(e^{-t/4}\\) and \\((1+t/4)^{-1}\\) tend to zero, giving common limit \\(10\\) \\(\\mathrm{mg\\,L^{-1}}\\). [2]",
+      "Differentiate: \\(A'(t)=-5e^{-t/4}\\) and \\(B'(t)=-5(1+t/4)^{-2}\\). At \\(t=0\\), \\(A'(0)=B'(0)=-5\\) \\(\\mathrm{mg\\,L^{-1}\\,h^{-1}}\\). Their initial decreases are numerically identical. [4]",
+      "Differentiate again: \\(A''(t)=\\frac54e^{-t/4}\\) and \\(B''(t)=\\frac52(1+t/4)^{-3}\\). Thus \\(A''(0)=\\frac54\\) and \\(B''(0)=\\frac52\\) in \\(\\mathrm{mg\\,L^{-1}\\,h^{-2}}\\). As both are positive, their initially negative rates become less negative; B's rate does so twice as quickly at the start. [3]",
       "The function \\(g(u)=e^u-1-u\\) has \\(g(0)=0\\) and derivative \\(g'(u)=e^u-1>0\\) when \\(u>0\\). Hence \\(e^u>1+u>0\\) for \\(u>0\\). Taking positive reciprocals gives \\(e^{-u}<\\frac1{1+u}\\). Put \\(u=t/4>0\\) and multiply by 20, then add 10: \\(A(t)<B(t)\\) for every \\(t>0\\). [3]",
       "A mathematical comparison cannot determine which formula fits measured concentrations; data and error analysis are required. Both models assume an unchanging treatment process and a limiting background concentration of exactly 10, while temperature, inflow, mixing or treatment efficiency may change. Any two clearly distinct, contextual limitations. [2]"
     ],
-    "answer": "Both start at \\(30\\) mg L\\(^{-1}\\) and approach \\(10\\) mg L\\(^{-1}\\). Both initially fall at \\(-5\\) mg L\\(^{-1}\\) h\\(^{-1}\\), but \\(A(t)<B(t)\\) for every \\(t>0\\).",
+    "answer": "Both start at \\(30\\) \\(\\mathrm{mg\\,L^{-1}}\\) and approach \\(10\\) \\(\\mathrm{mg\\,L^{-1}}\\). Both initially fall at \\(-5\\) \\(\\mathrm{mg\\,L^{-1}\\,h^{-1}}\\), but \\(A(t)<B(t)\\) for every \\(t>0\\).",
     "misconception": "Two models can have the same starting value and gradient without predicting the same future path; the second derivatives distinguish their early curvature.",
     "reflection": "How could a small set of actual observations at t = 1, 2 and 4 help decide which model is more appropriate?"
   }
