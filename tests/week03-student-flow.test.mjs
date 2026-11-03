@@ -43,8 +43,8 @@ test("Week 3 calendar, working, marks and 9MA0 evidence work without changing ol
   window.dispatchEvent(new window.Event("hashchange"));
  };
  assert.equal(root.querySelectorAll(".planner-cell").length,10);
- assert.equal(root.querySelectorAll("a.planner-cell.is-open").length,7);
- assert.equal(root.querySelectorAll(".planner-cell.is-upcoming").length,3);
+ assert.equal(root.querySelectorAll("a.planner-cell.is-open").length,8);
+ assert.equal(root.querySelectorAll(".planner-cell.is-upcoming").length,2);
  const week3=[...root.querySelectorAll("a.planner-cell.is-open")]
   .find(x=>x.getAttribute("href").startsWith("#/study/3/"));
  assert.ok(week3,"The third week must be directly clickable");
@@ -91,13 +91,13 @@ test("Week 3 calendar, working, marks and 9MA0 evidence work without changing ol
  assert.equal(root.querySelector("#previous").dataset.targetRoute,"#/study/3/R/9");
 
  navigate("#/progress/internal");
- assert.equal(root.querySelector(".metric strong").textContent,"4/126");
- assert.equal(root.querySelectorAll(".weekly-progress-group").length,7);
+ assert.equal(root.querySelector(".metric strong").textContent,"4/144");
+ assert.equal(root.querySelectorAll(".weekly-progress-group").length,8);
  const groups=root.querySelectorAll(".weekly-progress-group");
  assert.match(groups[2].textContent,/Trigonometry and periodic models/);
  assert.match(groups[2].textContent,/2 \/ 10 questions marked/);
  assert.ok(groups[2].querySelector('a[href="#/study/3/R/0"]'));
- assert.match(root.querySelector(".spec-progress-pulse").textContent,/4 \/ 154/);
+ assert.match(root.querySelector(".spec-progress-pulse").textContent,/4 \/ 176/);
  navigate("#/specification/internal/P05");
  assert.match(root.querySelector(".spec-topic-evidence").textContent,/2 \/ /);
  assert.match(root.querySelector("#P05-002").textContent,/0% of verified part marks/);
@@ -105,7 +105,7 @@ test("Week 3 calendar, working, marks and 9MA0 evidence work without changing ol
  const resumed=[...root.querySelectorAll("a.planner-cell.is-open")]
   .find(x=>x.getAttribute("href").startsWith("#/study/3/"));
  assert.equal(resumed.getAttribute("href"),"#/study/3/R/1");
- assert.equal(root.querySelectorAll(".planner-cell.is-upcoming").length,3);
+ assert.equal(root.querySelectorAll(".planner-cell.is-upcoming").length,2);
  dom.window.close();
  for(const name of ["window","document","location","localStorage","customElements","ResizeObserver","requestAnimationFrame"])
   delete globalThis[name];
