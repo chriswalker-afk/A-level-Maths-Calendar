@@ -89,7 +89,7 @@ function progressPage(scope="internal",strand="all"){
  return '<section class="page"><span class="eyebrow">Your independent study record</span><h1 class="page-title">My progress</h1><p class="intro">Self-assessed scores and reflection notes live in this browser only. They are not teacher-verified and do not sync automatically across devices.</p>'+(importNotice?'<p class="import-notice" role="status">'+esc(importNotice)+'</p>':'')+'<div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong><span>core questions</span></div><div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>lastStatus(q)==='I').length+'</strong><span>finished on own</span></div><div class="metric"><span>WITH HELP</span><strong>'+attempts.filter(q=>lastStatus(q)==='P').length+'</strong><span>marked with help</span></div><div class="metric"><span>CORE REMAINING</span><strong>'+(core.length-coreAttempts.length)+'</strong><span>essential questions still to mark</span></div></div>'+
  renderRevisionSuggestions({questions:published,records:saved,report,scope})+
  renderTopicProgressDashboard(report,{scope,strand})+
- heading('Your Week 1 question record','A valid mark is what makes a question finished')+'<div class="progress-grid">'+Object.entries(sections).map(([code,label])=>{const set=qs.filter(q=>q.section===code),done=set.filter(completed).length;return '<div class="progress-item"><span class="eyebrow">'+code+' · '+esc(label)+'</span><h3>'+done+' / '+set.length+' attempts marked</h3><div class="meter"><span style="width:'+(100*done/(set.length||1))+'%"></span></div><p style="margin-top:10px">'+(essentialSections.has(code)?'Included in the four essential hours.':'Recommended or optional beyond the four essential hours.')+'</p><a class="link" href="#/study/1/'+code+'/0">Open practice →</a></div>'}).join('')+'</div>'+
+ heading('Your Week 1 question record','A valid mark is what makes a question finished')+'<div class="progress-grid">'+Object.entries(sections).map(([code,label])=>{const set=qs.filter(q=>q.section===code),done=set.filter(everCompleted).length;return '<div class="progress-item"><span class="eyebrow">'+code+' · '+esc(label)+'</span><h3>'+done+' / '+set.length+' attempts marked</h3><div class="meter"><span style="width:'+(100*done/(set.length||1))+'%"></span></div><p style="margin-top:10px">'+(essentialSections.has(code)?'Included in the four essential hours.':'Recommended or optional beyond the four essential hours.')+'</p><a class="link" href="#/study/1/'+code+'/0">Open practice →</a></div>'}).join('')+'</div>'+
  heading('My revision notes','Make your next action specific')+'<div class="panel"><div class="reflection-row"><label for="strength">A method I can now use independently</label><textarea id="strength" class="reflection" placeholder="For example: I check the domain before solving a composite inequality…">'+esc(saved.reflections?.strength||'')+'</textarea></div><div class="reflection-row"><label for="repair">My next misconception to repair</label><textarea id="repair" class="reflection" placeholder="Name the exact step to practise…">'+esc(saved.reflections?.repair||'')+'</textarea></div><div class="reflection-row"><label for="strategy">My strategy for an unfamiliar question</label><textarea id="strategy" class="reflection" placeholder="What will you do when you are unsure where to begin?">'+esc(saved.reflections?.strategy||'')+'</textarea></div><p id="reflection-message" class="small muted">Notes save automatically in this browser.</p></div>'+
  '<div class="panel" style="margin-top:16px"><h3>Recorded self-marks</h3><p>'+(scored.length?total+' / '+available+' available marks across '+scored.length+' scored questions.':'No numerical scores recorded yet. Use the mark scheme to self-award marks after attempting a question.')+' The I / P / S rating measures independence, not just whether the final answer is correct.</p></div>'+renderProgressTransfer(saved)+'</section>';
 }
@@ -178,7 +178,8 @@ function render(){
         question:q,
         record:saved[q.id]||{},
         onChange(marking){
-          const current=saved[q.id]||{};
+          const previous=saved[q.id]||{};
+          const current={...previous};
           const priorScore=current.score,priorSource=current.scoreSource,
             wasFinished=isQuestionFinished(current,q.marks),
             previousParts=JSON.stringify(current.partMarks||{});
@@ -196,8 +197,9 @@ function render(){
           }
           saved[q.id]=current;
           const ok=store();
-          if(ok)remountHistory(q);
-          return ok;
+          if(!ok){saved[q.id]=previous;return false;}
+          remountHistory(q);
+          return true;
         },
         onCompletionChange(finished){
           const jump=el.querySelector('[data-jump="'+Math.max(0,Math.min(index,items.length-1))+'"]');
