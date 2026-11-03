@@ -2,6 +2,7 @@ import {
  specificationTopics,specificationSkills,getSpecTopic,specificationCounts,
  SPEC_SOURCE_URL,STRANDS,THEMES,searchCatalogue,inScope
 } from "./data/specification.js";
+import {getPublishedPracticeForSkill} from "./data/skill-practice-index.js";
 
 const escape=v=>String(v??"").replace(/[&<>"']/g,c=>
  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -80,7 +81,7 @@ function renderOverview(scope){
  const initial=renderGroups(scope);
  return '<div class="page spec-page">'+intro(scope)+
  '<section class="spec-explainer"><div class="spec-explainer-icon" aria-hidden="true">i</div>'+
- '<div><strong>What do the progress numbers mean?</strong><p>For now, this is the full skills checklist, not a score report. Once questions are tagged to individual skills in Pass 4B, your self-marked answers can feed a trustworthy dashboard in 4C. A blank skill is not a zero mark.</p></div></section>'+
+ '<div><strong>What do the progress numbers mean?</strong><p>For now, this is the full skills checklist, not a score report. Week 1 questions now link to the skills they practise. Topic-level counts and accuracy percentages will follow in Pass 4C after detailed marking evidence has been checked. An unpractised skill is not 0% accuracy.</p></div></section>'+
  '<div class="spec-tools"><div class="spec-search-wrap"><label for="spec-search">Search skills and topics</label>'+
  '<input type="search" id="spec-search" placeholder="Try '+"'"+'chain rule, discriminant, normal distribution…'+"'"+'" value="'+escape(searchTerm)+'" autocomplete="off">'+
  '</div><div class="spec-strand-wrap"><span class="spec-filter-caption">Filter by area</span><div class="spec-strand-buttons" role="group" aria-label="Filter specification by area">'+
@@ -92,6 +93,7 @@ function renderOverview(scope){
  '<div id="spec-results">'+initial.html+'</div>'+themesSection()+sourceNote()+'</div>';
 }
 function skillCard(skill,scope){
+ const practice=getPublishedPracticeForSkill(skill.id);
  const future=skill.scope!=="internal";
  const yearLabel=skill.year===1?"Year 1 Applied":skill.year===2?"Year 2 Applied":"Pure · Both papers";
  return '<details class="spec-skill" id="'+escape(skill.id)+'"><summary><span class="spec-skill-number">'+escape(skill.id)+'</span>'+
@@ -100,8 +102,17 @@ function skillCard(skill,scope){
  '<span class="spec-skill-chevron" aria-hidden="true">⌄</span></summary>'+
  '<div class="spec-skill-content"><div class="spec-ask"><strong>What might an examination ask?</strong><p class="math">'+escape(skill.examDemand)+'</p></div>'+
  (skill.pitfall?'<div class="spec-pitfall"><strong>Watch out for</strong><p>'+escape(skill.pitfall)+'</p></div>':'')+
- '<div class="spec-evidence-note"><span class="spec-evidence-dot" aria-hidden="true"></span>'+
- 'Practice evidence will appear here when question-to-skill tagging is introduced in Pass 4B.</div></div></details>';
+ '<div class="spec-skill-practice"><strong>Published questions connected to this skill</strong>'+
+ (practice.length?
+   '<p>Try a question, then record a self-mark. “Main” means this skill is assessed directly; “Connected” means it supports the wider problem.</p>'+
+   '<div class="spec-skill-practice-links">'+practice.slice(0,5).map(item=>
+     '<a href="'+escape(item.href)+'"><span class="spec-practice-id">'+escape(item.questionId)+
+     ' · '+escape(item.role==="primary"?"Main":"Connected")+'</span><span>'+escape(item.title)+'</span></a>'
+   ).join('')+'</div>'+
+   (practice.length>5?'<p class="spec-practice-more">Showing five of '+practice.length+' published questions.</p>':'')
+   :'<p>No published questions are tagged to this skill yet. It has not been scored as 0%.</p>')+
+ '</div><div class="spec-evidence-note"><span class="spec-evidence-dot" aria-hidden="true"></span>'+
+ 'Skill-level attempt counts and mark accuracy will follow in Pass 4C.</div></div></details>';
 }
 function renderTopic(scope,topicId){
  const topic=getSpecTopic(topicId);
@@ -125,8 +136,8 @@ function renderTopic(scope,topicId){
  (later.length?'<section class="spec-later"><div class="spec-section-heading"><div><span class="eyebrow">Looking ahead</span><h2>Year 2 additions</h2><p>These skills are part of the final A Level programme but outside the current internal-exam scope.</p></div></div>'+
  '<details class="spec-later-disclosure"><summary>Preview '+later.length+' future skill'+(later.length===1?'':'s')+' <span aria-hidden="true">⌄</span></summary>'+
  '<div class="spec-skill-entries">'+later.map(skill=>skillCard(skill,scope)).join('')+'</div></details></section>':'')+
- '<div class="spec-practice-future"><div><strong>Practice links are the next pass.</strong>'+
- '<p>Question parts will be tagged with these stable skill IDs in Pass 4B; accuracy and coverage calculations follow in 4C. No progress is being guessed from whole-question scores.</p></div>'+
+ '<div class="spec-practice-future"><div><strong>Published practice links are now available for tagged skills.</strong>'+
+ '<p>Each Week 1 question part is now tagged to a primary skill, with optional connected skills. Skill-level counts and accuracy are planned for Pass 4C, after checking detailed marking evidence.</p></div>'+
  '<a class="btn ghost small" href="#/calendar">Browse published practice →</a></div>'+
  sourceNote()+'</div>';
 }
@@ -171,7 +182,7 @@ export function mountSpecification(root,{scope="internal",topicId=null,skillId=n
  }
  function onToggle(event){
   if(!event.target.open||!(event.target.matches?.(".spec-skill")))return;
-  const jax=window.MathJax;
+  const jax=event.target.ownerDocument.defaultView?.MathJax;
   if(typeof jax?.typesetPromise==="function")
    jax.typesetPromise([event.target]).catch(()=>{});
  }

@@ -1,3 +1,5 @@
+import {marksBreakdown,applyPartMark,applyOverallMark,clearAllMarks,clearBreakdown,partKey} from "./part-marking.js";
+import {getSpecSkill} from "./data/specification.js";
 /**
  * Finishing a question has two independent signals:
  * - independence: how a learner worked (optional I / P)
@@ -18,6 +20,32 @@ function escapeHtml(value) {
 }
 
 const difficulties=["Technique","Method choice","Reasoning","Interpretation","Calculator","Time"];
+
+function partMarkingMarkup(question,record){
+ if(!Array.isArray(question.parts)||question.parts.length<2)return "";
+ const pieces=question.parts.map((part,index)=>{
+  const key=partKey(question,index);
+  const meta=part[2]||{};
+  const skill=getSpecSkill(meta.primarySkillId);
+  const existing=record.partMarks?.[key];
+  const entered=Number.isInteger(existing)&&existing>=0&&existing<=part[1];
+  return '<div class="detail-part-row"><div class="detail-part-label"><label for="self-part-'+key+'"><strong>Part ('+key+')</strong>'
+   +'<span>'+part[1]+' available mark'+(part[1]===1?'':'s')+'</span></label>'
+   +(skill?'<a href="#/specification/internal/'+escapeHtml(skill.topicId)+'/'+escapeHtml(skill.id)+'" title="See this skill in My Specification">'+escapeHtml(skill.statement)+'</a>':'')+'</div>'
+   +'<div class="detail-part-score"><input id="self-part-'+key+'" data-part-mark="'+key+'"'
+   +' type="number" min="0" max="'+part[1]+'" step="1" inputmode="numeric"'
+   +' aria-label="Marks earned for part ('+key+'), out of '+part[1]+'"'
+   +' value="'+(entered?existing:"")+'"><span>/ '+part[1]+'</span></div></div>';
+ }).join("");
+ return '<details id="mark-by-parts" class="mark-by-parts"'+(record.scoreSource==="parts"?' open':'')+'>'
+  +'<summary><span><strong>Optional: mark each part separately</strong>'
+  +'<small>Useful for seeing which specification skills earned marks</small></span><span class="detail-chevron" aria-hidden="true">⌄</span></summary>'
+  +'<div class="mark-by-parts-body"><p>Enter a mark for every part, including 0 if no marks were earned. When all parts are scored, your total is calculated automatically. Only completed part breakdowns can provide precise skill-accuracy data.</p>'
+  +'<div class="detail-part-grid">'+pieces+'</div>'
+  +'<div class="detail-part-bottom"><span id="detail-part-summary" aria-live="polite" role="status"></span>'
+  +'<button type="button" id="clear-part-breakdown" class="btn ghost small">Clear part scores</button></div>'
+  +'<p id="detail-part-info" class="detail-part-info" role="status" aria-live="polite"></p></div></details>';
+}
 
 function assessmentMarkup(question, record) {
   const marks=question.marks;
@@ -52,6 +80,7 @@ function assessmentMarkup(question, record) {
     +' value="'+escapeHtml(score)+'" aria-describedby="self-mark-message">'
     +'<span class="finish-out-of">/ '+marks+' marks</span>'
     +'<button type="button" class="clear-self-mark" id="clear-self-mark"'+(hasScore?'':' disabled')+'>Clear mark</button></div>'
+    +partMarkingMarkup(question,record)
     +'<p id="self-mark-message" class="finish-mark-message" role="status" aria-live="polite">'
     +(hasScore?'Recorded. This question is finished.':'No mark entered yet. This question is still in progress.')+'</p>'
     +'</div></div></div>'
@@ -113,35 +142,104 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
       persist();
     });
   });
+  const detail=root.querySelector("#mark-by-parts");
+  const partInputs=[...root.querySelectorAll("[data-part-mark]")];
+  const detailSummary=root.querySelector("#detail-part-summary");
+  const detailInfo=root.querySelector("#detail-part-info");
+
+  function replaceMarkState(next){
+    for(const key of ["score","scoreSource","partMarks"])delete state[key];
+    for(const key of ["score","scoreSource","partMarks"])
+      if(Object.prototype.hasOwnProperty.call(next,key))state[key]=next[key];
+  }
+  function refreshDetailed(message=""){
+    if(!detail)return;
+    const result=marksBreakdown(question,state.partMarks);
+    const derived=state.scoreSource==="parts";
+    score.readOnly=derived||detail.open;
+    score.setAttribute("aria-readonly",String(score.readOnly));
+    if(derived)score.title="This total is calculated from the individual parts. Edit those parts or clear the breakdown.";
+    else if(detail.open)score.title="Close detailed marking to edit the overall total.";
+    else score.removeAttribute("title");
+    if(detailSummary)
+      detailSummary.textContent=result.entered+" / "+result.count+" parts marked · subtotal "+result.subtotal+" / "+question.marks;
+    if(detailInfo){
+      detailInfo.textContent=message||
+        (result.complete&&derived?"All parts marked. The total has been calculated automatically.":
+         isQuestionFinished(state,question.marks)&&!derived
+          ?"Your previous overall mark stays recorded until you finish the part breakdown."
+          :"Fill in every part (including 0s) to calculate a total and finish.");
+    }
+  }
+  function refreshMark(message="",invalid=false){
+    const finished=isQuestionFinished(state,question.marks);
+    score.value=finished?String(state.score):"";
+    updateCompletion(message);
+    markMessage.classList.toggle("mark-error",invalid);
+    refreshDetailed();
+  }
   function readMark(){
-    const raw=score.value.trim();
-    if(raw===""){
-      delete state.score;
-      persist();updateCompletion();
-      return;
-    }
-    const value=Number(raw);
-    if(!Number.isInteger(value)||value<0||value>question.marks){
-      delete state.score;
-      persist();
-      updateCompletion("Enter a whole number from 0 to "+question.marks+" to finish this question.");
-      markMessage.classList.add("mark-error");
-      return;
-    }
-    state.score=value;
-    persist();updateCompletion();
+    if(score.readOnly)return;
+    const {record:next,invalid}=applyOverallMark(state,question,score.value);
+    replaceMarkState(next);
+    // A manual total deliberately supersedes partial marks.
+    for(const input of partInputs)input.value="";
+    persist();
+    refreshMark(invalid
+      ?"Enter a whole number from 0 to "+question.marks+" to finish this question.":"",invalid);
   }
   score.addEventListener("input",readMark);
   score.addEventListener("change",readMark);
+
+  for(const input of partInputs){
+    input.addEventListener("input",()=>{
+      const key=input.dataset.partMark;
+      const {record:next,summary,invalid}=applyPartMark(state,question,key,input.value);
+      replaceMarkState(next);
+      input.setAttribute("aria-invalid",String(invalid));
+      persist();
+      const message=invalid
+        ?"Enter a whole number between 0 and "+input.max+" for part ("+key+")."
+        :summary.complete
+          ?"All parts marked. Total: "+summary.subtotal+" out of "+question.marks+". Question finished."
+          :summary.entered+" of "+summary.count+" parts marked. Finish every part to calculate the total."+
+            (isQuestionFinished(state,question.marks)&&state.scoreSource!=="parts"?" Your existing overall mark remains recorded until this breakdown is complete.":"");
+      refreshMark(
+        invalid?message:
+        summary.complete?"All parts marked. The question is finished.":"",
+        invalid
+      );
+      if(detailInfo)detailInfo.textContent=message;
+      if(invalid&&detailInfo)detailInfo.classList.add("mark-error");
+      else detailInfo?.classList.remove("mark-error");
+    });
+  }
+  detail?.addEventListener("toggle",()=>refreshDetailed());
+  detail?.querySelector("#clear-part-breakdown")?.addEventListener("click",()=>{
+    const next=clearBreakdown(state);
+    replaceMarkState(next);
+    for(const input of partInputs){
+      input.value="";
+      input.removeAttribute("aria-invalid");
+    }
+    persist();
+    refreshMark();
+  });
   clear.addEventListener("click",()=>{
+    replaceMarkState(clearAllMarks(state));
     score.value="";
-    delete state.score;
-    persist();updateCompletion();
-    score.focus();
+    for(const input of partInputs){
+      input.value="";
+      input.removeAttribute("aria-invalid");
+    }
+    persist();refreshMark();
+    if(detail&&!detail.open)score.focus();
+    else partInputs[0]?.focus();
   });
   root.querySelector("#self-error").addEventListener("change",event=>{
     state.error=event.target.value;
     persist();
   });
   updateCompletion();
+  refreshDetailed();
 }

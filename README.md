@@ -19,9 +19,27 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 - Open each topic and skill to read specific examination demands, common pitfalls and the exact Pearson topic reference.
 - Future-only Applied content is labelled and remains discoverable rather than being presented as part of the internal exam.
 - The three overarching themes of argument/proof, problem solving and modelling are prominent across the course.
-- Stable skill identifiers make the library ready for **4B question-part tagging** and **4C performance analytics**.
+- Stable skill identifiers now connect every Week 1 question part to one primary skill and optional related skills; **4C performance analytics** is next.
 
-**No percentages or practice counts are generated yet**. Accurate data requires question-to-skill tagging and, ideally, marks assigned to individual question parts; we never infer skill mastery from an untagged overall mark. The reference guide is [docs/SPECIFICATION_LIBRARY.md](docs/SPECIFICATION_LIBRARY.md) and the official authority is [Pearson's 9MA0 specification](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf).
+**No topic-level accuracy percentages are generated yet.** Every Week 1 question part is now tagged, and the new optional part-marking system can collect precise evidence. Previously saved whole-question scores remain valid, but are not misrepresented as accurate marks for particular skills. The reference guide is [docs/SPECIFICATION_LIBRARY.md](docs/SPECIFICATION_LIBRARY.md) and the official authority is [Pearson's 9MA0 specification](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf).
+
+## Pass 4B — Question-to-skill links and detailed marking
+
+All **22 Week 1 questions** are now linked to the 9MA0 skill library **part by part**.
+
+Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
+
+Students can optionally expand **Mark each part separately** while self-marking:
+
+- Enter a whole-number score between **0** and the maximum for each part.
+- When every part has a score, the overall mark is **automatically calculated**, and the question becomes **Finished**.
+- If a derived part score is removed, that total is no longer valid and the question returns to *Not yet finished*.
+- An existing overall-only score remains saved and valid while students try an unfinished breakdown; completing it replaces the previous total.
+- Students who prefer to enter one overall mark can continue doing so. Previously saved marks, working and independence choices are preserved.
+
+In **My Specification**, individual skills now link to published questions that practise them. On each question, students can optionally reveal which skills were used. Future weeks are **not** released by these links.
+
+Actual skill percentage accuracy is intentionally deferred to **Pass 4C** so that analysis uses only verified individual-part marks, not overall-only scores misallocated across topics. See [the specification and evidence guide](docs/SPECIFICATION_LIBRARY.md) for the permanent skill-ID schema and scoring rules.
 
 ## Week 1 is now complete
 
@@ -109,7 +127,10 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `docs/QUESTION_BLUEPRINT.md`: required week-by-week curriculum and authoring guidance.
 - `src/config.js`: publication settings, local storage key and Brunei timezone.
 - `src/data/programmes.js`: week titles, curricula and 2027 final programme preview.
-- `src/data/week01.js`: completed Week 1 content, including T and X extension sections.
+- `src/data/week01.js`: original Week 1 question content, including T and X extension sections.
+- `src/data/week01-skill-map.js`, `src/data/tagged-questions.js`: verified part-by-part skill tags.
+- `src/data/skill-practice-index.js`: links from individual skills to published questions only.
+- `src/part-marking.js`: validated part scores, derived totals, and future accuracy evidence.
 - `src/app.js`: calendar, question navigator, MathJax typesetting, solutions and progress tracking.
 - `src/working-state.js`, `src/working-space.js`, `src/workspace-maths.js`, `src/workspace-drawing.js`: working modes and local persistence.
 - `src/question-assessment.js`: score-driven completion, clear independence/help reporting and self-marking.
@@ -117,10 +138,11 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `tests/content.test.mjs`: content, maths delimiters, AO marks and time audits.
 - `tests/math-render.test.mjs`: MathJax parse tests against all authored equations.
 - `tests/working-state.test.mjs`, `tests/working-ui.test.mjs`, `tests/question-assessment.test.mjs`: working space and scoring UI regressions.
+- `tests/question-skill-tags.test.mjs`, `tests/part-marking.test.mjs`, `tests/detailed-marking-ui.test.mjs`: skill mapping, legacy marks, complete breakdowns and numeric validation.
 
 ## Next passes
 
-1. Review actual student interactions and mathematical rendering on phones/tablets and desktops.
-2. Refine the working and self-marking experience before scaling.
-3. Produce and validate Weeks 2–10 one week at a time.
-4. Build the February–June full A Level programme using the same question library architecture.
+1. **4C — Personal specification dashboard:** distinct questions attempted per topic; mark accuracy calculated only from validated primary-part evidence; independent/help indicators and coverage. Clearly distinguish *No evidence* from 0%, and show evidence counts and caveats.
+2. **4D — Suggested revision and portability:** recommend published questions for skills needing attention, preserve a history of reattempts and support progress export/import.
+3. **Scale content:** review the first week's interactions and author Weeks 2–10 in a steady sequence, retaining the same stable skill IDs and part-marking tests.
+4. **Full 2027 programme:** extend the same data model to Year 2 Applied and final examination preparation.

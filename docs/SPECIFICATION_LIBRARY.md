@@ -1,6 +1,6 @@
-# Pass 4A — Student-friendly 9MA0 specification library
+# Student-friendly 9MA0 specification and question-skill evidence
 
-**Status:** Catalogue and interactive reader authored; question-to-skill evidence is deliberately not implemented until Pass 4B.
+**Status:** Pass 4A specification library and Pass 4B question-part tagging are implemented. The personalised percentage dashboard follows in Pass 4C.
 
 ## Curriculum authority
 
@@ -51,20 +51,62 @@ Each skill has these fields:
 
 Do not count the same marks repeatedly for several secondary-topic tags. For accuracy calculations, allocate marks at the part level to a **primary skill**, with secondary skills recorded as *exposure/links*, not automatically credited again.
 
-## Deliberately not present in 4A
+## Pass 4B — implemented question-to-skill tagging
 
-- Topic or skill percentage accuracy and attempt counters.
-- Automatic mastery claims based on unaudited whole-question marks.
-- A teacher dashboard or student log-in.
-- Links from every skill to questions that have not yet been tagged.
-- Publishing future-week questions.
+Week 1 now has **22 fully tagged questions**, including 18 essential questions, three timed-set questions and one extension. Each mark-bearing part has **exactly one primary skill ID**, zero or more secondary connected-skill IDs, and the same marks it had in the original question.
 
-Displaying zeros for unattempted skills would be misleading; until tagged data exists, the interface explicitly explains the future evidence system.
+The published question data remains unchanged in \`src/data/week01.js\`. The curriculum mapping is separate and reviewable in \`src/data/week01-skill-map.js\`; \`src/data/tagged-questions.js\` attaches the verified metadata on loading.
 
-## Next steps
+A tagged part looks like this conceptually:
 
-**4B — Detailed question tagging.** Introduce `part.skills.primary` (one stable skill ID per marked part), optional secondary skill IDs, reliable part-mark data and backward compatibility with existing overall scores. Make existing Week 1 content the test bed and validate all IDs.
+\`\`\`js
+["Part (c) question text", 5, {
+  key: "c",
+  primarySkillId: "P02-021",
+  secondarySkillIds: ["P02-011", "P02-020"]
+}]
+\`\`\`
 
-**4C — Evidence dashboard.** Calculate distinct questions attempted, valid marks earned/available per primary skill, scope-specific topic coverage and independence. Use 'no evidence' when there are no marked attempts, and avoid treating unscored questions as 0%.
+The **primary skill alone** can receive the part's marks. Secondary skill tags represent cross-topic connections and allow students to discover relevant practice, but **must never receive duplicate credit**. A single question's connected skill might be tagged by multiple parts; specification practice links deduplicate the question.
 
-**4D — Targeted revision.** Recommend released questions for under-practised or low-accuracy skills, preserve repeat attempts, and support controlled progress export/import.
+The specification's skill pages link to questions that are **actually released**, without leaking the unreleased Week 2–10 question sets. On a question, a collapsible list of skill links is offered after the working and solutions areas so students can keep practising method selection before inspecting tags.
+
+### Part-by-part self-marking
+
+Students can continue using the original one-number self-marking system. The newly added **Optional: mark each part separately** panel is available for multi-part questions and displays the specification skill for each part.
+
+- A completed breakdown automatically calculates the total, including marks of **zero** for a part.
+- **All parts must have valid whole-number marks** before the breakdown can generate precise skill accuracy evidence.
+- A previously saved *overall* score remains valid when the student begins an incomplete breakdown; once all part scores are entered, the sum replaces the overall score.
+- If the student deletes a part score from a derived total, the previously calculated overall mark becomes invalid and the question returns to *Not yet finished*.
+- Clearing all marks removes only marks and breakdowns; it never removes their independence choice, written working, maths lines or drawing.
+- Students with legacy scores do not need to re-mark every question to keep it marked as finished.
+
+New saved fields:
+
+\`\`\`js
+{
+  score: 6, // finished, exactly the same overall score used before Pass 4B
+  scoreSource: "parts", // "overall" for a one-number score; absent in legacy records
+  partMarks: {a: 2, b: 0, c: 4}
+}
+\`\`\`
+
+\`src/part-marking.js\` exposes \`verifiedPartEvidence(question, record)\` for the next analytics pass. It returns per-part earned/available marks with **one primary specification skill** only when every part has a valid mark, the score was derived from the parts, and the total matches. It returns no precise skill marks for legacy whole-question scores or unfinished detailed breakdowns.
+
+### Implementation and tests
+
+- \`src/data/week01-skill-map.js\`: reviewed curriculum map for every Week 1 question part.
+- \`src/data/tagged-questions.js\`: strict tagging validation and stable part keys.
+- \`src/data/skill-practice-index.js\`: published-question references for specification skill pages; connected skills are links, not marks.
+- \`src/part-marking.js\`: pure part-score and evidence functions, including legacy compatibility.
+- \`src/question-assessment.js\`: optional detailed-marking UI with automatic totals.
+- \`tests/question-skill-tags.test.mjs\`, \`tests/part-marking.test.mjs\`, \`tests/detailed-marking-ui.test.mjs\`: validation of all mappings and scores.
+
+## Still planned
+
+**4C — Evidence dashboard:** Calculate distinct questions attempted, validated primary-skill marks earned and available, and topic-level coverage and independence. Keep total-only question completion separate from **accurately measured marks by skill**; use *No evidence yet* when no valid part evidence exists. Consider whether a topic has enough evidence to give a meaningful interpretation and never duplicate marks across secondary tags.
+
+**4D — Targeted revision and data portability:** Recommend *published* questions for under-practised or low-accuracy skills, preserve repeat attempts and support progress export/import across devices.
+
+Teacher monitoring, logins and cross-device syncing remain separate projects, not automatic capabilities of local browser storage.
