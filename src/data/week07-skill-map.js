@@ -116,7 +116,7 @@ export const week07SkillMap = {
     [
       "P08-018",
       [
-        "P02-017"
+        "P08-017"
       ]
     ],
     [
@@ -156,7 +156,7 @@ export const week07SkillMap = {
     [
       "P08-017",
       [
-        "P02-014"
+        "P02-025"
       ]
     ],
     [
