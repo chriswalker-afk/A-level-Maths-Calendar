@@ -1,3 +1,4 @@
+import {week05ExpansionSkillMap} from "./week05-expansion-skill-map.js";
 /**
  * Week 5 primary and connected Edexcel 9MA0 skill tags.
  * Primary tags carry part marks; connected skills are navigation only.
@@ -314,5 +315,6 @@ export const week05SkillMap = {
     [
       "P08-019"
     ]
-  ]
+  ],
+  ...week05ExpansionSkillMap
 };
