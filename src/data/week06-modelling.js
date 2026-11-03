@@ -95,7 +95,7 @@ export const week06Modelling = [
     "steps": [
       "Plan A has first term \\(1200\\) and difference \\(100\\), so \\(A_n=1200+100(n-1)\\). Plan B has ratio \\(1.08\\), so \\(B_n=1200(1.08)^{n-1}\\). Both formulas use year 1 as the first term. [3]",
       "The eight-year totals come from \\(S_A(n)=\\frac n2[2400+100(n-1)]\\) and \\(S_B(n)=1200\\frac{1.08^n-1}{0.08}=15000(1.08^n-1)\\). Therefore \\(S_A(8)=12400\\) pounds and \\(S_B(8)\\approx12763.95\\) pounds. Ignoring the cap, Plan B gives approximately \\(£363.95\\) more after eight years. [4]",
-      "For A, \\(1200+100(n-1)>2000\\) gives \\(n>9\\); the first breach is year \\(10\\). For B, \\(1200(1.08)^{n-1}>2000\\) gives \\(n>1+\\frac{\\ln(5/3)}{\\ln1.08}\\approx7.638\\); the first breach is year \\(8\\) (donation about \\(£2056.59\\)). [3]",
+      "For A, \\(1200+100(n-1)>2000\\) gives \\(n>9\\); the first breach is year \\(10\\). For B, \\(1200(1.08)^{n-1}>2000\\) gives \\(n>1+\\frac{\\ln(5/3)}{\\ln1.08}\\approx7.637\\); the first breach is year \\(8\\) (donation about \\(£2056.59\\)). [3]",
       "Over the same first seven years, \\(S_A(7)=\\frac72(2400+600)=10500\\) pounds and \\(S_B(7)=15000(1.08^7-1)\\approx10707.36\\) pounds. Both respect the cap in these seven years, and B raises about \\(£207.36\\) more. [2]",
       "The model assumes contributors can afford the rises indefinitely and that the percentage or fixed increase is followed exactly. It also ignores inflation, interest, missed donations and changes in budgets. Any two distinct contextual issues with a plausible consequence earn credit. [2]"
     ],
