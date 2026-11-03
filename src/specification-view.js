@@ -180,7 +180,7 @@ export function mountSpecification(root,{scope="internal",topicId=null,skillId=n
  root.addEventListener("toggle",onToggle,true);
  if(skillId){
   requestAnimationFrame(()=>{
-   const selected=root.querySelector("#"+CSS.escape(skillId));
+   const selected=root.ownerDocument.getElementById(skillId);
    if(selected?.tagName==="DETAILS"){
     // Open any containing Year 2 preview as well.
     const later=selected.closest(".spec-later-disclosure");
