@@ -162,15 +162,13 @@ Question design gradient:
 - **Week 9 authored resolution (November 2026):** The earlier P1/P2/P3 descriptions request 30–40-mark timed papers inside 8/10/12-mark question slots. Those two mark/time requirements cannot both be true in the existing fixed 22-question and part-marked interface. Week 9 therefore uses P1/P2/P3 as 8-, 10- and 12-mark integrated Pure problems; Year 1 Applied synthesis is delivered by A1–A3; M1/M2 remain the 12-/14-mark modelling/error-analysis questions. T1–T3 supply a distinct timed 32-mark set. The idea of separate 40-mark papers is retained as a potential future mock-paper format, not falsely advertised as part of these questions.
 
 
-### Week 10 — Mock examination and consolidation
-- **Pure:** 100-mark two-hour full Pure mock.
-- **Year 1 Applied:** 50-mark one-hour Year 1 Applied mini-mock, split 25 Stats/25 Mechanics.
-- **AO1 (R1–R10):** Assessment under exam conditions, then reflection.
-- **P1 (8 marks):** 120-min full Pure paper.
-- **P2 (10 marks):** 60-min Applied mini-mock.
-- **P3 (12 marks):** 60-min marking and error diagnosis.
-- **M1 (12 marks):** Optional targeted repairs in hour 5.
-- **M2 (14 marks):** Optional selected reattempts in hour 6.
+### Week 10 — Mock examination and consolidation (authored format)
+- **Pure:** 12 original questions `W10-P1`–`W10-P12`; **100 marks / 120 minutes**. The full Pure course, including proof, algebra, circle/vector geometry, series, trigonometry, logs/exponentials, implicit/parametric reasoning, integration, numerical methods and 3D vectors, is represented.
+- **Year 1 Applied:** 10 original questions `W10-A1`–`W10-A10`; **50 marks / 60 minutes**, split precisely into **25 marks of Year 1 Statistics** (sampling, grouped data, probability, binomial and binomial testing) and **25 marks of Year 1 Mechanics** (straight-line motion, variable acceleration, force models, gravity and connected particles).
+- **60-minute review:** dedicated `#/mock-review/10` marking and diagnostic workspace (20 minutes self-marking + 20 minutes identifying the first lost mark + 20 minutes specifying reattempts). This is a *review task*, not a fake 60-mark mathematics question.
+- **Exam interface:** Week 10 uses the same calendar and saved question work, but section P is the complete Pure paper and section A the Applied paper. Students may opt into a 120/60-minute timed sitting which hides hints, worked schemes, scores and marking controls while it runs. Each question is self-marked afterwards; absent scores remain unattempted, while a genuine zero counts as marked. Paper totals are shown only once every question has a recorded mark.
+- **Total:** 22 original questions, 150 marks over 180 minutes of examination, followed by 60 minutes of review. This is a deliberate *exception* to the 98-mark essential practice-week template used in Weeks 1–9. The optional five- and six-hour practice can target error-based reattempts, rather than fabricate extra mock marks.
+- **AO profile:** the full 150-mark paper set has resource-authored approximate AO allocation **AO1 75 / AO2 38 / AO3 37**, close to Pearson's 50% / 25% / 25% qualification-level weighting. This is an authoring target, not a claim of official examination status.
 
 
 
@@ -178,7 +176,7 @@ Question design gradient:
 
 **Week 9 (240 min core, as authored):** 30 min mixed retrieval (10 × 2 marks); 67 min connected Pure (8 + 10 + 12 marks); 68 min unstructured modelling and error analysis (12 + 14 marks); 48 min Year 1 Applied synthesis (4 + 8 + 10 marks); 20 min self-marking and 7 min buffer. This totals 213 minutes of questions plus 27 minutes for marking/buffer, and the essential marks remain 98 with AO1/AO2/AO3 = 26/39/33. T1–T3 add 32 marks of recommended timed work (45 min), and X1 adds 14 optional extension marks. Students select methods without topic labels inside the question prompts; separate full-length mocks require a different format and belong to a future mock-paper flow.
 
-**Week 10 (240 min core):** 120-min full Pure mock (100 marks); 60-min Year 1 Applied mini-mock (50 marks = 25 Statistics + 25 Mechanics); 60 min mark, diagnose, plan. Optional hours for targeted repair/retry. AO balance and authentic pacing closer to Pearson exam structure.
+**Week 10 (240 min core, as authored):** **120 minutes / 100 marks** across 12 actual Pure mock questions, **60 minutes / 50 marks** across ten Year 1 Applied mock questions (25 Statistics / 25 Mechanics), and **60 minutes** in a dedicated marking, diagnosis and repair-planning workspace. Questions use original published IDs and the established permanent per-part skill tags. Unlike Weeks 1–9, there is no 10-question R section or additional T/X mock mark allocation; the conventional 98-mark practice blueprint has been explicitly superseded for the authentic two-paper assessment.
 
 ## Guaranteed specification coverage and retrieval
 
