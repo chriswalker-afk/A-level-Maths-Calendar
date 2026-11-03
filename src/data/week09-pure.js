@@ -38,7 +38,7 @@ export const week09PureProblems = [
     "hint": "Substitute the line into the circle, then use the distance formula. For the angle, the two radii are length 5 and the chord is the opposite side.",
     "steps": [
       "Substitute \\(y=x+1\\) into the circle: \\(x^2+(x+1)^2=25\\); hence \\(2x^2+2x-24=0\\), or \\((x+4)(x-3)=0\\). The intersections are \\(A=(3,4)\\) and \\(B=(-4,-3)\\) in either order. [2]",
-      "The displacement vector is \\(\\overrightarrow{BA}=\\begin{pmatrix}3-(-4)\\\\4-(-3)\\end{pmatrix}=\\begin{pmatrix}7\\\\7\\end{pmatrix}\\). Its magnitude is \\(AB=\\sqrt{7^2+7^2}=\\sqrt{98}=7\\sqrt2\\). [2]",
+      "The displacement vector is \\(\\overrightarrow{BA}=\\langle3-(-4),\\,4-(-3)\\rangle=\\langle7,7\\rangle\\). Its magnitude is \\(AB=\\sqrt{7^2+7^2}=\\sqrt{98}=7\\sqrt2\\). [2]",
       "Since \\(OA=OB=5\\), the cosine rule gives \\((7\\sqrt2)^2=5^2+5^2-2(5)(5)\\cos\\angle AOB\\). Thus \\(98=50-50\\cos\\angle AOB\\) and \\(\\cos\\angle AOB=-\\frac{24}{25}\\) (an obtuse central angle). [2]",
       "Strip lengths form a GP with \\(a=7\\sqrt2\\) and \\(r=\\frac12\\). Because \\(|r|<1\\), \\(S_\\infty=\\frac{7\\sqrt2}{1-1/2}=14\\sqrt2\\) length units. [2]"
     ],
