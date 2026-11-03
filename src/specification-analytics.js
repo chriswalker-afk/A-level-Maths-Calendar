@@ -94,7 +94,9 @@ export function calculateSpecificationProgress({questions=[],records={},scope="i
     if(skillStates.has(id)&&roles.get(id)!=="primary")roles.set(id,"connected");
    }
   }
-  if(roles.size===0)continue; // This question is outside the selected syllabus.
+  // A question that only mentions a skill as a secondary link does not
+  // qualify for the narrower internal exam if every mark is Year 2-only.
+  if(![...roles.values()].includes("primary"))continue;
   totals.releasedQuestions++;
   if(finished){
    totals.completedQuestions++;
@@ -115,7 +117,7 @@ export function calculateSpecificationProgress({questions=[],records={},scope="i
    else if(record.status==="P")skill.withHelp.add(q.id);
   }
   if(!finished)continue;
-  const verified=verifiedPartEvidence(q,record);
+  const verified=verifiedPartEvidence(q,record).filter(part=>skillStates.has(part.primarySkillId));
   if(verified.length){
    totals.verifiedQuestions++;
    totals.verifiedParts+=verified.length;
