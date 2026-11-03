@@ -58,6 +58,30 @@ Students can see:
 
 Everything is calculated locally from the existing browser storage. There is no new account, teacher monitoring or server-side data transfer. The full rules and known limitations are documented in [docs/SPECIFICATION_LIBRARY.md](docs/SPECIFICATION_LIBRARY.md). **Pass 4D** will turn these data into suggested revision and allow progress to be exported and restored between devices.
 
+## Pass 4D — Revision suggestions, improvement history & backup
+
+The website now provides a fully student-facing **What should I practise next?** section in **My Progress**. Recommendations use only actually released questions, and combine unpractised specification skills, early part-mark evidence, previously needed support, and low self-marked scores. They suggest varied AO1/AO2/AO3 practice with a short rationale and a link to the relevant skill; they do **not** label a student weak or diagnose mastery from one question.
+
+### Compare successive attempts without losing earlier work
+
+After completing and self-marking a question, students can choose **Start a fresh attempt**. A confirmation explains that the current marks, independence/help status, notes, line-by-line maths and vector drawing are archived before a blank new workspace opens. The earlier attempts remain in a collapsible, read-only **Try again & track improvement** panel, with scores, comparison to the previous attempt, maths steps and drawing previews. Up to 20 archived attempts per question may be stored locally; the site refuses to silently delete old attempts when that limit is reached.
+
+**Statistics still count a question only once.** The latest finished attempt supplies the current mark evidence. If a student starts a retry but has not yet finished it, their last finished mark and topic progress stay visible. The current question still displays **Not yet finished** until a fresh mark is entered.
+
+### Back up and restore safely
+
+**My Progress → Save or restore your progress** offers a versioned JSON download containing self-marks, reflection notes, mathematical working, ink strokes and reattempt history. The file is created locally in the browser; it is not uploaded to a server.
+
+When importing a backup, students see a preview of the saved contents and choose one of three modes:
+
+- **Keep my current work** (default): add only records absent from the current device, and leave all matching question records unchanged.
+- **Use imported for matches:** explicitly replace matching saved question records while leaving unrelated local records alone, after a warning.
+- **Replace everything:** explicitly restore the selected backup and remove records absent from it, after a warning recommending a local backup first.
+
+Invalid, oversized, version-mismatched and malformed backups are rejected. Progress is saved atomically; if browser storage fails, the import is not applied. The backup includes potentially private student notes, so the interface reminds students to store it privately.
+
+**Next:** author Week 2 and build out Weeks 3–10 using the same stable specification tags and evidence rules. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
+
 ## Week 1 is now complete
 
 The current release has **18 essential questions worth 98 marks** and two additional pathways:
@@ -149,6 +173,9 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `src/data/skill-practice-index.js`: links from individual skills to published questions only.
 - `src/part-marking.js`: validated part scores, derived totals and exact primary-skill mark evidence.
 - `src/specification-analytics.js`, `src/specification-progress-view.js`: pure analytics and responsive topic/skill progress UI.
+- `src/revision-recommendations.js`, `src/revision-recommendations-view.js`: published-only, evidence-aware next-practice suggestions.
+- `src/attempt-history.js`, `src/attempt-history-view.js`: explicitly archived retries, trends and read-only earlier maths/ink.
+- `src/progress-portability.js`, `src/progress-transfer-view.js`: JSON backup validation, safe merge/replace choices and offline transfer UI.
 - `src/app.js`: calendar, question navigator, MathJax typesetting, solutions and progress tracking.
 - `src/working-state.js`, `src/working-space.js`, `src/workspace-maths.js`, `src/workspace-drawing.js`: working modes and local persistence.
 - `src/question-assessment.js`: score-driven completion, clear independence/help reporting and self-marking.
@@ -158,9 +185,11 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `tests/working-state.test.mjs`, `tests/working-ui.test.mjs`, `tests/question-assessment.test.mjs`: working space and scoring UI regressions.
 - `tests/question-skill-tags.test.mjs`, `tests/part-marking.test.mjs`, `tests/detailed-marking-ui.test.mjs`: skill mapping, legacy marks, complete breakdowns and numeric validation.
 - `tests/specification-analytics.test.mjs`, `tests/specification-progress-ui.test.mjs`, `tests/specification-progress-route.test.mjs`: accurate topic evidence, no-data states, release scope and live routing.
+- `tests/attempt-history.test.mjs`, `tests/revision-recommendations.test.mjs`, `tests/progress-portability.test.mjs`, `tests/pass4d-student-ui.test.mjs`: retry history, suggestions, backup safety, and full student flow.
 
-## Next passes
+## Next development phases
 
-1. **4D — Smart revision and student data portability:** recommend only published questions for under-practised or low-accuracy skills; add reattempt history, and support progress export/import for another device.
-2. **Scale content:** review the Week 1 student experience and create Weeks 2–10 in a steady sequence, tagging each new question's marked parts to permanent skill IDs.
-3. **Full 2027 programme:** extend the data model to Year 2 Applied and final examination preparation, using the same local tracking rules.
+1. **Week 2 content:** author, check and publish the second weekly pack with full worked solutions and part-by-part specification skill tags. Reuse the same local mark/history/analytics systems.
+2. **Weeks 3–10:** extend the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
+3. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
+4. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.
