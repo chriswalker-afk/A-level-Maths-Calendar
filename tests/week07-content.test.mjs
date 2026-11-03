@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {week07Questions} from "../src/data/week07.js";
 import {week07SkillMap} from "../src/data/week07-skill-map.js";
-import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions} from "../src/data/tagged-questions.js";
+import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions} from "../src/data/tagged-questions.js";
 import {programmeOne} from "../src/data/programmes.js";
 import {siteConfig} from "../src/config.js";
 import {getSpecSkill} from "../src/data/specification.js";
