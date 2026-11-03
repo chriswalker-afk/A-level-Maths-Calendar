@@ -6,6 +6,8 @@
 import {getSpecSkill} from "./specification.js";
 import {week01Questions} from "./week01.js";
 import {week01SkillMap} from "./week01-skill-map.js";
+import {week02Questions} from "./week02.js";
+import {week02SkillMap} from "./week02-skill-map.js";
 
 const ALPHABET="abcdefghijklmnopqrstuvwxyz";
 
@@ -36,7 +38,7 @@ export function linkQuestionParts(questions, links, lookup=getSpecSkill){
     if(secondarySkill.scope!=="internal")throw new Error("Year 2-only secondary skill in internal exam: "+q.id);
    }
    if(!primary||primary.scope!=="internal")
-    throw new Error("Week 1 contains Year 2-only primary skill: "+q.id);
+    throw new Error("Published question contains Year 2-only primary skill: "+q.id);
    return [part[0],part[1],{
     key:ALPHABET[index],
     primarySkillId:primary.id,
@@ -49,3 +51,4 @@ export function linkQuestionParts(questions, links, lookup=getSpecSkill){
  });
 }
 export const taggedWeek01Questions=linkQuestionParts(week01Questions,week01SkillMap);
+export const taggedWeek02Questions=linkQuestionParts(week02Questions,week02SkillMap);
