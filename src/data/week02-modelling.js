@@ -6,10 +6,9 @@ export const week02Modelling = [
     "marks": 12,
     "minutes": 32,
     "ao": {
-      "AO1": 2,
-      "AO2": 3,
-      "AO3": 7
-    },
+    "AO2": 2,
+    "AO3": 10
+  },
     "topics": [
       "circles",
       "lines",
@@ -54,10 +53,9 @@ export const week02Modelling = [
     "marks": 14,
     "minutes": 36,
     "ao": {
-      "AO1": 3,
-      "AO2": 4,
-      "AO3": 7
-    },
+    "AO2": 2,
+    "AO3": 12
+  },
     "topics": [
       "circles",
       "differentiation",
