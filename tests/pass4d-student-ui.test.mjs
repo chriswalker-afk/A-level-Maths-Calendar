@@ -116,7 +116,7 @@ test("end-to-end student reattempts, grounded advice and offline import/export",
  assert.equal(app.querySelectorAll(".attempt-history-item").length,2);
  window.location.hash="#/progress/internal";
  window.dispatchEvent(new window.Event("hashchange"));
- assert.match(app.querySelector(".spec-progress-pulse").textContent,/2 \/ 220/);
+ assert.match(app.querySelector(".spec-progress-pulse").textContent,/2 \/ 247/);
  const finalRecord=JSON.parse(window.localStorage.getItem(key))["W01-P2"];
  assert.equal(finalRecord.attemptHistory[0].workspace.strokes.length,1);
 
