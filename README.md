@@ -1,50 +1,86 @@
 # A Level Maths Calendar
 
-A static, GitHub Pages-compatible revision calendar for **Pearson Edexcel A Level Mathematics (9MA0)**.
+An online independent-study calendar for **Pearson Edexcel A Level Mathematics (9MA0)**, designed to emphasise **combined skills, AO2 reasoning and AO3 modelling**.
 
-## Programmes
+## Two linked programmes
 
-- **Internal exam preparation:** ten weeks, all Pure Mathematics plus Year 1 Statistics and Mechanics; 4 hours of essential work, one recommended hour and one optional hour.
-- **Final examination preparation (future):** 20 weeks from 1 February 2027 through 16 June 2027, covering both years of Applied Mathematics.
+1. **Internal exam preparation:** 10 weeks, all Pure Mathematics + Year 1 Statistics & Mechanics. Four essential hours per week, one recommended hour of timed work, one optional hour for extended challenge or repair.
+2. **Final exam preparation:** a planned 20-week full A Level programme from 1 February to 16 June 2027, incorporating Year 2 Applied and exam-specific preparation. The future programme is not yet published.
 
-The content specification is [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_BLUEPRINT.md).
+The full authoring specification is [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_BLUEPRINT.md).
 
-## Preview locally
+## Week 1 is now complete
 
-Use a web server because the site uses JavaScript ES modules:
+The current release has **18 essential questions worth 98 marks** and two additional pathways:
+
+| Section | Questions | Marks | Time |
+|---|---:|---:|---:|
+| R — AO1 Retrieval | 10 | 20 | 30 min |
+| P — Connected problems | 3 | 30 | 70 min |
+| M — Extended modelling | 2 | 26 | 70 min |
+| A — Year 1 Statistics | 3 | 22 | 50 min |
+| Self-marking and correction | — | — | 20 min |
+| **Essential** | **18** | **98** | **240 min** |
+| T — Timed mixed set | 3 | 32 | 45 min attempt + 15 min marking |
+| X — A/A* extension | 1 | 14 | 40 min attempt + 20 min review |
+
+All questions are original Edexcel-style practice, **not official Pearson past-paper questions**. Each question has full step-by-step solutions, an optional first-step hint, a misconception prompt and a reflection question.
+
+## Mathematical notation
+
+Mathematical questions, steps, answers, hints and statistical-table headers are rendered with **MathJax**. Use standard LaTeX inline delimiters `\( ... \)` **with a single backslash in the JavaScript string value**. MathJax source is loaded via CDN.
+
+The CI workflow runs checks for correctly paired delimiters, no accidental doubled escaping, mark/section/time totals and **a genuine MathJax parse of every LaTeX expression**. New content should pass these checks before it is released.
+
+For data tables, provide a structured `table` property on the question object rather than inserting Markdown pipe tables inside its stem.
+
+## Local preview
+
+Start a static web server in the repository root:
 
     python3 -m http.server 8000
 
-Open http://localhost:8000.
+Then visit http://localhost:8000 (ES module imports do not run correctly on `file://` URLs).
 
-## Publish
+For development validation:
 
-After merging the website pull request, enable GitHub Pages under **Settings → Pages**, using the main branch and repository root. Verify the deployment before distributing a link. A repository commit alone does not guarantee that Pages has been enabled.
+    npm install
+    npm run check
 
-## Release policy
+## Publishing
 
-Release settings are in `src/config.js`. The default is manual release of one week. Student-facing future-week descriptions are always visible, but full questions are provided only in individual content modules. Never distribute future hidden answers in the frontend bundle if they are intended to remain embargoed.
+The repository is GitHub Pages-compatible and needs no frontend build step. Pages can be enabled at **Settings → Pages → Deploy from a branch → main → /(root)**. Review the actual Pages deployment rather than assuming an open PR is live.
 
-The first website pass includes an **illustrative Week 1 question experience**; the full 18-question Week 1 content, timed practice and optional extension will follow the authoring blueprint and be reviewed before general release.
+### Progressive weekly release
 
-## Progress
+Edit `src/config.js`: the default is `stage1.releaseMode = "manual"` with `releasedWeeks = 1`. To release a future week:
 
-Students mark their own answers against worked solutions. Status (Independent / Prompt needed / Still stuck), scores, error type and reflections are stored in **local browser storage only**. The site does not presently support logins, cross-device sync or teacher analytics.
+1. Fully author and validate that week's questions and mark schemes.
+2. Add its own content module and import it through `src/app.js`.
+3. Mark the corresponding week `hasPublishedContent: true` in `src/data/programmes.js`.
+4. Increase `releasedWeeks` and merge the release.
+5. Check MathJax, accessibility, device widths and the actual deployed website.
 
-## Structure
+Future-week topics may be previewed but **unreleased question files must not be bundled in the public website**. Merely hiding a loaded JavaScript question object with a browser lock is not a secure embargo.
 
-- `src/data/programmes.js`: programme and week metadata.
-- `src/data/week01.js`: published pilot questions for Week 1.
-- `src/config.js`: release settings, timezone and storage key.
-- `src/app.js`: calendar, questions, solutions, progress and study guide.
-- `styles.css`: design system.
-- `docs/QUESTION_BLUEPRINT.md`: the authoritative full question authoring plan.
+## Student progress and privacy
 
-Mathematics is rendered by MathJax over a CDN. The site does not require npm or a backend.
+Students self-mark against full working. The website records an honest **I / P / S** status (Independent / Needed a prompt / Still stuck), manually awarded marks, an error category and study reflections. These are stored **only in local browser storage** and do not sync between students or devices. Clearing browser data may remove them.
+
+## Source layout
+
+- `docs/QUESTION_BLUEPRINT.md`: required week-by-week curriculum and authoring guidance.
+- `src/config.js`: publication settings, local storage key and Brunei timezone.
+- `src/data/programmes.js`: week titles, curricula and 2027 final programme preview.
+- `src/data/week01.js`: completed Week 1 content, including T and X extension sections.
+- `src/app.js`: calendar, question navigator, MathJax typesetting, solutions and progress tracking.
+- `styles.css`: responsive design, math layout and print styling.
+- `tests/content.test.mjs`: content, maths delimiters, AO marks and time audits.
+- `tests/math-render.test.mjs`: MathJax parse tests against all authored equations.
 
 ## Next passes
 
-1. Complete and review every Week 1 question against the blueprint.
-2. Refine the mathematics working and marking interaction, including mobile accessibility.
-3. Author and publish Weeks 2–10 incrementally.
-4. Build the February–June full A Level stage using the same underlying architecture.
+1. Review actual student interactions and mathematical rendering on phones/tablets and desktops.
+2. Refine the working and self-marking experience before scaling.
+3. Produce and validate Weeks 2–10 one week at a time.
+4. Build the February–June full A Level programme using the same question library architecture.
