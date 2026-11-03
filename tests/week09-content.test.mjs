@@ -128,6 +128,6 @@ test("Week 9 samples broad synoptic Pure and Year 1 Applied without importing Ye
   const txt=[q.stem,...q.parts.map(p=>p[0])].join(" ");
   assert.doesNotMatch(txt,/normal distribution|product moment correlation hypothesis test|inclined plane|friction coefficient|projectile/i,q.id);
  }
- assert.ok(week09Questions.some(q=>q.id==="W09-M2"&&/error/i.test(q.title)));
+ assert.ok(week09Questions.some(q=>q.id==="W09-M2"&&/diagnos/i.test(q.title)&&q.topics.includes("marking and misconceptions")));
  assert.ok(week09Questions.some(q=>q.id==="W09-X1"&&/proof|bound/i.test(q.title)));
 });
