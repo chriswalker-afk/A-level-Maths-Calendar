@@ -202,7 +202,8 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
         ?"Enter a whole number between 0 and "+input.max+" for part ("+key+")."
         :summary.complete
           ?"All parts marked. Total: "+summary.subtotal+" out of "+question.marks+". Question finished."
-          :summary.entered+" of "+summary.count+" parts marked. Finish every part to calculate the total.";
+          :summary.entered+" of "+summary.count+" parts marked. Finish every part to calculate the total."+
+            (isQuestionFinished(state,question.marks)&&state.scoreSource!=="parts"?" Your existing overall mark remains recorded until this breakdown is complete.":"");
       refreshMark(
         invalid?message:
         summary.complete?"All parts marked. The question is finished.":"",
