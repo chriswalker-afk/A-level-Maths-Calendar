@@ -37,7 +37,7 @@ export const week06PureProblems = [
     "hint": "Start with \\(u_n=ar^{n-1}\\) and then use a finite geometric sum with \\(r=0.8\\). When solving a logarithmic inequality, remember that \\(\\log(0.8)<0\\).",
     "steps": [
       "The amounts form a GP with \\(a=160\\) and \\(r=0.8\\). Hence \\(u_n=160(0.8)^{n-1}\\) and \\(u_4=160(0.8)^3=81.92\\) pounds. [2]",
-      "Using \\(S_n=\\frac{a(1-r^n)}{1-r}\\), obtain \\(S_n=\\frac{160(1-0.8^n)}{0.2}=800(1-0.8^n\\) as required. [2]",
+      "Using \\(S_n=\\frac{a(1-r^n)}{1-r}\\), obtain \\(S_n=\\frac{160(1-0.8^n)}{0.2}=800(1-0.8^n)\\) as required. [2]",
       "Require \\(800(1-0.8^n)\\ge700\\), so \\(0.8^n\\le\\frac18\\). Taking logs and reversing the inequality because \\(\\ln0.8<0\\), \\(n\\ge\\frac{\\ln(1/8)}{\\ln0.8}\\approx9.319\\). The first integer is \\(n=10\\); \\(S_9<700\\le S_{10}\\). [3]",
       "For every finite positive \\(n\\), \\(0.8^n>0\\), so \\(S_n<800\\). The limiting total as \\(n\\to\\infty\\) is \\(£800\\), but it is not attained in finitely many months. [1]"
     ],
