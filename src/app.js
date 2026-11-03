@@ -1,4 +1,5 @@
 import {siteConfig} from "./config.js";
+import {isWeekReleased} from "./publication.js";
 import {programmeOne,programmeTwo} from "./data/programmes.js";
 import {taggedWeek01Questions,taggedWeek02Questions} from "./data/tagged-questions.js";
 import {getSpecSkill} from "./data/specification.js";
@@ -37,7 +38,7 @@ function status(q){return saved[q.id]?.status||''}
 function countDone(){return Object.values(allQuestions).flat().filter(q=>essentialSections.has(q.section)&&everCompleted(q)).length}
 function coreQuestions(week){return (allQuestions[week]||[]).filter(q=>essentialSections.has(q.section))}
 function releasedQuestions(){return Object.entries(allQuestions).flatMap(([week,qs])=>released(Number(week))?qs:[])}
-function released(week){const c=siteConfig.stage1;const meta=programmeOne.weeks[week-1];if(!meta?.hasPublishedContent||!allQuestions[week]?.length)return false;if(c.releaseMode==='manual')return week<=c.releasedWeeks;if(c.releaseMode==='scheduled'&&c.startDate){const from=new Date(c.startDate+'T00:00:00+08:00').getTime();const now=new Date(new Date().toLocaleString('en-US',{timeZone:siteConfig.timezone})).getTime();return now>=from+(week-1)*7*86400000}return false}
+function released(week){return isWeekReleased(week,allQuestions[week]||[]);}
 function heading(t,subtitle){return '<div class="section-heading"><div><span class="eyebrow">'+esc(subtitle||'Programme one')+'</span><h2>'+esc(t)+'</h2></div></div>'}
 function mathHtml(t){return '<span class="math">'+esc(t)+'</span>'}
 function relatedSkillsMarkup(q){
