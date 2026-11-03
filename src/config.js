@@ -2,7 +2,7 @@ export const siteConfig = {
   "timezone": "Asia/Brunei",
   "stage1": {
     "releaseMode": "manual",
-    "releasedWeeks": 1,
+    "releasedWeeks": 2,
     "startDate": null
   },
   "stage2": {
