@@ -34,7 +34,7 @@ export function applyPartMark(record,question,key,raw){
  const next={...record,partMarks:{...(record.partMarks||{})}};
  const trimmed=String(raw??"").trim();
  const value=Number(trimmed);
- const valid=trimmed!==""&&validMark(value,part[1]);
+ const valid=/^\d+$/.test(trimmed)&&validMark(value,part[1]);
  if(valid)next.partMarks[key]=value;
  else delete next.partMarks[key];
  const summary=marksBreakdown(question,next.partMarks);
