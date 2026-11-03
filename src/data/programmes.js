@@ -161,8 +161,8 @@ export const programmeOne = {
         5,
         6
       ],
-      "targetMarks": null,
-      "hasPublishedContent": false
+      "targetMarks": 150,
+      "hasPublishedContent": true
     }
   ]
 };
