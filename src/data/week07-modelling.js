@@ -98,10 +98,10 @@ export const week07Modelling = [
       "Separating \\(\\frac{dU}{dt}=0.2U\\) gives \\(\\ln U=0.2t+C\\) for \\(U>0\\). The initial condition yields \\(U(t)=20e^{0.2t}\\). [2]",
       "For L, separate \\(\\frac{dL}{L(1-L/100)}=0.2\\,dt\\). Since \\(\\frac1{L(1-L/100)}=\\frac1L+\\frac1{100-L}\\), integrate to get \\(\\ln L-\\ln(100-L)=0.2t+C\\) for \\(0<L<100\\). Thus \\(\\frac{L}{100-L}=Be^{0.2t}\\). Using \\(L(0)=20\\), \\(B=\\frac{20}{80}=\\frac14\\). Rearranging \\(L/(100-L)=e^{0.2t}/4\\) gives \\(L(t)=100/(1+4e^{-0.2t})\\). [4]",
       "For U, \\(20e^{0.2t}=50\\) implies \\(t_U=5\\ln(5/2)\\approx4.581\\) months. For L, \\(100/(1+4e^{-0.2t})=50\\) gives \\(e^{-0.2t}=1/4\\), so \\(t_L=5\\ln4\\approx6.931\\) months. [3]",
-      "At 10 months \\(U(10)=20e^2\\approx147.781\\) whereas \\(L(10)=\\frac{100}{1+4e^{-2}}\\approx64.873\\). If capacity 100 is firm, U's value above capacity is implausible; L tends to 100 without exceeding it. [3]",
+      "At 10 months \\(U(10)=20e^2\\approx147.781\\) whereas \\(L(10)=\\frac{100}{1+4e^{-2}}\\approx64.879\\). If capacity 100 is firm, U's value above capacity is implausible; L tends to 100 without exceeding it. [3]",
       "Both models impose a constant growth parameter and ignore random fluctuations, seasonal changes or demographic structure. The analyst could collect data at several intermediate and later times, estimate the rate and capacity rather than assume them, or introduce a time-varying rate supported by evidence. Award one contextual weakness and one specific proposed improvement. [2]"
     ],
-    "answer": "\\(U(t)=20e^{0.2t}\\), \\(L(t)=100/(1+4e^{-0.2t})\\); 50 reached after \\(5\\ln(5/2)\\approx4.581\\) and \\(5\\ln4\\approx6.931\\) months respectively; at 10 months, about \\(147.781\\) vs \\(64.873\\).",
+    "answer": "\\(U(t)=20e^{0.2t}\\), \\(L(t)=100/(1+4e^{-0.2t})\\); 50 reached after \\(5\\ln(5/2)\\approx4.581\\) and \\(5\\ln4\\approx6.931\\) months respectively; at 10 months, about \\(147.781\\) vs \\(64.879\\).",
     "misconception": "In the logistic separation, integrating 1/(100−L) gives −ln|100−L|, not +ln. A capacity parameter also does not automatically prove the model represents reality.",
     "reflection": "What data would best distinguish the two models early, before the unrestricted model reaches the supposed capacity?"
   }
