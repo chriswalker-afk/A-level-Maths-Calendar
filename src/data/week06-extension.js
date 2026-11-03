@@ -48,7 +48,7 @@ export const week06Extension = [
       "For \\(r=\\frac13\\), the infinite sum is \\(\\frac1{(2/3)^2}=\\frac94\\). The omitted tail after five terms is \\(\\frac{6(1/3)^5-5(1/3)^6}{(1-1/3)^2}=\\frac{13}{324}\\). Hence \\(H_5(\\frac13)=\\frac94-\\frac{13}{324}=\\frac{179}{81}\\), and the exact error is \\(\\frac{13}{324}\\). [3]",
       "Set \\(r=2x\\). Then \\((1-2x)^{-2}=\\sum_{k=1}^{\\infty}k(2x)^{k-1}\\) for \\(|2x|<1\\). The term in \\(x^4\\) has \\(k=5\\), giving coefficient \\(5\\cdot2^4=80\\). Validity is \\(-\\frac12<x<\\frac12\\). [2]"
     ],
-    "answer": "\\(H_N(r)=\\frac{1-(N+1)r^N+Nr^{N+1}}{(1-r)^2\\), \\(H_\\infty(r)=\\frac1{(1-r)^2}\\) for \\(|r|<1\\); \\(H_5(1/3)=\\frac{179}{81}\\), exact tail \\(\\frac{13}{324}\\), and \\([x^4](1-2x)^{-2}=80\\) for \\(|x|<\\frac12\\).",
+    "answer": "\\(H_N(r)=\\frac{1-(N+1)r^N+Nr^{N+1}}{(1-r)^2}\\), \\(H_\\infty(r)=\\frac1{(1-r)^2}\\) for \\(|r|<1\\); \\(H_5(1/3)=\\frac{179}{81}\\), exact tail \\(\\frac{13}{324}\\), and \\([x^4](1-2x)^{-2}=80\\) for \\(|x|<\\frac12\\).",
     "misconception": "Differentiation of each finite polynomial is legitimate, but exchanging differentiation and an infinite sum needs a convergent interval. The remainder is not just the sixth term.",
     "reflection": "What does the factor k in the differentiated series do to the size of the omitted tail compared with an ordinary geometric tail?"
   }
