@@ -143,15 +143,55 @@ function studyPage(n,sec,idx){
 function progressPage(scope="internal",strand="all"){
  const published=releasedQuestions();
  const report=calculateSpecificationProgress({questions:published,records:saved,scope});
- const qs=taggedWeek01Questions,core=coreQuestions(1),attempts=qs.filter(everCompleted),coreAttempts=core.filter(everCompleted);
- const scored=attempts.map(q=>({q,mark:latestFinishedRecord(q,saved[q.id]||{})})).filter(item=>Number.isInteger(item.mark?.score));
- const total=scored.reduce((sum,item)=>sum+item.mark.score,0),available=scored.reduce((sum,item)=>sum+item.q.marks,0);
- return '<section class="page"><span class="eyebrow">Your independent study record</span><h1 class="page-title">My progress</h1><p class="intro">Scores and working are saved in this browser. Use a backup to move them to another device.</p>'+(importNotice?'<p class="import-notice" role="status">'+esc(importNotice)+'</p>':'')+'<div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong><span>core questions</span></div><div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>lastStatus(q)==='I').length+'</strong><span>finished on own</span></div><div class="metric"><span>WITH HELP</span><strong>'+attempts.filter(q=>lastStatus(q)==='P').length+'</strong><span>marked with help</span></div><div class="metric"><span>CORE REMAINING</span><strong>'+(core.length-coreAttempts.length)+'</strong><span>essential questions still to mark</span></div></div>'+
+ const qs=published,core=published.filter(q=>essentialSections.has(q.section)),
+  attempts=qs.filter(everCompleted),coreAttempts=core.filter(everCompleted);
+ const scored=attempts.map(q=>({q,mark:latestFinishedRecord(q,saved[q.id]||{})}))
+  .filter(item=>Number.isInteger(item.mark?.score));
+ const total=scored.reduce((sum,item)=>sum+item.mark.score,0),
+  available=scored.reduce((sum,item)=>sum+item.q.marks,0);
+ const weeklyRecords=programmeOne.weeks.filter(w=>released(w.number)).map(w=>{
+  const items=allQuestions[w.number]||[];
+  const marked=items.filter(everCompleted).length;
+  const coreItems=items.filter(q=>essentialSections.has(q.section));
+  return '<section class="weekly-progress-group" aria-label="Week '+w.number+' question record">'+
+   '<div class="weekly-progress-heading"><div><span class="eyebrow">WEEK '+String(w.number).padStart(2,"0")+
+   ' / '+marked+' OF '+items.length+' MARKED</span><h3>'+esc(w.title)+'</h3></div>'+
+   '<span class="weekly-progress-core">'+coreItems.filter(everCompleted).length+'/'+coreItems.length+' ESSENTIAL</span></div>'+
+   '<div class="progress-grid">'+Object.entries(sections).map(([code,label])=>{
+    const set=items.filter(q=>q.section===code),done=set.filter(everCompleted).length;
+    if(!set.length)return '';
+    return '<div class="progress-item"><span class="eyebrow">'+code+' · '+esc(label)+'</span>'+
+     '<h3>'+done+' / '+set.length+' questions marked</h3>'+
+     '<div class="meter" aria-label="'+done+' of '+set.length+' finished"><span style="width:'+
+       (100*done/set.length)+'%"></span></div>'+
+     '<p class="weekly-progress-type">'+(essentialSections.has(code)?'Essential':'Recommended or optional')+'</p>'+
+     '<a class="link" href="#/study/'+w.number+'/'+code+'/0">Open Week '+w.number+' practice →</a></div>';
+   }).join('')+'</div></section>';
+ }).join('');
+ return '<section class="page"><span class="eyebrow">Your independent study record</span>'+
+ '<h1 class="page-title">My progress</h1>'+
+ '<p class="intro">Scores and working are saved in this browser. Use a backup to move them to another device.</p>'+
+ (importNotice?'<p class="import-notice" role="status">'+esc(importNotice)+'</p>':'')+
+ '<div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong><span>core questions</span></div>'+
+ '<div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>lastStatus(q)==='I').length+'</strong><span>finished on own</span></div>'+
+ '<div class="metric"><span>WITH HELP</span><strong>'+attempts.filter(q=>lastStatus(q)==='P').length+'</strong><span>marked with help</span></div>'+
+ '<div class="metric"><span>CORE REMAINING</span><strong>'+(core.length-coreAttempts.length)+'</strong><span>essential questions still to mark</span></div></div>'+
  renderRevisionSuggestions({questions:published,records:saved,report,scope})+
  renderTopicProgressDashboard(report,{scope,strand})+
- heading('Week 1 question record','Marks by practice section')+'<div class="progress-grid">'+Object.entries(sections).map(([code,label])=>{const set=qs.filter(q=>q.section===code),done=set.filter(everCompleted).length;return '<div class="progress-item"><span class="eyebrow">'+code+' · '+esc(label)+'</span><h3>'+done+' / '+set.length+' attempts marked</h3><div class="meter"><span style="width:'+(100*done/(set.length||1))+'%"></span></div><p style="margin-top:10px">'+(essentialSections.has(code)?'Included in the four essential hours.':'Recommended or optional beyond the four essential hours.')+'</p><a class="link" href="#/study/1/'+code+'/0">Open practice →</a></div>'}).join('')+'</div>'+
- heading('Revision notes','For your next study session')+'<div class="panel"><div class="reflection-row"><label for="strength">A method I can now use independently</label><textarea id="strength" class="reflection" placeholder="For example: I check the domain before solving a composite inequality…">'+esc(saved.reflections?.strength||'')+'</textarea></div><div class="reflection-row"><label for="repair">My next misconception to repair</label><textarea id="repair" class="reflection" placeholder="Name the exact step to practise…">'+esc(saved.reflections?.repair||'')+'</textarea></div><div class="reflection-row"><label for="strategy">My strategy for an unfamiliar question</label><textarea id="strategy" class="reflection" placeholder="What will you do when you are unsure where to begin?">'+esc(saved.reflections?.strategy||'')+'</textarea></div><p id="reflection-message" class="small muted">Notes save automatically in this browser.</p></div>'+
- '<div class="panel" style="margin-top:16px"><h3>Recorded self-marks</h3><p>'+(scored.length?total+' / '+available+' available marks across '+scored.length+' scored questions.':'No numerical scores recorded yet. Use the mark scheme to self-award marks after attempting a question.')+' The I / P / S rating measures independence, not just whether the final answer is correct.</p></div>'+renderProgressTransfer(saved)+'</section>';
+ heading('Weekly question record','A recorded mark finishes a question')+weeklyRecords+
+ heading('Revision notes','For your next study session')+
+ '<div class="panel"><div class="reflection-row"><label for="strength">A method I can now use independently</label>'+
+ '<textarea id="strength" class="reflection" placeholder="For example: I can justify a tangent using its perpendicular radius.">'+esc(saved.reflections?.strength||'')+'</textarea></div>'+
+ '<div class="reflection-row"><label for="repair">My next misconception to repair</label>'+
+ '<textarea id="repair" class="reflection" placeholder="Name the exact step to practise…">'+esc(saved.reflections?.repair||'')+'</textarea></div>'+
+ '<div class="reflection-row"><label for="strategy">My strategy for an unfamiliar question</label>'+
+ '<textarea id="strategy" class="reflection" placeholder="What will you do when you are unsure where to begin?">'+esc(saved.reflections?.strategy||'')+'</textarea></div>'+
+ '<p id="reflection-message" class="small muted">Notes save automatically in this browser.</p></div>'+
+ '<div class="panel" style="margin-top:16px"><h3>Recorded self-marks</h3><p>'+
+ (scored.length?total+' / '+available+' available marks across '+scored.length+' scored questions.':
+  'No numerical scores recorded yet. Use the mark scheme to self-award marks after attempting a question.')+
+ ' Independence/help records how you worked, not whether your answer was correct.</p></div>'+
+ renderProgressTransfer(saved)+'</section>';
 }
 function guidePage(){
  const plan=[
