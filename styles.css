@@ -1643,3 +1643,115 @@ footer b{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.03
  .guide-routine-row p{grid-column:2}
  .guide-instructions,.guide-ao{grid-template-columns:1fr}
 }
+
+
+/* Week 10 — genuine paper session and evidence-led diagnostic review.
+   Reuse the editorial graph-paper palette, not the old dashboard cards. */
+.mock-paper-banner{
+ margin:16px 0 19px;border:2px solid var(--editorial-ink);
+ background:var(--editorial-paper,#fafbf4);
+ box-shadow:4px 4px 0 #21343e1b
+}
+.mock-banner-top{
+ display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+ padding:9px 16px;background:var(--editorial-ink,#172e39);color:#fff;
+ font:700 11px "IBM Plex Mono",monospace;letter-spacing:.07em
+}
+.mock-banner-core{
+ display:flex;justify-content:space-between;align-items:center;gap:24px;
+ padding:15px 17px;border-bottom:1px solid #abbeb4
+}
+.mock-banner-core>div:first-child>strong{
+ display:block;font:700 clamp(19px,2.6vw,28px) "Space Grotesk",sans-serif;letter-spacing:-.035em
+}
+.mock-banner-core p{margin:4px 0 0;font-size:12px}
+.mock-banner-clock{min-width:142px;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.mock-clock{
+ font:700 clamp(30px,4vw,42px) "IBM Plex Mono",monospace;
+ font-variant-numeric:tabular-nums;line-height:1.12;color:var(--editorial-cobalt,#376f9c)
+}
+.mock-clock.mock-clock-expired{color:#9b422f}
+.mock-clock-quiet{font:700 20px "IBM Plex Mono",monospace;color:var(--editorial-ink)}
+.mock-banner-clock>span:last-child{font:700 9px "IBM Plex Mono",monospace;letter-spacing:.06em}
+.mock-banner-split{
+ display:block;margin:0;padding:9px 17px 0;
+ font:700 11px "IBM Plex Mono",monospace;color:var(--editorial-cobalt,#376f9c)
+}
+.mock-banner-footer{
+ padding:12px 17px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap
+}
+.mock-banner-actions{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.mock-banner-footer p{font-size:11px;line-height:1.55;margin:0;max-width:525px}
+.mock-exam-lock{
+ background:#e9f0df;border:2px dashed #718b7f;padding:18px;
+ margin-top:18px
+}
+.mock-exam-lock strong{font:700 15px "Space Grotesk",sans-serif}
+.mock-exam-lock p{margin:5px 0 0;font-size:12px;line-height:1.6}
+.mock-review-page{max-width:1360px;margin:auto}
+.mock-review-heading{
+ margin:16px 0 20px;padding:24px 26px;border:2px solid var(--editorial-ink);
+ background:linear-gradient(transparent 27px,#d3ded63c 28px),var(--editorial-paper,#fafbf4);
+ background-size:100% 29px
+}
+.mock-review-heading h1{margin:8px 0 10px}
+.mock-review-heading>p{max-width:760px;line-height:1.7}
+.mock-review-total{
+ display:inline-block;padding:9px 12px;border-top:3px solid var(--editorial-orange,#cf6337);
+ background:#fffdfa;font:700 12px "IBM Plex Mono",monospace
+}
+.mock-review-paper-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:0 0 24px}
+.mock-review-paper{padding:20px;border:1px solid #a9bdb4;border-top:5px solid var(--editorial-ink);background:#fffefa}
+.mock-review-paper-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.mock-review-paper-top>strong{font:700 11px "IBM Plex Mono",monospace}
+.mock-review-paper h2{margin:10px 0;font-size:22px}
+.mock-review-paper p{font-size:12px;line-height:1.6}
+.mock-review-paper p.mock-review-score{font:700 28px "IBM Plex Mono",monospace;color:var(--editorial-cobalt);margin-bottom:10px}
+.mock-review-paper .link{font-size:12px;font-weight:700;color:var(--editorial-cobalt)}
+.mock-review-split{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.mock-review-split span{border:1px solid #bfd0c5;background:#f1f6ee;padding:5px 8px;font:700 10px "IBM Plex Mono",monospace}
+.mock-review-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:17px}
+.mock-review-record,.mock-review-reflection{padding:21px 19px;border:1px solid #b7c7ba;background:#fffefa}
+.mock-review-record h2,.mock-review-reflection h2{margin:8px 0 11px;font-size:23px}
+.mock-review-record>p,.mock-review-reflection>p{font-size:12px;line-height:1.7}
+.mock-score-table{width:100%;border-collapse:collapse;font-size:12px;text-align:left}
+.mock-score-table th,.mock-score-table td{border-bottom:1px solid #d4dfd5;padding:11px 9px;vertical-align:top}
+.mock-score-table thead th{font:700 11px "IBM Plex Mono",monospace;background:#eaf2e8}
+.mock-score-table tbody th{font-weight:700}
+.mock-score-table td:nth-child(2),.mock-score-table td:nth-child(3){font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap}
+.mock-score-table a{color:var(--editorial-cobalt);text-decoration-thickness:1px;text-underline-offset:3px}
+.mock-unmarked{font-weight:700;color:#8b563d}
+.mock-priorities{padding:0;list-style:none;margin:10px 0 22px;border-top:1px solid #c7d6ca}
+.mock-priorities li{
+ display:flex;justify-content:space-between;gap:10px;align-items:start;
+ padding:10px 0;border-bottom:1px solid #c7d6ca;font-size:12px
+}
+.mock-priorities a{color:var(--editorial-cobalt);font-weight:700}
+.mock-priorities span{font:700 11px "IBM Plex Mono",monospace;white-space:nowrap}
+.mock-empty{padding:12px;background:#eef2e8}
+.mock-diagnostic-field{margin:17px 0}
+.mock-diagnostic-field label{font:700 15px "Space Grotesk",sans-serif;display:block;margin-bottom:3px}
+.mock-diagnostic-field p{font-size:11px;margin:0 0 7px}
+.mock-diagnostic-field textarea{
+ width:100%;min-height:95px;padding:12px 13px;border:1px solid #8eaaa0;
+ border-radius:2px;background:repeating-linear-gradient(#fffefa 0px,#fffefa 30px,#e9eee4 31px);
+ resize:vertical;line-height:1.8
+}
+.mock-review-foot{font-size:11px;margin:18px 0}
+@media(max-width:840px){
+ .mock-review-layout{grid-template-columns:1fr}
+ .mock-banner-footer{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:600px){
+ .mock-review-paper-grid{grid-template-columns:1fr}
+ .mock-review-heading{padding:17px}
+ .mock-banner-core{gap:12px;align-items:start;flex-wrap:wrap}
+ .mock-banner-clock{align-items:flex-start;min-width:0}
+ .mock-banner-top{font-size:9px}
+ .mock-paper-banner .btn{padding:9px 11px}
+ .mock-review-record,.mock-review-reflection{padding:13px}
+}
+@media print{
+ .mock-paper-banner,.mock-exam-lock,.mock-review-reflection{display:none!important}
+ .mock-review-record{border:0}
+}

@@ -1,7 +1,7 @@
 import {siteConfig} from "./config.js";
 import {isWeekReleased} from "./publication.js";
 import {programmeOne,programmeTwo} from "./data/programmes.js";
-import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions} from "./data/tagged-questions.js";
+import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions,taggedWeek10Questions} from "./data/tagged-questions.js";
 import {getSpecSkill} from "./data/specification.js";
 import {mountWorkingSpace} from "./working-space.js";
 import {isQuestionFinished,mountQuestionAssessment} from "./question-assessment.js";
@@ -13,6 +13,8 @@ import {renderProgressTransfer,mountProgressTransfer} from "./progress-transfer-
 import {startNewAttempt,latestFinishedRecord,hasNewAttemptInProgress} from "./attempt-history.js";
 import {mountAttemptHistory} from "./attempt-history-view.js";
 import {renderCalendarHome,firstWeekQuestionRoute,adjacentQuestionRoute,renderSectionNavigation,renderQuestionIndex,STUDY_SEQUENCE} from "./calendar-view.js";
+import {mockPaperForSection,mockTimerInfo,mockTimerUpdate,formatMockClock} from "./mock-week.js";
+import {renderMockPaperBanner,renderMockReview} from "./mock-week-view.js";
 
 const $=s=>document.querySelector(s);
 const el=$('#app');
@@ -20,7 +22,8 @@ const sections={R:'Quick retrieval',P:'Connected problems',M:'Modelling & reason
 const target={R:10,P:3,M:2,A:3,T:3,X:1};
 const essentialSections=new Set(['R','P','M','A']);
 const studyTimes={R:'30 min',P:'70 min',M:'70 min',A:'50 min',T:'45 min + 15 min marking',X:'40 min + 20 min review'};
-const allQuestions={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions,4:taggedWeek04Questions,5:taggedWeek05Questions,6:taggedWeek06Questions,7:taggedWeek07Questions,8:taggedWeek08Questions,9:taggedWeek09Questions};
+const allQuestions={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions,4:taggedWeek04Questions,5:taggedWeek05Questions,6:taggedWeek06Questions,7:taggedWeek07Questions,8:taggedWeek08Questions,9:taggedWeek09Questions,10:taggedWeek10Questions};
+let mockClockId=null;
 let disposeWorkspace=null;
 let disposeSpecification=null;
 let disposeHistory=null;
@@ -97,16 +100,21 @@ function studyPage(n,sec,idx){
  const next=adjacentQuestionRoute(n,all,sec,i,1);
  const nextSection=next?.split("/")[3]!==sec;
  const previousSection=prev?.split("/")[3]!==sec;
- const sectionNav=renderSectionNavigation({week:n,section:sec,questions:all,isFinished:everCompleted});
- const questionNav=renderQuestionIndex({section:sec,questions:qs,index:i,isFinished:completed,
+ const mock=n===10&&Boolean(mockPaperForSection(sec));
+ const timed=mock&&mockTimerInfo(saved.reflections,sec).active;
+ const sectionNav=renderSectionNavigation({week:n,section:sec,questions:all,
+   isFinished:timed?()=>false:everCompleted,
+   labels:mock?{P:"Pure mock · 100 marks",A:"Applied mini-mock · 50 marks"}:undefined});
+ const questionNav=renderQuestionIndex({section:sec,questions:qs,index:i,isFinished:timed?()=>false:completed,
    isRetrying:item=>hasNewAttemptInProgress(item,saved[item.id]||{})});
  const marked=all.filter(everCompleted).length;
  return '<section class="page study-page">'+
  '<header class="study-header"><a class="study-back" href="#/calendar">← CALENDAR</a>'+
- '<div class="study-header-title"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+' / INTERNAL EXAM</span>'+
+ '<div class="study-header-title"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+(mock?' / ORIGINAL MOCK':' / INTERNAL EXAM')+'</span>'+
  '<h1>'+esc(week.title)+'</h1></div>'+
- '<div class="study-header-progress"><strong>'+marked+'<span>/'+all.length+'</span></strong>'+
- '<small>QUESTIONS MARKED</small></div></header>'+
+ '<div class="study-header-progress"><strong>'+(timed?'—':marked)+'<span>/'+all.length+'</span></strong>'+
+ '<small>'+(timed?'MARKING HIDDEN':'QUESTIONS MARKED')+'</small></div></header>'+
+ (mock?renderMockPaperBanner({section:sec,questions:all,records:saved,reflections:saved.reflections}):"")+
  sectionNav+
  '<div class="study-layout study-workbench">'+questionNav+
  '<article class="paper exam-sheet">'+
@@ -123,6 +131,7 @@ function studyPage(n,sec,idx){
   '<div class="question-part math">'+mathHtml(part[0])+'</div>'+
   '<span class="marks">['+part[1]+']</span></li>').join('')+'</ol>'+
  '<hr><div id="question-working-space"></div>'+
+ (timed?'<div class="mock-exam-lock" role="note"><strong>Exam conditions are active.</strong><p>Hints, worked solutions, specification links, marks and attempt history are hidden while the timed paper is running. Your working is saved automatically. Use <strong>Finish timed paper</strong> above to unlock marking and review.</p></div>':
  '<div class="actions" style="margin-top:15px">'+
  '<button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button>'+
  '<button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div>'+
@@ -133,7 +142,7 @@ function studyPage(n,sec,idx){
   '<div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p>'+
   '<p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div>'+
  relatedSkillsMarkup(q)+
- '<div id="question-assessment"></div><div id="attempt-history-root"></div>'+
+ '<div id="question-assessment"></div><div id="attempt-history-root"></div>')+
  '<div class="foot-nav">'+
  '<button type="button" class="btn ghost small" id="previous"'+(prev?' data-target-route="'+prev+'"':' disabled')+'>'+
    (previousSection?'← Previous section':'← Previous question')+'</button>'+
@@ -210,6 +219,7 @@ function guidePage(){
  '<div class="guide-routine">'+plan.map(row=>'<div class="guide-routine-row">'+
    '<span class="guide-routine-index">'+row[0]+'</span>'+
    '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
+ '<div class="warning" style="margin:19px 0 25px"><strong>Week 10 uses a different format.</strong> The final week has a 100-mark Pure mock (120 minutes), a 50-mark Year 1 Applied mini-mock (60 minutes), and a separate 60-minute marking and repair plan. Its optional timer hides help and marking while active, but never erases work. Start from Week 10 on the calendar.</div>'+
  heading("Using a question","Working, hints and marking")+
  '<div class="guide-instructions">'+
  '<div><b>1</b><strong>Work independently</strong><p>Use Notes, Maths steps or Draw. Work is saved for each question.</p></div>'+
@@ -252,6 +262,7 @@ function remountHistory(q){
 }
 function routeInfo(){const path=(location.hash||'#/').slice(1).split('/').filter(Boolean);return path}
 function render(){
+  if(mockClockId!==null){window.clearInterval(mockClockId);mockClockId=null;}
   if(disposeWorkspace){disposeWorkspace();disposeWorkspace=null;}
   if(disposeSpecification){disposeSpecification();disposeSpecification=null;}
   if(disposeHistory){disposeHistory();disposeHistory=null;}
@@ -266,11 +277,12 @@ function render(){
     return;
   }
   document.querySelectorAll("[data-nav]").forEach(a=>
-    a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"||top==="home"?"calendar":top)));
+    a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"||top==="home"||top==="mock-review"?"calendar":top)));
   if(top==="home")el.innerHTML=overview();
   else if(top==="calendar")el.innerHTML=calendar();
   else if(top==="week")el.innerHTML=weekPage(Number(p[1]));
   else if(top==="study")el.innerHTML=studyPage(Number(p[1]),p[2]||"R",p[3]||0);
+  else if(top==="mock-review")el.innerHTML=Number(p[1])===10&&released(10)?renderMockReview({questions:allQuestions[10],records:saved,reflections:saved.reflections}):notFound();
   else if(top==="progress")el.innerHTML=progressPage(p[1]||"internal",p[2]||"all");
   else if(top==="specification")disposeSpecification=mountSpecification(el,{scope:p[1]||"internal",topicId:p[2]||null,skillId:p[3]||null,questions:releasedQuestions(),records:saved});
   else if(top==="guide")el.innerHTML=guidePage();
@@ -278,7 +290,7 @@ function render(){
   else el.innerHTML=notFound();
 
   document.title=(top==="home"?"A Level Maths Calendar":
-    top==="study"?"Questions":top==="week"?"Weekly questions":top==="specification"?"My Specification":
+    top==="study"?"Questions":top==="mock-review"?"Mock marking & review":top==="week"?"Weekly questions":top==="specification"?"My Specification":
     top.charAt(0).toUpperCase()+top.slice(1))+" — A Level Maths Calendar";
 
   if(top==="progress"){
@@ -369,6 +381,21 @@ function render(){
       }
     }
   }
+  if(top==="study"&&Number(p[1])===10){
+    const section=p[2];
+    const timer=mockPaperForSection(section)?mockTimerInfo(saved.reflections,section):null;
+    const clock=el.querySelector("#mock-clock");
+    if(timer?.active&&clock){
+      const updateClock=()=>{
+        const info=mockTimerInfo(saved.reflections,section);
+        clock.textContent=formatMockClock(info.remainingSeconds);
+        clock.classList.toggle("mock-clock-expired",info.overtime);
+        clock.setAttribute("aria-label",info.overtime?"Allocated time elapsed":"Time remaining");
+      };
+      updateClock();
+      mockClockId=window.setInterval(updateClock,1000);
+    }
+  }
   typeset();
 }
 window.addEventListener('hashchange',()=>{
@@ -379,6 +406,19 @@ window.addEventListener('hashchange',()=>{
   if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true});}
 });
 document.addEventListener('click',event=>{
+ const timedPaper=event.target.closest("button[data-mock-action]");
+ if(timedPaper){
+   const section=timedPaper.dataset.mockSection;
+   if(released(10)&&mockPaperForSection(section)){
+     const previous=saved.reflections;
+     try{
+       saved.reflections=mockTimerUpdate(saved.reflections||{},section,timedPaper.dataset.mockAction);
+       if(!store()){saved.reflections=previous;return;}
+       render();
+     }catch(err){saved.reflections=previous;console.warn("Unable to change mock sitting",err);}
+   }
+   return;
+ }
  const week=event.target.closest('button[data-week]');if(week){navigate(week.dataset.destination||'#/study/'+week.dataset.week+'/R/0');return}
  const section=event.target.closest('[data-section]');if(section){navigate('#/study/'+section.dataset.week+'/'+section.dataset.section+'/0');return}
  const jump=event.target.closest('[data-jump]');if(jump){const p=routeInfo();navigate('#/study/'+p[1]+'/'+p[2]+'/'+jump.dataset.jump);return}
@@ -387,6 +427,14 @@ document.addEventListener('click',event=>{
  const prev=event.target.closest('#previous,#next');if(prev&&!prev.disabled){const destination=prev.dataset.targetRoute;if(destination)navigate(destination);return;}
 });
 document.addEventListener('input',event=>{
+ const note=event.target.dataset?.mockNote;
+ if(released(10)&&["firstError","repairMethod","reattemptPlan"].includes(note)){
+   saved.reflections??={};saved.reflections.week10??={};saved.reflections.week10.notes??={};
+   saved.reflections.week10.notes[note]=event.target.value;
+   const ok=store(),message=$('#mock-review-save');
+   if(message)message.textContent=ok?"Review notes saved to this browser.":"Could not save these notes. Check browser storage and export a backup.";
+   return;
+ }
  if(['strength','repair','strategy'].includes(event.target.id)){saved.reflections??={};saved.reflections[event.target.id]=event.target.value;store();const msg=$('#reflection-message');if(msg)msg.textContent='Notes saved on this device.'}
 });
 render();

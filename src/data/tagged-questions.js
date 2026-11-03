@@ -22,6 +22,8 @@ import {week08Questions} from "./week08.js";
 import {week08SkillMap} from "./week08-skill-map.js";
 import {week09Questions} from "./week09.js";
 import {week09SkillMap} from "./week09-skill-map.js";
+import {week10Questions} from "./week10.js";
+import {week10SkillMap} from "./week10-skill-map.js";
 
 const ALPHABET="abcdefghijklmnopqrstuvwxyz";
 
@@ -73,3 +75,4 @@ export const taggedWeek06Questions=linkQuestionParts(week06Questions,week06Skill
 export const taggedWeek07Questions=linkQuestionParts(week07Questions,week07SkillMap);
 export const taggedWeek08Questions=linkQuestionParts(week08Questions,week08SkillMap);
 export const taggedWeek09Questions=linkQuestionParts(week09Questions,week09SkillMap);
+export const taggedWeek10Questions=linkQuestionParts(week10Questions,week10SkillMap);

@@ -20,9 +20,9 @@ const slash=String.fromCharCode(92),start=slash+"(",end=slash+")";
 
 test("only the nine genuinely authored weeks are released",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,9);
- assert.ok(programmeOne.weeks.slice(0,9).every(w=>w.hasPublishedContent));
- assert.ok(programmeOne.weeks.slice(9).every(w=>!w.hasPublishedContent));
+ assert.equal(siteConfig.stage1.releasedWeeks,10);
+ assert.ok(programmeOne.weeks.slice(0,10).every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(10).every(w=>!w.hasPublishedContent));
  assert.equal(siteConfig.stage2.published,false);
 });
 test("Week 3 fulfils the 4/5/6-hour blueprint and exact section mark quotas",()=>{

@@ -23,9 +23,9 @@ const slash=String.fromCharCode(92),open=slash+"(",close=slash+")";
 
 test("nine completed weeks release while all unauthored content stays inaccessible",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,9);
- assert.ok(programmeOne.weeks.slice(0,9).every(w=>w.hasPublishedContent));
- assert.ok(programmeOne.weeks.slice(9).every(w=>!w.hasPublishedContent));
+ assert.equal(siteConfig.stage1.releasedWeeks,10);
+ assert.ok(programmeOne.weeks.slice(0,10).every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(10).every(w=>!w.hasPublishedContent));
  assert.equal(siteConfig.stage2.published,false);
 });
 test("22 original Week 5 questions fulfil the exact 4/5/6-hour pack",()=>{

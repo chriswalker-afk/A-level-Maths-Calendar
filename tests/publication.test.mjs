@@ -2,13 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {isWeekReleased} from "../src/publication.js";
 import {programmeOne} from "../src/data/programmes.js";
-import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions} from "../src/data/tagged-questions.js";
+import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions,taggedWeek10Questions} from "../src/data/tagged-questions.js";
 import {getPublishedPracticeForSkill} from "../src/data/skill-practice-index.js";
 
 const weeks=programmeOne.weeks;
-const examples={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions,4:taggedWeek04Questions,5:taggedWeek05Questions,6:taggedWeek06Questions,7:taggedWeek07Questions,8:taggedWeek08Questions,9:taggedWeek09Questions};
+const examples={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions,4:taggedWeek04Questions,5:taggedWeek05Questions,6:taggedWeek06Questions,7:taggedWeek07Questions,8:taggedWeek08Questions,9:taggedWeek09Questions,10:taggedWeek10Questions};
 
-test("the calendar and topic index publish the same nine complete weeks",()=>{
+test("the calendar and topic index publish the same ten complete weeks",()=>{
  assert.equal(isWeekReleased(1,examples[1]),true);
  assert.equal(isWeekReleased(2,examples[2]),true);
  assert.equal(isWeekReleased(3,examples[3]),true);
@@ -18,7 +18,8 @@ test("the calendar and topic index publish the same nine complete weeks",()=>{
  assert.equal(isWeekReleased(7,examples[7]),true);
  assert.equal(isWeekReleased(8,examples[8]),true);
  assert.equal(isWeekReleased(9,examples[9]),true);
- for(const n of [10])assert.equal(isWeekReleased(n,[]),false);
+ assert.equal(isWeekReleased(10,examples[10]),true);
+ for(const n of [11])assert.equal(isWeekReleased(n,[]),false);
  assert.ok(getPublishedPracticeForSkill("P03-007").some(q=>q.week===2));
  assert.ok(getPublishedPracticeForSkill("P02-022").some(q=>q.week===1));
 });
@@ -27,7 +28,7 @@ test("teacher control works independently of question file presence",()=>{
  assert.equal(isWeekReleased(1,examples[1],{stage,weeks}),true);
  assert.equal(isWeekReleased(2,examples[2],{stage,weeks}),false);
  assert.equal(isWeekReleased(2,[],{stage:{releaseMode:"manual",releasedWeeks:3},weeks}),false);
- assert.equal(isWeekReleased(10,examples[1],{stage:{releaseMode:"manual",releasedWeeks:10},weeks}),false,
+ assert.equal(isWeekReleased(11,examples[1],{stage:{releaseMode:"manual",releasedWeeks:11},weeks}),false,
   "The week is still locked if content has not been authored");
  assert.equal(isWeekReleased(0,examples[1],{stage,weeks}),false);
 });

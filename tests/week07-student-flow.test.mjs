@@ -42,8 +42,8 @@ test("Week 7 calendar, maths, self-marking and integration skill evidence preser
  const app=doc.querySelector("#app");
  const navigate=hash=>{window.location.hash=hash;window.dispatchEvent(new window.Event("hashchange"));};
  assert.equal(app.querySelectorAll(".planner-cell").length,10);
- assert.equal(app.querySelectorAll("a.planner-cell.is-open").length,9);
- assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,1);
+ assert.equal(app.querySelectorAll("a.planner-cell.is-open").length,10);
+ assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,0);
  const seventh=[...app.querySelectorAll("a.planner-cell.is-open")]
   .find(a=>a.getAttribute("href").startsWith("#/study/7/"));
  assert.ok(seventh);
@@ -85,13 +85,13 @@ test("Week 7 calendar, maths, self-marking and integration skill evidence preser
  assert.match(app.querySelector(".exam-sheet-code").textContent,/W07-P1/);
  assert.equal(app.querySelector("#previous").dataset.targetRoute,"#/study/7/R/9");
  navigate("#/progress/internal");
- assert.equal(app.querySelector(".metric strong").textContent,"8/162");
+ assert.equal(app.querySelector(".metric strong").textContent,"8/184");
  const weeks=app.querySelectorAll(".weekly-progress-group");
- assert.equal(weeks.length,9);
+ assert.equal(weeks.length,10);
  assert.match(weeks[6].textContent,/Exponentials, logarithms and differential equations/);
  assert.match(weeks[6].textContent,/2 \/ 10 questions marked/);
  assert.ok(weeks[6].querySelector('a[href="#/study/7/R/0"]'));
- assert.match(app.querySelector(".spec-progress-pulse").textContent,/8 \/ 198/);
+ assert.match(app.querySelector(".spec-progress-pulse").textContent,/8 \/ 220/);
  navigate("#/specification/internal/P06");
  assert.match(app.querySelector(".spec-topic-evidence").textContent,/2 \/ /);
  assert.ok(app.querySelector("#P06-006"),"Log-law primary skill evidence exists");
@@ -100,7 +100,7 @@ test("Week 7 calendar, maths, self-marking and integration skill evidence preser
  const resume=[...app.querySelectorAll("a.planner-cell.is-open")]
   .find(a=>a.getAttribute("href").startsWith("#/study/7/"));
  assert.equal(resume.getAttribute("href"),"#/study/7/R/2");
- assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,1);
+ assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,0);
  dom.window.close();
  for(const n of ["window","document","location","localStorage","customElements","ResizeObserver","requestAnimationFrame"])
   delete globalThis[n];

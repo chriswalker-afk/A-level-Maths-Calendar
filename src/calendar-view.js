@@ -35,7 +35,7 @@ export function adjacentQuestionRoute(week,questions,section,index,direction){
  const target=list[at+direction];
  return target?weekPath(week,target.section,target.index):null;
 }
-export function renderSectionNavigation({week,section,questions,isFinished=()=>false}){
+export function renderSectionNavigation({week,section,questions,isFinished=()=>false,labels=STUDY_LABELS}){
  const links=STUDY_SEQUENCE.map(code=>{
   const items=questions.filter(q=>q.section===code);
   if(!items.length)return "";
@@ -44,7 +44,7 @@ export function renderSectionNavigation({week,section,questions,isFinished=()=>f
   return '<a class="study-section-link'+(selected?' is-selected':'')+'" href="'+weekPath(week,code,0)+'"'+
    (selected?' aria-current="page"':'')+
    '><span class="study-section-code">'+code+'</span>'+
-   '<span class="study-section-name">'+esc(STUDY_LABELS[code])+'</span>'+
+   '<span class="study-section-name">'+esc(labels[code]||STUDY_LABELS[code])+'</span>'+
    '<span class="study-section-progress">'+done+'/'+items.length+'</span></a>';
  }).join("");
  return '<nav class="study-section-nav" aria-label="Subsections in Week '+week+'">'+
