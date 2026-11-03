@@ -1,0 +1,10 @@
+{
+  "name": "a-level-maths-calendar",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/content.test.mjs",
+    "check": "node --check src/app.js && node --check src/data/programmes.js && node --check src/data/week01.js && npm test"
+  }
+}
