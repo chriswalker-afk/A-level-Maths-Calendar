@@ -57,10 +57,10 @@ export const week10PureC = [
       "Newton–Raphson",
       "error analysis"
     ],
-    "stem": "A numerical method is used to approximate \\(I=\\int_0^1\\frac1{1+x^2}\\,dx\\). Separately, the real root of \\(x^3-x-1=0\\) is sought by Newton–Raphson.",
+    "stem": "A numerical method is used to approximate \\(I=\\int_0^1\\sqrt{1+4x}\\,dx\\). Separately, the real root of \\(x^3-x-1=0\\) is sought by Newton–Raphson.",
     "parts": [
       [
-        "Use four equal-width trapezia to estimate I, showing the five ordinates and the calculation.",
+        "Use four equal-width trapezia to estimate I, showing all five ordinates and the calculation.",
         3
       ],
       [
@@ -72,13 +72,13 @@ export const week10PureC = [
         4
       ]
     ],
-    "hint": "The trapezium width is 0.25; the antiderivative of 1/(1+x²) is arctan x. For Newton, differentiate the cubic.",
+    "hint": "The trapezium width is 0.25; integrate the square-root expression by the reverse chain rule. For Newton, differentiate the cubic.",
     "steps": [
-      "The ordinates at \\(x=0,\\frac14,\\frac12,\\frac34,1\\) are \\(1,\\frac{16}{17},\\frac45,\\frac{16}{25},\\frac12\\). [1] With \\(h=\\frac14\\), \\(T_4=\\frac h2[y_0+2(y_1+y_2+y_3)+y_4]\\). [1] Therefore \\(T_4=\\frac18[1+2(\\frac{16}{17}+\\frac45+\\frac{16}{25})+\\frac12]\\approx0.782794118\\). [1]",
-      "The exact value is \\(I=[\\arctan x]_0^1=\\frac\\pi4\\approx0.785398163\\). [1] Signed error \\(T_4-I\\approx-0.002604\\) (an underestimate). [1]",
+      "The ordinates at \\(x=0,\\frac14,\\frac12,\\frac34,1\\) are \\(1,\\sqrt2,\\sqrt3,2,\\sqrt5\\). [1] With \\(h=\\frac14\\), \\(T_4=\\frac h2[y_0+2(y_1+y_2+y_3)+y_4]\\). [1] Thus \\(T_4=\\frac18[1+2(\\sqrt2+\\sqrt3+2)+\\sqrt5]\\approx1.691074590\\). [1]",
+      "The exact value by reverse chain rule is \\(I=\\left[\\frac{(1+4x)^{3/2}}6\\right]_0^1=\\frac{5\\sqrt5-1}{6}\\approx1.696723315\\). [1] Signed error \\(T_4-I\\approx-0.005649\\) (an underestimate). [1]",
       "For \\(f(x)=x^3-x-1\\), \\(f'(x)=3x^2-1\\). [1] Newton gives \\(x_{n+1}=x_n-\\frac{x_n^3-x_n-1}{3x_n^2-1}\\). [1] From 1.3, \\(x_1\\approx1.325307125\\) and \\(x_2\\approx1.324718280\\). [1] A further iterate is \\(x_3\\approx1.324717957\\), which supports the four-decimal value \\(1.3247\\); a sign bracket at the rounding boundaries is an alternative. [1]"
     ],
-    "answer": "\\(T_4\\approx0.782794118\\), \\(I=\\pi/4\\), signed error \\(-0.002604\\), Newton root \\(1.3247\\) to four decimal places.",
+    "answer": "\\(T_4\\approx1.691074590\\), \\(I=(5\\sqrt5-1)/6\\), signed error \\(-0.005649\\), Newton root \\(1.3247\\) to four decimal places.",
     "misconception": "Agreement of rounded Newton iterates supports a proposed root but does not by itself establish uniqueness; the numerical answer should be accompanied by appropriate checks.",
     "reflection": "Which of these two numerical tasks has an exact benchmark, and why is that useful?"
   },
