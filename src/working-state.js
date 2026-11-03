@@ -71,7 +71,8 @@ export function normalizeWorkspace(input, legacyText = "") {
     notes: typeof w.notes === "string" ? w.notes : String(legacyText ?? ""),
     mathLines: uniqueLines.length ? uniqueLines : [newMathLine()],
     strokes,
-    colour: LEGACY_PEN_COLOURS[w.colour] || (INK_COLOURS.includes(w.colour) ? w.colour : INK_COLOURS[0]),
+    colour: Object.hasOwn(LEGACY_PEN_COLOURS,w.colour) ? LEGACY_PEN_COLOURS[w.colour] :
+      (INK_COLOURS.includes(w.colour) ? w.colour : INK_COLOURS[0]),
     penWidth: INK_WIDTHS.includes(w.penWidth) ? w.penWidth : INK_WIDTHS[1],
     tool: w.tool === "eraser" ? "eraser" : "pen",
     grid: w.grid !== false
