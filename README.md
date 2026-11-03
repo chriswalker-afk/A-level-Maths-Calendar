@@ -39,7 +39,7 @@ The **four-hour essential pathway** retains the blueprint's AO1/AO2/AO3 mark dis
 
 Each Week 2 question includes correctly typeset maths, part-by-part marks, a first-step hint, fully worked solutions, a verified answer, a misconception, a reflection prompt and a permanent primary specification skill for each marked part (with optional connected skills). All the existing Notes / Maths steps / Draw, self-marking, independent/with-help selection, retry history and backup functions work unchanged.
 
-The student calendar now opens **Weeks 1–9 directly into questions**. The 162 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Week 10 remains locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
+The student calendar now opens **all ten weeks directly into questions**. Weeks 1–9 have **162 essential practice questions** (18 per week). Week 10 adds **22 authentic mock questions** (100 Pure marks + 50 Year 1 Applied marks) and a dedicated diagnostic review. Across all ten weeks there are **220 published questions, 184 essential**; topic accuracy counts precise evidence only once per finished question. Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
 
 Quality gates: `tests/week02-content.test.mjs`, `tests/week02-student-flow.test.mjs` and `tests/publication.test.mjs`, plus the existing MathJax, progress, marking and backup suites.
 
@@ -194,6 +194,29 @@ Week 9 includes **22 original mixed examination-style questions (144 marks)**, e
 
 The independent mathematics, release-safety, MathJax and student-flow tests live in `tests/week09-content.test.mjs`, `tests/week09-maths-audit.test.mjs` and `tests/week09-student-flow.test.mjs`. The detailed audit is in `docs/WEEK09_AUTHORING_AUDIT.md`.
 
+
+### Week 10 — Mock examination and consolidation
+
+Unlike the 98-mark Weeks 1–9 weekly drills, this final week contains an **original 100-mark two-hour Pure paper** (12 questions) and **50-mark one-hour Year 1 Applied mini-mock** (10 questions; 25 Statistics + 25 Mechanics), followed by **one hour of self-marking and diagnostic reflection**. The papers are original revision materials, not official Pearson past papers.
+
+| Activity | Questions | Marks | Duration |
+|---|---:|---:|---:|
+| Pure mock — proof, algebra, geometry, trig, series, calculus, exponentials, numerical methods and vectors | 12 | 100 | 120 min |
+| Year 1 Statistics — sampling, grouped data, probability, binomial models and tests | 5 | 25 | 30 min |
+| Year 1 Mechanics — velocity/displacement, SUVAT, calculus of motion, forces and connected particles | 5 | 25 | 30 min |
+| **Examination total** | **22** | **150** | **180 min** |
+| Mark, diagnose and plan — mark every question, identify the first error and choose specific reattempts | — | — | 60 min |
+
+Week 10’s 150-mark authored AO mix is **AO1 75 / AO2 38 / AO3 37** (roughly the 50/25/25 qualification weighting). Every one of **68 marked parts** has one permanent primary skill tag and optional non-credit-bearing connected tags. Applied content is **Year 1 only**, excluding Normal distributions, conditional probability, Year 2 correlation significance tests, projectiles, friction, inclined planes and moments.
+
+**Exam mode:** Students can start independent 120/60-minute timed sittings. During an active sitting the questions and working spaces remain available, but hints, solutions, score information, mark entry and diagnostic review are hidden. Finishing the sitting restores the full mark schemes and optional per-part marking. The clock records its start and stop timestamps in the existing local-progress record; restarting never clears writing or marks. Timer overruns display clearly rather than deleting working or forcing a submission.
+
+**Evidence-led review:** Visit **Mark & review both papers** after the timed sittings. The 60-minute screen shows per-question marking status, independent versus help-supported attempts, 25/25 Applied submarks and only evidence-backed repair priorities. **An unanswered or unmarked question is not treated as a zero.** Overall paper scores are shown only when every paper question has been scored; a recorded zero is a completed question. Three review notes (first error, repair method and reattempt plan) are included in the existing version-1 progress backup.
+
+**Published course:** All **ten weeks** are open through the calendar, with **220 original questions** (including **184 essential**). The separate February–June 2027 full A Level programme remains planned but **unpublished**. All earlier saved notes, maths input, drawings, scores, attempts/history, topic evidence, local storage key and version-1 backup/restore are preserved.
+
+See `docs/WEEK10_AUTHORING_AUDIT.md` for specification and independent mathematics checks, and `docs/QUESTION_BLUEPRINT.md` for the explicit Week 10 paper-format correction.
+
 ## My Specification — Pass 4A
 
 The website now includes a permanent **My specification** page for Pearson Edexcel 9MA0, with **19 official topic groups** (10 Pure, 5 Statistics, 4 Mechanics) and a full original student-friendly *I can…* skills library.
@@ -210,7 +233,7 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
-All **198 questions in published Weeks 1–9** are now linked to the 9MA0 skill library **part by part**.
+All **220 questions in published Weeks 1–10** are now linked to the 9MA0 skill library **part by part**.
 
 Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
 
@@ -265,7 +288,7 @@ When importing a backup, students see a preview of the saved contents and choose
 
 Invalid, oversized, version-mismatched and malformed backups are rejected. Progress is saved atomically; if browser storage fails, the import is not applied. The backup includes potentially private student notes, so the interface reminds students to store it privately.
 
-**Next:** complete Week 10 using the stable specification skills and decide how to accommodate full-length mocks without distorting the established question format. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
+**Next:** conduct a full release-quality and accessibility audit of Weeks 1–10; then build the February–June 2027 final-exam preparation programme without making unreleased Year 2 content accessible. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
 
 ## Week 1 is now complete
 
@@ -378,7 +401,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Week 10 content:** full-paper mock and consolidation, with a dedicated mock format or a clearly labelled adaptation of the existing calendar structure.
-2. **Week 10:** complete the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
+1. **Release-quality audit:** inspect the complete Week 1–10 maths, student experience, mobile rendering, marking and backup/restore after merging the Week 10 PR.
+2. **Consolidation:** review topic-specification coverage and adjust future-targeted reattempt guidance without overwriting student results.
 3. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
 4. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.
