@@ -7,8 +7,9 @@ export const week10PureA = [
     "marks": 6,
     "minutes": 7,
     "ao": {
-      "AO1": 2,
-      "AO2": 4
+      "AO1": 3,
+      "AO2": 3,
+      "AO3": 0
     },
     "topics": [
       "deductive proof",
@@ -48,8 +49,9 @@ export const week10PureA = [
     "marks": 7,
     "minutes": 8,
     "ao": {
-      "AO1": 3,
-      "AO2": 4
+      "AO1": 4,
+      "AO2": 3,
+      "AO3": 0
     },
     "topics": [
       "factor theorem",
@@ -89,8 +91,9 @@ export const week10PureA = [
     "marks": 8,
     "minutes": 10,
     "ao": {
-      "AO1": 2,
-      "AO2": 6
+      "AO1": 3,
+      "AO2": 2,
+      "AO3": 3
     },
     "topics": [
       "circle intersections",
@@ -131,8 +134,9 @@ export const week10PureA = [
     "marks": 9,
     "minutes": 11,
     "ao": {
-      "AO1": 3,
-      "AO2": 6
+      "AO1": 4,
+      "AO2": 3,
+      "AO3": 2
     },
     "topics": [
       "double-angle identity",
