@@ -33,7 +33,7 @@ test("Week 5 calendar, maths, self-marking and integration skill evidence preser
   "W01-R1":{score:2,status:"I",workspace:{mode:"notes",notes:"Algebra review"}},
   "W02-R1":{score:2,status:"P",workspace:{mode:"notes",notes:"Geometry review"}},
   "W03-R1":{score:2,status:"I",workspace:{mode:"notes",notes:"Trig review"}},
-  "W05-R1":{score:2,status:"I",workspace:{mode:"notes",notes:"Calculus review"}}
+  "W04-R1":{score:2,status:"I",workspace:{mode:"notes",notes:"Calculus review"}}
  };
  window.localStorage.setItem(key,JSON.stringify(existing));
  await import("../src/app.js");
@@ -49,7 +49,7 @@ test("Week 5 calendar, maths, self-marking and integration skill evidence preser
  navigate(fifth.getAttribute("href"));
  assert.match(app.querySelector("h1").textContent,/Integration and accumulation/);
  assert.match(app.querySelector(".exam-sheet-code").textContent,/W05-R1/);
- assert.equal(app.querySelectorAll(".study-section-link").length,5);
+ assert.equal(app.querySelectorAll(".study-section-link").length,6);
  assert.equal(app.querySelectorAll(".question-index-item").length,10);
  assert.ok(app.querySelector("#question-working-space"));
  assert.ok(app.querySelector("#question-assessment"));
