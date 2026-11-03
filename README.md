@@ -10,7 +10,7 @@ Inside practice, students can switch directly between **Retrieval / Connected pr
 
 The visual identity uses large week numerals, ruled graph-paper layouts, warm paper, dark ink, coral accents and highlighted active states. It also restyles My Progress, My Specification and the practical study guide to share the same design language.
 
-**Design and flow reference:** [docs/VISUAL_IDENTITY_AND_FLOW.md](docs/VISUAL_IDENTITY_AND_FLOW.md). New navigation regressions are covered by `tests/calendar-flow.test.mjs` and `tests/calendar-route-ui.test.mjs`.
+**Design and flow reference:** [docs/VISUAL_IDENTITY_AND_FLOW.md](docs/VISUAL_IDENTITY_AND_FLOW.md). The finishing stylesheet `styles/identity-polish.css` now applies the same identity across the maths editor, marking, specification, progress, retry history and backups. New components should reuse its palette and typography rather than introduce a separate theme. New navigation regressions are covered by `tests/calendar-flow.test.mjs` and `tests/calendar-route-ui.test.mjs`.
 
 ## Two linked programmes
 
