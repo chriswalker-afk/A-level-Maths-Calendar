@@ -60,7 +60,7 @@ function assessmentMarkup(question, record) {
   return '<section class="finish-assessment" aria-labelledby="finish-assessment-title">'
     +'<div class="finish-heading"><div><span class="eyebrow">When you finish the question</span>'
     +'<h3 id="finish-assessment-title">Check, mark & finish</h3>'
-    +'<p>Complete your attempt first. Then choose how you worked and compare with the full worked solution.</p></div>'
+    +'<p>Compare your working with the solution, record how independently you worked, then enter a mark.</p></div>'
     +'<span id="question-finish-badge" class="finish-state" data-finished="'+String(hasScore)+'" role="status" aria-live="polite">'
     +(hasScore?'✓ Finished':'○ Not yet finished')+'</span></div>'
     +'<div class="finish-flow">'
