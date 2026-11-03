@@ -21,7 +21,7 @@ const slash=String.fromCharCode(92),open=slash+"(",close=slash+")";
 test("the first eight authored weeks are released and remaining weeks stay locked",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
  assert.equal(siteConfig.stage1.releasedWeeks,8);
- assert.ok(programmeOne.weeks.slice(0,8.every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(0,8).every(w=>w.hasPublishedContent));
  assert.ok(programmeOne.weeks.slice(8).every(w=>!w.hasPublishedContent));
  assert.equal(siteConfig.stage2.published,false);
 });
