@@ -37,7 +37,7 @@ export const week05Applied = [
   {
     "id": "W05-A2",
     "section": "A",
-    "title": "Choose the right binomial tail",
+    "title": "Choose the right binomial tail and boundary",
     "marks": 8,
     "minutes": 18,
     "ao": {
@@ -49,7 +49,7 @@ export const week05Applied = [
       "binomial probability",
       "cumulative probabilities",
       "complements",
-      "conditional probability"
+      "event inequalities"
     ],
     "stem": "A discrete random variable has distribution \\(X\\sim B(10,0.3)\\). You may use a calculator's binomial probability and cumulative probability functions. Give probabilities to four decimal places where required.",
     "parts": [
@@ -66,20 +66,20 @@ export const week05Applied = [
         1
       ],
       [
-        "Find \\(P(X\\ge3\\mid X\\ge1)\\) to four decimal places. Explain why the conditional probability uses the event \\(X\\ge1\\) in its denominator.",
+        "A colleague says that \\(P(X\\ge3)\\) and \\(P(X>3)\\) are equal. Calculate \\(P(X>3)\\) to four decimal places and explain why the colleague is mistaken.",
         2
       ]
     ],
-    "hint": "For at least three, use \\(1-P(X\\le2)\\). The event X ≥ 3 is entirely contained within X ≥ 1, so conditional probability is a quotient of the two corresponding tail probabilities.",
+    "hint": "For at least three, use \\(1-P(X\\le2)\\). For strictly more than three, use \\(1-P(X\\le3)\\); the difference is the probability of exactly three.",
     "steps": [
       "\\(P(X=3)=\\binom{10}{3}(0.3)^3(0.7)^7\\approx0.2668\\). [2]",
       "Use the cumulative distribution, or sum three individual probabilities: \\(P(X\\le2)=\\sum_{r=0}^{2}\\binom{10}{r}(0.3)^r(0.7)^{10-r}\\approx0.3828\\). [3]",
       "\\(P(X\\ge3)=1-P(X\\le2)\\approx1-0.3827827864=0.6172\\). [1]",
-      "The conditioning event has probability \\(P(X\\ge1)=1-P(X=0)=1-(0.7)^{10}\\approx0.9717524751\\). Since \\(\\{X\\ge3\\}\\subseteq\\{X\\ge1\\}\\), \\(P(X\\ge3\\mid X\\ge1)=\\frac{P(X\\ge3)}{P(X\\ge1)}\\approx\\frac{0.6172172136}{0.9717524751}=0.6352\\). [2]"
+      "\\(P(X>3)=P(X\\ge4)=1-P(X\\le3)\\approx0.3504\\). This differs from \\(P(X\\ge3)\\approx0.6172\\) by \\(P(X=3)\\approx0.2668\\): the equality event \\(X=3\\) is included in the non-strict tail but excluded in the strict one. [2]"
     ],
-    "answer": "\\(P(X=3)=0.2668\\), \\(P(X\\le2)=0.3828\\), \\(P(X\\ge3)=0.6172\\), and \\(P(X\\ge3\\mid X\\ge1)=0.6352\\).",
-    "misconception": "A binomial cumulative calculator typically gives P(X ≤ k). For P(X ≥ 3), subtract P(X ≤ 2), not P(X ≤ 3).",
-    "reflection": "How would the chance of at least three successes change if p increased but n stayed fixed?"
+    "answer": "\\(P(X=3)=0.2668\\), \\(P(X\\le2)=0.3828\\), \\(P(X\\ge3)=0.6172\\), \\(P(X>3)=0.3504\\).",
+    "misconception": "Cumulative binomial probabilities use inclusive integer boundaries. P(X ≥ 3) and P(X > 3) differ by the nonzero probability P(X = 3).",
+    "reflection": "Why would applying a strict inequality rather than an inclusive one change a hypothesis-test tail probability?"
   },
   {
     "id": "W05-A3",
