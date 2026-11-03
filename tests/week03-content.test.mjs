@@ -11,9 +11,9 @@ import {calculateSpecificationProgress} from "../src/specification-analytics.js"
 import {recommendRevision} from "../src/revision-recommendations.js";
 
 const groups={
- R:{n:10,marks:20,minutes:30},P:{n:3,marks:30,minutes:70},
- M:{n:2,marks:26,minutes:70},A:{n:3,marks:22,minutes:50},
- T:{n:3,marks:32,minutes:45},X:{n:1,marks:14,minutes:40}
+ R:{n:10,marks:20,minutes:24},P:{n:7,marks:70,minutes:84},
+ M:{n:3,marks:40,minutes:48},A:{n:5,marks:45,minutes:54},
+ T:{n:4,marks:40,minutes:48},X:{n:2,marks:30,minutes:36}
 };
 const core=new Set(["R","P","M","A"]);
 const slash=String.fromCharCode(92),start=slash+"(",end=slash+")";
@@ -26,12 +26,12 @@ test("only the nine genuinely authored weeks are released",()=>{
  assert.equal(siteConfig.stage2.published,false);
 });
 test("Week 3 fulfils the 4/5/6-hour blueprint and exact section mark quotas",()=>{
- assert.equal(week03Questions.length,22);
- assert.equal(new Set(week03Questions.map(q=>q.id)).size,22);
+ assert.equal(week03Questions.length,31);
+ assert.equal(new Set(week03Questions.map(q=>q.id)).size,31);
  const essential=week03Questions.filter(q=>core.has(q.section));
- assert.equal(essential.length,18);
- assert.equal(essential.reduce((sum,q)=>sum+q.marks,0),98);
- assert.equal(week03Questions.reduce((sum,q)=>sum+q.marks,0),144);
+ assert.equal(essential.length,25);
+ assert.equal(essential.reduce((sum,q)=>sum+q.marks,0),175);
+ assert.equal(week03Questions.reduce((sum,q)=>sum+q.marks,0),245);
  for(const [section,plan]of Object.entries(groups)){
   const selected=week03Questions.filter(q=>q.section===section);
   assert.equal(selected.length,plan.n,section+" count");
@@ -40,14 +40,14 @@ test("Week 3 fulfils the 4/5/6-hour blueprint and exact section mark quotas",()=
   assert.deepEqual(selected.map(q=>q.id),selected.map((_,i)=>"W03-"+section+(i+1)),section+" index");
  }
  const working=essential.reduce((sum,q)=>sum+q.minutes,0);
- assert.equal(working,213);
- assert.equal(working+20+7,240,"core: work + 20 min self-mark + buffer");
+ assert.equal(working,210);
+ assert.equal(working+30,240,"core: work + 30 min self-mark/reflect");
 });
 test("Week 3 core follows the agreed resource AO breakdown",()=>{
  const mark={AO1:0,AO2:0,AO3:0};
  for(const q of week03Questions.filter(q=>core.has(q.section)))
   for(const [ao,score]of Object.entries(q.ao))mark[ao]+=score;
- assert.deepEqual(mark,{AO1:26,AO2:39,AO3:33});
+ assert.deepEqual(mark,{AO1:42,AO2:73,AO3:60});
 });
 test("questions have marked parts, worked solutions and balanced TeX delimiters",()=>{
  for(const q of week03Questions){
@@ -56,7 +56,7 @@ test("questions have marked parts, worked solutions and balanced TeX delimiters"
   assert.equal(q.parts.reduce((sum,p)=>sum+p[1],0),q.marks,q.id+" part marks");
   assert.equal(Object.values(q.ao).reduce((sum,n)=>sum+n,0),q.marks,q.id+" AO marks");
   assert.ok(q.steps.length>=q.parts.length,q.id+" fully worked parts");
-  assert.ok(q.minutes>=3&&q.topics?.length,q.id);
+  assert.ok(q.minutes>0&&q.topics?.length,q.id);
   const texts=[q.stem,q.hint,q.answer,...q.parts.map(p=>p[0]),...q.steps];
   if(q.table){
    assert.ok(q.table.rows.every(row=>row.length===q.table.header.length));
@@ -71,8 +71,8 @@ test("questions have marked parts, worked solutions and balanced TeX delimiters"
   }
  }
 });
-test("all 22 questions and their individual parts are assigned exact in-scope skills",()=>{
- assert.equal(Object.keys(week03SkillMap).length,22);
+test("all 31 questions and their individual parts are assigned exact in-scope skills",()=>{
+ assert.equal(Object.keys(week03SkillMap).length,31);
  assert.deepEqual(taggedWeek03Questions.map(q=>q.id),week03Questions.map(q=>q.id));
  let partCount=0,partMarks=0;
  for(const q of taggedWeek03Questions){
@@ -92,7 +92,7 @@ test("all 22 questions and their individual parts are assigned exact in-scope sk
   }
  }
  assert.ok(partCount>=55);
- assert.equal(partMarks,144);
+ assert.equal(partMarks,245);
  assert.ok(taggedWeek03Questions.filter(q=>q.section==="R").filter(q=>q.connectedSkillIds.some(id=>id.startsWith("P02"))).length>=2,
   "Spaced retrieval must deliberately return to earlier algebra and transforms");
 });
@@ -107,10 +107,10 @@ test("Week 3 question references and student revision links remain local to thei
  assert.deepEqual(getPublishedPracticeForSkill("M09-001"),[]);
  assert.ok([...index.values()].every(m=>[...m.values()].every(ref=>ref.href.startsWith("#/study/"))));
  const onlyWeek3=calculateSpecificationProgress({questions:taggedWeek03Questions,records:{"W03-R1":{score:2,status:"I"}},scope:"internal"});
- assert.equal(onlyWeek3.summary.releasedQuestions,22);
+ assert.equal(onlyWeek3.summary.releasedQuestions,31);
  assert.equal(onlyWeek3.summary.completedQuestions,1);
  const report=calculateSpecificationProgress({questions,records:{},scope:"internal"});
- assert.equal(report.summary.releasedQuestions,66);
+ assert.equal(report.summary.releasedQuestions,93);
  const suggestions=recommendRevision({questions,records:{},report,scope:"internal"});
  for(const x of suggestions){
   const q=questions.find(t=>t.id===x.questionId);assert.ok(q);
