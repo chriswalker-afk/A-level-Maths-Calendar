@@ -163,7 +163,7 @@ export function mountDrawing(root,{state,save,notify,questionId="working"}){
     const out=output.getContext("2d");if(!out)return;
     out.fillStyle="#ffffff";out.fillRect(0,0,output.width,output.height);
     if(state.grid){
-      out.lineWidth=1;out.strokeStyle="#e4ece8";
+      out.lineWidth=1;out.strokeStyle="#cbd3c9";
       for(let x=0;x<=output.width;x+=50){
         out.beginPath();out.moveTo(x,0);out.lineTo(x,output.height);out.stroke();
       }
