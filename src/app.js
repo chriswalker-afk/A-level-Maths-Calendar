@@ -219,6 +219,7 @@ function guidePage(){
  '<div class="guide-routine">'+plan.map(row=>'<div class="guide-routine-row">'+
    '<span class="guide-routine-index">'+row[0]+'</span>'+
    '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
+ '<div class="warning" style="margin:19px 0 25px"><strong>Week 10 uses a different format.</strong> The final week has a 100-mark Pure mock (120 minutes), a 50-mark Year 1 Applied mini-mock (60 minutes), and a separate 60-minute marking and repair plan. Its optional timer hides help and marking while active, but never erases work. Start from Week 10 on the calendar.</div>'+
  heading("Using a question","Working, hints and marking")+
  '<div class="guide-instructions">'+
  '<div><b>1</b><strong>Work independently</strong><p>Use Notes, Maths steps or Draw. Work is saved for each question.</p></div>'+
