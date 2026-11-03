@@ -345,12 +345,13 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 - `docs/QUESTION_BLUEPRINT.md`: required week-by-week curriculum and authoring guidance.
 - `src/config.js`, `src/publication.js`: teacher-controlled release settings, shared publication gating, local storage key and Brunei timezone.
 - `src/data/programmes.js`: week titles, curricula and 2027 final programme preview.
-- `src/data/week01.js`: original Week 1 content.
+- `src/data/week01.js`: preserved original Week 1 questions combined with the additive expansion and pacing metadata.
+- `src/data/expanded-week-budget.js`, `src/data/week01-expansion-*.js`, `src/data/week02-expansion-*.js`, `src/data/week03-expansion-*.js`: Pass 1 original challenge additions, per-part specification tags and exam-paced four/five/six-hour allocations.
 - `src/data/week02.js`, `src/data/week02-retrieval.js`, `src/data/week02-pure.js`, `src/data/week02-modelling.js`, `src/data/week02-applied.js`, `src/data/week02-timed.js`, `src/data/week02-extension.js`: Week 2 content across all six subsections.
 - `src/data/week03.js`, `src/data/week03-retrieval.js`, `src/data/week03-pure.js`, `src/data/week03-modelling.js`, `src/data/week03-applied.js`, `src/data/week03-timed.js`, `src/data/week03-extension.js`: Week 3 content in the same format.
 - `src/data/week04.js`, `src/data/week04-retrieval.js`, `src/data/week04-pure.js`, `src/data/week04-modelling.js`, `src/data/week04-applied.js`, `src/data/week04-timed.js`, `src/data/week04-extension.js`: Week 4 question content in six existing modes.
 - `src/data/week05.js`, `src/data/week05-retrieval.js`, `src/data/week05-pure.js`, `src/data/week05-modelling.js`, `src/data/week05-applied.js`, `src/data/week05-timed.js`, `src/data/week05-extension.js`: Week 5 material across six existing subsections.
-- `src/data/week01-skill-map.js`, `src/data/week02-skill-map.js`, `src/data/week03-skill-map.js`, `src/data/week04-skill-map.js`, `src/data/week05-skill-map.js`, `src/data/tagged-questions.js`: permanent, reviewed part-by-part skill tags across both released weeks.
+- `src/data/week01-skill-map.js`, `src/data/week02-skill-map.js`, `src/data/week03-skill-map.js`, `src/data/week04-skill-map.js`, `src/data/week05-skill-map.js`, `src/data/tagged-questions.js`: permanent, reviewed part-by-part skill tags; later weeks and additive Pass 1 mappings are loaded through the same shared tagging system.
 - `src/data/skill-practice-index.js`: links from individual skills to published questions only.
 - `src/part-marking.js`: validated part scores, derived totals and exact primary-skill mark evidence.
 - `src/specification-analytics.js`, `src/specification-progress-view.js`: pure analytics and responsive topic/skill progress UI.
@@ -370,7 +371,8 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Release-quality audit:** inspect the complete Week 1–10 maths, student experience, mobile rendering, marking and backup/restore after merging the Week 10 PR.
-2. **Consolidation:** review topic-specification coverage and adjust future-targeted reattempt guidance without overwriting student results.
-3. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
-4. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.
+1. **Pass 2 — expand Weeks 4–6:** add genuinely connected AO2/AO3 problems, modelling and Year 1 Applied depth to the same 175/215/245-mark targets, while preserving all existing IDs and marks.
+2. **Pass 3 — expand Weeks 7–9:** increase deliberately unstructured synoptic work and further specification skill coverage.
+3. **Pass 4 — final quality audit:** independently verify mathematics, moderate AO attributions, address remaining skills without directly assessed evidence, and pilot honest student timing before release.
+4. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
+5. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.
