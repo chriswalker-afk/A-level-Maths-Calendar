@@ -69,7 +69,7 @@ A tagged part looks like this conceptually:
 
 The **primary skill alone** can receive the part's marks. Secondary skill tags represent cross-topic connections and allow students to discover relevant practice, but **must never receive duplicate credit**. A single question's connected skill might be tagged by multiple parts; specification practice links deduplicate the question.
 
-The specification's skill pages link to questions that are **actually released**, without leaking the unreleased Week 2–10 question sets. On a question, a collapsible list of skill links is offered after the working and solutions areas so students can keep practising method selection before inspecting tags.
+The specification's skill pages link to questions that are **actually released**, without leaking unreleased Week 4–10 question sets. On a question, a collapsible list of skill links is offered after the working and solutions areas so students can keep practising method selection before inspecting tags.
 
 ### Part-by-part self-marking
 
@@ -205,11 +205,21 @@ The shared `src/publication.js` release gate is used for both calendar access an
 
 **Week 2 quality checks** include all six section quotas (98 marks essential, 144 marks overall), the core AO1/AO2/AO3 breakdown **26/39/33**, part-by-part tags, MathJax parsing, independent numerical verification of tangency, circular constraints, motion and vector proof, and a browser test that starts Week 2, self-marks, then revisits My Progress and My Specification.
 
+## Week 3 — new direct evidence in the specification
+
+**Week 3 adds 22 published, fully marked and tagged questions** (144 marks: 98 essential, 32 timed and 14 extension), bringing the total to **66 questions across Weeks 1–3**. All original prompts and worked marking schemes live in the Week 3 source modules; individual part tags are permanently stored in `src/data/week03-skill-map.js`.
+
+Direct skill evidence includes **P05 Trigonometry** (exact angles, sine/cosine rule, radians, sector geometry, trig identities, compound/double angles, R-sine form, multi-angle equations, periodic models and small-angle validity), and **S03 Year 1 probability** (mutual exclusivity, independence, trees and Venn diagrams). Connections to older **P02 Algebra and functions**, **P07 Differentiation** and other previously released mathematics support spaced retrieval and genuine synoptic problems.
+
+All third-week practice links use routes of the form `#/study/3/SECTION/INDEX`. Analytics correctly report attempted questions and individual skill-mark evidence, never equating unattempted practice with 0% accuracy and never double-counting a mark through connected tags. The student's local-storage key and archived Week 1/2 records are unchanged. The shared publication gate makes **Weeks 4–10 inaccessible** to students until they are fully authored and released.
+
+The quality gates include `tests/week03-content.test.mjs` (course content, tags, AO/workload), `tests/week03-maths-audit.test.mjs` (independent symbolic/numeric checks of the advanced examples) and `tests/week03-student-flow.test.mjs` (saving working, zero-mark completion, progress and evidence routes).
+
 ## Next
 
-**Create Week 3** (trigonometry and periodic models, plus Year 1 probability), with the same standard of original questions, complete solutions, per-part skill tags and evidence-safe publication.
+**Create Week 4** (differentiation and curve behaviour, plus Year 1 forces and Newton's laws), with the same standard of original questions, complete solutions, per-part skill tags and evidence-safe publication.
 
-**Complete Weeks 3–10** progressively, keeping future material locked until the intended release date.
+**Complete Weeks 4–10** progressively, keeping future material locked until the intended release date.
 
 **Build the full February–June 2027 programme** and release it on the intended schedule with the additional Year 2 Applied questions and official exam-period revision.
 
