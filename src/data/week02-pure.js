@@ -6,9 +6,8 @@ export const week02PureProblems = [
     "marks": 8,
     "minutes": 18,
     "ao": {
-      "AO1": 2,
-      "AO2": 6
-    },
+    "AO2": 8
+  },
     "topics": [
       "circles",
       "discriminants",
@@ -51,9 +50,8 @@ export const week02PureProblems = [
     "marks": 10,
     "minutes": 24,
     "ao": {
-      "AO1": 2,
-      "AO2": 8
-    },
+    "AO2": 10
+  },
     "topics": [
       "vectors",
       "geometric proof",
@@ -96,9 +94,8 @@ export const week02PureProblems = [
     "marks": 12,
     "minutes": 25,
     "ao": {
-      "AO1": 3,
-      "AO2": 9
-    },
+    "AO2": 12
+  },
     "topics": [
       "circles",
       "vectors",
