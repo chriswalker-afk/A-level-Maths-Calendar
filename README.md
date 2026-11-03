@@ -21,93 +21,41 @@ The full authoring specification is [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_B
 
 ## Published study weeks
 
-### Pass 1 expansion — Weeks 1–3 (November 2026)
+### Pass 1 + Pass 2 — expanded Weeks 1–6
 
-Weeks 1, 2 and 3 have been **expanded to 31 original questions each** while retaining **all 22 earlier question IDs and marked parts** in their original section positions. The expanded work is designed to be more demanding and more exam-paced; 1.2 working minutes per mark is a **planning benchmark**, not a measured student-completion time. Student work is still saved to the original `alevel-maths-calendar-progress-v1` key.
+**Weeks 1–6 now contain 31 original questions each**, including 25 essential questions. All earlier question IDs, marked parts, working and self-marked attempts remain in place; the new questions were appended within each existing subsection after its earlier questions.
 
 | Section | Questions per week | Marks | Planned working |
 |---|---:|---:|---:|
-| Quick retrieval (R1–R10) | 10 | 20 | 24 min |
+| Retrieval (R1–R10) | 10 | 20 | 24 min |
 | Connected Pure (P1–P7) | 7 | 70 | 84 min |
 | Modelling & reasoning (M1–M3) | 3 | 40 | 48 min |
 | Year 1 Applied (A1–A5) | 5 | 45 | 54 min |
-| **Four-hour essential** | **25** | **175** | **210 working + 30 marking/reflection = 240 min** |
-| Recommended timed work (T1–T4) | 4 | 40 | 48 working + 12 marking |
-| **Five-hour cumulative** | **29** | **215** | **300 min including review** |
-| Optional A/A* extensions (X1–X2) | 2 | 30 | 36 working + 24 reflection |
-| **Six-hour cumulative** | **31** | **245** | **360 min including review** |
+| **Essential four-hour pathway** | **25** | **175** | **210 working + 30 marking/reflection = 240 min** |
+| Recommended timed work (T1–T4) | 4 | 40 | 48 working + 12 review |
+| **Recommended five-hour cumulative** | **29** | **215** | **300 min including review** |
+| Optional A/A* work (X1–X2) | 2 | 30 | 36 working + 24 reflection |
+| **Optional six-hour cumulative** | **31** | **245** | **360 min including review** |
 
-The new parts have full worked mark schemes, independent first-step hints, misconceptions, reflection questions and primary specification skill IDs. Secondary linked skills remain practice-only. The new content includes proof by contradiction, domain/transform order, repeated poles, nonlinear constraints, constrained optimisation, codified data and outlier judgment in Week 1; parametric geometry, 3D vector proof, circular tangents, route restrictions and multi-stage Year 1 mechanics in Week 2; and advanced trig, exact circle intersection, approximation, periodic threshold decisions and Year 1 probability modelling in Week 3.
+The working-time allocations are **1.2 minutes per mark as an examination-paced planning benchmark**, not a claim that every student will complete very demanding AO2/AO3 questions at that speed. Teachers should pilot real completion times, particularly for extended proofs and multi-skill problems. The resource authoring AO2/AO3 emphasis is not the official examination AO weighting.
 
-**Weeks 4–9 are still at their original 22-question / 98-essential-mark allocation** until their own expansion passes. **Week 10 remains the 100-mark Pure and 50-mark Year 1 Applied mock**, plus 60 minutes of diagnostic review. The calendar still links directly to questions, and the February–June 2027 full A Level course remains unpublished.
+**Week 1:** proof by contradiction and surds, restricted functions and inverse transformations, repeated poles, nonlinear systems, optimisation, Year 1 sampling and outlier interpretation.
 
-Across the ten published weeks the updated programme contains **247 questions**, including **205 essential**. Earlier scores, working, drawing, attempt history, specification progress links, recommendations and backups are preserved.
+**Week 2:** parametric/Cartesian geometry and constraints, exact tangent/3D vector proofs, safer-route modelling, Year 1 constant-acceleration and multi-stage motion.
 
-For the updated target and quality criteria see [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_BLUEPRINT.md), and for the independent mathematics and safety audit see [docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md](docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md).
+**Week 3:** reciprocal identities, R-form and unit-circle intersections, sector/segment approximations, periodic threshold models and Year 1 probability trees.
 
-### Week 4 — Differentiation and curve behaviour
+**Week 4 (Pass 2):** implicit differentiation and tangency, inverse/logarithm behaviour, related rates, rational stationary-point comparisons, a constrained conical tank, Year 1 forces and connected-particle questions.
 
-Week 4 is authored in full: **22 original exam-style questions**, including complete mark schemes, first-step hints, feedback and exact mathematical notation.
+**Week 5 (Pass 2):** exact trigonometric integration, repeated-pole partial fractions and bounds, separable differential equations, area between curves, finite exponential accumulation, Year 1 binomial distributions and hypothesis testing.
 
-| Section | Questions | Marks | Working time |
-|---|---:|---:|---:|
-| Quick retrieval — first principles, rational indices, chain/product/quotient, implicit/parametric, exponential and log derivatives | 10 | 20 | 30 minutes |
-| Connected Pure — parameterised cubics; implicit tangent and intercept proof; horizontal/vertical parametric tangents and classification | 3 | 30 | 67 minutes |
-| Modelling — minimum material in a radius-constrained container; comparison of two pollutant concentration models using rates and curvature | 2 | 26 | 68 minutes |
-| Year 1 Mechanics — force diagram; two-dimensional force resolution; connected particles followed by motion with a slack string | 3 | 22 | 48 minutes |
-| **Essential core** | **18** | **98** | **213 minutes + 20 marking + 7 buffer = four hours** |
-| Recommended timed problems — exponential stationary point, rational extrema and inequalities, non-parallel force resultant | 3 | 32 | 45 + 15 minutes |
-| Optional A/A* extension — parametric curve with a self-intersection and two distinct tangents | 1 | 14 | 40 + 20 minutes |
+**Week 6 (Pass 2):** AP/GP comparison proofs, fractional binomial approximations, nonlinear recurrence convergence, financial sequence modelling, a recurring-pollutant threshold, Year 1 histogram interpretation and connected particles. The extension connects Pure binomial identities to a simple Year 1 binomial distribution.
 
-The core practice-authoring AO balance is **AO1 26 / AO2 39 / AO3 33** marks (a resource design choice, not the official full-paper AO weightings). All questions use the existing **Notes / Maths steps / Draw**, independent/with-help and numerical self-marking, saved retries and offline progress backup.
+**Weeks 7–9 remain at 22 questions and a 98-mark essential core** until Pass 3; **Week 10 remains an authentic 100-mark Pure and 50-mark Year 1 Applied assessment** with a 60-minute diagnostic review. The 2027 final-examination programme is still unpublished. Across all ten weeks there are now **274 published questions, including 226 essential**.
 
-**Weeks 1–4 are available on the calendar** with **88 published questions (72 essential)**. Question IDs and part-by-part specification tags use the stable `W04-` and P07/M08 skill namespaces, with connected references back to algebra, exponentials, vectors and kinematics. The separate week record in My Progress and per-skill evidence in My Specification update automatically from these attempts. The release gate now keeps **Weeks 6–10 locked**; final-exam programme 2 remains unpublished.
+Each new marked part has **one permanent primary 9MA0 specification skill**; optional secondary skills only represent connected practice. The existing calendar, six-section navigation, line-by-line maths, drawing, local storage key `alevel-maths-calendar-progress-v1`, scored-zero completion, self-marking, retry history, progress, specification analytics and backups are preserved.
 
-Quality gates: `tests/week04-content.test.mjs` (marks, skills, AO, timing, release routing), `tests/week04-maths-audit.test.mjs` (independent algebraic/physical numerical checks), `tests/week04-student-flow.test.mjs` (four-week calendar, saved work, zero-mark completion, skill evidence), and the extended real MathJax parser suite.
-
-### Week 5 — Integration and accumulation
-
-The full **Week 5** pack contains **22 original exam-style questions** with fully worked mark schemes, hint scaffolding, answer checks, common misconceptions and permanent specification skill links.
-
-| Section | Questions | Marks | Working time |
-|---|---:|---:|---:|
-| Retrieval — standard, reverse-chain, trigonometric, logarithmic and fractional-power integrals; substitution; by parts; partial fractions; areas; limits of sums | 10 | 20 | 30 minutes |
-| Connected Pure — algebraic preparation; signed versus actual area; repeated integration by parts | 3 | 30 | 67 minutes |
-| Modelling — accumulated water flow and average rate; squared sensor pulse and parameter sensitivity | 2 | 26 | 68 minutes |
-| Year 1 Applied — binomial model assumptions; inclusive and strict cumulative tails; one-tailed binomial hypothesis test | 3 | 22 | 48 minutes |
-| **Essential four-hour core** | **18** | **98** | **213 working + 20 marking + 7 buffer = 240 minutes** |
-| Recommended timed — exact versus trapezium area; two parametric areas; two-tailed binomial hypothesis test | 3 | 32 | 45 minutes + 15 review |
-| Optional A/A* extension — finite accumulated response and numerical threshold | 1 | 14 | 40 minutes + 20 reflection |
-
-The 98 essential marks meet the intended resource-design **AO1/AO2/AO3 balance of 26/39/33**. These are resource practice allocations, not whole-exam assessment weightings. Individual marked parts are tagged to **P08 Integration**, **P09 Numerical methods**, **S04 Statistical distributions** and **S05 Statistical hypothesis testing**, with connected algebra, calculus and modelling skills.
-
-**Curriculum correction:** Pearson 9MA0 P8.3 requires areas under and between curves, including parametric curves, not volumes of revolution (a Further Maths requirement). Week 5 therefore uses authentic area and accumulation models instead of off-syllabus revolving-solid questions. Similarly, Year 1 binomial work does not introduce Year 2 conditional probability. See [Pearson's 9MA0 enhanced guidance](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/pearson-edexcel-l3-advanced-gce-mathematics-9ma0-enhanced-content-guidance-issue-2.pdf).
-
-**At the end of Week 5, Weeks 1–5 were enabled**, providing **110 published questions (90 essential)**. All student question routes, working, maths typing, drawing, independence choices, zero-mark completions, optional part marking, retries, backups and My Specification accuracy continue to share the existing code and storage key. **Weeks 7–10 stay locked**, and programme 2 remains unpublished.
-
-Quality gates include `tests/week05-content.test.mjs`, `tests/week05-maths-audit.test.mjs`, `tests/week05-student-flow.test.mjs` and the expanded real MathJax parser tests.
-
-
-### Week 6 — Sequences, series and binomial expansion
-
-Week 6 added **22 original exam-style questions (144 marks)** with fully worked answers, precise per-part marks, first-step hints, misconceptions, reflections and permanent specification tags. At the Week 6 release the programme had **132 released questions across six weeks (108 essential)**.
-
-| Section | Questions | Marks | Working time |
-|---|---:|---:|---:|
-| Quick retrieval — AP/GP terms and sums, recurrence, sigma notation, integer and rational binomial expansion and validity | 10 | 20 | 30 min |
-| Connected Pure — geometric collection threshold, rational coefficient cancellation, recurrence and sum proof | 3 | 30 | 67 min (+3 buffer) |
-| Modelling — discrete vs continuous subscriber growth; two escalating donation plans under a yearly cap | 2 | 26 | 68 min (+2 buffer) |
-| Year 1 Applied — velocity from displacement, integrate variable acceleration, direction changes and distance | 3 | 22 | 48 min (+2 buffer) |
-| **Essential four-hour programme** | **18** | **98** | **213 working + 20 marking + 7 buffer = 240 min** |
-| Recommended timed set — arithmetic proof, mixed binomial products, exact changing-direction motion | 3 | 32 | 45 min + 15 review |
-| Optional A/A* extension — finite weighted GP, differentiated sums, exact remainder and binomial coefficient | 1 | 14 | 40 min + 20 reflection |
-
-The essential mark allocation is **AO1 26 / AO2 39 / AO3 33**, the resource's authoring target rather than Pearson's examination-wide assessment weights. Each of the **60 marked parts** is tagged to exactly one primary stable skill, with supplementary connections that do not double-count marks. Pure work primarily covers **P04 Sequences and series**, while the Applied problems use **M07 Year 1 Kinematics (7.4)**; short retrieval items also revisit previous algebra, inequalities and binomial probability.
-
-**Curriculum validation:** the official 9MA0 guidance includes the binomial expansion for rational powers with its required |bx/a| < 1 restriction, arithmetic/geometric sums and recurrence, and calculus to recover velocity/displacement in one-dimensional kinematics. The Week 6 Applied questions avoid Year 2-only projectile, friction, moments and vector-calculus problems. [Pearson enhanced guidance](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/pearson-edexcel-l3-advanced-gce-mathematics-9ma0-enhanced-content-guidance-issue-2.pdf).
-
-At the Week 6 release, **Weeks 1–6 were available directly from the calendar**; the second programme remained unpublished. Existing storage and attempts are not migrated or overwritten. Week 6 is validated by the Week 6 content, maths-audit, student-flow and expanded MathJax tests.
-
+Read [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_BLUEPRINT.md) for the current content contract, [docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md](docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md) for Pass 1 and [docs/PASS2_WEEKS04_06_EXPANSION_AUDIT.md](docs/PASS2_WEEKS04_06_EXPANSION_AUDIT.md) for Pass 2.
 
 ### Week 7 — Exponentials, logarithms and differential equations
 
@@ -215,7 +163,7 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
-All **247 questions in published Weeks 1–10** are now linked to the 9MA0 skill library **part by part**.
+All **274 questions in published Weeks 1–10** are now linked to the 9MA0 skill library **part by part**.
 
 Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
 
@@ -371,7 +319,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Pass 2 — expand Weeks 4–6:** add genuinely connected AO2/AO3 problems, modelling and Year 1 Applied depth to the same 175/215/245-mark targets, while preserving all existing IDs and marks.
+1. **Pass 2 — completed on review branch:** merge the completed Weeks 4–6 upgrade after checking its mathematics and student flow.
 2. **Pass 3 — expand Weeks 7–9:** increase deliberately unstructured synoptic work and further specification skill coverage.
 3. **Pass 4 — final quality audit:** independently verify mathematics, moderate AO attributions, address remaining skills without directly assessed evidence, and pilot honest student timing before release.
 4. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
