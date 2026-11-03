@@ -41,8 +41,8 @@ test("Week 6 calendar, maths, self-marking and integration skill evidence preser
  const app=doc.querySelector("#app");
  const navigate=hash=>{window.location.hash=hash;window.dispatchEvent(new window.Event("hashchange"));};
  assert.equal(app.querySelectorAll(".planner-cell").length,10);
- assert.equal(app.querySelectorAll("a.planner-cell.is-open").length,8);
- assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,2);
+ assert.equal(app.querySelectorAll("a.planner-cell.is-open").length,9);
+ assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,1);
  const sixth=[...app.querySelectorAll("a.planner-cell.is-open")]
   .find(a=>a.getAttribute("href").startsWith("#/study/6/"));
  assert.ok(sixth);
@@ -84,13 +84,13 @@ test("Week 6 calendar, maths, self-marking and integration skill evidence preser
  assert.match(app.querySelector(".exam-sheet-code").textContent,/W06-P1/);
  assert.equal(app.querySelector("#previous").dataset.targetRoute,"#/study/6/R/9");
  navigate("#/progress/internal");
- assert.equal(app.querySelector(".metric strong").textContent,"7/144");
+ assert.equal(app.querySelector(".metric strong").textContent,"7/162");
  const weeks=app.querySelectorAll(".weekly-progress-group");
- assert.equal(weeks.length,8);
+ assert.equal(weeks.length,9);
  assert.match(weeks[5].textContent,/Sequences, series and binomial expansion/);
  assert.match(weeks[5].textContent,/2 \/ 10 questions marked/);
  assert.ok(weeks[5].querySelector('a[href="#/study/6/R/0"]'));
- assert.match(app.querySelector(".spec-progress-pulse").textContent,/7 \/ 176/);
+ assert.match(app.querySelector(".spec-progress-pulse").textContent,/7 \/ 198/);
  navigate("#/specification/internal/P04");
  assert.match(app.querySelector(".spec-topic-evidence").textContent,/2 \/ /);
  assert.match(app.querySelector("#P04-009").textContent,/50% of verified part marks/);
@@ -98,7 +98,7 @@ test("Week 6 calendar, maths, self-marking and integration skill evidence preser
  const resume=[...app.querySelectorAll("a.planner-cell.is-open")]
   .find(a=>a.getAttribute("href").startsWith("#/study/6/"));
  assert.equal(resume.getAttribute("href"),"#/study/6/R/2");
- assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,2);
+ assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,1);
  dom.window.close();
  for(const n of ["window","document","location","localStorage","customElements","ResizeObserver","requestAnimationFrame"])
   delete globalThis[n];
