@@ -18,11 +18,11 @@ const groups={
 const essential=new Set(["R","P","M","A"]);
 const slash=String.fromCharCode(92),open=slash+"(",close=slash+")";
 
-test("the fourth authored week is released and all six future weeks stay locked",()=>{
+test("the first five authored weeks are released and remaining weeks stay locked",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,4);
- assert.ok(programmeOne.weeks.slice(0,4).every(w=>w.hasPublishedContent));
- assert.ok(programmeOne.weeks.slice(4).every(w=>!w.hasPublishedContent));
+ assert.equal(siteConfig.stage1.releasedWeeks,5);
+ assert.ok(programmeOne.weeks.slice(0,5).every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(5).every(w=>!w.hasPublishedContent));
  assert.equal(siteConfig.stage2.published,false);
 });
 test("the complete Week 4 pack meets all counts, mark quotas and working times",()=>{

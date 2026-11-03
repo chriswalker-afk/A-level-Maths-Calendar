@@ -69,7 +69,7 @@ A tagged part looks like this conceptually:
 
 The **primary skill alone** can receive the part's marks. Secondary skill tags represent cross-topic connections and allow students to discover relevant practice, but **must never receive duplicate credit**. A single question's connected skill might be tagged by multiple parts; specification practice links deduplicate the question.
 
-The specification's skill pages link to questions that are **actually released**, without leaking unreleased Week 5–10 question sets. On a question, a collapsible list of skill links is offered after the working and solutions areas so students can keep practising method selection before inspecting tags.
+The specification's skill pages link to questions that are **actually released**, without leaking unreleased Week 6–10 question sets. On a question, a collapsible list of skill links is offered after the working and solutions areas so students can keep practising method selection before inspecting tags.
 
 ### Part-by-part self-marking
 
@@ -211,7 +211,7 @@ The shared `src/publication.js` release gate is used for both calendar access an
 
 Direct skill evidence includes **P05 Trigonometry** (exact angles, sine/cosine rule, radians, sector geometry, trig identities, compound/double angles, R-sine form, multi-angle equations, periodic models and small-angle validity), and **S03 Year 1 probability** (mutual exclusivity, independence, trees and Venn diagrams). Connections to older **P02 Algebra and functions**, **P07 Differentiation** and other previously released mathematics support spaced retrieval and genuine synoptic problems.
 
-All third-week practice links use routes of the form `#/study/3/SECTION/INDEX`. Analytics correctly report attempted questions and individual skill-mark evidence, never equating unattempted practice with 0% accuracy and never double-counting a mark through connected tags. The student's local-storage key and archived Week 1/2 records are unchanged. The shared publication gate now makes **Weeks 5–10 inaccessible** to students until they are fully authored and released.
+All third-week practice links use routes of the form `#/study/3/SECTION/INDEX`. Analytics correctly report attempted questions and individual skill-mark evidence, never equating unattempted practice with 0% accuracy and never double-counting a mark through connected tags. The student's local-storage key and archived Week 1/2 records are unchanged. The shared publication gate now makes **Weeks 6–10 inaccessible** to students until they are fully authored and released.
 
 The quality gates include `tests/week03-content.test.mjs` (course content, tags, AO/workload), `tests/week03-maths-audit.test.mjs` (independent symbolic/numeric checks of the advanced examples) and `tests/week03-student-flow.test.mjs` (saving working, zero-mark completion, progress and evidence routes).
 
@@ -225,15 +225,27 @@ This adds **22 fully authored, part-tagged original questions (144 marks)**, bri
 
 Every question part has **one primary permanent specification skill**, with optional connected skills used for practice discovery. This remains compatible with the existing evidence rules: whole marks complete a question (including a zero); fully verified part marks provide per-skill percentage accuracy; an unfinished part breakdown never invents skill scores.
 
-The specific files are `src/data/week04.js`, its six question section modules, and `src/data/week04-skill-map.js`. Student routes are `#/study/4/SECTION/INDEX`; the fourth week opens directly from the calendar. My Progress automatically produces a separate Week 4 question record and cumulative **72 essential** question counts; My Specification includes new P07 and M08 practice links. Earlier scores, notes, mathematical working, drawings, revisions and backups use the same storage key and remain intact. **Weeks 5–10 are still unreleased**, and future Year 2 Mechanics topics continue to be discoverable but not linked to published internal-exam exercises.
+The specific files are `src/data/week04.js`, its six question section modules, and `src/data/week04-skill-map.js`. Student routes are `#/study/4/SECTION/INDEX`; the fourth week opens directly from the calendar. My Progress automatically produces a separate Week 4 question record and cumulative **72 essential** question counts; My Specification includes new P07 and M08 practice links. Earlier scores, notes, mathematical working, drawings, revisions and backups use the same storage key and remain intact. **Weeks 6–10 are still unreleased**, and future Year 2 Mechanics topics continue to be discoverable but not linked to published internal-exam exercises.
 
 The QA suite includes `tests/week04-content.test.mjs`, `tests/week04-maths-audit.test.mjs`, `tests/week04-student-flow.test.mjs` and expanded MathJax real rendering checks.
 
+## Week 5 — integration, numerical methods and Year 1 binomial evidence
+
+The published question collection now includes **Week 5's 22 fully authored questions** (144 marks: 98 essential, 32 timed and 14 extension). **110 questions**, of which **90 are essential**, are available across Weeks 1–5. There is a permanent primary skill ID for every marked part in `src/data/week05-skill-map.js`.
+
+**P08 Integration** includes standard/reverse-chain antiderivatives, substitution, integration by parts, partial fractions, areas under/between curves, integration with parametric equations and limits of sums. **P09 Numerical methods** includes trapezium-rule approximation and interpreting numerical accuracy. **S04 Statistical distributions** and **S05 Statistical hypothesis testing** include fixed-trial independence assumptions, binomial exact/cumulative tails, one- and two-tailed tests and contextual decisions. Connected algebra, differentiation and modelling skills remain supporting links, not duplicated marks.
+
+The original Week 5 blueprint mistakenly included solids of revolution in 9MA0, although Pearson's P8.3 assesses areas rather than volumes of revolution. We have corrected it and replaced those items with examinable areas and accumulated-response models. The Year 1 applied section similarly omits Year 2 conditional probability. The official specification remains authoritative; see [Pearson 9MA0 enhanced guidance](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/pearson-edexcel-l3-advanced-gce-mathematics-9ma0-enhanced-content-guidance-issue-2.pdf).
+
+Question links use `#/study/5/SECTION/INDEX`. The fifth week is released from the calendar, and its marks, optional individual part scores, Notes/Maths/Draw working and archived attempts all participate in cumulative My Progress and My Specification without changing prior saved records. The shared release gate keeps **Weeks 6–10 closed**; future Year 2 Applied topics are still displayed as future-only.
+
+Automated content, maths and UI checks are in `tests/week05-content.test.mjs`, `tests/week05-maths-audit.test.mjs`, `tests/week05-student-flow.test.mjs`, plus the extended actual MathJax parsing suite.
+
 ## Next
 
-**Create Week 5** (integration and accumulation, plus Year 1 binomial probabilities and hypothesis testing), with the same standard of original questions, complete solutions, per-part skill tags and evidence-safe publication.
+**Create Week 6** (sequences and series, binomial expansion and variable-acceleration mechanics), with the same standard of original questions, complete solutions, per-part skill tags and evidence-safe publication.
 
-**Complete Weeks 5–10** progressively, keeping future material locked until the intended release date.
+**Complete Weeks 6–10** progressively, keeping future material locked until the intended release date.
 
 **Build the full February–June 2027 programme** and release it on the intended schedule with the additional Year 2 Applied questions and official exam-period revision.
 

@@ -95,17 +95,21 @@ Question design gradient:
 - **A3 (10 marks):** Force model followed by a constant-acceleration stage.
 
 ### Week 05 — Integration and accumulation
-- **Pure:** Reverse chain, definite/indefinite integrals, substitution, parts, partial fractions, area, parametric integration, volumes, limits of sums.
-- **Year 1 Applied:** Binomial distributions and Year 1 hypothesis tests.
-- **AO1 (R1–R10):** Power rule; exponential; trig; reverse chain; substitution; by parts; partial fractions; definite integrals; areas/volumes; limits of sums.
-- **P1 (8 marks):** Select an integral method after algebraic preparation.
-- **P2 (10 marks):** Establish enclosed area using intersection and sign analysis.
-- **P3 (12 marks):** Combine integration methods then prove a result.
-- **M1 (12 marks):** Interpret accumulated flow and average rate.
-- **M2 (14 marks):** Construct a rotating-shape volume model with parameter sensitivity.
-- **A1 (4 marks):** Recognise B(n,p) and identify parameters.
-- **A2 (8 marks):** Calculate cumulative/complement probabilities.
-- **A3 (10 marks):** Complete a binomial hypothesis test and contextual conclusion.
+- **Pure (9MA0):** Reverse chain rule; definite/indefinite integrals; substitution; integration by parts (including cyclical cases); linear partial fractions after division; areas under/between curves (including parametric curves); limits of sums.
+- **Year 1 Applied:** Binomial distributions and Year 1 hypothesis tests. Conditional probability with its full formula belongs to Year 2, so do not use it as Year 1 core practice.
+- **AO1 (R1–R10):** Power rule; exponential/logarithmic and trigonometric forms; reverse chain; substitution; integration by parts; partial fractions; definite integrals; **area**; limits of sums.
+- **P1 (8 marks):** Select an integration method after algebraic division and partial fractions.
+- **P2 (10 marks):** Establish the total enclosed area using intersections and sign changes.
+- **P3 (12 marks):** Combine repeated integration by parts with a further weighted integral and prove a result.
+- **M1 (12 marks):** Interpret an accumulated flow, average rate and limitations.
+- **M2 (14 marks):** Calculate the integral of a squared sensor pulse, with parameter sensitivity and restrictions.
+- **A1 (4 marks):** Recognise a binomial distribution and justify its parameters.
+- **A2 (8 marks):** Calculate cumulative, complementary and strictly bounded binomial probabilities.
+- **A3 (10 marks):** Complete a one-tailed binomial hypothesis test and contextual conclusion.
+- **T1/T2/T3 (32 marks):** Exact-vs-trapezium area, parametric areas and a two-tailed binomial decision.
+- **X1 (14 marks):** A/A* finite accumulated response with repeated integration by parts and a numerical threshold.
+
+**Curriculum correction:** The 9MA0 integration specification (section P8.3) includes definite integrals, planar area between curves and parametric areas, but **does not require volumes of revolution**, which are Further Maths content. Earlier planning references to revolving solids in Week 5 have therefore been replaced with integration and area models that use examinable 9MA0 methods. See the [Pearson enhanced content guidance](https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/pearson-edexcel-l3-advanced-gce-mathematics-9ma0-enhanced-content-guidance-issue-2.pdf).
 
 ### Week 06 — Sequences, series and binomial expansion
 - **Pure:** Arithmetic/geometric sequences and series; sigma; recurrence; infinite geometric sums; binomial integer/non-integer expansion; validity; proof.
