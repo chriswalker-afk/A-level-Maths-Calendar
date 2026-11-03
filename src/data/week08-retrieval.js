@@ -41,7 +41,7 @@ export const week08Retrieval = [
       "continuity",
       "limitations of sign-change tests"
     ],
-    "stem": "A function is given by \\(f(x)=\\\\frac{1}{x-2}\\) on its real domain.",
+    "stem": "A function is given by \\(f(x)=\\frac{1}{x-2}\\) on its real domain.",
     "parts": [
       [
         "Explain why the opposite signs of \\(f(1)\\) and \\(f(3)\\) do not prove a root between them.",
@@ -70,7 +70,7 @@ export const week08Retrieval = [
       "fixed-point iteration",
       "calculator fluency"
     ],
-    "stem": "Use \\(x_{n+1}=\\\\cos x_n\\) (angles in radians), starting from \\(x_0=0.5\\).",
+    "stem": "Use \\(x_{n+1}=\\cos x_n\\) (angles in radians), starting from \\(x_0=0.5\\).",
     "parts": [
       [
         "Find \\(x_1\\) and \\(x_2\\) to four decimal places.",
@@ -79,10 +79,10 @@ export const week08Retrieval = [
     ],
     "hint": "Substitute the latest result into cosine each time, retaining unrounded calculator values.",
     "steps": [
-      "The first iterate is \\(x_1=\\\\cos(0.5)=0.877582\\\\ldots\\\\approx0.8776\\). [1]",
-      "The second is \\(x_2=\\\\cos(0.877582\\\\ldots)=0.639012\\\\ldots\\\\approx0.6390\\). [1]"
+      "The first iterate is \\(x_1=\\cos(0.5)=0.877582\\ldots\\approx0.8776\\). [1]",
+      "The second is \\(x_2=\\cos(0.877582\\ldots)=0.639012\\ldots\\approx0.6390\\). [1]"
     ],
-    "answer": "\\(x_1=0.8776,\\\\quad x_2=0.6390\\).",
+    "answer": "\\(x_1=0.8776,\\quad x_2=0.6390\\).",
     "misconception": "Ensure radians mode is used; rounding x1 to four places before computing x2 can introduce avoidable error.",
     "reflection": "Why do the values oscillate rather than approach the fixed point from one side?"
   },
@@ -99,7 +99,7 @@ export const week08Retrieval = [
       "cobweb and staircase diagrams",
       "fixed point stability"
     ],
-    "stem": "Consider the iteration \\(x_{n+1}=g(x_n)\\) with \\(g(x)=3-\\\\frac{x}{2}\\), started near its fixed point.",
+    "stem": "Consider the iteration \\(x_{n+1}=g(x_n)\\) with \\(g(x)=3-\\frac{x}{2}\\), started near its fixed point.",
     "parts": [
       [
         "Find its fixed point and explain whether nearby iterates converge or diverge.",
@@ -108,8 +108,8 @@ export const week08Retrieval = [
     ],
     "hint": "Solve \\(x=g(x)\\) and inspect the magnitude of the gradient of \\(g\\).",
     "steps": [
-      "The fixed point solves \\(x=3-\\\\frac x2\\), giving \\(x=2\\). [1]",
-      "Since \\(g'(x)=-\\\\frac12\\) and \\(|g'(2)|<1\\), nearby iterates converge, alternating about \\(2\\). [1]"
+      "The fixed point solves \\(x=3-\\frac x2\\), giving \\(x=2\\). [1]",
+      "Since \\(g'(x)=-\\frac12\\) and \\(|g'(2)|<1\\), nearby iterates converge, alternating about \\(2\\). [1]"
     ],
     "answer": "Fixed point \\(2\\); convergent with alternating steps.",
     "misconception": "Negative gradient does not mean divergence: it creates oscillation, while its magnitude controls local convergence.",
@@ -135,12 +135,12 @@ export const week08Retrieval = [
         2
       ]
     ],
-    "hint": "Use \\(x_{n+1}=x_n-\\\\frac{f(x_n)}{f'(x_n)}\\).",
+    "hint": "Use \\(x_{n+1}=x_n-\\frac{f(x_n)}{f'(x_n)}\\).",
     "steps": [
       "The derivative is \\(f'(x)=2x\\) and \\(f(2)=4-5=-1\\). [1]",
-      "Therefore \\(x_1=2-\\\\frac{-1}{4}=\\\\frac94\\). [1]"
+      "Therefore \\(x_1=2-\\frac{-1}{4}=\\frac94\\). [1]"
     ],
-    "answer": "\\(x_1=\\\\frac94=2.25\\).",
+    "answer": "\\(x_1=\\frac94=2.25\\).",
     "misconception": "The denominator is the derivative at the current iterate, not the function value or the next iterate.",
     "reflection": "Why might the next step be smaller than the first?"
   },
@@ -167,7 +167,7 @@ export const week08Retrieval = [
     "hint": "Evaluate \\(f'(1)\\) before dividing by it.",
     "steps": [
       "The derivative is \\(f'(x)=3x^2-3\\), hence \\(f'(1)=0\\). [1]",
-      "Newton's update divides by \\(f'(x_0)\\) and is therefore undefined at \\(x_0=1\\). Starting at \\(x_0=2\\) gives \\(f'(2)=9\\\\ne0\\), so the first update is defined. [1]"
+      "Newton's update divides by \\(f'(x_0)\\) and is therefore undefined at \\(x_0=1\\). Starting at \\(x_0=2\\) gives \\(f'(2)=9\\ne0\\), so the first update is defined. [1]"
     ],
     "answer": "Start at \\(1\\) is invalid; \\(x_0=2\\) is a valid first-step alternative.",
     "misconception": "A horizontal tangent does not make a Newton update of zero; division by zero makes it undefined.",
@@ -186,7 +186,7 @@ export const week08Retrieval = [
       "trapezium rule",
       "definite integrals"
     ],
-    "stem": "Approximate \\(\\\\int_0^2x^2\\\\,dx\\) with two equal strips using the trapezium rule.",
+    "stem": "Approximate \\(\\int_0^2x^2\\,dx\\) with two equal strips using the trapezium rule.",
     "parts": [
       [
         "Find the approximation.",
@@ -195,8 +195,8 @@ export const week08Retrieval = [
     ],
     "hint": "Use ordinates at \\(0,1,2\\) and strip width \\(1\\).",
     "steps": [
-      "At the three nodes, \\(y_0=0,\\\\ y_1=1,\\\\ y_2=4\\); the width is \\(h=1\\). [1]",
-      "The trapezium estimate is \\(T=\\\\frac h2(y_0+2y_1+y_2)=\\\\frac12(0+2+4)=3\\). [1]"
+      "At the three nodes, \\(y_0=0,\\ y_1=1,\\ y_2=4\\); the width is \\(h=1\\). [1]",
+      "The trapezium estimate is \\(T=\\frac h2(y_0+2y_1+y_2)=\\frac12(0+2+4)=3\\). [1]"
     ],
     "answer": "Trapezium estimate \\(3\\) (exact integral \\(8/3\\)).",
     "misconception": "The interior ordinate is counted twice; forgetting the factor 2 changes the approximation.",
@@ -215,7 +215,7 @@ export const week08Retrieval = [
       "trapezium error",
       "curve shape"
     ],
-    "stem": "On \\(0\\\\le x\\\\le1\\), let \\(f(x)=e^{-x}\\).",
+    "stem": "On \\(0\\le x\\le1\\), let \\(f(x)=e^{-x}\\).",
     "parts": [
       [
         "Determine whether a trapezium-rule approximation with equal-width strips is above or below the exact area, giving a mathematical reason.",
@@ -244,7 +244,7 @@ export const week08Retrieval = [
       "interpreting roots",
       "exponential synthesis"
     ],
-    "stem": "A concentration model is \\(C(t)=30e^{-0.2t}\\) for time \\(t\\\\ge0\\) in hours.",
+    "stem": "A concentration model is \\(C(t)=30e^{-0.2t}\\) for time \\(t\\ge0\\) in hours.",
     "parts": [
       [
         "Find when \\(C(t)=12\\) to two decimal places and interpret the result.",
@@ -253,8 +253,8 @@ export const week08Retrieval = [
     ],
     "hint": "First isolate the exponential; then take logarithms.",
     "steps": [
-      "The equation is \\(e^{-0.2t}=\\\\frac{12}{30}=0.4\\), giving \\(-0.2t=\\\\ln0.4\\). [1]",
-      "Thus \\(t=\\\\frac{\\\\ln(2.5)}{0.2}\\\\approx4.58\\) hours, when the model first predicts 12 concentration units. [1]"
+      "The equation is \\(e^{-0.2t}=\\frac{12}{30}=0.4\\), giving \\(-0.2t=\\ln0.4\\). [1]",
+      "Thus \\(t=\\frac{\\ln(2.5)}{0.2}\\approx4.58\\) hours, when the model first predicts 12 concentration units. [1]"
     ],
     "answer": "Approximately \\(4.58\\) hours after measurement began.",
     "misconception": "Do not report the time without its unit or confuse the threshold concentration with the initial value.",
@@ -285,7 +285,7 @@ export const week08Retrieval = [
       "Differentiation gives \\(f'(x)=3x^2-2\\), so \\(f'(1)=1\\). [1]",
       "The function value is \\(f(1)=1-2=-1\\). [1]"
     ],
-    "answer": "\\(f'(1)=1,\\\\quad f(1)=-1\\).",
+    "answer": "\\(f'(1)=1,\\quad f(1)=-1\\).",
     "misconception": "Newton's method needs both the function and its derivative; they are not interchangeable.",
     "reflection": "What would the first Newton step be if the target equation were f(x)=0?"
   }
