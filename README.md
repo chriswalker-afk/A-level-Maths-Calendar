@@ -2,6 +2,16 @@
 
 An online independent-study calendar for **Pearson Edexcel A Level Mathematics (9MA0)**, designed to emphasise **combined skills, AO2 reasoning and AO3 modelling**.
 
+## Calendar-first navigation and editorial design
+
+The homepage **is the ten-week calendar**, arranged as two five-week planner blocks. There is no promotional hero or extra "overview" before the work. An available week links directly to its questions, resuming any unfinished reattempt or the next unmarked question; an unreleased week is labelled but not clickable.
+
+Inside practice, students can switch directly between **Retrieval / Connected problems / Modelling & reasoning / Year 1 Applied / Timed set / Extension**, browse the question index, and continue across a section boundary with Next/Previous. Old bookmarked `#/week/N` URLs for published weeks open the questions instead of a separate intermediate screen.
+
+The visual identity uses large week numerals, ruled graph-paper layouts, warm paper, dark ink, coral accents and highlighted active states. It also restyles My Progress, My Specification and the practical study guide to share the same design language.
+
+**Design and flow reference:** [docs/VISUAL_IDENTITY_AND_FLOW.md](docs/VISUAL_IDENTITY_AND_FLOW.md). New navigation regressions are covered by `tests/calendar-flow.test.mjs` and `tests/calendar-route-ui.test.mjs`.
+
 ## Two linked programmes
 
 1. **Internal exam preparation:** 10 weeks, all Pure Mathematics + Year 1 Statistics & Mechanics. Four essential hours per week, one recommended hour of timed work, one optional hour for extended challenge or repair.

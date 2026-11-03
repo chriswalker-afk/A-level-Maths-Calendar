@@ -11,6 +11,7 @@ import {renderRevisionSuggestions} from "./revision-recommendations-view.js";
 import {renderProgressTransfer,mountProgressTransfer} from "./progress-transfer-view.js";
 import {startNewAttempt,latestFinishedRecord,hasNewAttemptInProgress} from "./attempt-history.js";
 import {mountAttemptHistory} from "./attempt-history-view.js";
+import {renderCalendarHome,firstWeekQuestionRoute,adjacentQuestionRoute,renderSectionNavigation,renderQuestionIndex,STUDY_SEQUENCE} from "./calendar-view.js";
 
 const $=s=>document.querySelector(s);
 const el=$('#app');
@@ -54,32 +55,91 @@ function relatedSkillsMarkup(q){
 function questionTable(data){if(!data)return '';return '<div class="table-scroll" role="region" aria-label="'+esc(data.caption)+'" tabindex="0"><table class="data-table"><caption>'+esc(data.caption)+'</caption><thead><tr>'+data.header.map(v=>'<th scope="col">'+mathHtml(v)+'</th>').join('')+'</tr></thead><tbody>'+data.rows.map(row=>'<tr>'+row.map((v,i)=>i===0?'<th scope="row">'+mathHtml(v)+'</th>':'<td>'+mathHtml(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'}
 function typeset(){const jax=window.MathJax;if(typeof jax?.typesetPromise==='function'){jax.typesetPromise([el]).catch(err=>console.warn('Math typesetting failed',err));}else if(jax?.startup?.promise){jax.startup.promise.then(()=>jax.typesetPromise?.([el])).catch(err=>console.warn('Math typesetting unavailable',err));}}
 function navigate(route){if(location.hash!==route)location.hash=route;else render();}
-function heroArt(){return '<div class="hero-art" aria-hidden="true"><svg viewBox="0 0 430 280" role="img"><path d="M-15 236 C70 235 100 240 152 203 S205 60 255 100 S335 206 445 23" stroke="#1d8879" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M-15 236 C70 235 100 240 152 203 S205 60 255 100 S335 206 445 23 L445 300 L-15 300 Z" fill="#74c6a0" opacity=".13"/><circle cx="255" cy="100" r="7" fill="#e6a25f" stroke="white" stroke-width="3"/><path d="M255 100 V250 M30 150 H405" stroke="#88a99c" stroke-width="1.4" stroke-dasharray="5 7" opacity=".7"/></svg><div class="float-card"><small>THE AIM</small><strong>Think deeper.</strong></div></div>'}
 function buttonLink(href,label,cls=''){return '<a href="'+esc(href)+'" class="btn '+cls+'">'+esc(label)+'</a>'}
-function weekCards(){return '<div class="weeks">'+programmeOne.weeks.map(w=>{const on=released(w.number);const qs=allQuestions[w.number]||[];const done=coreQuestions(w.number).filter(completed).length;return '<button type="button" class="week-card '+(on?'current':'locked')+'" data-week="'+w.number+'" aria-label="Week '+w.number+': '+esc(w.title)+', '+(on?'questions available':'topic overview only')+'"><div class="top"><span class="week-no">WEEK '+String(w.number).padStart(2,'0')+'</span><span class="pill '+(on?'teal':'')+'">'+(on?'AVAILABLE':'PREVIEW')+'</span></div><h3>'+esc(w.title)+'</h3><p>'+esc(w.subtitle)+'</p><div class="bottom"><span>'+(on?done+' / '+coreQuestions(w.number).length+' core marked':'4–6 hrs / week')+'</span><span aria-hidden="true">'+(on?'↗':'◇')+'</span></div></button>'}).join('')+'</div>'}
-function overview(){return '<section class="page"><div class="hero"><div class="hero-content"><span class="eyebrow">A better way to prepare</span><h1>Master the connections.<br>Not just the methods.</h1><p class="lead">Ten weeks of purposeful A Level Mathematics revision, built around problem solving, mathematical reasoning and meaningful modelling. Every week links ideas you already know.</p><div class="actions">'+buttonLink('#/week/1','Explore Week 1 →')+buttonLink('#/calendar','View the calendar','ghost')+'</div></div>'+heroArt()+'</div>'+
-heading('Choose your programme','One calendar. Two preparation journeys.')+
-'<div class="card-grid"><article class="card featured"><div class="card-head"><span class="pill teal">PROGRAMME 01 · WEEK 1 LIVE</span><span class="eyebrow">10 WEEKS</span></div><h3>Internal exam preparation</h3><p>All Pure Mathematics, with Year 1 Statistics and Mechanics. Revisit every topic, then practise connecting ideas and justifying decisions.</p><div class="line"></div><div class="card-foot"><span class="small muted">4–6 hours each week</span><a class="link" href="#/calendar">Explore programme →</a></div></article><article class="card"><div class="card-head"><span class="pill">PROGRAMME 02 · PLANNED</span><span class="eyebrow">20 WEEKS</span></div><h3>Final A Level preparation</h3><p>Beginning 1 February 2027. Full 9MA0, including Year 2 Applied, with timed papers and exam-specific revision through June.</p><div class="line"></div><div class="card-foot"><span class="small muted">1 Feb – 16 Jun 2027</span><a class="link" href="#/final">See future programme →</a></div></article></div>'+
-'<div class="spec-home-link"><div><span class="eyebrow">NEW · Your complete syllabus map</span><h3>What could an examiner ask me to do?</h3><p>Explore all 19 specification topics, searchable “I can” skills and examples of examination demands. See what belongs to the internal exams and what comes later.</p></div><a class="btn small" href="#/specification/internal">Explore My Specification →</a></div>'+heading('Your preparation at a glance','Made for thoughtful independent study')+
-'<div class="metrics"><div class="metric"><span>THE PROGRAMME</span><strong>10</strong><span>weekly releases</span></div><div class="metric"><span>WEEKLY COMMITMENT</span><strong>4–6h</strong><span>essential + extension</span></div><div class="metric"><span>MAIN EMPHASIS</span><strong>AO2/3</strong><span>reasoning & modelling</span></div><div class="metric"><span>CORE QUESTION PROGRESS</span><strong>'+countDone()+'/'+coreQuestions(1).length+'</strong><span>self-assessed locally</span></div></div>'+
-heading('Your weekly calendar','Browse every week; full sets release progressively')+weekCards()+
-heading('The learning routine','Independent first, then reflective')+
-'<div class="step-grid"><div class="step"><b>01</b><strong>Recall</strong><p>Test basic techniques without notes.</p></div><div class="step"><b>02</b><strong>Connect</strong><p>Solve problems combining several topics.</p></div><div class="step"><b>03</b><strong>Reason</strong><p>Explain, model, evaluate and prove.</p></div><div class="step"><b>04</b><strong>Reflect</strong><p>Self-mark, fix and log the first error.</p></div></div></section>'}
-function calendar(){return '<section class="page"><a class="back" href="#/">← Overview</a><span class="eyebrow">Programme 01 · Your route through revision</span><h1 class="page-title">The ten-week calendar</h1><p class="intro">All Pure Mathematics plus Year 1 Statistics and Mechanics. Each week deliberately connects techniques. Week 1 has its complete core pack, timed set and optional challenge; later weeks remain curriculum previews until their material is authored and released.</p><div class="banner"><div><strong>Designed for four to six hours each week</strong><p>Four hours essential, an extra timed hour recommended, a sixth hour for challenge or targeted repair.</p></div><span class="pill teal">AO2 / AO3 FOCUS</span></div>'+weekCards()+heading('What comes after the internal exams?','Future expansion')+'<div class="panel"><h3>Full A Level preparation · February to June 2027</h3><p>Designed into the calendar from the start. Full Pure and both years of Statistics and Mechanics, leading into your final examinations.</p><a href="#/final" class="link">View the planned next stage →</a></div></section>'}
-function weekPage(n){
- const w=programmeOne.weeks[n-1];if(!w)return notFound();
- const on=released(n),qs=allQuestions[n]||[],core=coreQuestions(n),done=core.filter(completed).length;
- const top='<section class="page"><a class="back" href="#/calendar">← Back to calendar</a><div class="card-head"><span class="eyebrow">Programme one · Week '+String(n).padStart(2,'0')+'</span><span class="pill '+(on?'teal':'')+'">'+(on?'QUESTIONS AVAILABLE':'PREVIEW · NOT YET RELEASED')+'</span></div><h1 class="page-title">'+esc(w.title)+'</h1><p class="intro">'+esc(w.subtitle)+'</p><div class="tag-row"><span class="pill">4 hours essential</span><span class="pill">+1 timed hour</span><span class="pill">+1 optional hour</span></div>'+
- heading('This week’s mathematical connections','Topic overview')+'<div class="topic-pair"><article class="panel"><span class="eyebrow">Pure mathematics</span><h3>Techniques to connect</h3><p>'+esc(w.pure)+'</p></article><article class="panel"><span class="eyebrow">Year 1 applied</span><h3>Statistics & mechanics</h3><p>'+esc(w.applied)+'</p></article></div>'+
- heading('Your extended challenge','Think beyond the method')+'<div class="panel"><h3>Where the ideas meet</h3><p>'+esc(w.challenge)+'</p></div>';
- if(!on)return top+heading('Coming later','Curriculum preview')+'<div class="locked-panel"><h2>Questions are not published yet</h2><p>Explore the topics now. Questions and solutions will be released after authoring and checking.</p>'+buttonLink('#/calendar','Back to calendar','ghost')+'</div></section>';
- const labels={R:'Recall key techniques',P:'Connect methods',M:'Model and reason',A:'Year 1 Applied',T:'Timed mixed challenge',X:'A/A* extension'};
- const time={R:'30 min · 20 marks',P:'70 min · 30 marks',M:'70 min · 26 marks',A:'50 min · 22 marks',T:'60 min incl. marking · 32 marks',X:'60 min incl. review · 14 marks'};
- return top+heading('Your Week '+String(n).padStart(2,'0')+' pathway',done+' of '+core.length+' essential questions self-marked')+
- '<div class="progress-grid">'+Object.entries(labels).map(([code,label])=>{const section=qs.filter(q=>q.section===code),scored=section.filter(completed).length;return '<div class="progress-item"><div class="card-head"><span class="eyebrow">'+(essentialSections.has(code)?'ESSENTIAL':code==='T'?'RECOMMENDED':'OPTIONAL')+'</span><span class="pill '+(scored===section.length?'teal':'')+'">'+scored+'/'+section.length+'</span></div><h3>'+esc(label)+'</h3><p>'+time[code]+'</p><div class="meter"><span style="width:'+(100*scored/Math.max(1,section.length))+'%"></span></div><div style="margin-top:14px"><a class="link" href="#/study/'+n+'/'+code+'/0">Open '+esc(label.toLowerCase())+' →</a></div></div>'}).join('')+'</div>'+
- '<div class="banner" style="margin-top:19px"><div><strong>Your four essential hours</strong><p>30 minutes retrieval + 70 connected problems + 70 modelling + 50 Applied + 20 minutes checking. Add the timed set (60 minutes) and, if helpful, extension or targeted repair (60 minutes).</p></div><a class="btn small" href="#/study/'+n+'/R/0">Start Week '+n+' →</a></div></section>';
+function weekStatus(w){
+ const qs=allQuestions[w.number]||[];
+ const core=coreQuestions(w.number);
+ return {
+  released:released(w.number),
+  done:core.filter(everCompleted).length,
+  total:core.length,
+  url:firstWeekQuestionRoute(w.number,qs,everCompleted,
+    q=>hasNewAttemptInProgress(q,saved[q.id]||{}))
+ };
 }
-function studyPage(n,sec,idx){if(!released(n))return weekPage(n);const qs=(allQuestions[n]||[]).filter(q=>q.section===sec);if(!qs.length){return '<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+'</a><h1>Not yet authored</h1><p>Questions for this section are still in development.</p></section>'}const i=Math.max(0,Math.min(Number(idx)||0,qs.length-1)),q=qs[i];const group=Object.entries(sections).map(([code,label])=>'<button type="button" class="tab" role="tab" aria-selected="'+String(sec===code)+'" data-section="'+code+'" data-week="'+n+'">'+label+' ('+(allQuestions[n]||[]).filter(t=>t.section===code).length+'/'+target[code]+')</button>').join('');const nav=qs.map((item,j)=>'<button type="button" data-jump="'+j+'" class="'+(j===i?'active':'')+'"><span class="qid">'+esc(item.id.split('-')[1])+'</span><span>'+esc(item.title)+'</span>'+'<span class="q-complete-indicator" aria-label="Question finished"'+(completed(item)?'':' hidden')+'>✓</span>'+(hasNewAttemptInProgress(item,saved[item.id]||{})?'<span class="q-retrying" aria-label="Reattempt in progress">↻</span>':'')+'</button>').join('');let result='<section class="page"><a class="back" href="#/week/'+n+'">← Week '+n+' overview</a><div class="card-head"><span class="eyebrow">Week '+String(n).padStart(2,'0')+' · '+esc(sections[sec]||sec)+'</span><span class="pill teal">ORIGINAL EXAM-STYLE QUESTION</span></div><h1 class="page-title">Practice with purpose.</h1><p class="intro">Attempt independently first. Use a hint only if needed, compare with the worked solution, and record the marks you actually earned.</p><div class="tabs" role="tablist" aria-label="Question categories">'+group+'</div><div class="study-layout"><aside class="side"><h3>Questions in this section</h3><div class="question-links">'+nav+'</div><div class="line"></div><p class="small muted">4-hour essentials · 1 timed set · 1 optional challenge.</p></aside><article class="paper"><div class="card-head"><span class="pill blue">'+esc(q.id)+'</span><span class="small muted">'+q.marks+' marks · ~'+q.minutes+' min</span></div><h2>'+esc(q.title)+'</h2><p class="stem math">'+mathHtml(q.stem)+'</p>'+questionTable(q.table)+'<ol class="parts">'+q.parts.map((p,j)=>'<li><span class="letter">('+'abcdefgh'[j]+')</span><div class="question-part math">'+mathHtml(p[0])+'</div><span class="marks">['+p[1]+']</span></li>').join('')+'</ol><hr><div id="question-working-space"></div><div class="actions" style="margin-top:15px"><button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button><button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div><div id="hint-box" hidden class="helper"><h3>A small nudge</h3><p class="math">'+mathHtml(q.hint)+'</p></div><div id="solution-box" hidden class="helper solution"><h3>Fully worked solution</h3><ol>'+q.steps.map(s=>'<li class="math">'+mathHtml(s)+'</li>').join('')+'</ol><p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p><div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p><p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div>'+relatedSkillsMarkup(q)+'<div id="question-assessment"></div><div id="attempt-history-root"></div><div class="foot-nav"><button type="button" class="btn ghost small" id="previous" '+(i===0?'disabled':'')+'>← Previous</button><button type="button" class="btn small" id="next" '+(i===qs.length-1?'disabled':'')+'>Next question →</button></div></article></div></section>';return result}
+function overview(){
+ return renderCalendarHome({weeks:programmeOne.weeks,
+   getStatus:weekStatus,totalCompleted:countDone()});
+}
+function calendar(){return overview();}
+function weekPage(n){
+ const w=programmeOne.weeks[n-1];
+ if(!w)return notFound();
+ if(released(n))return studyPage(n,"R",0);
+ return '<section class="page locked-week-page"><a class="back" href="#/calendar">← Study calendar</a>'+
+  '<div class="locked-week-notice"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+' · NOT RELEASED</span>'+
+  '<h1>'+esc(w.title)+'</h1>'+
+  '<p>Questions for this week are not available yet.</p>'+
+  '<div class="locked-week-topics"><div><strong>PURE</strong><p>'+esc(w.pure)+'</p></div>'+
+  '<div><strong>APPLIED</strong><p>'+esc(w.applied)+'</p></div></div>'+
+  buttonLink("#/calendar","Return to calendar","ghost")+'</div></section>';
+}
+function studyPage(n,sec,idx){
+ if(!released(n))return weekPage(n);
+ const week=programmeOne.weeks[n-1];
+ const all=allQuestions[n]||[];
+ if(!all.some(q=>q.section===sec))sec=STUDY_SEQUENCE.find(code=>all.some(q=>q.section===code))||"R";
+ const qs=all.filter(q=>q.section===sec);
+ if(!qs.length)return '<section class="page"><a class="back" href="#/calendar">← Calendar</a><h1>No questions published</h1></section>';
+ const i=Math.max(0,Math.min(Number(idx)||0,qs.length-1)),q=qs[i];
+ const prev=adjacentQuestionRoute(n,all,sec,i,-1);
+ const next=adjacentQuestionRoute(n,all,sec,i,1);
+ const nextSection=next?.split("/")[3]!==sec;
+ const previousSection=prev?.split("/")[3]!==sec;
+ const sectionNav=renderSectionNavigation({week:n,section:sec,questions:all,isFinished:everCompleted});
+ const questionNav=renderQuestionIndex({section:sec,questions:qs,index:i,isFinished:completed,
+   isRetrying:item=>hasNewAttemptInProgress(item,saved[item.id]||{})});
+ const marked=all.filter(everCompleted).length;
+ return '<section class="page study-page">'+
+ '<header class="study-header"><a class="study-back" href="#/calendar">← CALENDAR</a>'+
+ '<div class="study-header-title"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+' / INTERNAL EXAM</span>'+
+ '<h1>'+esc(week.title)+'</h1></div>'+
+ '<div class="study-header-progress"><strong>'+marked+'<span>/'+all.length+'</span></strong>'+
+ '<small>QUESTIONS MARKED</small></div></header>'+
+ sectionNav+
+ '<div class="study-layout study-workbench">'+questionNav+
+ '<article class="paper exam-sheet">'+
+ '<div class="exam-sheet-topline"><span class="exam-question-number">QUESTION '+String(i+1).padStart(2,"0")+
+ ' / '+String(qs.length).padStart(2,"0")+'</span>'+
+ '<span class="exam-sheet-points">'+q.marks+' MARKS</span>'+
+ '<span class="exam-sheet-time">ABOUT '+q.minutes+' MIN</span></div>'+
+ '<div class="exam-sheet-title"><span class="exam-sheet-code">'+esc(q.id)+'</span>'+
+ '<h2>'+esc(q.title)+'</h2></div>'+
+ '<p class="stem math">'+mathHtml(q.stem)+'</p>'+
+ questionTable(q.table)+
+ '<ol class="parts">'+q.parts.map((part,j)=>
+  '<li><span class="letter">('+'abcdefghijklmnopqrstuvwxyz'[j]+')</span>'+
+  '<div class="question-part math">'+mathHtml(part[0])+'</div>'+
+  '<span class="marks">['+part[1]+']</span></li>').join('')+'</ol>'+
+ '<hr><div id="question-working-space"></div>'+
+ '<div class="actions" style="margin-top:15px">'+
+ '<button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button>'+
+ '<button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div>'+
+ '<div id="hint-box" hidden class="helper"><h3>First-step hint</h3><p class="math">'+mathHtml(q.hint)+'</p></div>'+
+ '<div id="solution-box" hidden class="helper solution"><h3>Worked solution</h3><ol>'+
+  q.steps.map(step=>'<li class="math">'+mathHtml(step)+'</li>').join('')+'</ol>'+
+  '<p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p>'+
+  '<div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p>'+
+  '<p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div>'+
+ relatedSkillsMarkup(q)+
+ '<div id="question-assessment"></div><div id="attempt-history-root"></div>'+
+ '<div class="foot-nav">'+
+ '<button type="button" class="btn ghost small" id="previous"'+(prev?' data-target-route="'+prev+'"':' disabled')+'>'+
+   (previousSection?'← Previous section':'← Previous question')+'</button>'+
+ '<button type="button" class="btn small" id="next"'+(next?' data-target-route="'+next+'"':' disabled')+'>'+
+   (nextSection?'Next section →':'Next question →')+'</button>'+
+ '</div></article></div></section>';
+}
 function progressPage(scope="internal",strand="all"){
  const published=releasedQuestions();
  const report=calculateSpecificationProgress({questions:published,records:saved,scope});
@@ -93,8 +153,45 @@ function progressPage(scope="internal",strand="all"){
  heading('My revision notes','Make your next action specific')+'<div class="panel"><div class="reflection-row"><label for="strength">A method I can now use independently</label><textarea id="strength" class="reflection" placeholder="For example: I check the domain before solving a composite inequality…">'+esc(saved.reflections?.strength||'')+'</textarea></div><div class="reflection-row"><label for="repair">My next misconception to repair</label><textarea id="repair" class="reflection" placeholder="Name the exact step to practise…">'+esc(saved.reflections?.repair||'')+'</textarea></div><div class="reflection-row"><label for="strategy">My strategy for an unfamiliar question</label><textarea id="strategy" class="reflection" placeholder="What will you do when you are unsure where to begin?">'+esc(saved.reflections?.strategy||'')+'</textarea></div><p id="reflection-message" class="small muted">Notes save automatically in this browser.</p></div>'+
  '<div class="panel" style="margin-top:16px"><h3>Recorded self-marks</h3><p>'+(scored.length?total+' / '+available+' available marks across '+scored.length+' scored questions.':'No numerical scores recorded yet. Use the mark scheme to self-award marks after attempting a question.')+' The I / P / S rating measures independence, not just whether the final answer is correct.</p></div>'+renderProgressTransfer(saved)+'</section>';
 }
-function guidePage(){return '<section class="page"><span class="eyebrow">A thoughtful routine</span><h1 class="page-title">How to use the calendar</h1><p class="intro">This is not a race through question numbers. Your goal is to become more independent in deciding which mathematics to use.</p>'+heading('Your four essential hours','Week 1–8 question blueprint')+'<div class="card-grid">'+[['30 min','AO1 quick retrieval','Ten short questions: remember familiar procedures.'],['70 min','Connected problems','Three questions joining two or more techniques.'],['70 min','Mathematical modelling','Two extended questions with context, justification and limitations.'],['50 min','Year 1 Applied','Three questions on Statistics or Mechanics.'],['20 min','Mark and repair','Identify a specific misconception and reattempt the first incorrect step.'],['Optional','The extra two hours','One 60-minute timed set, then an optional 60-minute challenge or targeted repair.']].map(a=>'<article class="card"><span class="pill teal">'+a[0]+'</span><h3>'+a[1]+'</h3><p>'+a[2]+'</p></article>').join('')+'</div>'+heading('How to approach a hard question','Before you open a solution')+'<div class="step-grid"><div class="step"><b>01</b><strong>Understand</strong><p>Underline the required outcome, constraints and units.</p></div><div class="step"><b>02</b><strong>Connect</strong><p>Identify a useful representation and at least one possible method.</p></div><div class="step"><b>03</b><strong>Try</strong><p>Attempt the first step. Reveal only the hint when necessary.</p></div><div class="step"><b>04</b><strong>Repair</strong><p>Self-mark the full method, record the first error, then retry.</p></div></div>'+heading('The assessment objectives','What each means in these resources')+'<div class="panel"><p><strong>AO1:</strong> accurately use techniques and recall facts. <strong>AO2:</strong> reason, communicate mathematics, deduce and prove. <strong>AO3:</strong> solve problems, create and interpret models, and evaluate assumptions and conclusions.</p><p>The revision set intentionally emphasises AO2 and AO3 more than the official final paper weighting. The final mock will be closer to actual examination conditions.</p></div><div class="warning" style="margin-top:15px"><strong>Privacy and access.</strong> Working and progress are stored only in your current browser. Clearing browser storage may remove them. Future question content is withheld until publication; topic previews are visible in advance.</div></section>'}
-function finalPage(){return '<section class="page"><a class="back" href="#/">← Overview</a><span class="eyebrow">Programme 02 · Future expansion</span><h1 class="page-title">The road to the final papers.</h1><p class="intro">A planned 20-week full-course programme from 1 February to 16 June 2027, including Year 2 Statistics and Mechanics, synoptic questions and timed examinations. Question packs are not published yet.</p><div class="banner"><div><strong>The same study system, a wider syllabus</strong><p>Your internal-exam programme stays separate. The future stage can reuse tagged questions and build upon the same progress model.</p></div><span class="pill">PLANNED ONLY</span></div>'+heading('Five phases','1 February – 16 June 2027')+'<div class="phases">'+programmeTwo.phases.map(p=>'<div class="phase"><span class="eyebrow">WEEKS '+p.start+'–'+p.end+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.theme)+'</p></div>').join('')+'</div>'+heading('Official 2027 dates','Pearson timetable · Afternoon session')+programmeTwo.exams.map(x=>{const d=new Date(x.date+'T12:00:00Z');const day=d.toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});return '<div class="exam"><div class="exam-date"><strong>'+day.split(' ')[0]+'</strong>'+day.split(' ')[1].toUpperCase()+'</div><div><strong>'+esc(x.name)+'</strong><p>'+esc(x.code)+' · Wednesday '+esc(x.date)+' · '+esc(x.session)+' · '+esc(x.duration)+'</p></div></div>'}).join('')+'<div class="warning" style="margin-top:18px">These are the published Pearson GCE paper dates. School-specific local start times in Brunei must be confirmed separately. Papers 1 and 2 can both test the entire Pure syllabus.</div></section>'}
+function guidePage(){
+ const plan=[
+  ["01","30 min","Retrieval","10 short AO1 questions"],
+  ["02","70 min","Connected problems","3 multi-skill questions"],
+  ["03","70 min","Modelling & reasoning","2 extended questions"],
+  ["04","50 min","Year 1 Applied","3 Statistics or Mechanics questions"],
+  ["05","20 min","Self-mark & repair","Mark your work and identify the first error"],
+  ["06","Optional","Timed / Extension","One timed set and an optional challenge"]
+ ];
+ return '<section class="page guide-page"><a class="back" href="#/calendar">← Calendar</a>'+
+ '<span class="eyebrow">9MA0 / REFERENCE</span><h1 class="page-title">Study guide</h1>'+
+ '<p class="intro">Open a week, work through its sections, then record your marks. Your progress saves on this device.</p>'+
+ heading("Weekly structure","4 essential hours + optional practice")+
+ '<div class="guide-routine">'+plan.map(row=>'<div class="guide-routine-row">'+
+   '<span class="guide-routine-index">'+row[0]+'</span>'+
+   '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
+ heading("Using a question","Working, hints and marking")+
+ '<div class="guide-instructions">'+
+ '<div><b>1</b><strong>Work independently</strong><p>Use Notes, Maths steps or Draw. Work is saved for each question.</p></div>'+
+ '<div><b>2</b><strong>Check the solution</strong><p>Use a hint when needed, then compare your working with the mark scheme.</p></div>'+
+ '<div><b>3</b><strong>Record your mark</strong><p>Enter an overall mark, or optionally score each part. Even 0 marks counts as finished.</p></div>'+
+ '<div><b>4</b><strong>Retry or move on</strong><p>Archived attempts preserve previous working. Use My Progress to find questions to revisit.</p></div></div>'+
+ heading("Assessment objectives","What the questions assess")+
+ '<div class="guide-ao"><div><strong>AO1</strong><p>Recall and carry out mathematical procedures.</p></div>'+
+ '<div><strong>AO2</strong><p>Reason, explain, deduce and prove.</p></div>'+
+ '<div><strong>AO3</strong><p>Model, solve problems, interpret and evaluate.</p></div></div>'+
+ '<div class="warning guide-privacy"><strong>Saved locally.</strong> Marks and working remain in this browser. Use <a href="#/progress">My Progress</a> to download a backup if you change devices.</div></section>';
+}
+function finalPage(){
+ return '<section class="page final-page"><a class="back" href="#/calendar">← Calendar</a>'+
+ '<span class="eyebrow">FULL A LEVEL / NOT YET RELEASED</span>'+
+ '<h1 class="page-title">Final examination preparation</h1>'+
+ '<p class="intro">Planned from 1 February to 16 June 2027. This stage will include Year 2 Statistics and Mechanics. Its questions are not available yet.</p>'+
+ heading("Programme phases","20-week plan")+
+ '<div class="phases">'+programmeTwo.phases.map(p=>'<div class="phase"><span class="eyebrow">WEEKS '+p.start+'–'+p.end+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.theme)+'</p></div>').join('')+'</div>'+
+ heading("Exam dates","Pearson 9MA0 · 2027")+
+ programmeTwo.exams.map(x=>{const d=new Date(x.date+'T12:00:00Z');const day=d.toLocaleDateString('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});return '<div class="exam"><div class="exam-date"><strong>'+day.split(' ')[0]+'</strong>'+day.split(' ')[1].toUpperCase()+'</div><div><strong>'+esc(x.name)+'</strong><p>'+esc(x.code)+' · Wednesday '+esc(x.date)+' · '+esc(x.session)+' · '+esc(x.duration)+'</p></div></div>'}).join('')+
+ '<div class="warning" style="margin-top:18px">Confirm examination start times with your centre in Brunei. Both Pure papers can assess the full Pure syllabus.</div></section>';
+}
 function notFound(){return '<section class="page"><h1>Page not found</h1>'+buttonLink('#/','Return home')+'</section>'}
 function remountHistory(q){
  const mount=el.querySelector("#attempt-history-root");
@@ -120,8 +217,15 @@ function render(){
   if(disposeTransfer){disposeTransfer();disposeTransfer=null;}
   const p=routeInfo();
   const top=p[0]||"home";
+  // Old links to the removed week overview open the exercises immediately.
+  if(top==="week"&&released(Number(p[1]))){
+    const n=Number(p[1]);
+    navigate(firstWeekQuestionRoute(n,allQuestions[n]||[],everCompleted,
+      q=>hasNewAttemptInProgress(q,saved[q.id]||{}))||"#/calendar");
+    return;
+  }
   document.querySelectorAll("[data-nav]").forEach(a=>
-    a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"?"calendar":top)));
+    a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"||top==="home"?"calendar":top)));
   if(top==="home")el.innerHTML=overview();
   else if(top==="calendar")el.innerHTML=calendar();
   else if(top==="week")el.innerHTML=weekPage(Number(p[1]));
@@ -133,7 +237,7 @@ function render(){
   else el.innerHTML=notFound();
 
   document.title=(top==="home"?"A Level Maths Calendar":
-    top==="study"?"Practice":top==="week"?"Weekly overview":top==="specification"?"My Specification":
+    top==="study"?"Questions":top==="week"?"Weekly questions":top==="specification"?"My Specification":
     top.charAt(0).toUpperCase()+top.slice(1))+" — A Level Maths Calendar";
 
   if(top==="progress"){
@@ -210,16 +314,36 @@ function render(){
       });
     }
   }
+  if(top==="study"){
+    // On small screens the category/question strips scroll sideways. Keep
+    // the current choice visible when entering a linked subsection.
+    for(const [container,selected] of [
+      [".study-section-strip",".study-section-link.is-selected"],
+      [".question-index .question-links",".question-index-item.active"]
+    ]){
+      const rail=el.querySelector(container),active=rail?.querySelector(selected);
+      if(rail&&active&&rail.scrollWidth>rail.clientWidth){
+        const offset=active.offsetLeft-rail.offsetLeft;
+        rail.scrollLeft=Math.max(0,offset-(rail.clientWidth-active.clientWidth)/2);
+      }
+    }
+  }
   typeset();
 }
-window.addEventListener('hashchange',()=>{render();window.scrollTo({top:0,behavior:'instant'})});
+window.addEventListener('hashchange',()=>{
+  render();
+  window.scrollTo({top:0,behavior:'instant'});
+  // A route change is also an accessibility landmark change.
+  const title=el.querySelector('h1');
+  if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true});}
+});
 document.addEventListener('click',event=>{
- const week=event.target.closest('[data-week]');if(week){navigate('#/week/'+week.dataset.week);return}
+ const week=event.target.closest('button[data-week]');if(week){navigate(week.dataset.destination||'#/study/'+week.dataset.week+'/R/0');return}
  const section=event.target.closest('[data-section]');if(section){navigate('#/study/'+section.dataset.week+'/'+section.dataset.section+'/0');return}
  const jump=event.target.closest('[data-jump]');if(jump){const p=routeInfo();navigate('#/study/'+p[1]+'/'+p[2]+'/'+jump.dataset.jump);return}
  const hint=event.target.closest('#hint-toggle');if(hint){const box=$('#hint-box');box.hidden=!box.hidden;hint.setAttribute('aria-expanded',String(!box.hidden));hint.textContent=box.hidden?'Show first-step hint':'Hide first-step hint';if(!box.hidden){const p=routeInfo(),q=(allQuestions[Number(p[1])]||[]).filter(q=>q.section===p[2])[Number(p[3])||0];if(q){saved[q.id]??={};saved[q.id].hintSeen=true;store()}}return}
  const solution=event.target.closest('#solution-toggle');if(solution){const box=$('#solution-box');box.hidden=!box.hidden;solution.setAttribute('aria-expanded',String(!box.hidden));solution.textContent=box.hidden?'Show worked solution':'Hide worked solution';if(!box.hidden)typeset();return}
- const prev=event.target.closest('#previous,#next');if(prev){const p=routeInfo(),n=Number(p[3]||0)+(prev.id==='next'?1:-1);navigate('#/study/'+p[1]+'/'+p[2]+'/'+n);}
+ const prev=event.target.closest('#previous,#next');if(prev&&!prev.disabled){const destination=prev.dataset.targetRoute;if(destination)navigate(destination);return;}
 });
 document.addEventListener('input',event=>{
  if(['strength','repair','strategy'].includes(event.target.id)){saved.reflections??={};saved.reflections[event.target.id]=event.target.value;store();const msg=$('#reflection-message');if(msg)msg.textContent='Notes saved on this device.'}
