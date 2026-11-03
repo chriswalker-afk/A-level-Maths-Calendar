@@ -75,6 +75,7 @@ test("every Week 2 item has complete parts, worked marking, genuine TeX and feed
    assert.equal(text.split(texOpen).length-1,text.split(texClose).length-1,q.id+" unbalanced TeX");
    assert.equal(text.replace(/\\\([\s\S]*?\\\)/g,"").includes(slash),false,q.id+" TeX outside a math delimiter");
    assert.ok(!text.includes("|---"),q.id+" must not use raw markdown tables");
+   assert.ok(!text.includes(String.raw`\(^{-`),q.id+" uses an isolated superscript rather than a complete formatted unit");
   }
  }
 });
