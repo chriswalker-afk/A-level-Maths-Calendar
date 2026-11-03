@@ -204,6 +204,15 @@ function progressPage(scope="internal",strand="all"){
  renderProgressTransfer(saved)+'</section>';
 }
 function guidePage(){
+ const expandedPlan=[
+  ["01","24 min","Retrieval","10 questions · 20 marks"],
+  ["02","84 min","Connected Pure","7 linked problems · 70 marks"],
+  ["03","48 min","Modelling & reasoning","3 investigations · 40 marks"],
+  ["04","54 min","Year 1 Applied","5 questions · 45 marks"],
+  ["05","30 min","Mark, reflect and repair","30-minute core review"],
+  ["06","+60 min","Recommended timed practice","40 marks · 48 working + 12 review"],
+  ["07","+60 min","Optional A/A* extension","30 marks · 36 working + 24 reflection"]
+ ];
  const plan=[
   ["01","30 min","Retrieval","10 short AO1 questions"],
   ["02","70 min","Connected problems","3 multi-skill questions"],
@@ -215,7 +224,13 @@ function guidePage(){
  return '<section class="page guide-page"><a class="back" href="#/calendar">← Calendar</a>'+
  '<span class="eyebrow">9MA0 / REFERENCE</span><h1 class="page-title">Study guide</h1>'+
  '<p class="intro">Open a week, work through its sections, then record your marks. Your progress saves on this device.</p>'+
- heading("Weekly structure","4 essential hours + optional practice")+
+ heading("Expanded Weeks 1–3","175 essential marks · 215 recommended · 245 optional")+
+ '<p>These are examination-paced planning targets at approximately 1.2 working minutes per mark, not measured completion times. A four-hour core includes 30 minutes of marking and reflection. The additional hour for each optional pathway also includes review.</p>'+
+ '<div class="guide-routine">'+expandedPlan.map(row=>'<div class="guide-routine-row">'+
+   '<span class="guide-routine-index">'+row[0]+'</span>'+
+   '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
+ heading("Weeks 4–9","Original 98-mark essential allocation · expansion planned")+
+ '<p>These weeks retain the earlier allocations while the next development passes build out their mathematics. Do not mistake the old four-hour plan for an exam-paced mark total.</p>'+
  '<div class="guide-routine">'+plan.map(row=>'<div class="guide-routine-row">'+
    '<span class="guide-routine-index">'+row[0]+'</span>'+
    '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
