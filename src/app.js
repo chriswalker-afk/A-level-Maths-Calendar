@@ -314,9 +314,29 @@ function render(){
       });
     }
   }
+  if(top==="study"){
+    // On small screens the category/question strips scroll sideways. Keep
+    // the current choice visible when entering a linked subsection.
+    for(const [container,selected] of [
+      [".study-section-strip",".study-section-link.is-selected"],
+      [".question-index .question-links",".question-index-item.active"]
+    ]){
+      const rail=el.querySelector(container),active=rail?.querySelector(selected);
+      if(rail&&active&&rail.scrollWidth>rail.clientWidth){
+        const offset=active.offsetLeft-rail.offsetLeft;
+        rail.scrollLeft=Math.max(0,offset-(rail.clientWidth-active.clientWidth)/2);
+      }
+    }
+  }
   typeset();
 }
-window.addEventListener('hashchange',()=>{render();window.scrollTo({top:0,behavior:'instant'})});
+window.addEventListener('hashchange',()=>{
+  render();
+  window.scrollTo({top:0,behavior:'instant'});
+  // A route change is also an accessibility landmark change.
+  const title=el.querySelector('h1');
+  if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true});}
+});
 document.addEventListener('click',event=>{
  const week=event.target.closest('button[data-week]');if(week){navigate(week.dataset.destination||'#/study/'+week.dataset.week+'/R/0');return}
  const section=event.target.closest('[data-section]');if(section){navigate('#/study/'+section.dataset.week+'/'+section.dataset.section+'/0');return}
