@@ -13,7 +13,7 @@ const record=(q,values,status="I")=>{
 
 test("empty browser record: no made-up percentages or attempted questions",()=>{
  const p=calculate({questions});
- assert.equal(p.summary.releasedQuestions,22);
+ assert.equal(p.summary.releasedQuestions,31);
  assert.equal(p.summary.completedQuestions,0);
  assert.equal(p.summary.verifiedAccuracy,null);
  assert.equal(p.summary.selfMarkAccuracy,null);
