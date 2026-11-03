@@ -145,8 +145,8 @@ export const programmeOne = {
         5,
         6
       ],
-      "targetMarks": null,
-      "hasPublishedContent": false
+      "targetMarks": 98,
+      "hasPublishedContent": true
     },
     {
       "number": 10,

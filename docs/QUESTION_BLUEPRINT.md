@@ -159,6 +159,7 @@ Question design gradient:
 - **P3 (12 marks):** 45-min Year 1 Applied set (~30–35 marks).
 - **M1 (12 marks):** 45-min unstructured modelling challenge (12–16 marks).
 - **M2 (14 marks):** 35-min marking and error analysis.
+- **Week 9 authored resolution (November 2026):** The earlier P1/P2/P3 descriptions request 30–40-mark timed papers inside 8/10/12-mark question slots. Those two mark/time requirements cannot both be true in the existing fixed 22-question and part-marked interface. Week 9 therefore uses P1/P2/P3 as 8-, 10- and 12-mark integrated Pure problems; Year 1 Applied synthesis is delivered by A1–A3; M1/M2 remain the 12-/14-mark modelling/error-analysis questions. T1–T3 supply a distinct timed 32-mark set. The idea of separate 40-mark papers is retained as a potential future mock-paper format, not falsely advertised as part of these questions.
 
 
 ### Week 10 — Mock examination and consolidation
@@ -175,7 +176,7 @@ Question design gradient:
 
 ## Weeks 9–10: revised allocations
 
-**Week 9 (240 min core):** 15 min rapid mixed retrieval; 50 min Pure A (~40 marks); 50 min Pure B (~40 marks); 45 min Year 1 Applied (~30–35 marks); 45 min unstructured contextual modelling (12–16 marks); 35 min marking/repair. Optional hours: personalised reattempt and extension. No labelled topics on student questions.
+**Week 9 (240 min core, as authored):** 30 min mixed retrieval (10 × 2 marks); 67 min connected Pure (8 + 10 + 12 marks); 68 min unstructured modelling and error analysis (12 + 14 marks); 48 min Year 1 Applied synthesis (4 + 8 + 10 marks); 20 min self-marking and 7 min buffer. This totals 213 minutes of questions plus 27 minutes for marking/buffer, and the essential marks remain 98 with AO1/AO2/AO3 = 26/39/33. T1–T3 add 32 marks of recommended timed work (45 min), and X1 adds 14 optional extension marks. Students select methods without topic labels inside the question prompts; separate full-length mocks require a different format and belong to a future mock-paper flow.
 
 **Week 10 (240 min core):** 120-min full Pure mock (100 marks); 60-min Year 1 Applied mini-mock (50 marks = 25 Statistics + 25 Mechanics); 60 min mark, diagnose, plan. Optional hours for targeted repair/retry. AO balance and authentic pacing closer to Pearson exam structure.
 

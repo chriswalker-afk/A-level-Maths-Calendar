@@ -42,8 +42,8 @@ test("the second released week opens, saves maths and updates cumulative evidenc
  };
  assert.equal(app.querySelectorAll(".planner-cell").length,10);
  const open=[...app.querySelectorAll("a.planner-cell.is-open")];
- assert.equal(open.length,8,"Weeks 1–8 should be open");
- assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,2);
+ assert.equal(open.length,9,"Weeks 1–9 should be open");
+ assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,1);
  const second=open.find(a=>a.getAttribute("href")?.startsWith("#/study/2/"));
  assert.ok(second,"Second week is a direct question link");
  assert.equal(second.getAttribute("href"),"#/study/2/R/0");
@@ -72,14 +72,14 @@ test("the second released week opens, saves maths and updates cumulative evidenc
   "Week 2 also crosses section boundaries");
  navigate("#/progress/internal");
  const firstMetric=app.querySelector(".metric strong");
- assert.equal(firstMetric.textContent,"2/144","All eight released weeks contribute to core summary");
+ assert.equal(firstMetric.textContent,"2/162","All nine released weeks contribute to core summary");
  const weekly=app.querySelectorAll(".weekly-progress-group");
- assert.equal(weekly.length,8,"Separate per-week question records");
+ assert.equal(weekly.length,9,"Separate per-week question records");
  assert.match(weekly[0].textContent,/Algebra, functions and proof/);
  assert.match(weekly[1].textContent,/Coordinate geometry and vectors/);
  assert.match(weekly[1].textContent,/1 \/ 10 questions marked/);
  assert.ok(weekly[1].querySelector('a[href="#/study/2/R/0"]'));
- assert.match(app.querySelector(".spec-progress-pulse").textContent,/2 \/ 176/);
+ assert.match(app.querySelector(".spec-progress-pulse").textContent,/2 \/ 198/);
  navigate("#/specification/internal/P03");
  assert.match(app.querySelector(".spec-topic-evidence").textContent,/1 \/ /);
  assert.ok(app.querySelector("#P03-001 .spec-skill-performance"));
@@ -87,7 +87,7 @@ test("the second released week opens, saves maths and updates cumulative evidenc
  navigate("#/calendar");
  const returned=[...app.querySelectorAll("a.planner-cell.is-open")].find(a=>a.getAttribute("href").startsWith("#/study/2/"));
  assert.equal(returned.getAttribute("href"),"#/study/2/R/1","Resume at next unmarked Week 2 question");
- assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,2);
+ assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,1);
  dom.window.close();
  for(const name of ["window","document","location","localStorage","customElements","ResizeObserver","requestAnimationFrame"])delete globalThis[name];
 });

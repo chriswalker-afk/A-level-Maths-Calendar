@@ -39,7 +39,7 @@ The **four-hour essential pathway** retains the blueprint's AO1/AO2/AO3 mark dis
 
 Each Week 2 question includes correctly typeset maths, part-by-part marks, a first-step hint, fully worked solutions, a verified answer, a misconception, a reflection prompt and a permanent primary specification skill for each marked part (with optional connected skills). All the existing Notes / Maths steps / Draw, self-marking, independent/with-help selection, retry history and backup functions work unchanged.
 
-The student calendar now opens **Weeks 1–8 directly into questions**. The 144 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Weeks 9–10 remain locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
+The student calendar now opens **Weeks 1–9 directly into questions**. The 162 essential questions across those weeks contribute to cumulative progress; topic accuracy counts precise evidence only once per finished question. **Week 10 remains locked.** Release logic is shared by question routes and specification-practice links, so an unreleased week is not accidentally exposed by a topic link. The full final-exam programme is still only planned.
 
 Quality gates: `tests/week02-content.test.mjs`, `tests/week02-student-flow.test.mjs` and `tests/publication.test.mjs`, plus the existing MathJax, progress, marking and backup suites.
 
@@ -149,7 +149,7 @@ The essential AO marks are **AO1 26 / AO2 39 / AO3 33** (practice-design targets
 
 ### Week 8 — Numerical methods and synthesis
 
-Week 8 adds **22 original exam-style questions (144 marks)** with complete worked schemes, first-step hints, robust MathJax notation, identified misconceptions, reflection prompts and permanent primary per-part specification skills. The programme now has **176 released questions across eight weeks (144 essential)**.
+Week 8 adds **22 original exam-style questions (144 marks)** with complete worked schemes, first-step hints, robust MathJax notation, identified misconceptions, reflection prompts and permanent primary per-part specification skills. At the Week 8 release the programme had **176 released questions across eight weeks (144 essential)**.
 
 | Section | Questions | Marks | Working time |
 |---|---:|---:|---:|
@@ -169,6 +169,31 @@ The essential resource-design allocation remains **AO1 26 / AO2 39 / AO3 33**, r
 
 Quality gates include the new `tests/week08-content.test.mjs`, `tests/week08-maths-audit.test.mjs`, `tests/week08-student-flow.test.mjs` and expanded real MathJax parser coverage. A detailed mathematical and curriculum audit is at `docs/WEEK08_AUTHORING_AUDIT.md`.
 
+
+### Week 9 — Synoptic problem solving
+
+Week 9 includes **22 original mixed examination-style questions (144 marks)**, each with first-step hints, complete per-part worked mark schemes, final answers, misconceptions, reflection prompts and permanent specification links. The released programme reaches **198 questions across nine weeks, including 162 essential questions**.
+
+| Section | Questions | Marks | Working time |
+|---|---:|---:|---:|
+| R — quick mixed retrieval across algebra, geometry, trigonometry, series, calculus, numerical methods and Year 1 Applied | 10 | 20 | 30 min |
+| P — connected Pure: circle/vector/chord/geometric sum; logarithmic optimisation/integration/Newton; parametric differentiation, tangent and area | 3 | 30 | 67 min |
+| M — model calibration, optimisation and energy target; exam-script marking, error diagnosis and constructive feedback | 2 | 26 | 68 min |
+| A — Year 1 Statistics stratification; connected-particle forces, tension and motion; regression plus two-tailed binomial testing | 3 | 22 | 48 min |
+| **Essential four-hour programme** | **18** | **98** | **213 working + 20 self-marking + 7 buffer = 240 min** |
+| T — recommended timed Pure/Applied mix including rational binomial expansion, integration, trapezia, SUVAT and hypothesis testing | 3 | 32 | 45 min + 15 review |
+| X — optional A/A* proof using finite geometric sums to bound and numerically certify ln 2 | 1 | 14 | 40 min + 20 reflection |
+
+**Resource AO distribution:** AO1 **26** / AO2 **39** / AO3 **33** essential marks. There are **66 independently tagged marked parts**; each has one primary permanent skill, while connected skills are navigational and never receive duplicate mark credit.
+
+**Blueprint interpretation:** An earlier Week 9 plan proposed 30–40-mark, 50-minute mini-papers inside question slots allocated only 8, 10 or 12 marks. To preserve a consistent interactive calendar, Week 9 uses the established 22-question, 98-essential-mark structure and makes the P questions integrated synoptic problems. The 32-mark recommended T set provides additional timed practice. See `docs/QUESTION_BLUEPRINT.md` for the reconciled allocation. The question stems avoid telling students which Pure technique to choose.
+
+**Curriculum:** Week 9 revisits all ten Pure topics through primary and connected skills, with explicit coordinate/vector geometry, series and proof; its Applied material is restricted to Year 1 Statistics (sampling, regression, binomial probability and tests) and Mechanics (constant acceleration, variable velocity and smooth connected-particle models). Year 2-only conditional probability, Normal models, correlation hypothesis testing, inclined-plane dynamics, friction and moments remain excluded.
+
+**Publication and data:** Weeks **1–9** open directly from the calendar. Week **10**, the 2027 revision programme, and all unshipped questions remain locked. No progress key migration occurs: the existing local-storage key, notes, mathematical-input lines, drawings, saved marks (including zero), attempts, backups and skill-evidence rules are unchanged.
+
+The independent mathematics, release-safety, MathJax and student-flow tests live in `tests/week09-content.test.mjs`, `tests/week09-maths-audit.test.mjs` and `tests/week09-student-flow.test.mjs`. The detailed audit is in `docs/WEEK09_AUTHORING_AUDIT.md`.
+
 ## My Specification — Pass 4A
 
 The website now includes a permanent **My specification** page for Pearson Edexcel 9MA0, with **19 official topic groups** (10 Pure, 5 Statistics, 4 Mechanics) and a full original student-friendly *I can…* skills library.
@@ -185,7 +210,7 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
-All **176 questions in published Weeks 1–8** are now linked to the 9MA0 skill library **part by part**.
+All **198 questions in published Weeks 1–9** are now linked to the 9MA0 skill library **part by part**.
 
 Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
 
@@ -240,7 +265,7 @@ When importing a backup, students see a preview of the saved contents and choose
 
 Invalid, oversized, version-mismatched and malformed backups are rejected. Progress is saved atomically; if browser storage fails, the import is not applied. The backup includes potentially private student notes, so the interface reminds students to store it privately.
 
-**Next:** author Weeks 9–10 using the same stable specification tags and evidence rules. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
+**Next:** complete Week 10 using the stable specification skills and decide how to accommodate full-length mocks without distorting the established question format. Later, create and release the February–June 2027 final-exam programme without publishing unreleased practice prematurely.
 
 ## Week 1 is now complete
 
@@ -353,7 +378,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Week 9 content:** mixed Pure reasoning and full Year 1 Applied synthesis, following the blueprint and official specification.
-2. **Weeks 9–10:** extend the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
+1. **Week 10 content:** full-paper mock and consolidation, with a dedicated mock format or a clearly labelled adaptation of the existing calendar structure.
+2. **Week 10:** complete the internal-exam programme in a controlled weekly sequence, monitoring content quality and screen usability before each release.
 3. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
 4. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.

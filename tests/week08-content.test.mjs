@@ -20,14 +20,14 @@ const essential=new Set(["R","P","M","A"]);
 const allWeeks=[taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions];
 const slash=String.fromCharCode(92),open=slash+"(",close=slash+")";
 
-test("eight authored weeks are released, with Weeks 9–10 and programme two inaccessible",()=>{
+test("nine authored weeks are released, with Week 10 and programme two inaccessible",()=>{
  assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,8);
+ assert.equal(siteConfig.stage1.releasedWeeks,9);
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
- assert.ok(programmeOne.weeks.slice(0,8).every(w=>w.hasPublishedContent));
- assert.ok(programmeOne.weeks.slice(8).every(w=>!w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(0,9).every(w=>w.hasPublishedContent));
+ assert.ok(programmeOne.weeks.slice(9).every(w=>!w.hasPublishedContent));
  assert.ok(isWeekReleased(8,taggedWeek08Questions));
- assert.equal(isWeekReleased(9,taggedWeek08Questions),false);
+ assert.equal(isWeekReleased(10,taggedWeek08Questions),false);
  assert.equal(isWeekReleased(8,[]),false);
  assert.equal(siteConfig.stage2.published,false);
 });

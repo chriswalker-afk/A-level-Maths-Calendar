@@ -23,7 +23,7 @@ test("My Progress and My Specification receive real saved progress through the a
  assert.match(root.textContent,/My progress/i);
  const board=root.querySelector(".progress-spec-section");
  assert.ok(board,"Subject/topic dashboard appears in My Progress");
- assert.match(board.textContent,/2 \/ 176/,"Completed question count uses saved records");
+ assert.match(board.textContent,/2 \/ 198/,"Completed question count uses saved records");
  const algebra=board.querySelector('a[href="#/specification/internal/P02"]');
  assert.ok(algebra);
  assert.match(algebra.textContent,/0%/,"Single-part zero score is evidence, not missing");
