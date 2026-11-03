@@ -1,6 +1,6 @@
 # A Level Maths Calendar — Detailed Question Blueprint
 
-> **Version 1 · 3 November 2026 · Pearson Edexcel A Level Mathematics (9MA0)**
+> **Version 1 with Pass 1 revision · 4 November 2026 · Pearson Edexcel A Level Mathematics (9MA0)**
 > This is the **authoritative content/authoring blueprint** for the first programme. It records the agreed design. It is not a claim that all questions have already been written.
 > Programme 1 prepares for **internal exams: all Pure + Year 1 Statistics & Mechanics**. Programme 2 will extend from **1 February to 16 June 2027** to **the full 9MA0 syllabus**, with both years of Applied.
 > Teacher-set Stage 1 dates are **not yet specified**. Do not assume a date for the first ten-week programme; the site starts with a configurable **manual release count**.
@@ -16,7 +16,31 @@ A deliberately more challenging alternative to the existing 29-week *Fluency & R
 - Genuine cross-topic challenges; avoid cosmetic contexts or contrived multi-part questions.
 - Strict total per week **4h essential / 5h recommended / 6h optional**, including self-marking, correction and reflection.
 
-## Week 1–8 fixed question pattern
+## Pass 1 expansion (November 2026): Weeks 1–3, overriding the original Week 1–8 target
+
+This section is the **current** authoring contract for Weeks 1–3, not an extrapolation of the initial 98-mark plan. The earlier table below remains only as a record of the unchanged Weeks 4–9 design until their own expansion passes. All earlier question IDs, marked parts and historical student data are preserved.
+
+| Section | Existing IDs | New IDs | Questions | Marks | Target question-working time |
+|---|---|---|---:|---:|---:|
+| R — recall | R1–R10 | — | 10 | 20 | 24 min |
+| P — connected Pure | P1–P3 | P4–P7 | 7 | 70 | 84 min |
+| M — modelling | M1–M2 | M3 | 3 | 40 | 48 min |
+| A — Year 1 Applied | A1–A3 | A4–A5 | 5 | 45 | 54 min |
+| **Essential** | | | **25** | **175** | **210 min + 30 min marking/review = 240 min** |
+| T — timed practice | T1–T3 | T4 | 4 | 40 | 48 min + 12 min review |
+| **Recommended** | | | **29** | **215** | **300 min cumulative** |
+| X — optional extension | X1 | X2 | 2 | 30 | 36 min + 24 min reflection |
+| **Optional total** | | | **31** | **245** | **360 min cumulative** |
+
+Working-time allocations are **planning benchmarks**: 1.2 minutes per mark, based on the 100-mark/120-minute 9MA0 Pure paper pace, with separate allocated marking/reflection. They are not empirically observed student completion times; harder AO2/AO3 problems may need longer in a classroom. Avoid implying that simply changing a time field makes a difficult problem quicker.
+
+**Quality requirements for each expansion:** original question, genuine method selection and connections (not merely topic bundles), full mathematically checked per-part worked steps, one primary permanent specification skill ID for every marked part, optional non-credit-bearing connected skills, a brief first-step hint hidden until requested, final answer, misconception and reflection. No Year 2 Applied mathematics. Preserve student work, marks, attempts and the local-storage key. All additions go **after** the existing questions in their section, retaining every old route index.
+
+**Pass 1 topic emphasis:** Week 1 proof by contradiction, surd rationalisation, function-order/domain, repeated-factor partial fractions, nonlinear simultaneous constraints, physical optimisation, stratification, coded data, outliers; Week 2 parametric/Cartesian segment restrictions, vector median geometry, line-circle tangents and accessible routes, Year 1 velocity and relative motion; Week 3 exact reciprocal trig identities, R-form and circle intersections, small-angle/sector error, periodic thresholds and Year 1 probability trees. All completed work is now in dedicated additive `week0X-expansion-*.js` modules.
+
+**Next planned passes:** Weeks 4–6, then 7–9, then a final catalogue-wide skills audit and revised mock/reattempt recommendations. Week 10's genuine 100/50-mark paper and 60-minute diagnostic review remain unchanged.
+
+### Original 98-mark practice pattern (Weeks 4–9 while awaiting expansion)
 
 | Block | IDs | Marks | Minutes | Status |
 |---|---|---:|---:|---|
