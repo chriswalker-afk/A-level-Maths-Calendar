@@ -12,7 +12,7 @@ import {
 } from "../src/data/specification.js";
 
 const expected={
- P:{1:1,2:11,3:4,4:6,5:9,6:7,7:6,8:8,9:4,10:5},
+ P:{1:1,2:11,3:4,4:6,5:9,6:7,7:6,8:8,9:5,10:5},
  S:{1:1,2:4,3:3,4:3,5:3},
  M:{6:1,7:5,8:6,9:1}
 };
@@ -78,6 +78,10 @@ test("internal exam includes all Pure and just Year 1 Applied",()=>{
  assert.ok(internal.strands.S.skills<full.strands.S.skills);
  assert.ok(internal.strands.M.skills<full.strands.M.skills);
  assert.equal(internal.strands.M.topics,3,"Moments is Year 2 only");
+ assert.equal(specificationSkills.find(x=>x.statement.includes("constant acceleration in two dimensions")).scope,"full","2D constant acceleration belongs to Year 2");
+ assert.ok(specificationSkills.some(x=>x.reference==="P8.4"&&x.statement.includes("limit of sums")));
+ assert.ok(specificationSkills.some(x=>x.reference==="P9.5"&&x.statement.includes("numerical")));
+ assert.ok(!specificationSkills.some(x=>/volume formed by rotating/i.test(x.statement)),"volume of revolution not in 9MA0 Pure specification");
  for(const s of specificationSkills){
   assert.equal(inScope(s,"internal"),s.scope==="internal");
   assert.equal(inScope(s,"full"),true);
