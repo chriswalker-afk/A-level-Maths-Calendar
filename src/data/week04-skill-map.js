@@ -202,7 +202,7 @@ export const week04SkillMap = {
       ]
     ],
     [
-      "P06-012"
+      "P06-014"
     ]
   ],
   "W04-A1": [
