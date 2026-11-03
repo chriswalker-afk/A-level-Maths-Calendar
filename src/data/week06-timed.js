@@ -83,7 +83,7 @@ export const week06Timed = [
     "steps": [
       "In \\((1-2x)^7\\), the cubic term is \\(\\binom73(-2x)^3=35(-8)x^3=-280x^3\\). Coefficient: \\(-280\\). [2]",
       "Using the geometric or binomial series, \\((1-3x)^{-1}=1+3x+9x^2+27x^3+\\cdots\\). [3]",
-      "For \\(n=\\frac12\\), \\((1+x)^{1/2}=1+\\frac12x-\\frac18x^2+\\frac1{16}x^3+\\cdots\\). The quadratic coefficient is \\(\\frac{(1/2)(-1/2)}2=-\\frac18\\), and the cubic coefficient is \\(\\frac{(1/2)(-1/2)(-3/2)}6=\\frac1{16\\). [3]",
+      "For \\(n=\\frac12\\), \\((1+x)^{1/2}=1+\\frac12x-\\frac18x^2+\\frac1{16}x^3+\\cdots\\). The quadratic coefficient is \\(\\frac{(1/2)(-1/2)}2=-\\frac18\\), and the cubic coefficient is \\(\\frac{(1/2)(-1/2)(-3/2)}6=\\frac1{16}\\). [3]",
       "Multiply the two expansions. The coefficient of \\(x^2\\) in G is \\(1(9)+(\\frac12)(3)+(-\\frac18)(1)=9+\\frac32-\\frac18=\\frac{83}{8}\\). [2]",
       "The denominator expansion requires \\(|3x|<1\\), so \\(|x|<\\frac13\\); the square-root expansion requires \\(|x|<1\\). Their common open interval is \\(-\\frac13<x<\\frac13\\). [2]"
     ],
