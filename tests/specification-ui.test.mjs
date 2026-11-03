@@ -70,7 +70,7 @@ test("internal topic details show visible Year 1 skills and optional Year 2 prev
  const first=visible[0];
  first.open=true;
  assert.match(first.textContent,/What might an examination ask/i);
- assert.match(first.textContent,/Practice evidence will appear here/i);
+ assert.match(first.textContent,/Published questions connected to this skill/i);
  cleanup(dom,dispose);
 });
 test("Moments is clearly outside the internal exam but available in full course",()=>{
