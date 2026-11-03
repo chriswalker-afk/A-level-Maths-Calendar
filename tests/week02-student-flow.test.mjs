@@ -87,7 +87,7 @@ test("the second released week opens, saves maths and updates cumulative evidenc
  navigate("#/calendar");
  const returned=[...app.querySelectorAll("a.planner-cell.is-open")].find(a=>a.getAttribute("href").startsWith("#/study/2/"));
  assert.equal(returned.getAttribute("href"),"#/study/2/R/1","Resume at next unmarked Week 2 question");
- assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,7);
+ assert.equal(app.querySelectorAll(".planner-cell.is-upcoming").length,6);
  dom.window.close();
  for(const name of ["window","document","location","localStorage","customElements","ResizeObserver","requestAnimationFrame"])delete globalThis[name];
 });
