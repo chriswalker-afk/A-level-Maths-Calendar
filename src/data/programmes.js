@@ -82,7 +82,7 @@ export const programmeOne = {
         6
       ],
       "targetMarks": 98,
-      "hasPublishedContent": false
+      "hasPublishedContent": true
     },
     {
       "number": 6,
