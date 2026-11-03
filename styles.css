@@ -587,3 +587,103 @@ footer{border-top:1px solid var(--line);padding:27px 0 40px;display:flex;justify
  .spec-hero-decoration{display:none}
  .spec-skill{break-inside:avoid}
 }
+
+
+/* Pass 4B: optional precise part marking and syllabus connections */
+.mark-by-parts{
+  margin:17px 0 4px;background:#f6faf7;border:1px solid #d8e9df;
+  border-radius:13px;overflow:hidden;
+}
+.mark-by-parts>summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;
+  justify-content:space-between;gap:12px;padding:12px 14px;
+  border-radius:12px;color:#236856;
+}
+.mark-by-parts>summary::-webkit-details-marker{display:none}
+.mark-by-parts>summary:hover{background:#edf7f0}
+.mark-by-parts>summary strong,.mark-by-parts>summary small{display:block}
+.mark-by-parts>summary strong{font-size:12px}
+.mark-by-parts>summary small{font-size:11px;color:#627b6b;font-weight:500;margin-top:3px}
+.mark-by-parts[open]>summary{border-bottom:1px solid #d6e8da;border-radius:12px 12px 0 0}
+.detail-chevron{font-size:18px;transition:transform .15s}
+.mark-by-parts[open] .detail-chevron{transform:rotate(180deg)}
+.mark-by-parts-body{padding:14px}
+.mark-by-parts-body>p{font-size:12px;line-height:1.6;margin:0 0 13px}
+.detail-part-grid{display:grid;gap:8px}
+.detail-part-row{
+ display:flex;justify-content:space-between;gap:12px;align-items:center;
+ border:1px solid #e1ece4;border-radius:11px;background:white;padding:11px 13px;
+}
+.detail-part-label{flex:1;min-width:0}
+.detail-part-label label{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.detail-part-label label strong{font-size:13px}
+.detail-part-label label span{color:var(--muted);font-size:11px}
+.detail-part-label a{
+ display:block;text-decoration:none;color:#2c7565;
+ font-size:11px;line-height:1.5;margin-top:5px;
+}
+.detail-part-label a:hover{text-decoration:underline}
+.detail-part-score{display:flex;align-items:center;gap:8px;flex:none}
+.detail-part-score input{
+ width:61px;height:40px;border-radius:9px;border:1px solid #bbd5c6;
+ padding:6px;font:800 16px Manrope,sans-serif;text-align:center;
+ color:var(--ink);background:#fff;
+}
+.detail-part-score input[aria-invalid="true"]{border-color:#b45c48;box-shadow:0 0 0 2px #fce6e0}
+.detail-part-score span{font-size:12px;white-space:nowrap;color:var(--muted)}
+.detail-part-bottom{
+ display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+ margin-top:13px;border-top:1px dashed #d1e4d6;padding-top:12px;
+}
+.detail-part-bottom span{font-size:12px;font-weight:800;color:#1b6f59}
+.detail-part-info{font-size:11px!important;margin-top:11px!important;margin-bottom:0!important}
+.detail-part-info.mark-error{color:#a94134!important}
+.finish-score[readonly]{background:#e9f4eb;color:#236d59;cursor:default}
+.question-skill-links{
+ margin:19px 0;padding:0;border:1px solid #d7e5de;background:#fcfefd;
+ border-radius:13px;
+}
+.question-skill-links summary{
+ display:flex;justify-content:space-between;gap:10px;padding:14px 17px;
+ cursor:pointer;font-size:12px;color:#226c5d;font-weight:800;list-style:none;
+}
+.question-skill-links summary::-webkit-details-marker{display:none}
+.question-skill-links[open] summary{border-bottom:1px solid #d8e7db}
+.question-skill-links>p{
+ padding:13px 16px 0;margin:0;font-size:11px;line-height:1.6;
+}
+.question-skill-list{display:grid;gap:7px;padding:12px 16px 16px}
+.question-skill-list a{
+ display:flex;flex-direction:column;gap:4px;padding:10px 12px;
+ border-radius:9px;border:1px solid #e2ece6;background:#fff;text-decoration:none;
+}
+.question-skill-list a:hover{border-color:#a5ccb7;background:#f4faf5}
+.question-skill-list a span{font-size:10px;font-weight:800;color:#23745c}
+.question-skill-list a strong{font-size:12px;color:var(--ink);font-weight:600}
+.spec-skill-practice{
+ padding:13px 15px;border-radius:9px;background:#f3faf5;border:1px solid #d8e9dc;
+}
+.spec-skill-practice>strong{display:block;font-size:12px;color:#226c58}
+.spec-skill-practice>p{font-size:11px;color:#6b806f;margin:7px 0 10px;line-height:1.6}
+.spec-skill-practice-links{display:grid;gap:7px}
+.spec-skill-practice-links a{
+ display:flex;align-items:center;gap:12px;padding:10px;
+ background:#fff;border:1px solid #e0ede4;border-radius:9px;
+ text-decoration:none;color:#1c3e35;font-size:12px;
+}
+.spec-skill-practice-links a:hover{background:#eaf6ee;border-color:#a8d1b6}
+.spec-practice-id{
+ flex:none;font-weight:800;font-size:10px;color:#237d63;
+ border-radius:6px;background:#e7f4eb;padding:5px 7px;
+}
+.spec-skill-practice .spec-practice-more{margin:8px 0 0}
+@media(max-width:630px){
+ .detail-part-row{align-items:flex-start;gap:10px}
+ .detail-part-label a{font-size:11px}
+ .detail-part-score input{width:54px}
+ .spec-skill-practice-links a{align-items:flex-start;flex-direction:column;gap:7px}
+ .spec-practice-id{white-space:normal}
+}
+@media print{
+ .mark-by-parts,.question-skill-links,.spec-skill-practice{display:none!important}
+}
