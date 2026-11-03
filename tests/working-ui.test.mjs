@@ -11,6 +11,7 @@ test("students can switch notes, maths lines and ink without losing previous wor
   window.scrollTo=()=>{};
   globalThis.window=window;
   globalThis.document=document;
+  globalThis.location=window.location;
   globalThis.customElements=window.customElements;
   globalThis.requestAnimationFrame=fn=>fn();
   globalThis.ResizeObserver=class{observe(){}disconnect(){}};
@@ -99,6 +100,7 @@ test("students can switch notes, maths lines and ink without losing previous wor
   dom.window.close();
   delete globalThis.window;
   delete globalThis.document;
+  delete globalThis.location;
   delete globalThis.customElements;
   delete globalThis.requestAnimationFrame;
   delete globalThis.ResizeObserver;
