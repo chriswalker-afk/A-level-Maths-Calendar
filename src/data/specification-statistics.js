@@ -89,6 +89,7 @@ export const statisticsTopics=[
     ]},
     {ref:"5.1",year:2,skills:[
       ["I can interpret product moment correlation coefficients and their limitations.","Explain the direction and strength of a calculated correlation coefficient."],
+      ["I can calculate a product moment correlation coefficient using a suitable calculator.","Find the correlation coefficient from paired observations, without needing to use its formula."],
       ["I can test a claim about population correlation using supplied critical information.","Use a given critical value or p-value to assess evidence that correlation is nonzero."]
     ]},
     {ref:"5.3",year:2,skills:[
