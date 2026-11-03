@@ -110,7 +110,7 @@ test("integration practice, stats tests and revision links point to Week 5 rathe
  assert.equal(single.summary.completedQuestions,1,"Zero is a valid finished attempt");
  const all=sets.flat();
  const report=calculateSpecificationProgress({questions:all,records:{},scope:"internal"});
- assert.equal(report.summary.releasedQuestions,110);
+ assert.equal(report.summary.releasedQuestions,137);
  const recommendations=recommendRevision({questions:all,records:{},report,scope:"internal",limit:8});
  for(const rec of recommendations){
   const q=all.find(x=>x.id===rec.questionId);assert.ok(q);
