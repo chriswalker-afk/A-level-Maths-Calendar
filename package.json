@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check src/app.js && node --check src/working-state.js && node --check src/working-space.js && node --check src/working-space-template.js && node --check src/workspace-maths.js && node --check src/workspace-drawing.js && node --check src/data/programmes.js && node --check src/data/week01.js && npm test"
+    "check": "node --check src/app.js && node --check src/specification-view.js && node --check src/data/specification-core.js && node --check src/data/specification-pure-a.js && node --check src/data/specification-pure-b.js && node --check src/data/specification-statistics.js && node --check src/data/specification-mechanics.js && node --check src/data/specification.js && node --check src/working-state.js && node --check src/working-space.js && node --check src/working-space-template.js && node --check src/workspace-maths.js && node --check src/workspace-drawing.js && node --check src/data/programmes.js && node --check src/data/week01.js && npm test"
   },
   "devDependencies": {
     "mathjax-full": "3.2.2",

@@ -3,6 +3,7 @@ import {programmeOne,programmeTwo} from "./data/programmes.js";
 import {week01Questions} from "./data/week01.js";
 import {mountWorkingSpace} from "./working-space.js";
 import {isQuestionFinished,mountQuestionAssessment} from "./question-assessment.js";
+import {mountSpecification} from "./specification-view.js";
 
 const $=s=>document.querySelector(s);
 const el=$('#app');
@@ -12,6 +13,7 @@ const essentialSections=new Set(['R','P','M','A']);
 const studyTimes={R:'30 min',P:'70 min',M:'70 min',A:'50 min',T:'45 min + 15 min marking',X:'40 min + 20 min review'};
 const allQuestions={1:week01Questions};
 let disposeWorkspace=null;
+let disposeSpecification=null;
 const storageKey=siteConfig.storageKey;
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function read(){try{const s=JSON.parse(localStorage.getItem(storageKey)||'{}');return s&&typeof s==='object'?s:{}}catch{return {}}}
@@ -33,7 +35,7 @@ function weekCards(){return '<div class="weeks">'+programmeOne.weeks.map(w=>{con
 function overview(){return '<section class="page"><div class="hero"><div class="hero-content"><span class="eyebrow">A better way to prepare</span><h1>Master the connections.<br>Not just the methods.</h1><p class="lead">Ten weeks of purposeful A Level Mathematics revision, built around problem solving, mathematical reasoning and meaningful modelling. Every week links ideas you already know.</p><div class="actions">'+buttonLink('#/week/1','Explore Week 1 →')+buttonLink('#/calendar','View the calendar','ghost')+'</div></div>'+heroArt()+'</div>'+
 heading('Choose your programme','One calendar. Two preparation journeys.')+
 '<div class="card-grid"><article class="card featured"><div class="card-head"><span class="pill teal">PROGRAMME 01 · WEEK 1 LIVE</span><span class="eyebrow">10 WEEKS</span></div><h3>Internal exam preparation</h3><p>All Pure Mathematics, with Year 1 Statistics and Mechanics. Revisit every topic, then practise connecting ideas and justifying decisions.</p><div class="line"></div><div class="card-foot"><span class="small muted">4–6 hours each week</span><a class="link" href="#/calendar">Explore programme →</a></div></article><article class="card"><div class="card-head"><span class="pill">PROGRAMME 02 · PLANNED</span><span class="eyebrow">20 WEEKS</span></div><h3>Final A Level preparation</h3><p>Beginning 1 February 2027. Full 9MA0, including Year 2 Applied, with timed papers and exam-specific revision through June.</p><div class="line"></div><div class="card-foot"><span class="small muted">1 Feb – 16 Jun 2027</span><a class="link" href="#/final">See future programme →</a></div></article></div>'+
-heading('Your preparation at a glance','Made for thoughtful independent study')+
+'<div class="spec-home-link"><div><span class="eyebrow">NEW · Your complete syllabus map</span><h3>What could an examiner ask me to do?</h3><p>Explore all 19 specification topics, searchable “I can” skills and examples of examination demands. See what belongs to the internal exams and what comes later.</p></div><a class="btn small" href="#/specification/internal">Explore My Specification →</a></div>'+heading('Your preparation at a glance','Made for thoughtful independent study')+
 '<div class="metrics"><div class="metric"><span>THE PROGRAMME</span><strong>10</strong><span>weekly releases</span></div><div class="metric"><span>WEEKLY COMMITMENT</span><strong>4–6h</strong><span>essential + extension</span></div><div class="metric"><span>MAIN EMPHASIS</span><strong>AO2/3</strong><span>reasoning & modelling</span></div><div class="metric"><span>CORE QUESTION PROGRESS</span><strong>'+countDone()+'/'+coreQuestions(1).length+'</strong><span>self-assessed locally</span></div></div>'+
 heading('Your weekly calendar','Browse every week; full sets release progressively')+weekCards()+
 heading('The learning routine','Independent first, then reflective')+
@@ -70,6 +72,7 @@ function notFound(){return '<section class="page"><h1>Page not found</h1>'+butto
 function routeInfo(){const path=(location.hash||'#/').slice(1).split('/').filter(Boolean);return path}
 function render(){
   if(disposeWorkspace){disposeWorkspace();disposeWorkspace=null;}
+  if(disposeSpecification){disposeSpecification();disposeSpecification=null;}
   const p=routeInfo();
   const top=p[0]||"home";
   document.querySelectorAll("[data-nav]").forEach(a=>
@@ -79,12 +82,13 @@ function render(){
   else if(top==="week")el.innerHTML=weekPage(Number(p[1]));
   else if(top==="study")el.innerHTML=studyPage(Number(p[1]),p[2]||"R",p[3]||0);
   else if(top==="progress")el.innerHTML=progressPage();
+  else if(top==="specification")disposeSpecification=mountSpecification(el,{scope:p[1]||"internal",topicId:p[2]||null,skillId:p[3]||null});
   else if(top==="guide")el.innerHTML=guidePage();
   else if(top==="final")el.innerHTML=finalPage();
   else el.innerHTML=notFound();
 
   document.title=(top==="home"?"A Level Maths Calendar":
-    top==="study"?"Practice":top==="week"?"Weekly overview":
+    top==="study"?"Practice":top==="week"?"Weekly overview":top==="specification"?"My Specification":
     top.charAt(0).toUpperCase()+top.slice(1))+" — A Level Maths Calendar";
 
   if(top==="study"){
