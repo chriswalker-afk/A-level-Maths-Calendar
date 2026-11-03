@@ -1,3 +1,4 @@
+import {week06ExpansionSkillMap} from "./week06-expansion-skill-map.js";
 /**
  * Permanent Pearson 9MA0 part-level tags for Week 6.
  * Only primary skills receive marks; connected links are navigation-only.
@@ -299,5 +300,6 @@ export const week06SkillMap = {
         "P04-001"
       ]
     ]
-  ]
+  ],
+  ...week06ExpansionSkillMap
 };
