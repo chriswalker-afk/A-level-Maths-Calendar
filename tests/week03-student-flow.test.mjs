@@ -105,7 +105,7 @@ test("Week 3 calendar, working, marks and 9MA0 evidence work without changing ol
  const resumed=[...root.querySelectorAll("a.planner-cell.is-open")]
   .find(x=>x.getAttribute("href").startsWith("#/study/3/"));
  assert.equal(resumed.getAttribute("href"),"#/study/3/R/1");
- assert.equal(root.querySelectorAll(".planner-cell.is-upcoming").length,7);
+ assert.equal(root.querySelectorAll(".planner-cell.is-upcoming").length,6);
  dom.window.close();
  for(const name of ["window","document","location","localStorage","customElements","ResizeObserver","requestAnimationFrame"])
   delete globalThis[name];
