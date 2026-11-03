@@ -3,7 +3,7 @@ import {
 } from "./working-state.js";
 
 // Only requested when the student enters the Maths steps tab.
-const CDN="https://cdn.jsdelivr.net/npm/mathlive@0.111.0/dist/mathlive.min.js";
+const CDN="https://cdn.jsdelivr.net/npm/mathlive@0.111.4/mathlive.min.js";
 let loader=null;
 function loadMathLive(){
   if(customElements.get("math-field"))return Promise.resolve(true);
