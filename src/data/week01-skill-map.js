@@ -1,3 +1,4 @@
+import {week01ExpansionSkillMap} from "./week01-expansion-skill-map.js";
 /**
  * Pass 4B: independently reviewed skill tags for every Week 1 question part.
  *
@@ -90,4 +91,5 @@ export const week01SkillMap = {
     ["P02-011"],
     ["P03-001",["P02-028"]]
   ]
+  ,...week01ExpansionSkillMap
 };
