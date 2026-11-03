@@ -36,6 +36,19 @@
   --editorial-font-body: "DM Sans", system-ui, sans-serif;
 }
 ::selection { background: var(--editorial-lime); color: var(--editorial-ink); }
+.skip-link {
+  border:2px solid var(--editorial-ink);
+  border-radius:2px;
+  background:var(--editorial-lime);
+  color:var(--editorial-ink);
+  font:700 11px var(--editorial-font-index);
+  box-shadow:3px 3px 0 var(--editorial-ink);
+}
+.skip-link:focus { top:8px; }
+.brand small { color:var(--editorial-quiet);font-family:var(--editorial-font-index); }
+.qualification b { color:var(--editorial-cobalt); }
+footer { color:var(--editorial-quiet); }
+footer b { color:var(--editorial-ink); }
 body { accent-color: var(--editorial-cobalt); }
 :is(button,a,input,textarea,select,[tabindex],summary,math-field):focus-visible {
   outline: 3px solid var(--editorial-cobalt);
