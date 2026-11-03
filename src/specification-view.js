@@ -3,6 +3,8 @@ import {
  SPEC_SOURCE_URL,STRANDS,THEMES,searchCatalogue,inScope
 } from "./data/specification.js";
 import {getPublishedPracticeForSkill} from "./data/skill-practice-index.js";
+import {calculateSpecificationProgress} from "./specification-analytics.js";
+import {renderProgressPulse,renderTopicCardProgress,renderTopicEvidence,renderSkillEvidence} from "./specification-progress-view.js";
 
 const escape=v=>String(v??"").replace(/[&<>"']/g,c=>
  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -35,7 +37,7 @@ function intro(scope){
  '<div class="spec-hero-decoration" aria-hidden="true"><span>∑</span><span>f(x)</span><span>∫</span><span>→</span></div>'+
  '</section>'+filters(scope);
 }
-function topicCard({topic,matching,excluded},scope,query){
+function topicCard({topic,matching,excluded},scope,query,report){
  const active=topic.skills.filter(skill=>inScope(skill,scope));
  const futureOnly=active.length===0;
  const count=query?matching.length:active.length;
@@ -49,9 +51,10 @@ function topicCard({topic,matching,excluded},scope,query){
  (query&&matching.length?'<div class="spec-matches">'+matching.length+' matching skill'+(matching.length===1?"":"s")+'</div>':
    futureOnly?'<p class="spec-future-note">Not in the current internal examination. Explore the future content.</p>':
    '<div class="spec-preview">'+preview+'</div>')+
+ renderTopicCardProgress(report.topicMap.get(topic.id))+
  '<div class="spec-topic-foot"><span>'+count+' skill'+(count===1?"":"s")+(excluded?' · '+excluded+' later':'')+'</span><strong>Explore skills →</strong></div></a>';
 }
-function renderGroups(scope){
+function renderGroups(scope,report){
  const entries=searchCatalogue(specificationTopics,{scope,strand:selectedStrand,query:searchTerm});
  const resultCount=entries.reduce((sum,entry)=>sum+entry.matching.length,0);
  let html='';
@@ -60,7 +63,7 @@ function renderGroups(scope){
   if(!slice.length)continue;
   html+='<section class="spec-group"><div class="spec-group-title"><div><span class="eyebrow">'+escape(STRANDS[strand].paper)+'</span><h2>'+escape(STRANDS[strand].name)+'</h2></div>'+
   '<span class="spec-group-count">'+slice.length+' topic'+(slice.length===1?'':'s')+'</span></div>'+
-  '<div class="spec-topic-grid">'+slice.map(entry=>topicCard(entry,scope,searchTerm)).join('')+'</div></section>';
+  '<div class="spec-topic-grid">'+slice.map(entry=>topicCard(entry,scope,searchTerm,report)).join('')+'</div></section>';
  }
  if(!html){
   html='<div class="spec-empty"><h3>No matching skills in this syllabus view</h3>'+
@@ -76,12 +79,12 @@ function themesSection(){
  '<article class="spec-theme"><span class="spec-ref">'+escape(item.id)+'</span><h3>'+escape(item.name)+'</h3>'+
  '<p>'+escape(item.description)+'</p><div class="spec-theme-demand"><strong>An examination might ask you to…</strong><span>'+escape(item.examDemand)+'</span></div></article>').join('')+'</div></section>';
 }
-function renderOverview(scope){
+function renderOverview(scope,report){
  const selectedCount=specificationCounts(scope);
- const initial=renderGroups(scope);
- return '<div class="page spec-page">'+intro(scope)+
+ const initial=renderGroups(scope,report);
+ return '<div class="page spec-page">'+intro(scope)+renderProgressPulse(report,{compact:true})+
  '<section class="spec-explainer"><div class="spec-explainer-icon" aria-hidden="true">i</div>'+
- '<div><strong>What do the progress numbers mean?</strong><p>For now, this is the full skills checklist, not a score report. Week 1 questions now link to the skills they practise. Topic-level counts and accuracy percentages will follow in Pass 4C after detailed marking evidence has been checked. An unpractised skill is not 0% accuracy.</p></div></section>'+
+ '<div><strong>What do the progress numbers mean?</strong><p>This is not a score report from your teacher. It shows your own completed practice and the skills encountered. Accuracy uses only fully marked individual parts, credited to their main skill. An unpractised skill is not 0% accuracy, and early percentages are not grade predictions.</p></div></section>'+
  '<div class="spec-tools"><div class="spec-search-wrap"><label for="spec-search">Search skills and topics</label>'+
  '<input type="search" id="spec-search" placeholder="Try '+"'"+'chain rule, discriminant, normal distribution…'+"'"+'" value="'+escape(searchTerm)+'" autocomplete="off">'+
  '</div><div class="spec-strand-wrap"><span class="spec-filter-caption">Filter by area</span><div class="spec-strand-buttons" role="group" aria-label="Filter specification by area">'+
@@ -92,7 +95,7 @@ function renderOverview(scope){
  (searchTerm?initial.count+' matching skills':'Showing '+selectedCount.totalTopics+' topics and '+selectedCount.visibleSkills+' skills in this programme')+'</div>'+
  '<div id="spec-results">'+initial.html+'</div>'+themesSection()+sourceNote()+'</div>';
 }
-function skillCard(skill,scope){
+function skillCard(skill,scope,report){
  const practice=getPublishedPracticeForSkill(skill.id);
  const future=skill.scope!=="internal";
  const yearLabel=skill.year===1?"Year 1 Applied":skill.year===2?"Year 2 Applied":"Pure · Both papers";
@@ -102,6 +105,7 @@ function skillCard(skill,scope){
  '<span class="spec-skill-chevron" aria-hidden="true">⌄</span></summary>'+
  '<div class="spec-skill-content"><div class="spec-ask"><strong>What might an examination ask?</strong><p class="math">'+escape(skill.examDemand)+'</p></div>'+
  (skill.pitfall?'<div class="spec-pitfall"><strong>Watch out for</strong><p>'+escape(skill.pitfall)+'</p></div>':'')+
+ renderSkillEvidence(report.skills.get(skill.id))+
  '<div class="spec-skill-practice"><strong>Published questions connected to this skill</strong>'+
  (practice.length?
    '<p>Try a question, then record a self-mark. “Main” means this skill is assessed directly; “Connected” means it supports the wider problem.</p>'+
@@ -112,9 +116,9 @@ function skillCard(skill,scope){
    (practice.length>5?'<p class="spec-practice-more">Showing five of '+practice.length+' published questions.</p>':'')
    :'<p>No published questions are tagged to this skill yet. It has not been scored as 0%.</p>')+
  '</div><div class="spec-evidence-note"><span class="spec-evidence-dot" aria-hidden="true"></span>'+
- 'Skill-level attempt counts and mark accuracy will follow in Pass 4C.</div></div></details>';
+ 'Your scores are stored only in your browser. A whole-question score counts as an attempt but cannot be allocated to one skill without detailed marking.</div></div></details>';
 }
-function renderTopic(scope,topicId){
+function renderTopic(scope,topicId,report){
  const topic=getSpecTopic(topicId);
  if(!topic)return '<div class="page spec-page"><a class="back" href="'+topicUrl(scope)+'">← Back to My Specification</a><h1>Topic not found</h1><p>This topic reference is not in the current 9MA0 catalogue.</p></div>';
  const eligible=topic.skills.filter(skill=>inScope(skill,scope));
@@ -127,23 +131,24 @@ function renderTopic(scope,topicId){
  '<h1 class="page-title">'+escape(topic.title)+'</h1><p class="intro">'+escape(topic.description)+'</p>'+
  '<div class="spec-detail-badges">'+badge(eligible.length+' skill'+(eligible.length===1?"":"s")+' in current view',"available")+
  (later.length?badge(later.length+" Year 2 addition"+(later.length===1?"":"s"),"future"):"")+'</div></div>'+
- '<div class="spec-detail-id" aria-hidden="true">'+topic.id+'</div></div>'+filters(scope)+
+ '<div class="spec-detail-id" aria-hidden="true">'+topic.id+'</div></div>'+filters(scope)+renderTopicEvidence(report.topicMap.get(topic.id))+
  '<section class="spec-skill-list"><div class="spec-section-heading"><div><span class="eyebrow">'+escape(scope==="internal"?"Internal exams · Full Pure + Y1 Applied":"Full A Level · all content")+'</span>'+
  '<h2>What could I be asked to do?</h2><p>Open any statement to see an example examination demand and useful advice.</p></div>'+
  (eligible.length?'<div class="spec-skill-counter">'+eligible.length+' skills</div>':'')+'</div>'+
  (empty?'<div class="spec-future-panel"><h3>Not tested in your current internal exam</h3><p>These are Year 2 Applied skills that belong to the full 9MA0 course. You can browse them now or switch to Full A Level.</p><a class="btn small" href="'+topicUrl("full",topic.id)+'">View full-course skills →</a></div>':
- '<div class="spec-skill-entries">'+eligible.map(skill=>skillCard(skill,scope)).join('')+'</div>')+'</section>'+
+ '<div class="spec-skill-entries">'+eligible.map(skill=>skillCard(skill,scope,report)).join('')+'</div>')+'</section>'+
  (later.length?'<section class="spec-later"><div class="spec-section-heading"><div><span class="eyebrow">Looking ahead</span><h2>Year 2 additions</h2><p>These skills are part of the final A Level programme but outside the current internal-exam scope.</p></div></div>'+
  '<details class="spec-later-disclosure"><summary>Preview '+later.length+' future skill'+(later.length===1?'':'s')+' <span aria-hidden="true">⌄</span></summary>'+
- '<div class="spec-skill-entries">'+later.map(skill=>skillCard(skill,scope)).join('')+'</div></details></section>':'')+
+ '<div class="spec-skill-entries">'+later.map(skill=>skillCard(skill,scope,report)).join('')+'</div></details></section>':'')+
  '<div class="spec-practice-future"><div><strong>Published practice links are now available for tagged skills.</strong>'+
- '<p>Each Week 1 question part is now tagged to a primary skill, with optional connected skills. Skill-level counts and accuracy are planned for Pass 4C, after checking detailed marking evidence.</p></div>'+
+ '<p>Your local self-marks now contribute to the topic and skill indicators. Detailed part scores provide primary-skill accuracy; whole-question marks count as attempts without fabricating skill accuracy. Connected skills are exposure only.</p></div>'+
  '<a class="btn ghost small" href="#/calendar">Browse published practice →</a></div>'+
  sourceNote()+'</div>';
 }
-export function mountSpecification(root,{scope="internal",topicId=null,skillId=null}={}){
+export function mountSpecification(root,{scope="internal",topicId=null,skillId=null,questions=[],records={}}={}){
  if(scope!=="internal"&&scope!=="full")scope="internal";
- root.innerHTML=topicId?renderTopic(scope,topicId):renderOverview(scope);
+ const report=calculateSpecificationProgress({scope,questions,records});
+ root.innerHTML=topicId?renderTopic(scope,topicId,report):renderOverview(scope,report);
  function onClick(event){
   const strand=event.target.closest("[data-spec-strand]");
   if(strand){
@@ -166,7 +171,7 @@ export function mountSpecification(root,{scope="internal",topicId=null,skillId=n
  }
  function updateResults(){
   const list=root.querySelector("#spec-results");
-  const results=renderGroups(scope);
+  const results=renderGroups(scope,report);
   if(list)list.innerHTML=results.html;
   const status=root.querySelector("#spec-result-line");
   if(status){
