@@ -7,8 +7,9 @@ export const week10PureC = [
     "marks": 9,
     "minutes": 11,
     "ao": {
-      "AO1": 2,
-      "AO2": 7
+      "AO1": 4,
+      "AO2": 3,
+      "AO3": 2
     },
     "topics": [
       "partial fractions",
@@ -48,8 +49,9 @@ export const week10PureC = [
     "marks": 9,
     "minutes": 11,
     "ao": {
-      "AO1": 3,
-      "AO2": 6
+      "AO1": 5,
+      "AO2": 1,
+      "AO3": 3
     },
     "topics": [
       "trapezium rule",
@@ -90,9 +92,9 @@ export const week10PureC = [
     "marks": 10,
     "minutes": 12,
     "ao": {
-      "AO1": 2,
-      "AO2": 6,
-      "AO3": 2
+      "AO1": 3,
+      "AO2": 3,
+      "AO3": 4
     },
     "topics": [
       "product rule",
@@ -138,8 +140,9 @@ export const week10PureC = [
     "marks": 9,
     "minutes": 10,
     "ao": {
-      "AO1": 2,
-      "AO2": 7
+      "AO1": 5,
+      "AO2": 1,
+      "AO3": 3
     },
     "topics": [
       "3D position vectors",
