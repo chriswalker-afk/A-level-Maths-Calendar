@@ -102,7 +102,7 @@ export const week02Timed = [
       "SUVAT",
       "modelling"
     ],
-    "stem": "A cyclist travels along a straight road in one direction. Starting from rest, the cyclist accelerates uniformly to \\(16\\) m s\\(^{-1}\\) in \\(8\\) seconds. The cyclist immediately brakes at a constant rate until coming to rest. The total distance from starting to stopping is \\(160\\) m.",
+    "stem": "A cyclist travels along a straight road in one direction. Starting from rest, the cyclist accelerates uniformly to \\(16\\) \\(\\mathrm{m\\,s^{-1}}\\) in \\(8\\) seconds. The cyclist immediately brakes at a constant rate until coming to rest. The total distance from starting to stopping is \\(160\\) m.",
     "parts": [
       [
         "Calculate the initial acceleration and distance travelled in the first eight seconds.",
@@ -121,14 +121,14 @@ export const week02Timed = [
         2
       ]
     ],
-    "hint": "Distance equals the triangular area under each straight-line segment of a velocity–time graph. The second stage begins at \\(16\\) m s\\(^{-1}\\) and ends at rest.",
+    "hint": "Distance equals the triangular area under each straight-line segment of a velocity–time graph. The second stage begins at \\(16\\) \\(\\mathrm{m\\,s^{-1}}\\) and ends at rest.",
     "steps": [
-      "First-stage acceleration \\(a_1=\\dfrac{16-0}{8}=2\\) m s\\(^{-2}\\). First-stage displacement \\(s_1=\\tfrac12(0+16)(8)=64\\) m. [3]",
-      "The braking distance is \\(160-64=96\\) m. If its duration is \\(t\\) seconds, \\(96=\\tfrac12(16+0)t=8t\\), giving \\(t=12\\) s. Braking acceleration \\(a_2=\\dfrac{0-16}{12}=-\\tfrac43\\) m s\\(^{-2}\\). [4]",
-      "The graph is formed by straight segments joining \\((0,0)\\), \\((8,16)\\) and \\((20,0)\\) on axes of time (s) and velocity (m s\\(^{-1}\\)). The signed area is positive throughout and equals \\(\\tfrac12(8)(16)+\\tfrac12(12)(16)=64+96=160\\) m, verifying the distance. [3]",
+      "First-stage acceleration \\(a_1=\\dfrac{16-0}{8}=2\\) \\(\\mathrm{m\\,s^{-2}}\\). First-stage displacement \\(s_1=\\tfrac12(0+16)(8)=64\\) m. [3]",
+      "The braking distance is \\(160-64=96\\) m. If its duration is \\(t\\) seconds, \\(96=\\tfrac12(16+0)t=8t\\), giving \\(t=12\\) s. Braking acceleration \\(a_2=\\dfrac{0-16}{12}=-\\tfrac43\\) \\(\\mathrm{m\\,s^{-2}}\\). [4]",
+      "The graph is formed by straight segments joining \\((0,0)\\), \\((8,16)\\) and \\((20,0)\\) on axes of time (s) and velocity (\\(\\mathrm{m\\,s^{-1}}\\)). The signed area is positive throughout and equals \\(\\tfrac12(8)(16)+\\tfrac12(12)(16)=64+96=160\\) m, verifying the distance. [3]",
       "Acceleration and braking are unlikely to be perfectly constant; the sudden switch from accelerating to braking ignores reaction time or transitions. Road slope, wind and tyre grip also affect the braking performance. Any two distinct, explained limitations. [2]"
     ],
-    "answer": "Initial acceleration \\(2\\) m s\\(^{-2}\\); braking time \\(12\\) s; braking acceleration \\(-\\tfrac43\\) m s\\(^{-2}\\); total time \\(20\\) s.",
+    "answer": "Initial acceleration \\(2\\) \\(\\mathrm{m\\,s^{-2}}\\); braking time \\(12\\) s; braking acceleration \\(-\\tfrac43\\) \\(\\mathrm{m\\,s^{-2}}\\); total time \\(20\\) s.",
     "misconception": "Braking distance is not computed using the initial acceleration; the second stage has a new negative acceleration.",
     "reflection": "What would change if the cyclist travelled for a three-second interval at constant speed before braking?"
   }
