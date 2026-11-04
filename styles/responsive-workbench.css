@@ -5,7 +5,7 @@
 @media(max-width:900px){
   .study-page .study-question-toolbar{top:0;z-index:8}
   .study-page .study-mobile-tabs:not([hidden]){
-    position:sticky;top:54px;z-index:7;
+    position:sticky;top:var(--study-nav-height,54px);z-index:7;
     display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
     gap:3px;padding:6px;background:var(--editorial-ink);
     border-top:1px solid #4c5d5d;
@@ -36,7 +36,7 @@
   .study-page .study-answer-layout,
   .study-page-mock .study-answer-layout{
     display:flex;flex-direction:column;
-    height:clamp(300px,calc(100dvh - 330px),750px);
+    height:var(--study-fit-height,clamp(300px,calc(100dvh - 330px),750px));
     min-height:0;max-height:none;overflow:hidden
   }
   .study-page .study-question-pane:not([hidden]){
@@ -99,11 +99,11 @@
   }
 }
 @media(max-width:600px){
-  .study-page .study-mobile-tabs:not([hidden]){top:49px;gap:3px;padding:4px}
+  .study-page .study-mobile-tabs:not([hidden]){top:var(--study-nav-height,49px);gap:3px;padding:4px}
   .study-page .study-mobile-tab{min-height:46px;font-size:12px}
   .study-page .study-answer-layout,
   .study-page-mock .study-answer-layout{
-    height:clamp(285px,calc(100dvh - 315px),700px)
+    height:var(--study-fit-height,clamp(285px,calc(100dvh - 315px),700px))
   }
   .study-page .study-question-pane:not([hidden]){
     padding:13px 12px 22px
@@ -124,7 +124,7 @@
      viewport; use a short independently scrollable panel rather than clipping. */
   .study-page .study-answer-layout,
   .study-page-mock .study-answer-layout{
-    height:max(245px,calc(100dvh - 225px))
+    height:var(--study-fit-height,max(245px,calc(100dvh - 225px)))
   }
   .study-page .study-mobile-tab{min-height:44px}
   .study-page .study-marking-dock{min-height:132px;max-height:64%}
@@ -142,4 +142,52 @@
   .study-page .study-answer-layout,
   .study-page-mock .study-answer-layout{display:block!important;height:auto!important;overflow:visible!important}
   .study-page .study-writing-pane{overflow:visible!important}
+}
+
+/* Pass D: touch target, focus and overflow QA for the complete student loop. */
+@media(max-width:900px){
+ .study-page .study-mobile-tab,
+ .study-page .study-answer-mode,
+ .study-page .study-question-toolbar .study-step-nav,
+ .study-page .study-question-toolbar .question-index-item{
+   min-height:44px
+ }
+ .study-page .work-mode-tabs button,
+ .study-page .maths-quickbar button,
+ .study-page .maths-row-actions .maths-icon-btn,
+ .study-page .ink-toolset button:not(.ink-colour),
+ .study-page .ink-colour,
+ .study-page .finish-compact .assessment-choice,
+ .study-page .finish-compact .detail-part-score input{
+   min-height:44px
+ }
+ .study-page .maths-quickbar button{min-width:44px}
+ .study-page .ink-colour{min-width:44px}
+ .study-page .ink-canvas-wrap,.study-page .maths-rows,.study-page .maths-row{
+   min-width:0;max-width:100%
+ }
+ .study-page .study-question-pane,
+ .study-page .study-solution-area{
+   overflow-wrap:anywhere
+ }
+ .study-page .study-work-panel:focus-within,
+ .study-page .study-marking-dock:focus-within{
+   scroll-padding-block:16px 80px
+ }
+ /* The browser's virtual keyboard may dramatically reduce the visual
+    viewport. These inner panes scroll instead of overlapping the tabs. */
+ .study-page .study-answer-layout{
+   min-height:0;overflow:hidden
+ }
+}
+@media(max-width:900px) and (max-height:520px){
+ .study-page .study-marking-dock{min-height:112px}
+ .study-page .study-solution-area{min-height:72px}
+}
+@media(prefers-reduced-motion:reduce){
+ .study-page .study-mobile-tab,
+ .study-page .study-answer-mode,
+ .study-page .study-question-toolbar .question-index-item{
+   scroll-behavior:auto!important;transition:none!important
+ }
 }
