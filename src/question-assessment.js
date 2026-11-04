@@ -47,7 +47,7 @@ function partMarkingMarkup(question,record){
   +'<p id="detail-part-info" class="detail-part-info" role="status" aria-live="polite"></p></div></details>';
 }
 
-function assessmentMarkup(question, record) {
+function assessmentMarkup(question, record, compact=false) {
   const marks=question.marks;
   const hasScore=isQuestionFinished(record,marks);
   const score=hasScore?String(record.score):"";
@@ -57,24 +57,24 @@ function assessmentMarkup(question, record) {
     +'<span><strong>'+title+'</strong><small>'+description+'</small></span>'
     +'<span class="assessment-choice-tick" aria-hidden="true">✓</span></button>';
 
-  return '<section class="finish-assessment" aria-labelledby="finish-assessment-title">'
+  return '<section class="finish-assessment'+(compact?' finish-compact':'')+'" aria-labelledby="finish-assessment-title">'
     +'<div class="finish-heading"><div>'
-    +'<h3 id="finish-assessment-title">Check, mark & finish</h3>'
+    +'<h3 id="finish-assessment-title">'+(compact?'Mark your attempt':'Check, mark & finish')+'</h3>'
     +'</div>'
     +'<span id="question-finish-badge" class="finish-state" data-finished="'+String(hasScore)+'" role="status" aria-live="polite">'
     +(hasScore?'✓ Finished':'○ Not yet finished')+'</span></div>'
     +'<div class="finish-flow">'
     +'<div class="finish-step"><div class="finish-number" aria-hidden="true">1</div><div class="finish-step-content">'
-    +'<strong>How did you complete this question?</strong>'
+    +'<strong>'+(compact?'How did you work?':'How did you complete this question?')+'</strong>'
     +'<div class="assessment-choices" role="group" aria-label="How independently did you work?">'
     +choice("I","Independently","No hints, notes or help.","◇")
     +choice("P","With help","Used a hint, notes, example or someone’s help.","✦")
     +'</div></div></div>'
     +'<div class="finish-step"><div class="finish-number" aria-hidden="true">2</div><div class="finish-step-content">'
     +'<strong>How many marks did you earn?</strong>'
-    +'<p>Enter a mark—including 0—to finish the question.</p>'
-    +'<button type="button" class="btn ghost small finish-review-button" id="mark-view-solution">View the worked solution ↑</button>'
-    +'<div class="finish-score-row"><label for="self-mark-input">Your mark</label>'
+    +(compact?'':'<p>Enter a mark—including 0—to finish the question.</p>')
+    +(compact?'':'<button type="button" class="btn ghost small finish-review-button" id="mark-view-solution">View the worked solution ↑</button>')
+    +'<div class="finish-score-row"><label for="self-mark-input">'+(compact?'Your mark (0 allowed)':'Your mark')+'</label>'
     +'<input id="self-mark-input" class="finish-score" type="number" min="0" max="'+marks+'" step="1" inputmode="numeric"'
     +' value="'+escapeHtml(score)+'" aria-describedby="self-mark-message">'
     +'<span class="finish-out-of">/ '+marks+' marks</span>'
@@ -83,20 +83,21 @@ function assessmentMarkup(question, record) {
     +'<p id="self-mark-message" class="finish-mark-message" role="status" aria-live="polite">'
     +(hasScore?'Recorded. This question is finished.':'No mark entered yet. This question is still in progress.')+'</p>'
     +'</div></div></div>'
-    +'<div class="finish-followup"><label for="self-error">Optional: What should you revisit?</label>'
+    +(compact?'<details class="finish-extra"><summary>Reflection (optional)</summary>':'')+
+     '<div class="finish-followup"><label for="self-error">Optional: What should you revisit?</label>'
     +'<select id="self-error"><option value="">Nothing to record yet</option>'
     +difficulties.map(d=>'<option value="'+escapeHtml(d)+'"'+(record.error===d?' selected':'')+'>'+escapeHtml(d)+'</option>').join('')
-    +'</select></div>'
+    +'</select></div>'+(compact?'</details>':'')
     +'<p class="finish-saving" id="finish-save-status" role="status" aria-live="polite">Your choices and mark save automatically on this device.</p>'
     +'</section>';
 }
 
 /** Mount self-marking UI for one question. DOM listeners are scoped to root. */
-export function mountQuestionAssessment(root,{question,record={},onChange,onCompletionChange}={}) {
+export function mountQuestionAssessment(root,{question,record={},onChange,onCompletionChange,compact=false}={}) {
   if(!root||!question)return;
   // Preserve unrelated fields: workspace, hintSeen and legacy working.
   const state={...record};
-  root.innerHTML=assessmentMarkup(question,state);
+  root.innerHTML=assessmentMarkup(question,state,compact);
   const score=root.querySelector("#self-mark-input");
   const badge=root.querySelector("#question-finish-badge");
   const markMessage=root.querySelector("#self-mark-message");
@@ -148,7 +149,7 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
     if(typeof onCompletionChange==="function")onCompletionChange(finished);
   }
   const review=root.querySelector("#mark-view-solution");
-  review.addEventListener("click",()=>{
+  review?.addEventListener("click",()=>{
     const solution=root.ownerDocument.querySelector("#solution-box");
     const toggle=root.ownerDocument.querySelector("#solution-toggle");
     if(solution?.hidden && toggle)toggle.click();
