@@ -21,9 +21,9 @@ The full authoring specification is [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_B
 
 ## Published study weeks
 
-### Pass 1 + Pass 2 — expanded Weeks 1–6
+### Passes 1–3 — expanded Weeks 1–9
 
-**Weeks 1–6 now contain 31 original questions each**, including 25 essential questions. All earlier question IDs, marked parts, working and self-marked attempts remain in place; the new questions were appended within each existing subsection after its earlier questions.
+**Weeks 1–9 now contain 31 original questions each**, including 25 essential questions. All earlier question IDs, marked parts, working and self-marked attempts remain in place; the new questions were appended within each existing subsection after its earlier questions.
 
 | Section | Questions per week | Marks | Planned working |
 |---|---:|---:|---:|
@@ -51,83 +51,29 @@ The working-time allocations are **1.2 minutes per mark as an examination-paced 
 
 **Week 6 (Pass 2):** AP/GP comparison proofs, fractional binomial approximations, nonlinear recurrence convergence, financial sequence modelling, a recurring-pollutant threshold, Year 1 histogram interpretation and connected particles. The optional extension proves weighted binomial-coefficient identities without requiring out-of-specification discrete-distribution variance.
 
-**Weeks 7–9 remain at 22 questions and a 98-mark essential core** until Pass 3; **Week 10 remains an authentic 100-mark Pure and 50-mark Year 1 Applied assessment** with a 60-minute diagnostic review. The 2027 final-examination programme is still unpublished. Across all ten weeks there are now **274 published questions, including 226 essential**.
+**Pass 3 has completed Weeks 7–9 at 31 questions each**, including a 175-mark essential core and harder AO2/AO3 challenge. **Week 10 remains an authentic 100-mark Pure and 50-mark Year 1 Applied assessment** with a 60-minute diagnostic review. The 2027 full A Level programme is still unpublished. Across the published ten weeks there are now **301 questions, including 247 essential**.
 
 Each new marked part has **one permanent primary 9MA0 specification skill**; optional secondary skills only represent connected practice. The existing calendar, six-section navigation, line-by-line maths, drawing, local storage key `alevel-maths-calendar-progress-v1`, scored-zero completion, self-marking, retry history, progress, specification analytics and backups are preserved.
 
-Read [docs/QUESTION_BLUEPRINT.md](docs/QUESTION_BLUEPRINT.md) for the current content contract, [docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md](docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md) for Pass 1 and [docs/PASS2_WEEKS04_06_EXPANSION_AUDIT.md](docs/PASS2_WEEKS04_06_EXPANSION_AUDIT.md) for Pass 2.
+Read the [current question blueprint](docs/QUESTION_BLUEPRINT.md) and the [Pass 1](docs/PASS1_WEEKS01_03_EXPANSION_AUDIT.md), [Pass 2](docs/PASS2_WEEKS04_06_EXPANSION_AUDIT.md) and [Pass 3](docs/PASS3_WEEKS07_09_EXPANSION_AUDIT.md) authoring and validation audits.
 
 ### Week 7 — Exponentials, logarithms and differential equations
 
-Week 7 contains **22 original exam-style questions (144 marks)** with precise part marks, first-step hints, full worked solutions, final answers, misconceptions, reflections and stable links to the specification. At this stage the calendar has **154 questions, including 126 essential questions**, across seven published weeks.
-
-| Section | Questions | Marks | Working time |
-|---|---:|---:|---:|
-| Retrieval — log laws/equations, logarithmic domains, exponential derivatives and integrals, linearisation, separation and initial conditions | 10 | 20 | 30 min |
-| Connected Pure — log equations and excluded roots; fitting a power law; a separable differential equation with a tangent | 3 | 30 | 67 min (+3 buffer) |
-| Modelling — pollutant decay from data; unlimited versus logistic population growth | 2 | 26 | 68 min (+2 buffer) |
-| Year 1 Applied — interpret a regression; compare predictions before/after an outlier; exact two-tailed binomial test | 3 | 22 | 48 min (+2 buffer) |
-| **Essential four-hour programme** | **18** | **98** | **213 working + 20 marking + 7 buffer = 240 min** |
-| Recommended timed set — exponential maximum and area; power-law integral; regression plus binomial inference | 3 | 32 | 45 min + 15 review |
-| Optional A/A* extension — differential-equation decay, weighted exposure, exact infinite limit and unique numerical threshold | 1 | 14 | 40 min + 20 reflection |
-
-The essential AO marks are **AO1 26 / AO2 39 / AO3 33** (practice-design targets, not examination-paper weights). Every one of **62 marked parts** has one primary permanent skill for accuracy; connected skills are links for retrieval and diagnosis rather than additional marks. Applied tags use **S02** (Year 1 regression) and **S05** (Year 1 binomial hypothesis testing), with no Year 2 correlation-coefficient tests or Normal distribution.
-
-**At the Week 7 release**, Weeks 1–7 were directly accessible; programme two remained unpublished. The local storage key, previous notes/drawings/attempts and backup compatibility are unchanged. Quality gates cover exact mathematics, correct Year 1 scope, all published MathJax, the student marking flow and release-safe specification links.
-
-
+**31 original questions, 175/215/245 marks.** Connected Pure problems include logarithmic root counts, flat stationary inflections, variable-exponent optimisation and exact logarithmic bounds. The new model compares competing exponential forecasts using convexity and a numerical crossover. Year 1 Statistics investigates an influential regression outlier and a one-sided binomial test whose conclusion depends on the significance level. The optional extension proves logarithmic bounds by differentiation.
 
 ### Week 8 — Numerical methods and synthesis
 
-Week 8 adds **22 original exam-style questions (144 marks)** with complete worked schemes, first-step hints, robust MathJax notation, identified misconceptions, reflection prompts and permanent primary per-part specification skills. At the Week 8 release the programme had **176 released questions across eight weeks (144 essential)**.
-
-| Section | Questions | Marks | Working time |
-|---|---:|---:|---:|
-| Quick retrieval — sign changes/continuity, iterations and staircase behaviour, Newton steps, trapezia, error direction and interpreted roots | 10 | 20 | 30 minutes |
-| Connected Pure — Newton root with an accuracy check; exponential trapezium versus exact area; two algebraically equivalent iterations with different stability | 3 | 30 | 67 minutes (+3 buffer) |
-| Modelling — optimum treatment duration requiring a numerical root; exact versus sampled excess-exposure predictions and threshold | 2 | 26 | 68 minutes (+2 buffer) |
-| Year 1 Mechanics — separate smooth-pulley force diagrams; acceleration and tension; two-stage travel after the hanging particle reaches the floor and the string becomes slack | 3 | 22 | 48 minutes (+2 buffer) |
-| **Essential four-hour programme** | **18** | **98** | **213 solving + 20 marking + 7 buffer = 240 minutes** |
-| Recommended timed — bracketed root, concave logarithmic trapezium error, motion model with Newton threshold | 3 | 32 | 45 minutes + 15 review |
-| Optional A/A* extension — derive Newton's method for √2, prove convergence, obtain exact rational error bounds and certify five decimal places | 1 | 14 | 40 minutes + 20 reflection |
-
-The essential resource-design allocation remains **AO1 26 / AO2 39 / AO3 33**, rather than Pearson's full-examination AO weightings. Each of the **63 marked parts** has one stable primary specification skill; connected skills provide navigation without awarding its marks again.
-
-**Curriculum scope:** Pure practice focuses on **P09 numerical methods**, supported by algebra, differentiation and integration. Applied questions use Year 1 **M08-008 connected particles, light strings and smooth pulleys**, along with constant-acceleration kinematics, and deliberately exclude Year 2 friction, inclined-plane dynamics, moments and projectile motion. The A/A* Newton proof develops an optional higher-level justification rather than assuming it is required in every 9MA0 examination answer.
-
-**Publication:** Weeks **1–8** are released directly from the calendar; Weeks **9–10** remain inaccessible until authored. The 2027 programme stays unpublished. Existing working spaces, student mark records (including zero), attempts, revision advice, backups and the unchanged local storage key all remain compatible.
-
-Quality gates include the new `tests/week08-content.test.mjs`, `tests/week08-maths-audit.test.mjs`, `tests/week08-student-flow.test.mjs` and expanded real MathJax parser coverage. A detailed mathematical and curriculum audit is at `docs/WEEK08_AUTHORING_AUDIT.md`.
-
+**31 original questions, 175/215/245 marks.** Students establish root uniqueness before Newton–Raphson iteration, examine a double root that fails sign-change tests, calculate exact and numerical integrals, and use concavity to determine signed errors. A distinctive model shows how trapezium errors can cancel to give an exact total for the wrong reason. Year 1 Applied includes vertical SUVAT and binomial batch reliability. The extension uses logarithmic ratios and numerical roots to calculate a root-dependent area.
 
 ### Week 9 — Synoptic problem solving
 
-Week 9 includes **22 original mixed examination-style questions (144 marks)**, each with first-step hints, complete per-part worked mark schemes, final answers, misconceptions, reflection prompts and permanent specification links. The released programme reaches **198 questions across nine weeks, including 162 essential questions**.
+**31 original questions, 175/215/245 marks.** The questions do not label the required method: students combine rational inverses and inequalities, exact trigonometric area, partial fractions, parametric geometric area and cost optimisation. Year 1 Applied combines stratified sampling and a conditional binomial decision, and a variable-force mechanics problem in which acceleration changes sign before velocity. The optional cubic-parameter investigation connects derivative signs, root counts, Newton iteration and exact integration.
 
-| Section | Questions | Marks | Working time |
-|---|---:|---:|---:|
-| R — quick mixed retrieval across algebra, geometry, trigonometry, series, calculus, numerical methods and Year 1 Applied | 10 | 20 | 30 min |
-| P — connected Pure: circle/vector/chord/geometric sum; logarithmic optimisation/integration/Newton; parametric differentiation, tangent and area | 3 | 30 | 67 min |
-| M — model calibration, optimisation and energy target; exam-script marking, error diagnosis and constructive feedback | 2 | 26 | 68 min |
-| A — Year 1 Statistics stratification; connected-particle forces, tension and motion; regression plus two-tailed binomial testing | 3 | 22 | 48 min |
-| **Essential four-hour programme** | **18** | **98** | **213 working + 20 self-marking + 7 buffer = 240 min** |
-| T — recommended timed Pure/Applied mix including rational binomial expansion, integration, trapezia, SUVAT and hypothesis testing | 3 | 32 | 45 min + 15 review |
-| X — optional A/A* proof using finite geometric sums to bound and numerically certify ln 2 | 1 | 14 | 40 min + 20 reflection |
-
-**Resource AO distribution:** AO1 **26** / AO2 **39** / AO3 **33** essential marks. There are **66 independently tagged marked parts**; each has one primary permanent skill, while connected skills are navigational and never receive duplicate mark credit.
-
-**Blueprint interpretation:** An earlier Week 9 plan proposed 30–40-mark, 50-minute mini-papers inside question slots allocated only 8, 10 or 12 marks. To preserve a consistent interactive calendar, Week 9 uses the established 22-question, 98-essential-mark structure and makes the P questions integrated synoptic problems. The 32-mark recommended T set provides additional timed practice. See `docs/QUESTION_BLUEPRINT.md` for the reconciled allocation. The question stems avoid telling students which Pure technique to choose.
-
-**Curriculum:** Week 9 revisits all ten Pure topics through primary and connected skills, with explicit coordinate/vector geometry, series and proof; its Applied material is restricted to Year 1 Statistics (sampling, regression, binomial probability and tests) and Mechanics (constant acceleration, variable velocity and smooth connected-particle models). Year 2-only conditional probability, Normal models, correlation hypothesis testing, inclined-plane dynamics, friction and moments remain excluded.
-
-**Publication and data:** Weeks **1–9** open directly from the calendar. Week **10**, the 2027 revision programme, and all unshipped questions remain locked. No progress key migration occurs: the existing local-storage key, notes, mathematical-input lines, drawings, saved marks (including zero), attempts, backups and skill-evidence rules are unchanged.
-
-The independent mathematics, release-safety, MathJax and student-flow tests live in `tests/week09-content.test.mjs`, `tests/week09-maths-audit.test.mjs` and `tests/week09-student-flow.test.mjs`. The detailed audit is in `docs/WEEK09_AUTHORING_AUDIT.md`.
-
+**Across Weeks 7–9**, the essential 175-mark core in each week contains **136 marks attributed to AO2/AO3** (77.7% of its marks), for deliberate practice in mathematical argument, method selection and model evaluation. See the [Pass 3 audit](docs/PASS3_WEEKS07_09_EXPANSION_AUDIT.md) for content, scope, time and regression guarantees.
 
 ### Week 10 — Mock examination and consolidation
 
-Unlike the 98-mark Weeks 1–9 weekly drills, this final week contains an **original 100-mark two-hour Pure paper** (12 questions) and **50-mark one-hour Year 1 Applied mini-mock** (10 questions; 25 Statistics + 25 Mechanics), followed by **one hour of self-marking and diagnostic reflection**. The papers are original revision materials, not official Pearson past papers.
+Unlike the 175-mark Weeks 1–9 weekly challenge pathways, this final week contains an **original 100-mark two-hour Pure paper** (12 questions) and **50-mark one-hour Year 1 Applied mini-mock** (10 questions; 25 Statistics + 25 Mechanics), followed by **one hour of self-marking and diagnostic reflection**. The papers are original revision materials, not official Pearson past papers.
 
 | Activity | Questions | Marks | Duration |
 |---|---:|---:|---:|
@@ -143,7 +89,7 @@ Week 10’s 150-mark authored AO mix is **AO1 75 / AO2 38 / AO3 37** (roughly th
 
 **Evidence-led review:** Visit **Mark & review both papers** after the timed sittings. The 60-minute screen shows per-question marking status, independent versus help-supported attempts, 25/25 Applied submarks and only evidence-backed repair priorities. **An unanswered or unmarked question is not treated as a zero.** Overall paper scores are shown only when every paper question has been scored; a recorded zero is a completed question. Three review notes (first error, repair method and reattempt plan) are included in the existing version-1 progress backup.
 
-**Published course:** All **ten weeks** are open through the calendar, with **220 original questions** (including **184 essential**). The separate February–June 2027 full A Level programme remains planned but **unpublished**. All earlier saved notes, maths input, drawings, scores, attempts/history, topic evidence, local storage key and version-1 backup/restore are preserved.
+**Published course:** All **ten weeks** are open through the calendar, with **301 original questions** (including **247 essential**). The separate February–June 2027 full A Level programme remains planned but **unpublished**. All earlier saved notes, maths input, drawings, scores, attempts/history, topic evidence, local storage key and version-1 backup/restore are preserved.
 
 See `docs/WEEK10_AUTHORING_AUDIT.md` for specification and independent mathematics checks, and `docs/QUESTION_BLUEPRINT.md` for the explicit Week 10 paper-format correction.
 
@@ -163,7 +109,7 @@ The website now includes a permanent **My specification** page for Pearson Edexc
 
 ## Pass 4B — Question-to-skill links and detailed marking
 
-All **274 questions in published Weeks 1–10** are now linked to the 9MA0 skill library **part by part**.
+All **301 questions in published Weeks 1–10** are now linked to the 9MA0 skill library **part by part**.
 
 Each question part has exactly **one primary skill ID**, used for eventual accuracy calculations, and optional **connected skill IDs** used only to show cross-topic practice links. The primary and connected tags do **not** multiply the available marks.
 
@@ -319,8 +265,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Pass 2 — completed on review branch:** merge the completed Weeks 4–6 upgrade after checking its mathematics and student flow.
-2. **Pass 3 — expand Weeks 7–9:** increase deliberately unstructured synoptic work and further specification skill coverage.
-3. **Pass 4 — final quality audit:** independently verify mathematics, moderate AO attributions, address remaining skills without directly assessed evidence, and pilot honest student timing before release.
-4. **2027 final-exam preparation:** extend the existing February–June plan to Year 2 Applied and final-exam practice using the same skill IDs and local progress format.
-5. **Optional future teacher features:** only consider anonymous class-level summaries or secure multi-device sync if there is a clear privacy and school-authorisation plan. Neither is silently enabled.
+1. **Pass 3 — ready for review:** verify GitHub Actions, inspect the student-facing Week 7–9 route and mathematical rendering, and merge the PR only after checks pass and it is approved.
+2. **Pass 4 — final release-quality audit:** independently moderate AO assignments and worked mathematics, audit specification coverage and accessibility, and pilot realistic student completion times before classroom use.
+3. **2027 final-exam preparation:** extend the February–June full-course plan to Year 2 Applied and complete-paper practice while retaining the same student-progress schema. This future programme remains unpublished.
+4. **Teacher features, only if authorised:** consider privacy-safe class summaries or multi-device sync separately; neither is enabled in this release.
