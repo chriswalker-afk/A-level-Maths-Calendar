@@ -92,3 +92,24 @@ test("future valid week IDs are preserved; invalid or oversized data is not impo
  assert.throws(()=>validateProgressRecords({"random-key":{score:2}}),/Unsupported progress key/);
  assert.throws(()=>parseProgressBackup("x".repeat(11*1024*1024)),/smaller than 10 MiB/);
 });
+
+test("fresh topic practice scores, working and retries survive version-1 backup and restore",()=>{
+ const saved={
+  "W01-R2":{score:2,status:"I"},
+  "TP-P02-AO2":{
+   score:3,scoreSource:"parts",partMarks:{a:1,b:2},status:"I",
+   workspace:{mode:"notes",notes:"Independent alternate method",mathLines:[{
+    latex:"x^2+1",reason:"positive"
+   }],strokes:[]},
+   attemptHistory:[{score:1,status:"P",workspace:{notes:"First attempt",strokes:[]}}]
+  }
+ };
+ const restored=parseProgressBackup(backupToJSON(saved,now)).data;
+ assert.deepEqual(restored,saved);
+ const merged=mergeProgressRecords({"W01-R2":{score:2}},restored);
+ assert.deepEqual(merged.records["TP-P02-AO2"],saved["TP-P02-AO2"]);
+ assert.equal(summarizeProgressRecords(restored).questions,2);
+ for(const id of ["TP-P02-AO4","TP-Z99-AO1","TP-M01-AO1","TP-P00-AO2"]){
+  assert.throws(()=>validateProgressRecords({[id]:{score:2}}),/Unsupported progress key/);
+ }
+});

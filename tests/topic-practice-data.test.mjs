@@ -61,7 +61,7 @@ test("bank rejects missing marks, weak AO labels, drafts, and repeated slots",()
   [{id:"W01-P1"},/unstable question ID/],
   [{ao:{AO1:1,AO2:1,AO3:1}},/AO marks must total/],
   [{ao:{AO1:3,AO2:1,AO3:0}},/dominant objective/],
-  [{parts:[["Part",2,{primarySkillId:"P02-001"}]]},/part marks do not total/],
+  [{parts:[["Part",1,{primarySkillId:"P02-001"}],["Another part",2,{primarySkillId:"P02-003"}]]},/part marks do not total/],
   [{steps:["Only one step"]},/one worked mark-scheme step/],
   [{parts:[["No tags",1,{}],["Part",3,{primarySkillId:"P02-003"}]]},/unknown primary/]
  ]){
