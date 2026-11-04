@@ -76,6 +76,6 @@ test("question index shows a stable selection, saved-mark ticks and retries",()=
  assert.equal(root.querySelectorAll('[aria-current="true"]').length,1);
  assert.equal(root.querySelectorAll(".q-complete-indicator:not([hidden])").length,1);
  assert.ok(root.querySelector(".q-retrying"));
- assert.match(root.querySelector(".question-index-heading").textContent,/10 QUESTIONS/);
+ assert.match(root.querySelector(".question-index-heading").textContent,/SECTION R3 \/ 10/);
  page.window.close();
 });
