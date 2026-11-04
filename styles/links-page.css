@@ -32,6 +32,7 @@
 .links-resource--mechanics{--links-accent:var(--editorial-coral)}
 .links-resource--words{--links-accent:#24846c}
 .links-resource--sampling{--links-accent:#8660ac}
+.links-resource--lds{--links-accent:#b57232}
 .links-resource:hover{
   transform:translateY(-3px);
   box-shadow:5px 5px 0 var(--editorial-ink)
