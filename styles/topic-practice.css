@@ -1,0 +1,78 @@
+/* Fresh specification practice uses the existing paper / ink calendar identity. */
+.topic-practice-section{margin:24px 0 30px}
+.topic-practice-section .spec-section-heading{display:flex;justify-content:space-between;gap:16px;align-items:flex-end}
+.topic-practice-section .spec-section-heading p{margin:6px 0 0;max-width:65ch;color:var(--editorial-quiet);font-size:13px;line-height:1.6}
+.topic-practice-count{
+ flex:none;padding:6px 9px;background:var(--editorial-lime);
+ color:var(--editorial-ink);font:700 10px/1.3 var(--editorial-font-index)
+}
+.topic-practice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.topic-practice-card{
+ --topic-accent:var(--editorial-cobalt);
+ display:flex;flex-direction:column;gap:8px;min-width:0;min-height:210px;
+ padding:16px 17px;background:var(--editorial-paper);
+ border:1.5px solid var(--editorial-ink);border-top:5px solid var(--topic-accent);
+ color:var(--editorial-ink);text-decoration:none;
+ border-radius:var(--editorial-radius)
+}
+.topic-practice-card[data-ao=AO2]{--topic-accent:var(--editorial-coral)}
+.topic-practice-card[data-ao=AO3]{--topic-accent:var(--editorial-teal,var(--editorial-cobalt))}
+.topic-practice-card-top,.topic-practice-card-bottom{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.topic-practice-ao{font:800 21px/1.1 var(--editorial-font-display)}
+.topic-practice-state{
+ padding:4px 6px;background:var(--editorial-wash);border:1px solid var(--editorial-rule);
+ color:var(--editorial-quiet);font:700 9px/1.3 var(--editorial-font-index)
+}
+.topic-practice-card h3{font:700 20px/1.25 var(--editorial-font-display);margin:0}
+.topic-practice-card p{font-size:12px;color:var(--editorial-quiet);line-height:1.5;margin:0}
+.topic-practice-question-title{font:700 12px/1.4 var(--editorial-font-body);margin-top:2px}
+.topic-practice-card-bottom{
+ border-top:1px solid var(--editorial-rule);padding-top:10px;margin-top:auto;
+ flex-wrap:wrap;font:700 10px/1.5 var(--editorial-font-index)
+}
+.topic-practice-card-bottom span{color:var(--editorial-quiet)}
+.topic-practice-card-bottom strong{color:var(--editorial-cobalt);font-size:10px}
+.topic-practice-card.is-planned{
+ background:var(--editorial-wash);border-color:var(--editorial-rule);
+ border-top-color:var(--editorial-rule)
+}
+.topic-practice-card.is-planned .topic-practice-ao{color:var(--editorial-quiet)}
+.topic-practice-card.is-planned .topic-practice-card-bottom strong{color:var(--editorial-quiet);font-weight:600}
+.topic-practice-card.is-ready{transition:transform 140ms ease,box-shadow 140ms ease}
+.topic-practice-card.is-ready:hover{transform:translateY(-2px);box-shadow:3px 4px 0 var(--editorial-ink)}
+.topic-practice-card.is-ready:focus-visible{outline:3px solid var(--editorial-cobalt);outline-offset:3px}
+.topic-practice-footnote{color:var(--editorial-quiet);font-size:11px;line-height:1.5;margin:12px 0 0}
+.topic-practice-future{
+ border:1px solid var(--editorial-rule);padding:18px 20px;background:var(--editorial-wash)
+}
+.topic-practice-future p{font-size:13px;line-height:1.5;color:var(--editorial-quiet)}
+.topic-practice-future .btn{margin-top:7px}
+.topic-practice-context{
+ font-size:12px;line-height:1.5;color:var(--editorial-quiet);padding:0 0 10px
+}
+.study-page .topic-practice-nav{
+ position:sticky;top:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:3px;padding:4px;background:var(--editorial-ink)
+}
+.topic-practice-nav-item{
+ display:flex;align-items:center;justify-content:center;gap:9px;
+ min-width:0;min-height:48px;padding:7px 11px;background:#2d4247;color:#f8f7ef;
+ text-decoration:none;text-align:center;border:1px solid #516362;border-radius:2px
+}
+.topic-practice-nav-item strong{font:800 14px var(--editorial-font-index)}
+.topic-practice-nav-item span{font:600 12px var(--editorial-font-body)}
+.topic-practice-nav-item.is-current{
+ background:var(--editorial-lime);border-color:var(--editorial-lime);
+ color:var(--editorial-ink);box-shadow:inset 0 -3px 0 var(--editorial-coral)
+}
+.topic-practice-nav-item.is-unavailable{background:#263a42;color:#bcc8c2}
+a.topic-practice-nav-item:not(.is-current):hover{background:#40585a;color:#fff}
+.topic-practice-page .study-review-and-more .topic-practice-footnote a{color:var(--editorial-cobalt)}
+@media(max-width:740px){
+ .topic-practice-section .spec-section-heading{display:block}
+ .topic-practice-count{display:inline-block;margin-top:11px}
+ .topic-practice-grid{grid-template-columns:1fr}
+ .topic-practice-card{min-height:155px}
+ .topic-practice-page .topic-practice-nav-item{flex-direction:column;gap:2px;padding:5px}
+ .topic-practice-page .topic-practice-nav-item span{font-size:10px}
+}
