@@ -57,7 +57,7 @@ export function renderAttemptHistory(question,record={}){
    '</div></details>';
  }).join('')+'</div>':
  '')+
- '<p class="attempt-history-privacy">Older attempts are included in your progress backup, but do not count as extra completed questions.</p>'+
+ (archive.length?'<p class="attempt-history-privacy">Older attempts are included in your progress backup, but do not count as extra completed questions.</p>':'')+
  '<p class="attempt-history-status" id="attempt-history-status" role="status" aria-live="polite"></p>'+
  '</section>';
 }
