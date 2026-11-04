@@ -180,6 +180,17 @@ try{
    check(reduced<=original+2&&reduced>185,"virtual-viewport resize did not keep the panel usable");
 
    // Maths input has a usable fallback when the third-party keyboard is offline.
+   const keyboardLayout=await page.evaluate(()=>{
+    const box=s=>{const el=document.querySelector(s),r=el?.getBoundingClientRect();
+     return {hidden:el?.hidden,top:r?.top,bottom:r?.bottom,height:r?.height,
+      display:el?getComputedStyle(el).display:null};};
+    return {height:innerHeight,scrollY,topbar:box(".topbar"),header:box(".study-header"),
+     section:box(".study-section-nav"),questionNav:box(".study-question-toolbar"),
+     mobileTabs:box(".study-mobile-tabs"),layout:box(".study-answer-layout"),
+     writing:box("#study-writing-pane"),work:box("#study-panel-work"),
+     mathsTab:box("#work-tab-maths")};
+   });
+   console.log("KEYBOARD_LAYOUT "+JSON.stringify(keyboardLayout));
    await page.click("#work-tab-maths");
    await page.waitForSelector(".maths-fallback-input",{visible:true,timeout:12000});
    await page.$eval(".maths-fallback-input",el=>{
