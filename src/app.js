@@ -24,6 +24,7 @@ const essentialSections=new Set(['R','P','M','A']);
 const allQuestions={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions,4:taggedWeek04Questions,5:taggedWeek05Questions,6:taggedWeek06Questions,7:taggedWeek07Questions,8:taggedWeek08Questions,9:taggedWeek09Questions,10:taggedWeek10Questions};
 let mockClockId=null;
 let disposeWorkspace=null;
+let disposeStudyModes=null;
 let disposeSpecification=null;
 let disposeHistory=null;
 let disposeTransfer=null;
@@ -286,6 +287,7 @@ function remountHistory(q){
 function routeInfo(){const path=(location.hash||'#/').slice(1).split('/').filter(Boolean);return path}
 function render(){
   if(mockClockId!==null){window.clearInterval(mockClockId);mockClockId=null;}
+  if(disposeStudyModes){disposeStudyModes();disposeStudyModes=null;}
   if(disposeWorkspace){disposeWorkspace();disposeWorkspace=null;}
   if(disposeSpecification){disposeSpecification();disposeSpecification=null;}
   if(disposeHistory){disposeHistory();disposeHistory=null;}
@@ -352,7 +354,7 @@ function render(){
       });
     }
     // Switching panels preserves the mounted working editor and its saved state.
-    mountStudyReviewModes(el.querySelector(".study-writing-pane"),{
+    disposeStudyModes=mountStudyReviewModes(el.querySelector(".study-writing-pane"),{
       questionPane:el.querySelector("#study-question-pane"),
       mobileTabs:el.querySelector(".study-mobile-tabs"),
       onFirstReview(){
