@@ -1,4 +1,4 @@
-/** Exactly one permanent primary skill per marked part; connected skills do not receive marks. */
+/** Exactly one permanent primary per marked part; connected practice never receives double credit. */
 export const week06ExpansionSkillMap = {
   "W06-P4": [
     [
@@ -216,9 +216,9 @@ export const week06ExpansionSkillMap = {
       ]
     ],
     [
-      "S04-003",
+      "P04-001",
       [
-        "P04-001"
+        "P01-001"
       ]
     ],
     [
