@@ -9,7 +9,8 @@ export const BACKUP_FORMAT="alevel-maths-calendar-progress";
 export const BACKUP_VERSION=1;
 export const MAX_BACKUP_SIZE=10*1024*1024; // 10 MiB for notes + ink
 const isObject=x=>x!==null&&typeof x==="object"&&!Array.isArray(x);
-const safeTopKey=x=>x==="reflections"||/^W\d{2,3}-[A-Z]\d{1,3}$/.test(x);
+const safeTopKey=x=>x==="reflections"||/^W\d{2,3}-[A-Z]\d{1,3}$/.test(x)||
+ /^TP-(?:P(?:0[1-9]|10)|S0[1-5]|M0[6-9])-AO[123]$/.test(x);
 const forbidden=new Set(["__proto__","prototype","constructor"]);
 const invalid=(message)=>{throw new Error(message);};
 function auditTree(value,depth=0,counters={nodes:0}){

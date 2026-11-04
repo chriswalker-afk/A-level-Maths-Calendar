@@ -3,6 +3,8 @@ import {isWeekReleased} from "./publication.js";
 import {programmeOne,programmeTwo} from "./data/programmes.js";
 import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions,taggedWeek10Questions} from "./data/tagged-questions.js";
 import {getSpecSkill} from "./data/specification.js";
+import {getTopicPracticeQuestion} from "./data/topic-practice/index.js";
+import {renderTopicPracticeQuestion} from "./topic-practice-view.js";
 import {mountWorkingSpace} from "./working-space.js";
 import {isQuestionFinished,mountQuestionAssessment} from "./question-assessment.js";
 import {mountSpecification} from "./specification-view.js";
@@ -295,6 +297,7 @@ function render(){
   if(disposeTransfer){disposeTransfer();disposeTransfer=null;}
   const p=routeInfo();
   const top=p[0]||"home";
+  const topicQuestion=top==="topic-practice"?getTopicPracticeQuestion(p[2],p[3],p[1]):null;
   // Old links to the removed week overview open the exercises immediately.
   if(top==="week"&&released(Number(p[1]))){
     const n=Number(p[1]);
@@ -303,7 +306,7 @@ function render(){
     return;
   }
   document.querySelectorAll("[data-nav]").forEach(a=>
-    a.classList.toggle("active",a.dataset.nav===(top==="week"||top==="study"||top==="home"||top==="mock-review"?"calendar":top)));
+    a.classList.toggle("active",a.dataset.nav===(top==="topic-practice"?"specification":top==="week"||top==="study"||top==="home"||top==="mock-review"?"calendar":top)));
   if(top==="home")el.innerHTML=overview();
   else if(top==="calendar")el.innerHTML=calendar();
   else if(top==="week")el.innerHTML=weekPage(Number(p[1]));
@@ -311,13 +314,16 @@ function render(){
   else if(top==="mock-review")el.innerHTML=Number(p[1])===10&&released(10)?renderMockReview({questions:allQuestions[10],records:saved,reflections:saved.reflections}):notFound();
   else if(top==="progress")el.innerHTML=progressPage(p[1]||"internal",p[2]||"all");
   else if(top==="specification")disposeSpecification=mountSpecification(el,{scope:p[1]||"internal",topicId:p[2]||null,skillId:p[3]||null,questions:releasedQuestions(),records:saved});
+  else if(top==="topic-practice")el.innerHTML=renderTopicPracticeQuestion({
+    scope:p[1]||"internal",topicId:p[2]||"",aoFocus:p[3]||"",question:topicQuestion,records:saved
+  });
   else if(top==="guide")el.innerHTML=guidePage();
   else if(top==="links")el.innerHTML=renderLinksPage();
   else if(top==="final")el.innerHTML=finalPage();
   else el.innerHTML=notFound();
 
   document.title=(top==="home"?"A Level Maths Calendar":
-    top==="study"?"Questions":top==="mock-review"?"Mock marking & review":top==="week"?"Weekly questions":top==="specification"?"My Specification":top==="links"?"More maths tools":
+    top==="study"?"Questions":top==="topic-practice"?"Fresh topic practice":top==="mock-review"?"Mock marking & review":top==="week"?"Weekly questions":top==="specification"?"My Specification":top==="links"?"More maths tools":
     top.charAt(0).toUpperCase()+top.slice(1))+" — A Level Maths Calendar";
 
   if(top==="progress"){
@@ -336,12 +342,15 @@ function render(){
     });
     importNotice="";
   }
-  if(top==="study"){
+  // Fresh topic practice uses the same workbench without joining weekly counts.
+  if(top==="study"||top==="topic-practice"){
+    const weekly=top==="study";
     const week=Number(p[1]),section=p[2]||"R",index=Number(p[3]||0);
-    const items=(allQuestions[week]||[]).filter(q=>q.section===section);
-    const q=items[Math.max(0,Math.min(index,items.length-1))];
+    const items=weekly?(allQuestions[week]||[]).filter(q=>q.section===section):[];
+    const q=weekly?items[Math.max(0,Math.min(index,items.length-1))]:topicQuestion;
+    const usable=weekly?released(week):Boolean(q);
     const mount=el.querySelector("#question-working-space");
-    if(q&&mount&&released(week)){
+    if(q&&mount&&usable){
       disposeWorkspace=mountWorkingSpace(mount,{
         initial:saved[q.id]?.workspace,
         legacyWorking:saved[q.id]?.working||"",
@@ -368,7 +377,7 @@ function render(){
       }
     });
     const assessment=el.querySelector("#question-assessment");
-    if(q&&assessment&&released(week)){
+    if(q&&assessment&&usable){
       remountHistory(q);
       mountQuestionAssessment(assessment,{
         question:q,
@@ -399,6 +408,7 @@ function render(){
           return true;
         },
         onCompletionChange(finished){
+          if(!weekly)return;
           const jump=el.querySelector('[data-jump="'+Math.max(0,Math.min(index,items.length-1))+'"]');
           const indicator=jump?.querySelector(".q-complete-indicator");
           if(indicator)indicator.hidden=!finished;
@@ -442,7 +452,7 @@ window.addEventListener('hashchange',()=>{
   render();
   window.scrollTo({top:0,behavior:'instant'});
   // A route change is also an accessibility landmark change.
-  const title=el.querySelector(routeInfo()[0]==='study'?'#active-question-title':'h1');
+  const title=el.querySelector(['study','topic-practice'].includes(routeInfo()[0])?'#active-question-title':'h1');
   if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true});}
 });
 document.addEventListener('click',event=>{
@@ -462,7 +472,9 @@ document.addEventListener('click',event=>{
  const week=event.target.closest('button[data-week]');if(week){navigate(week.dataset.destination||'#/study/'+week.dataset.week+'/R/0');return}
  const section=event.target.closest('[data-section]');if(section){navigate('#/study/'+section.dataset.week+'/'+section.dataset.section+'/0');return}
  const jump=event.target.closest('[data-jump]');if(jump){const p=routeInfo();navigate('#/study/'+p[1]+'/'+p[2]+'/'+jump.dataset.jump);return}
- const hint=event.target.closest('#hint-toggle');if(hint){const box=$('#hint-box');box.hidden=!box.hidden;hint.setAttribute('aria-expanded',String(!box.hidden));hint.textContent=box.hidden?'Show first-step hint':'Hide first-step hint';if(!box.hidden){typeset();const p=routeInfo(),q=(allQuestions[Number(p[1])]||[]).filter(q=>q.section===p[2])[Number(p[3])||0];if(q){saved[q.id]??={};saved[q.id].hintSeen=true;store()}}return}
+ const hint=event.target.closest('#hint-toggle');if(hint){const box=$('#hint-box');box.hidden=!box.hidden;hint.setAttribute('aria-expanded',String(!box.hidden));hint.textContent=box.hidden?'Show first-step hint':'Hide first-step hint';if(!box.hidden){typeset();const p=routeInfo(),q=p[0]==="topic-practice"?
+    getTopicPracticeQuestion(p[2],p[3],p[1]):
+    (allQuestions[Number(p[1])]||[]).filter(q=>q.section===p[2])[Number(p[3])||0];if(q){saved[q.id]??={};saved[q.id].hintSeen=true;store()}}return}
  const solution=event.target.closest('#solution-toggle');if(solution){const box=$('#solution-box');box.hidden=!box.hidden;solution.setAttribute('aria-expanded',String(!box.hidden));solution.textContent=box.hidden?'Show worked solution':'Hide worked solution';if(!box.hidden)typeset();return}
  const prev=event.target.closest('#previous,#next');if(prev&&!prev.disabled){const destination=prev.dataset.targetRoute;if(destination)navigate(destination);return;}
 });

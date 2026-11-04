@@ -4,6 +4,7 @@ import {
 } from "./data/specification.js";
 import {getPublishedPracticeForSkill} from "./data/skill-practice-index.js";
 import {calculateSpecificationProgress} from "./specification-analytics.js";
+import {renderTopicPracticeSlots} from "./topic-practice-view.js";
 import {renderProgressPulse,renderTopicCardProgress,renderTopicEvidence,renderSkillEvidence} from "./specification-progress-view.js";
 
 const escape=v=>String(v??"").replace(/[&<>"']/g,c=>
@@ -117,7 +118,7 @@ function skillCard(skill,scope,report){
  '</div><div class="spec-evidence-note"><span class="spec-evidence-dot" aria-hidden="true"></span>'+
  'Your scores are stored only in your browser. A whole-question mark counts as an attempt. For questions with just one part, the mark also belongs precisely to that part’s main skill; multi-part questions need a completed detailed breakdown.</div></div></details>';
 }
-function renderTopic(scope,topicId,report){
+function renderTopic(scope,topicId,report,records){
  const topic=getSpecTopic(topicId);
  if(!topic)return '<div class="page spec-page"><a class="back" href="'+topicUrl(scope)+'">← Back to My Specification</a><h1>Topic not found</h1><p>This topic reference is not in the current 9MA0 catalogue.</p></div>';
  const eligible=topic.skills.filter(skill=>inScope(skill,scope));
@@ -130,7 +131,7 @@ function renderTopic(scope,topicId,report){
  '<h1 class="page-title">'+escape(topic.title)+'</h1><p class="intro">'+escape(topic.description)+'</p>'+
  '<div class="spec-detail-badges">'+badge(eligible.length+' skill'+(eligible.length===1?"":"s")+' in current view',"available")+
  (later.length?badge(later.length+" Year 2 addition"+(later.length===1?"":"s"),"future"):"")+'</div></div>'+
- '<div class="spec-detail-id" aria-hidden="true">'+topic.id+'</div></div>'+filters(scope)+renderTopicEvidence(report.topicMap.get(topic.id))+
+ '<div class="spec-detail-id" aria-hidden="true">'+topic.id+'</div></div>'+filters(scope)+renderTopicEvidence(report.topicMap.get(topic.id))+renderTopicPracticeSlots(topic,scope,records)+
  '<section class="spec-skill-list"><div class="spec-section-heading"><div><span class="eyebrow">'+escape(scope==="internal"?"Internal exams · Full Pure + Y1 Applied":"Full A Level · all content")+'</span>'+
  '<h2>What could I be asked to do?</h2><p>Open any statement to see an example examination demand and useful advice.</p></div>'+
  (eligible.length?'<div class="spec-skill-counter">'+eligible.length+' skills</div>':'')+'</div>'+
@@ -147,7 +148,7 @@ function renderTopic(scope,topicId,report){
 export function mountSpecification(root,{scope="internal",topicId=null,skillId=null,questions=[],records={}}={}){
  if(scope!=="internal"&&scope!=="full")scope="internal";
  const report=calculateSpecificationProgress({scope,questions,records});
- root.innerHTML=topicId?renderTopic(scope,topicId,report):renderOverview(scope,report);
+ root.innerHTML=topicId?renderTopic(scope,topicId,report,records):renderOverview(scope,report);
  function onClick(event){
   const strand=event.target.closest("[data-spec-strand]");
   if(strand){
