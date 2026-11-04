@@ -265,14 +265,12 @@ body { accent-color: var(--editorial-cobalt); }
 }
 .work-header {
   gap:14px;border-bottom:2px solid var(--editorial-rule);
-  margin-bottom:0;padding-bottom:15px;
+  margin-bottom:0;padding-bottom:10px;
 }
 .work-header h3 {
   font:700 22px/1.2 var(--editorial-font-display);
-  margin:4px 0 5px;
+  margin:0;
 }
-.work-header .eyebrow { color:var(--editorial-cobalt); }
-.work-header p { color:var(--editorial-quiet); }
 .work-header-actions { align-items:flex-end; }
 .work-save-status {
   font:700 10px/1.45 var(--editorial-font-index);
@@ -280,7 +278,7 @@ body { accent-color: var(--editorial-cobalt); }
 }
 .work-save-status.save-error { color:var(--editorial-error)!important; }
 .work-mode-tabs {
-  margin-top:15px;padding:3px;gap:3px;
+  margin-top:10px;padding:3px;gap:3px;
   border:2px solid var(--editorial-ink);border-radius:var(--editorial-radius);
   background:var(--editorial-ink);
 }
@@ -294,9 +292,8 @@ body { accent-color: var(--editorial-cobalt); }
   background:var(--editorial-lime);color:var(--editorial-ink);
   border-color:var(--editorial-lime);box-shadow:none;
 }
-.work-panel { padding:17px 0 1px; }
+.work-panel { padding:12px 0 1px; }
 .work-tip { color:var(--editorial-quiet)!important; }
-.working-label { margin-bottom:8px; }
 .work-notes {
   color:var(--editorial-ink);
   border:1.5px solid var(--editorial-rule);
@@ -304,11 +301,7 @@ body { accent-color: var(--editorial-cobalt); }
   background:repeating-linear-gradient(to bottom,var(--editorial-paper) 0,var(--editorial-paper) 32px,#d3dbd2 33px);
 }
 .work-notes:focus { border-color:var(--editorial-cobalt);background:var(--editorial-paper); }
-.maths-work-head { border-bottom:1px solid var(--editorial-rule);padding-bottom:12px; }
-.maths-work-head strong {
-  font:700 14px var(--editorial-font-display);
-  color:var(--editorial-ink);
-}
+.maths-work-head { justify-content:flex-end;border-bottom:0;padding-bottom:0;margin-bottom:8px; }
 .maths-load-status,.work-tip { font-size:11px;color:var(--editorial-quiet); }
 .maths-row {
   background:var(--editorial-paper);border:1.5px solid var(--editorial-rule);
