@@ -1,0 +1,29 @@
+name: Student experience browser audit
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  browser-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install audit dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Locate system Chrome
+        run: |
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium
+      - name: Exercise student question flow in real Chrome
+        run: npm run audit:browser
+      - name: Upload viewport screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pass-d-viewport-screenshots
+          path: browser-audit-output/
+          if-no-files-found: warn
+          retention-days: 14
