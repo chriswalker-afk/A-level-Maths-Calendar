@@ -365,6 +365,96 @@ try{
     item.name+": resources should use the two-column grid");
   }
   await page.screenshot({path:join(output,item.name+"-links.png")});
+
+  // Pass C: real-browser audit of the new question bank, not only the
+  // weekly workbench. Verify long AO3 maths, responsive panels and progress.
+  await page.evaluate(()=>{location.hash="#/specification/internal/P07";});
+  await page.waitForSelector('.topic-practice-card[data-ao="AO3"]');
+  const aoCard=await page.evaluate(()=>({
+   count:document.querySelectorAll(".topic-practice-card").length,
+   href:document.querySelector('.topic-practice-card[data-ao="AO3"]')?.getAttribute("href"),
+   width:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth
+  }));
+  check(aoCard.count===3&&aoCard.href==="#/topic-practice/internal/P07/AO3",
+   item.name+": AO topic cards have incorrect navigation");
+  check(aoCard.width<=aoCard.viewport+6,item.name+": original practice cards overflow");
+  await page.screenshot({path:join(output,item.name+"-ao-cards.png")});
+  await page.click('.topic-practice-card[data-ao="AO3"]');
+  await page.waitForSelector("#active-question-title");
+  const fresh=await page.evaluate(()=>({
+   id:document.querySelector(".exam-question-number")?.textContent,
+   title:document.querySelector("#active-question-title")?.textContent,
+   width:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth,
+   navItems:document.querySelectorAll(".topic-practice-nav-item").length,
+   tabsHidden:document.querySelector(".study-mobile-tabs")?.hidden,
+   editorHidden:document.querySelector("#study-writing-pane")?.hidden,
+   reviewHidden:document.querySelector("#solution-box")?.hidden,
+   fit:document.querySelector(".topic-practice-page")?.style.getPropertyValue("--study-fit-height")
+  }));
+  check(fresh.id==="TP-P07-AO3"&&fresh.navItems===3,
+   item.name+": original question did not load");
+  check(fresh.width<=fresh.viewport+6,
+   item.name+": original long AO3 question overflows on its initial view");
+  check(fresh.reviewHidden===true,
+   item.name+": fresh solution appears before requested");
+  if(small){
+   check(fresh.tabsHidden===false&&fresh.editorHidden===true&&Boolean(fresh.fit),
+    item.name+": original question mobile workbench state is wrong");
+   await page.click("#study-mobile-work");
+  }else{
+   check(fresh.tabsHidden===true&&fresh.editorHidden===false,
+    item.name+": original question desktop split view is wrong");
+  }
+  await page.waitForSelector("#work-notes",{visible:true});
+  await page.$eval("#work-notes",element=>{
+   element.value="A new independent model";
+   element.dispatchEvent(new Event("input",{bubbles:true}));
+  });
+  const savedFresh=await page.evaluate(()=>{
+   const progress=JSON.parse(localStorage.getItem("alevel-maths-calendar-progress-v1")||"{}");
+   return {original:progress["TP-P07-AO3"]?.workspace?.notes,
+    weekly:progress["W01-R1"]?.workspace?.notes};
+  });
+  check(savedFresh.original==="A new independent model",
+   item.name+": fresh question working did not save");
+  check(savedFresh.weekly==="Pass D saved reasoning",
+   item.name+": fresh question overwritten a weekly attempt");
+  if(small)await page.click("#study-mobile-review");
+  else await page.click("#study-tab-review");
+  await page.waitForSelector("#solution-box",{visible:true});
+  await page.waitForSelector("#self-mark-input",{visible:true});
+  const freshMarks=await page.evaluate(()=>{
+   const input=document.querySelector("#self-mark-input");
+   input.value="0";
+   input.dispatchEvent(new Event("input",{bubbles:true}));
+   const progress=JSON.parse(localStorage.getItem("alevel-maths-calendar-progress-v1")||"{}");
+   return {score:progress["TP-P07-AO3"]?.score,
+    weeklyScore:progress["W01-R1"]?.score};
+  });
+  check(freshMarks.score===0&&freshMarks.weeklyScore===0,
+   item.name+": original marking or weekly independence failed");
+  await page.screenshot({path:join(output,item.name+"-ao-review.png")});
+  await page.evaluate(()=>{location.hash="#/specification/internal/P07";});
+  await page.waitForFunction(()=>
+   document.querySelector('.topic-practice-card[data-ao="AO3"]')?.dataset.progress==="marked");
+  check(await page.$eval('.topic-practice-card[data-ao="AO3"]',node=>
+   node.textContent.includes("0 / 9 marks")),
+   item.name+": a real zero-mark answer was not displayed");
+  await page.evaluate(()=>{location.hash="#/specification/internal";});
+  await page.waitForSelector(".topic-practice-overview");
+  check(await page.$eval(".topic-practice-overview",node=>
+   /1\s*\/\s*54/.test(node.textContent)),
+   item.name+": original AO dashboard has wrong denominator");
+  if(item.name==="phone-360"){
+   // Full A Level Moments skill links must not strand students in Y1 view.
+   await page.evaluate(()=>{location.hash="#/topic-practice/full/M09/AO2";});
+   await page.waitForSelector("#question-assessment #mark-by-parts");
+   const moments=await page.$eval("#mark-by-parts",detail=>
+    [...detail.querySelectorAll("a[href^='#/specification/']")].map(a=>a.getAttribute("href")));
+   check(moments.length>0&&moments.every(h=>h.startsWith("#/specification/full/M09/")),
+    "Moments part-mark links must point to the full syllabus");
+  }
+
   check(pageErrors.length===0,item.name+": page exceptions: "+pageErrors.join(" | "));
   summaries.push({name:item.name,size:item.width+"x"+item.height,
    dynamicHeight:dom.fitted,questionVisible:!dom.questionHidden,
