@@ -114,8 +114,16 @@ function studyPage(n,sec,idx){
  '<small>'+(timed?'MARKING HIDDEN':'QUESTIONS MARKED')+'</small></div></header>'+
  (mock?renderMockPaperBanner({section:sec,questions:all,records:saved,reflections:saved.reflections}):"")+
  sectionNav+
- '<div class="study-layout study-workbench">'+questionNav+
+ '<div class="study-layout study-workbench">'+
+ '<div class="study-question-toolbar" role="group" aria-label="Question navigation">'+
+ '<button type="button" class="btn ghost small study-step-nav" id="previous" aria-label="'+(previousSection?'Previous section':'Previous question')+'"'+
+  (prev?' data-target-route="'+prev+'"':' disabled')+'>← <span>Previous</span></button>'+
+ questionNav+
+ '<button type="button" class="btn small study-step-nav" id="next" aria-label="'+(nextSection?'Next section':'Next question')+'"'+
+  (next?' data-target-route="'+next+'"':' disabled')+'><span>Next</span> →</button></div>'+
  '<article class="paper exam-sheet" aria-labelledby="active-question-title">'+
+ '<div class="study-answer-layout">'+
+ '<section class="study-question-pane" role="region" tabindex="0" aria-label="Question prompt">'+
  '<div class="exam-sheet-topline"><span class="exam-question-number">QUESTION '+String(i+1).padStart(2,"0")+
  ' / '+String(qs.length).padStart(2,"0")+'</span>'+
  '<span class="exam-sheet-points">'+q.marks+' MARKS</span>'+
@@ -128,7 +136,9 @@ function studyPage(n,sec,idx){
   '<li><span class="letter">('+'abcdefghijklmnopqrstuvwxyz'[j]+')</span>'+
   '<div class="question-part math">'+mathHtml(part[0])+'</div>'+
   '<span class="marks">['+part[1]+']</span></li>').join('')+'</ol>'+
- '<hr><div id="question-working-space"></div>'+
+ '</section><section class="study-writing-pane" role="region" tabindex="0" aria-label="Working area">'+
+ '<div id="question-working-space"></div></section></div>'+
+ '<section class="study-review-and-more" aria-label="Hints, solutions and marking">'+
  (timed?'<div class="mock-exam-lock" role="note"><strong>Exam conditions are active.</strong><p>Hints, worked solutions, specification links, marks and attempt history are hidden while the timed paper is running. Your working is saved automatically. Use <strong>Finish timed paper</strong> above to unlock marking and review.</p></div>':
  '<div class="actions" style="margin-top:15px">'+
  '<button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button>'+
@@ -139,14 +149,9 @@ function studyPage(n,sec,idx){
   '<p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p>'+
   '<div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p>'+
   '<p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div>'+
- relatedSkillsMarkup(q)+
- '<div id="question-assessment"></div><div id="attempt-history-root"></div>')+
- '<div class="foot-nav">'+
- '<button type="button" class="btn ghost small" id="previous"'+(prev?' data-target-route="'+prev+'"':' disabled')+'>'+
-   (previousSection?'← Previous section':'← Previous question')+'</button>'+
- '<button type="button" class="btn small" id="next"'+(next?' data-target-route="'+next+'"':' disabled')+'>'+
-   (nextSection?'Next section →':'Next question →')+'</button>'+
- '</div></article></div></section>';
+ '<div id="question-assessment"></div><div id="attempt-history-root"></div>'+
+ relatedSkillsMarkup(q))+
+ '</section></article></div></section>';
 }
 function progressPage(scope="internal",strand="all"){
  const published=releasedQuestions();
