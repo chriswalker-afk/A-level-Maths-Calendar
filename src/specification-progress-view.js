@@ -92,13 +92,13 @@ export function renderTopicProgressDashboard(report,{scope=report.scope,strand="
  const areas=[["all","All topics"],["P","Pure"],["S","Statistics"],["M","Mechanics"]];
  const groups=["P","S","M"].filter(k=>strand==="all"||strand===k);
  let html='<section class="progress-spec-section" aria-label="Specification progress">'+
- '<div class="progress-spec-header"><div><span class="eyebrow">Your syllabus at a glance</span><h2>Progress by specification topic</h2>'+
- '<p>A question is attempted once you record a valid mark—even 0. Topic accuracy is calculated only from fully marked question parts, and is self-assessed rather than teacher-verified.</p></div>'+
+ '<div class="progress-spec-header"><div><h2>Progress by specification topic</h2>'+
+ '</div>'+
  '<a class="btn ghost small" href="#/specification/'+scope+'">Browse the full specification →</a></div>'+
  '<nav class="progress-spec-scope" aria-label="Progress syllabus"><a href="'+boardUrl("internal")+'"'+(scope==="internal"?' aria-current="page" class="selected"':'')+'>Internal exam · Pure + Y1 Applied</a>'+
  '<a href="'+boardUrl("full")+'"'+(scope==="full"?' aria-current="page" class="selected"':'')+'>Full A Level</a></nav>'+
  renderProgressPulse(report)+
- '<div class="progress-spec-explain"><strong>Reading these numbers:</strong> “Skills encountered” counts skills linked to finished questions, including connected skills. An unpractised skill is not automatically a weakness. “Accuracy” uses only attributable marks: completed part-by-part breakdowns, or a whole score for a single-part question. Missing data says <em>No part accuracy yet</em>, never 0%. Topic question counts can overlap in mixed-topic questions.</div>'+
+ '<div class="progress-spec-explain"><strong>Reading these numbers:</strong> “Skills encountered” includes linked skills on finished questions. “Accuracy” uses fully marked parts or single-part questions—not whole multi-part scores. Missing evidence is not 0%, percentages are not grade predictions, and mixed-topic questions may appear under multiple topics.</div>'+
  '<nav class="progress-spec-strands" aria-label="Filter topic progress">'+areas.map(([key,title])=>
  '<a href="'+boardUrl(scope,key)+'"'+(strand===key?' aria-current="page" class="selected"':'')+'>'+title+'</a>').join('')+'</nav>';
  for(const k of groups){
@@ -110,7 +110,7 @@ export function renderTopicProgressDashboard(report,{scope=report.scope,strand="
   (future.length?'<p class="progress-future-note">'+future.length+' additional Year 2 topic is excluded from the internal exam. <a href="'+boardUrl("full",k)+'">View the full A Level →</a></p>':'')+
   '</div>';
  }
- html+='<p class="progress-spec-footnote">All progress is saved only on this device. You can continue to self-mark whole questions; their completion counts. Single-part scores can be assigned to one skill, but multi-part total-only scores cannot be split accurately between skills. Percentages are not predicted exam grades.</p>'+
+ html+=''+
  '</section>';
  return html;
 }
