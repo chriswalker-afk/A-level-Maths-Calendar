@@ -21,6 +21,9 @@ export function mountStudyReviewModes(root,{questionPane,mobileTabs,onFirstRevie
  const hasMobile=Boolean(questionPane&&desktopTabs&&mobileButtons?.question&&
    mobileButtons.work&&mobileButtons.review);
  const doc=root.ownerDocument,view=doc.defaultView;
+ const page=root.closest(".study-page");
+ const layout=root.closest(".study-answer-layout");
+ const questionBar=page?.querySelector(".study-question-toolbar");
  const media=view?.matchMedia?.("(max-width: 900px)")||null;
  let mobile=Boolean(hasMobile&&media?.matches);
  let active="work",mobileActive="question",hasReviewed=false;
@@ -34,6 +37,7 @@ export function mountStudyReviewModes(root,{questionPane,mobileTabs,onFirstRevie
   if(mode!=="work"&&mode!=="review")return false;
   if(mode==="review"&&!available)return false;
   if(active===mode)return true;
+  if(active==="work"&&mode==="review")dismissWorkingKeyboard();
   active=mode;
   for(const [tab,panel,key] of [[workTab,workPanel,"work"],[reviewTab,reviewPanel,"review"]]){
    const selected=key===mode;
@@ -55,6 +59,20 @@ export function mountStudyReviewModes(root,{questionPane,mobileTabs,onFirstRevie
   if(focused&&workPanel.contains(focused))focused.blur?.();
   // MathLive's keyboard is outside the working panel; hide it when leaving.
   view?.mathVirtualKeyboard?.hide?.();
+ }
+ // Subtract the actual position of the workbench, not an estimated header
+ // height. visualViewport also responds when a phone keyboard opens.
+ function fitViewport(){
+  if(!view||!page||!layout)return;
+  const rect=layout.getBoundingClientRect();
+  const visibleHeight=view.visualViewport?.height??view.innerHeight;
+  if(rect.width<1||!Number.isFinite(visibleHeight)||visibleHeight<220)return;
+  const visualBottom=visibleHeight+(view.visualViewport?.offsetTop||0);
+  const available=Math.floor(visualBottom-rect.top-10);
+  const target=Math.max(220,Math.min(820,Math.floor(visibleHeight-20),available));
+  page.style.setProperty("--study-fit-height",target+"px");
+  const navHeight=questionBar?.getBoundingClientRect().height;
+  if(navHeight>0)page.style.setProperty("--study-nav-height",Math.round(navHeight)+"px");
  }
  function syncViewport(){
   if(!hasMobile)return;
@@ -88,7 +106,7 @@ export function mountStudyReviewModes(root,{questionPane,mobileTabs,onFirstRevie
   if(mode==="review"&&!available)return false;
   if(mode===mobileActive)return true;
   const oldMode=mobileActive;
-  if(oldMode==="work"&&mode!=="work")dismissWorkingKeyboard();
+  if(oldMode==="work"&&mode==="question")dismissWorkingKeyboard();
   // Reveal the containing pane before typesetting a newly opened solution.
   if(mode!=="question"){
    root.hidden=false;
@@ -102,6 +120,7 @@ export function mountStudyReviewModes(root,{questionPane,mobileTabs,onFirstRevie
   }
   mobileActive=mode;
   syncViewport();
+  fitViewport();
   return true;
  }
 
@@ -141,6 +160,7 @@ export function mountStudyReviewModes(root,{questionPane,mobileTabs,onFirstRevie
     if(mobile&&desktopHadFocus)mobileButtons[mobileActive].focus();
     if(!mobile&&mobileHadFocus)(active==="work"?workTab:reviewTab).focus();
     if(!mobile&&active==="work")onReturnToWork?.();
+    fitViewport();
    };
    if(typeof media.addEventListener==="function"){
     media.addEventListener("change",respond);
@@ -152,5 +172,27 @@ export function mountStudyReviewModes(root,{questionPane,mobileTabs,onFirstRevie
   }
   syncViewport();
  }
- return ()=>{for(const cleanup of unbind)cleanup();};
+ if(page&&layout&&view){
+  bind(view,"resize",fitViewport);
+  if(view.visualViewport){
+   bind(view.visualViewport,"resize",fitViewport);
+   bind(view.visualViewport,"scroll",fitViewport);
+  }
+  const Observer=view.ResizeObserver||globalThis.ResizeObserver;
+  if(typeof Observer==="function"){
+   const observer=new Observer(fitViewport);
+   for(const target of [questionBar,page.querySelector(".study-header"),
+     page.querySelector(".study-section-nav"),page.querySelector(".mock-paper-banner"),
+     mobileTabs]){
+    if(target)observer.observe(target);
+   }
+   unbind.push(()=>observer.disconnect());
+  }
+  fitViewport();
+ }
+ return ()=>{
+  for(const cleanup of unbind)cleanup();
+  page?.style.removeProperty("--study-fit-height");
+  page?.style.removeProperty("--study-nav-height");
+ };
 }
