@@ -4,9 +4,9 @@ const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 export function renderRevisionSuggestions({questions=[],records={},report,scope="internal"}={}){
  const suggestions=recommendRevision({questions,records,report,scope});
  return '<section class="revision-suggestions" aria-labelledby="revision-suggestions-title">'+
- '<div class="revision-suggestions-head"><div><span class="eyebrow">A useful next step</span>'+
+ '<div class="revision-suggestions-head"><div>'+
  '<h2 id="revision-suggestions-title">What should I practise next?</h2>'+
- '<p>Suggestions use your saved marks, need for help and which published skills you have already encountered. They are suggestions, not a judgement of your ability.</p></div>'+
+ '<p>Based on your saved marks, help used and skills practised.</p></div>'+
  '<a class="btn ghost small" href="#/calendar">Browse all released practice →</a></div>'+
  (suggestions.length?'<div class="revision-suggestions-grid">'+suggestions.map((item,index)=>{
   const skill=getSpecSkill(item.primarySkillId);
