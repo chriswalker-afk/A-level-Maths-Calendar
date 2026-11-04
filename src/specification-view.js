@@ -29,7 +29,6 @@ function intro(scope){
  const count=specificationCounts(scope);
  return '<section class="spec-hero"><div>'+
  '<h1 class="page-title">My Specification</h1>'+
- ''+
  '<div class="spec-hero-metrics">'+
  '<div><strong>'+count.totalTopics+'</strong><span>topic groups</span></div>'+
  '<div><strong>'+count.visibleSkills+'</strong><span>skills in this programme</span></div>'+
@@ -84,7 +83,7 @@ function renderOverview(scope,report){
  const initial=renderGroups(scope,report);
  return '<div class="page spec-page">'+intro(scope)+renderProgressPulse(report,{compact:true})+
  '<section class="spec-explainer"><div class="spec-explainer-icon" aria-hidden="true">i</div>'+
- '<div><strong>What do the progress numbers mean?</strong><p>Based on your self-marked practice, not teacher assessment. Accuracy uses fully marked parts; missing practice is not 0%, and percentages are not predicted grades.</p></div></section>'+
+ '<div><strong>What do the progress numbers mean?</strong><p>Not a score report from your teacher: progress comes from your self-marks. Accuracy uses fully marked parts; missing practice is not 0%, and percentages are not predicted grades.</p></div></section>'+
  '<div class="spec-tools"><div class="spec-search-wrap"><label for="spec-search">Search skills and topics</label>'+
  '<input type="search" id="spec-search" placeholder="Try '+"'"+'chain rule, discriminant, normal distribution…'+"'"+'" value="'+escape(searchTerm)+'" autocomplete="off">'+
  '</div><div class="spec-strand-wrap"><span class="spec-filter-caption">Filter by area</span><div class="spec-strand-buttons" role="group" aria-label="Filter specification by area">'+
