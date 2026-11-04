@@ -203,6 +203,16 @@ try{
    check(mathSaved==="x^2-4","mobile Maths steps fallback did not save");
    await page.click("#work-tab-draw");
    await page.waitForSelector("#working-ink",{visible:true});
+   await page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));
+   const drawingLayout=await page.evaluate(()=>{
+    const canvas=document.querySelector("#working-ink");
+    const rec=JSON.parse(localStorage.getItem("alevel-maths-calendar-progress-v1")||"{}");
+    return {width:canvas.width,height:canvas.height,rectWidth:canvas.getBoundingClientRect().width,
+     mode:rec["W01-R1"]?.workspace?.mode,visible:!canvas.closest(".work-panel").hidden};
+   });
+   console.log("DRAWING_LAYOUT "+JSON.stringify(drawingLayout));
+   check(drawingLayout.width>0&&drawingLayout.rectWidth>0,
+    "Draw canvas did not initialise after returning from Maths steps");
    await page.$eval("#working-ink",canvas=>{
     const rect=canvas.getBoundingClientRect();
     const start={bubbles:true,cancelable:true,pointerId:71,pointerType:"pen",button:0,
