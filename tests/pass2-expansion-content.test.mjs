@@ -122,7 +122,7 @@ test("All new mathematical text is balanced, parsable MathJax without raw TeX or
 test("Mark scheme part-level method credits match the declared part marks for all additions",()=>{
  for(const qs of weeks)for(const q of qs.filter(toNew))
   for(let j=0;j<q.parts.length;j++){
-   const marks=[...q.steps[j].matchAll(/\[(\d+)\]/g)].map(x=>Number(x[1])).reduce((a,b)=>a+b,0);
+   const marks=[...q.steps[j].matchAll(/\s\[(\d+)\](?:\s|$)/g)].map(x=>Number(x[1])).reduce((a,b)=>a+b,0);
    assert.equal(marks,q.parts[j][1],q.id+" part "+(j+1));
   }
 });
