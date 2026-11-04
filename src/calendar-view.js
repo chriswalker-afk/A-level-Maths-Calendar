@@ -55,17 +55,18 @@ export function renderQuestionIndex({section,questions,index,isFinished=()=>fals
  const nav=questions.map((q,i)=>{
   const label=q.id.split("-")[1]||String(i+1);
   return '<button type="button" data-jump="'+i+'" class="question-index-item'+(i===index?' active':'')+'"'+
-    (i===index?' aria-current="true"':'')+'>'+
-    '<span class="qid">'+esc(label)+'</span>'+
-    '<span class="question-index-title">'+esc(q.title)+'</span>'+
-    '<span class="q-complete-indicator" aria-label="Question finished"'+(isFinished(q)?'':' hidden')+'>✓</span>'+
-    (isRetrying(q)?'<span class="q-retrying" aria-label="Reattempt in progress">↻</span>':'')+
-    '</button>';
+   (i===index?' aria-current="true"':'')+
+   ' aria-label="Question '+(i+1)+': '+esc(q.title)+'" title="'+esc(q.title)+'">'+
+   '<span class="qid">'+esc(label)+'</span>'+
+   '<span class="question-index-title">'+esc(q.title)+'</span>'+
+   '<span class="q-complete-indicator" aria-label="Question finished"'+(isFinished(q)?'':' hidden')+'>✓</span>'+
+   (isRetrying(q)?'<span class="q-retrying" aria-label="Reattempt in progress">↻</span>':'')+
+   '</button>';
  }).join("");
- return '<aside class="side question-index"><div class="question-index-heading"><span>SECTION '+esc(section)+'</span>'+
- '<strong>'+questions.length+' QUESTIONS</strong></div>'+
- '<div class="question-links" aria-label="Questions in this section">'+nav+'</div>'+
- '<div class="question-index-foot"><span>✓ MARKED</span><span>↻ REATTEMPT</span></div></aside>';
+ return '<nav class="question-index" aria-label="Questions in section '+esc(section)+'">'+
+  '<div class="question-index-heading"><span>SECTION '+esc(section)+'</span>'+
+  '<strong>'+(index+1)+' / '+questions.length+'</strong></div>'+
+  '<div class="question-links">'+nav+'</div></nav>';
 }
 function renderCell(week,status){
  const ready=Boolean(status?.released);
