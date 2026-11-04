@@ -1,0 +1,125 @@
+/* Other maths sites: reuse the calendar's paper/ink/cobalt/lime identity. */
+.links-page{max-width:1220px;margin:0 auto}
+.links-page .back{margin-bottom:15px}
+.links-page-header{
+  border-bottom:2px solid var(--editorial-ink);
+  padding-bottom:20px;margin-bottom:24px
+}
+.links-page-header h1{
+  margin:2px 0 7px;
+  font:700 clamp(29px,4vw,48px)/1.13 var(--editorial-font-display)
+}
+.links-page-intro{
+  margin:0;color:var(--editorial-quiet);font-size:14px
+}
+.links-page-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px
+}
+.links-resource{
+  --links-accent:var(--editorial-cobalt);
+  position:relative;display:flex;flex-direction:column;
+  min-width:0;min-height:245px;overflow:hidden;
+  padding:21px 23px 18px;text-decoration:none;
+  border:2px solid var(--editorial-ink);
+  border-top:6px solid var(--links-accent);
+  border-radius:var(--editorial-radius);
+  background:var(--editorial-paper);
+  color:var(--editorial-ink);
+  transition:transform 150ms ease,box-shadow 150ms ease
+}
+.links-resource--statistics{--links-accent:var(--editorial-cobalt)}
+.links-resource--mechanics{--links-accent:var(--editorial-coral)}
+.links-resource--words{--links-accent:#24846c}
+.links-resource--sampling{--links-accent:#8660ac}
+.links-resource:hover{
+  transform:translateY(-3px);
+  box-shadow:5px 5px 0 var(--editorial-ink)
+}
+.links-resource:focus-visible{
+  outline:3px solid var(--editorial-cobalt);
+  outline-offset:4px
+}
+.links-resource-top,.links-resource-bottom{
+  display:flex;align-items:center;justify-content:space-between;gap:14px
+}
+.links-resource-top{
+  position:relative;z-index:1;
+  font:700 10px/1.4 var(--editorial-font-index)
+}
+.links-resource-subject{
+  color:var(--editorial-quiet);letter-spacing:.04em
+}
+.links-resource-number{
+  color:var(--links-accent);font-size:14px
+}
+.links-resource-symbol{
+  position:absolute;right:30px;top:47px;
+  color:var(--links-accent);opacity:.14;
+  font:700 clamp(65px,8vw,105px)/1 var(--editorial-font-display);
+  pointer-events:none;user-select:none
+}
+.links-resource-copy{
+  position:relative;z-index:1;
+  padding:25px 0 20px;max-width:88%
+}
+.links-resource-copy h2{
+  font:700 clamp(23px,2.7vw,31px)/1.18 var(--editorial-font-display);
+  margin:0 0 10px;letter-spacing:-.035em
+}
+.links-resource-copy p{
+  color:var(--editorial-quiet);
+  font-size:13px;line-height:1.6;margin:0;max-width:44ch
+}
+.links-resource-bottom{
+  position:relative;z-index:1;margin-top:auto;
+  border-top:1px solid var(--editorial-rule);
+  padding-top:12px
+}
+.links-resource-domain{
+  min-width:0;overflow-wrap:anywhere;
+  color:var(--editorial-quiet);
+  font:600 10px/1.5 var(--editorial-font-index)
+}
+.links-resource-cta{
+  flex:none;display:flex;align-items:center;gap:8px;
+  color:var(--editorial-cobalt);
+  font:700 12px/1.4 var(--editorial-font-display)
+}
+.links-resource-cta span{font-size:19px;line-height:1}
+.links-visually-hidden{
+  position:absolute;width:1px;height:1px;overflow:hidden;
+  white-space:nowrap;clip-path:inset(50%)
+}
+@media(max-width:1100px){
+  /* Five main links still fit without stealing space from the brand. */
+  .topbar nav{gap:2px}
+  .topbar nav a{padding-inline:10px}
+}
+@media(max-width:760px){
+  .links-page-grid{grid-template-columns:1fr;gap:12px}
+  .links-resource{min-height:212px;padding:18px 19px 15px}
+  .links-resource-copy{padding-top:17px;max-width:90%}
+  .links-page-header{margin-bottom:16px;padding-bottom:15px}
+}
+@media(max-width:730px){
+  .topbar nav{justify-content:flex-start;gap:5px}
+  .topbar nav a{flex:0 0 auto;min-height:44px;display:inline-flex;align-items:center}
+}
+@media(max-width:420px){
+  .links-resource{padding:15px 14px;min-height:206px}
+  .links-resource-copy{max-width:93%;padding-top:15px}
+  .links-resource-domain{font-size:9px}
+  .links-resource-symbol{right:16px;top:40px}
+}
+@media(prefers-reduced-motion:reduce){
+  .links-resource{transition:none}
+  .links-resource:hover{transform:none}
+}
+@media print{
+  .links-resource{
+    break-inside:avoid;box-shadow:none!important;
+    border-color:#555!important;background:#fff!important
+  }
+  .links-resource:hover{transform:none}
+}
