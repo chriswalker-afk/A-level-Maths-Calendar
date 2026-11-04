@@ -84,7 +84,7 @@ export const week06ExpansionPure = [
       "Use \\((1+u)^\\alpha=1+\\alpha u+\\frac{\\alpha(\\alpha-1)}{2!}u^2+\\frac{\\alpha(\\alpha-1)(\\alpha-2)}{3!}u^3+\\cdots\\). [1] With \\(\\alpha=-1/2,\\ u=2x\\), the successive coefficients are \\(-x\\), \\(+\\frac32x^2\\) and \\(-\\frac52x^3\\). [3]",
       "The generalised series converges for \\(|2x|<1\\). [1] Thus \\(-\\frac12<x<\\frac12\\); outside this interval the power-series expansion about zero is not generally valid. [1]",
       "At x=0.1, the cubic gives \\(1-0.1+\\frac32(0.1)^2-\\frac52(0.1)^3=0.9125\\). [2]",
-      "The fourth-degree term is \\(+\\frac{35}{8}x^4\\). [1] At x=0.1 its magnitude is \\(0.0004375\\), so the cubic estimate should be accurate to roughly four decimal places only cautiously; for this alternating decreasing series the exact remainder is smaller than that next term. [1]"
+      "The fourth-degree term is \\(+\\frac{35}{8}x^4\\). [1] At x=0.1 its magnitude is \\(0.0004375\\), so, because the terms alternate and decrease at x=0.1, the absolute error in the cubic estimate is less than 0.0004375. This bound alone does not guarantee agreement when rounding to three or four decimal places. [1]"
     ],
     "answer": "\\((1+2x)^{-1/2}=1-x+\\frac32x^2-\\frac52x^3+\\cdots\\) for |x|<1/2, cubic at 0.1 =0.9125, next term +0.0004375.",
     "misconception": "The convergence condition applies to u=2x, not directly to x; do not assume the interval is −1<x<1.",
