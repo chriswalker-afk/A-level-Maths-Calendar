@@ -1,0 +1,231 @@
+/* Pass A — question and working share one stable, two-panel study viewport.
+   Keep this isolated from the calendar and other editorial page styles. */
+.study-page{padding-top:12px}
+.study-page .study-header{
+  gap:12px;padding:3px 0 10px;margin-bottom:9px;border-bottom-width:2px
+}
+.study-page .study-back{padding:6px 9px;margin-top:0;align-self:center}
+.study-page .study-header-title h1{
+  margin:2px 0 0;font-size:clamp(22px,2.7vw,32px);line-height:1.12
+}
+.study-page .study-header-title .eyebrow{font-size:9px}
+.study-page .study-header-progress{padding-left:11px}
+.study-page .study-header-progress strong{font-size:24px}
+.study-page .study-header-progress strong span{font-size:13px}
+.study-page .study-section-nav{
+  flex-direction:row;align-items:stretch;margin-bottom:9px
+}
+.study-page .study-section-nav-heading{
+  flex:0 0 84px;flex-direction:column;gap:3px;padding:8px 10px;
+  border-right:1px solid #8ba3a0;border-bottom:0
+}
+.study-page .study-section-strip{
+  display:flex;grid-template-columns:none;gap:2px;flex:1;min-width:0;
+  overflow-x:auto;scrollbar-width:thin;scroll-snap-type:x proximity
+}
+.study-page .study-section-link{
+  flex:1 0 126px;min-width:116px;padding:7px 9px;gap:3px;
+  scroll-snap-align:start
+}
+.study-page .study-section-name{font-size:11px;line-height:1.2}
+.study-page .study-section-progress{font-size:9px}
+
+/* Compact, persistent question selection takes the place of the wide sidebar. */
+.study-page .study-workbench{
+  display:flex;flex-direction:column;min-width:0;gap:0
+}
+.study-page .study-question-toolbar{
+  position:sticky;top:0;z-index:5;
+  display:flex;align-items:stretch;min-width:0;
+  border-bottom:2px solid var(--editorial-ink);
+  background:var(--editorial-ink)
+}
+.study-page .study-step-nav{
+  flex:0 0 auto;min-width:82px;min-height:54px;padding:0 12px;
+  border:0;border-radius:0;background:#263a42;color:#fff;
+  font:700 11px var(--editorial-font-index);white-space:nowrap
+}
+.study-page .study-step-nav:hover:not(:disabled){background:#40585a;color:#fff}
+.study-page .study-step-nav:disabled{background:#263a42;color:#9aaba8;opacity:1}
+.study-page #next{background:var(--editorial-lime);color:var(--editorial-ink)}
+.study-page #next:hover:not(:disabled){background:#d1f080;color:var(--editorial-ink)}
+.study-page #next:disabled{background:#c5cfc0;color:#54615b}
+.study-page .study-question-toolbar .question-index{
+  display:flex;flex:1;align-items:stretch;min-width:0;
+  background:#eef2e9;border-left:2px solid var(--editorial-ink);
+  border-right:2px solid var(--editorial-ink)
+}
+.study-page .study-question-toolbar .question-index-heading{
+  display:flex;flex:0 0 84px;flex-direction:column;justify-content:center;
+  align-items:flex-start;gap:2px;padding:7px 9px;
+  border-bottom:0;border-right:1px solid #bdc9bd;
+  background:#e1f1d7
+}
+.study-page .study-question-toolbar .question-index-heading span{
+  font:700 9px var(--editorial-font-index);letter-spacing:.01em
+}
+.study-page .study-question-toolbar .question-index-heading strong{
+  font:700 12px var(--editorial-font-index)
+}
+.study-page .study-question-toolbar .question-links{
+  display:flex;flex:1;min-width:0;align-items:center;
+  flex-direction:row;gap:4px;padding:5px 8px;
+  overflow-x:auto;scrollbar-width:thin;scroll-snap-type:x proximity
+}
+.study-page .study-question-toolbar .question-index-item{
+  display:inline-flex;flex:0 0 auto;justify-content:center;
+  align-items:center;position:relative;width:auto;min-width:47px;
+  min-height:40px;gap:2px;padding:4px 5px;text-align:center;
+  border:1.5px solid #bbcbbd;border-radius:3px;
+  background:#fffefa;scroll-snap-align:center
+}
+.study-page .study-question-toolbar .question-index-item:hover{background:#e2eadd}
+.study-page .study-question-toolbar .question-index-item.active{
+  background:var(--editorial-lime);border-color:var(--editorial-ink);
+  box-shadow:inset 0 -4px 0 var(--editorial-orange)
+}
+.study-page .study-question-toolbar .question-index .qid,
+.study-page .study-question-toolbar .question-index .question-index-item.active .qid{
+  min-width:0;padding:0;border:0;background:transparent;
+  color:var(--editorial-ink);font:700 11px var(--editorial-font-index)
+}
+.study-page .study-question-toolbar .question-index-title{
+  position:absolute;width:1px;height:1px;padding:0;overflow:hidden;
+  white-space:nowrap;clip:rect(0,0,0,0);clip-path:inset(50%)
+}
+.study-page .study-question-toolbar .q-complete-indicator{
+  margin-left:1px;color:#176643;font:700 11px var(--editorial-font-index)
+}
+.study-page .study-question-toolbar .q-retrying{
+  font:700 11px var(--editorial-font-index);color:var(--editorial-cobalt)
+}
+.study-page .study-question-toolbar .question-index-item:focus-visible,
+.study-page .study-step-nav:focus-visible{
+  outline:3px solid var(--editorial-orange);outline-offset:-3px
+}
+
+/* The question and the editable workspace scroll independently. */
+.study-page .study-workbench .paper.exam-sheet{
+  display:block;padding:0;min-width:0
+}
+.study-page .study-answer-layout{
+  display:grid;grid-template-columns:minmax(0, .96fr) minmax(0, 1.04fr);
+  height:clamp(375px,calc(100vh - 315px),820px);
+  height:clamp(375px,calc(100dvh - 315px),820px);
+  min-width:0;min-height:0
+}
+.study-page-mock .study-answer-layout{
+  height:clamp(350px,calc(100vh - 445px),760px);
+  height:clamp(350px,calc(100dvh - 445px),760px)
+}
+.study-page .study-question-pane,
+.study-page .study-writing-pane{
+  min-width:0;min-height:0;overflow-y:auto;overflow-x:auto;
+  overscroll-behavior:contain;scrollbar-gutter:stable;
+  scrollbar-width:thin
+}
+.study-page .study-question-pane{
+  padding:15px clamp(15px,2vw,25px) 22px;
+  background:var(--editorial-paper)
+}
+.study-page .study-writing-pane{
+  padding:14px clamp(12px,1.6vw,21px) 20px;
+  border-left:2px solid var(--editorial-ink);
+  background:var(--editorial-wash)
+}
+.study-page .study-question-pane:focus-visible,
+.study-page .study-writing-pane:focus-visible{
+  outline:3px solid var(--editorial-cobalt);outline-offset:-3px
+}
+.study-page .study-question-pane .exam-sheet-topline{padding-bottom:8px}
+.study-page .study-question-pane .exam-sheet-title{
+  align-items:center;gap:8px;padding:12px 0 11px
+}
+.study-page .study-question-pane .exam-sheet-title h2{
+  font-size:clamp(20px,2.1vw,27px);line-height:1.24
+}
+.study-page .study-question-pane .stem{font-size:15px;line-height:1.65}
+.study-page .study-question-pane .parts{margin:12px 0}
+.study-page .study-question-pane .parts li{padding:9px 0}
+
+/* Flatten the nested editor card so the right panel is working space, not a card within a card. */
+.study-page .study-writing-pane #question-working-space{
+  min-height:100%;display:flex;min-width:0
+}
+.study-page .study-workbench .study-writing-pane .student-workspace{
+  flex:1;display:flex;flex-direction:column;min-width:0;min-height:100%;
+  margin:0;padding:0;border:0;border-radius:0;
+  background:transparent;box-shadow:none
+}
+.study-page .study-writing-pane .work-header{
+  gap:8px;align-items:center;padding-bottom:8px
+}
+.study-page .study-writing-pane .work-header h3{font-size:18px}
+.study-page .study-writing-pane .work-header-actions{
+  gap:8px;align-items:center;flex-direction:row
+}
+.study-page .study-writing-pane .work-mode-tabs{margin-top:8px}
+.study-page .study-writing-pane .work-mode-tabs button{
+  min-height:40px;padding:7px 4px
+}
+.study-page .study-writing-pane .work-panel{padding:9px 0 0}
+.study-page .study-writing-pane .work-panel:not([hidden]){
+  display:flex;flex:1;flex-direction:column;min-height:0
+}
+.study-page .study-writing-pane .work-notes{
+  flex:1;min-height:215px
+}
+.study-page .study-review-and-more{
+  padding:18px clamp(15px,2.5vw,30px) 30px;
+  border-top:2px solid var(--editorial-ink);
+  background:var(--editorial-paper)
+}
+.study-page .study-review-and-more>.actions{margin-top:0!important}
+.study-page .study-review-and-more .question-skill-links{margin-top:24px}
+.study-page .study-review-and-more .mock-exam-lock{margin-top:0}
+.study-page #hint-box,.study-page #solution-box,.study-page #question-assessment{scroll-margin-top:66px}
+
+/* Keep writing and drawing usable on narrow screens until the tabbed layout in Pass C. */
+@media(max-width:900px){
+  .study-page .study-answer-layout,.study-page-mock .study-answer-layout{
+    display:flex;flex-direction:column;height:auto;min-height:0
+  }
+  .study-page .study-question-pane,.study-page .study-writing-pane{
+    overflow:visible;scrollbar-gutter:auto;max-height:none
+  }
+  .study-page .study-question-pane{padding:15px 18px 20px}
+  .study-page .study-writing-pane{
+    border-left:0;border-top:2px solid var(--editorial-ink);
+    padding:16px 18px 20px
+  }
+  .study-page .study-writing-pane #question-working-space{min-height:260px}
+  .study-page .study-writing-pane .work-notes{min-height:235px}
+  .study-page .study-section-link{flex:0 0 142px;min-width:125px}
+}
+@media(max-width:610px){
+  .study-page .study-header{gap:8px}
+  .study-page .study-header-title h1{font-size:23px}
+  .study-page .study-section-nav-heading{flex:0 0 64px;padding:7px}
+  .study-page .study-section-link{flex:0 0 136px}
+  .study-page .study-question-toolbar .question-index-heading{
+    flex:0 0 51px;align-items:center;padding:5px 2px
+  }
+  .study-page .study-question-toolbar .question-index-heading span{display:none}
+  .study-page .study-question-toolbar .question-index-heading strong{font-size:11px}
+  .study-page .study-step-nav{min-width:43px;padding:0 9px;min-height:49px}
+  .study-page .study-step-nav span{display:none}
+  .study-page .study-question-toolbar .question-links{padding:5px;gap:3px}
+  .study-page .study-question-toolbar .question-index-item{min-width:42px;min-height:38px}
+  .study-page .study-question-pane,.study-page .study-writing-pane{padding-left:12px;padding-right:12px}
+  .study-page .study-review-and-more{padding:14px 12px 24px}
+}
+@media print{
+  .study-page .study-question-toolbar{display:none!important}
+  .study-page .study-answer-layout,.study-page-mock .study-answer-layout{
+    display:block;height:auto!important
+  }
+  .study-page .study-question-pane,.study-page .study-writing-pane{
+    overflow:visible;scrollbar-gutter:auto;padding:8px 0;border:0;max-height:none
+  }
+  .study-page .study-review-and-more{border:0;padding:10px 0}
+}
