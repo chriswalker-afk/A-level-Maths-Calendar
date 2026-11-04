@@ -226,3 +226,20 @@
  .study-page .study-back{padding:6px 8px;font-size:10px;min-height:36px}
  .study-page .study-section-nav{margin-bottom:5px}
 }
+
+/* On phones the "My working" view tab already names this area.
+   Keep its heading in the accessibility tree without repeating it visually. */
+@media(max-width:600px){
+ .study-page .study-work-panel .work-header{
+   position:relative;flex-direction:row;justify-content:flex-end;
+   align-items:center;min-height:0;padding-bottom:7px
+ }
+ .study-page .study-work-panel .work-heading-copy{
+   position:absolute;width:1px;height:1px;overflow:hidden;
+   white-space:nowrap;clip-path:inset(50%)
+ }
+ .study-page .study-work-panel .work-header-actions{
+   width:100%;margin:0;display:flex;flex-direction:row;
+   justify-content:space-between;align-items:center
+ }
+}
