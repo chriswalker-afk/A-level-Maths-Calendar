@@ -63,7 +63,8 @@ test("Week 7: two competing growth models, regression influence, critical-tail b
   const slope=sxy/sxx;return [slope,ym-slope*xm];
  };
  assert.deepEqual(fit(pts),[1.6,2]);
- assert.deepEqual(fit([...pts,[10,30]]),[2.8,-2.8000000000000007].map(Number).map((x,i)=>i===1?-2.8000000000000007:x)); // compare outputs precisely below
+ const allFive=fit([...pts,[10,30]]);
+ close(allFive[0],2.8);close(allFive[1],-2.8);
  close(tail(12,.5,10),79/4096);
  assert.ok(tail(12,.5,10)<.05&&tail(12,.5,9)>.05);
  assert.ok(tail(12,.5,10)>.01&&tail(12,.5,11)<.01);
