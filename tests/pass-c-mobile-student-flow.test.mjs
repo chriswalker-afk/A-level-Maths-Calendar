@@ -127,7 +127,7 @@ test("small screen stylesheet keeps math legible, supports landscape and printin
  assert.match(index,/styles\/responsive-workbench\.css/);
  assert.match(css,/@media\(max-width:900px\)/);
  assert.match(css,/\.study-mobile-tabs:not\(\[hidden\]\)/);
- assert.match(css,/height:clamp\(300px,calc\(100dvh - 330px\),750px\)/);
+ assert.match(css,/height:var\(--study-fit-height,clamp\(300px,calc\(100dvh - 330px\),750px\)\)/);
  assert.match(css,/overflow-x:auto;overflow-y:auto/);
  assert.match(css,/\.study-page \.study-marking-dock/);
  assert.match(css,/@media\(max-width:900px\) and \(max-height:520px\)/);
