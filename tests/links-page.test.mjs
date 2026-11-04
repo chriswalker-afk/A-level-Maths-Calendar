@@ -8,18 +8,19 @@ const urls={
  "Statistics Lab":"https://statistics.mrwalkermaths.com/",
  "Mechanics Lab":"https://mechanics.mrwalkermaths.com/",
  "Maths Words Lab":"https://words.mrwalkermaths.com/",
- "Sampling Arcade":"https://sampling.mrwalkermaths.com/"
+ "Sampling Arcade":"https://sampling.mrwalkermaths.com/",
+ "Race Around the Large Data Set":"https://lds.mrwalkermaths.com/"
 };
 
-test("links page contains the four configured maths tools, with clear external links",()=>{
- assert.equal(mathsLinks.length,4);
+test("links page contains the five configured maths tools, with clear external links",()=>{
+ assert.equal(mathsLinks.length,5);
  assert.deepEqual(Object.fromEntries(mathsLinks.map(x=>[x.title,x.href])),urls);
  const dom=new JSDOM(renderLinksPage(),{url:"https://example.com/A-level-Maths-Calendar/#/links"});
  const doc=dom.window.document;
  assert.equal(doc.querySelector("#links-page-title").textContent,"More maths tools");
  assert.equal(doc.querySelector(".back").getAttribute("href"),"#/calendar");
  const cards=[...doc.querySelectorAll(".links-page-grid .links-resource")];
- assert.equal(cards.length,4);
+ assert.equal(cards.length,5);
  for(let i=0;i<cards.length;i++){
    const card=cards[i],link=mathsLinks[i];
    assert.equal(card.tagName,"A");
@@ -32,6 +33,7 @@ test("links page contains the four configured maths tools, with clear external l
    assert.equal(card.getAttribute("aria-describedby"),card.querySelector("p").id);
    assert.match(card.querySelector(".links-resource-domain").textContent,/mrwalkermaths\.com/);
    assert.equal(new URL(link.href).protocol,"https:");
+   if(link.id==="lds")assert.equal(card.querySelector(".links-resource-number").textContent,"05");
    assert.equal(card.querySelectorAll("button").length,0);
  }
  dom.window.close();
@@ -72,7 +74,7 @@ test("route links are reachable from the main navigation, active and independent
   assert.ok(nav,"Links appears in the site navigation");
   assert.equal(nav.getAttribute("href"),"#/links");
   assert.equal(nav.classList.contains("active"),true);
-  assert.equal(root.querySelectorAll(".links-resource").length,4);
+  assert.equal(root.querySelectorAll(".links-resource").length,5);
   assert.equal(doc.title,"More maths tools — A Level Maths Calendar");
   const goto=hash=>{window.location.hash=hash;window.dispatchEvent(new window.Event("hashchange"));};
   goto("#/calendar");
@@ -80,7 +82,7 @@ test("route links are reachable from the main navigation, active and independent
   assert.equal(nav.classList.contains("active"),false);
   goto("#/links");
   assert.equal(nav.classList.contains("active"),true);
-  assert.equal(root.querySelectorAll(".links-resource").length,4);
+  assert.equal(root.querySelectorAll(".links-resource").length,5);
   assert.equal(doc.activeElement,root.querySelector("h1"),"Route title receives keyboard focus");
   assert.deepEqual(JSON.parse(window.localStorage.getItem(key)),saved,
    "Visiting external resources must not change student progress");
