@@ -12,6 +12,12 @@ The visual identity uses large week numerals, ruled graph-paper layouts, warm pa
 
 **Design and flow reference:** [docs/VISUAL_IDENTITY_AND_FLOW.md](docs/VISUAL_IDENTITY_AND_FLOW.md). The finishing stylesheet `styles/identity-polish.css` now applies the same identity across the maths editor, marking, specification, progress, retry history and backups. New components should reuse its palette and typography rather than introduce a separate theme. New navigation regressions are covered by `tests/calendar-flow.test.mjs` and `tests/calendar-route-ui.test.mjs`.
 
+## Links to other maths websites
+
+The **Links** tab (`#/links`) offers four independent resources: [Statistics Lab](https://statistics.mrwalkermaths.com/), [Mechanics Lab](https://mechanics.mrwalkermaths.com/), [Maths Words Lab](https://words.mrwalkermaths.com/), and [Sampling Arcade](https://sampling.mrwalkermaths.com/). Cards open in a new tab so students can return to their Calendar working without navigating away.
+
+To add, rename or update a link, edit the data list in `src/links-view.js`; the route uses `styles/links-page.css` and is tested in `tests/links-page.test.mjs` and the Chrome browser audit. These are separate GitHub Pages sites with their own browser storage; saved calendar marks do not transfer.
+
 ## Two linked programmes
 
 1. **Internal exam preparation:** 10 weeks, all Pure Mathematics + Year 1 Statistics & Mechanics. Four essential hours per week, one recommended hour of timed work, one optional hour for extended challenge or repair.
