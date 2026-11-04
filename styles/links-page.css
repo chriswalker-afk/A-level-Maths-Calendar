@@ -103,8 +103,15 @@
   .links-page-header{margin-bottom:16px;padding-bottom:15px}
 }
 @media(max-width:730px){
-  .topbar nav{justify-content:flex-start;gap:5px}
-  .topbar nav a{flex:0 0 auto;min-height:44px;display:inline-flex;align-items:center}
+  /* A scroll-only navigation hides the final item on phones; wrap instead. */
+  .topbar nav{
+    flex-wrap:wrap;overflow:visible;
+    justify-content:flex-start;gap:2px 4px
+  }
+  .topbar nav a{
+    flex:0 0 auto;min-height:44px;
+    display:inline-flex;align-items:center;padding:7px 9px
+  }
 }
 @media(max-width:420px){
   .links-resource{padding:15px 14px;min-height:206px}
