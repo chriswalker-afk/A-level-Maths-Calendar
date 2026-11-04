@@ -110,7 +110,6 @@ export function renderTopicProgressDashboard(report,{scope=report.scope,strand="
   (future.length?'<p class="progress-future-note">'+future.length+' additional Year 2 topic is excluded from the internal exam. <a href="'+boardUrl("full",k)+'">View the full A Level →</a></p>':'')+
   '</div>';
  }
- html+=''+
- '</section>';
+ html+='</section>';
  return html;
 }
