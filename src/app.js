@@ -15,6 +15,7 @@ import {mountAttemptHistory} from "./attempt-history-view.js";
 import {renderCalendarHome,firstWeekQuestionRoute,adjacentQuestionRoute,renderSectionNavigation,renderQuestionIndex,STUDY_SEQUENCE} from "./calendar-view.js";
 import {mockPaperForSection,mockTimerInfo,mockTimerUpdate,formatMockClock} from "./mock-week.js";
 import {renderMockPaperBanner,renderMockReview} from "./mock-week-view.js";
+import {mountStudyReviewModes} from "./study-review-modes.js";
 
 const $=s=>document.querySelector(s);
 const el=$('#app');
@@ -136,22 +137,34 @@ function studyPage(n,sec,idx){
   '<li><span class="letter">('+'abcdefghijklmnopqrstuvwxyz'[j]+')</span>'+
   '<div class="question-part math">'+mathHtml(part[0])+'</div>'+
   '<span class="marks">['+part[1]+']</span></li>').join('')+'</ol>'+
- '</section><section class="study-writing-pane" role="region" tabindex="0" aria-label="Working area">'+
- '<div id="question-working-space"></div></section></div>'+
- '<section class="study-review-and-more" aria-label="Hints, solutions and marking">'+
- (timed?'<div class="mock-exam-lock" role="note"><strong>Exam conditions are active.</strong><p>Hints, worked solutions, specification links, marks and attempt history are hidden while the timed paper is running. Your working is saved automatically. Use <strong>Finish timed paper</strong> above to unlock marking and review.</p></div>':
- '<div class="actions" style="margin-top:15px">'+
- '<button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button>'+
- '<button class="btn ghost small" type="button" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show worked solution</button></div>'+
- '<div id="hint-box" hidden class="helper"><h3>First-step hint</h3><p class="math">'+mathHtml(q.hint)+'</p></div>'+
- '<div id="solution-box" hidden class="helper solution"><h3>Worked solution</h3><ol>'+
-  q.steps.map(step=>'<li class="math">'+mathHtml(step)+'</li>').join('')+'</ol>'+
-  '<p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p>'+
-  '<div class="line"></div><p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p>'+
-  '<p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></div>'+
- '<div id="question-assessment"></div><div id="attempt-history-root"></div>'+
- relatedSkillsMarkup(q))+
- '</section></article></div></section>';
+ '</section><section class="study-writing-pane" role="region" tabindex="0" aria-label="Working and review">'+
+ '<div class="study-answer-modes" role="tablist" aria-label="Question workspace">'+
+ '<button type="button" id="study-tab-work" class="study-answer-mode is-active" role="tab" aria-controls="study-panel-work" aria-selected="true" tabindex="0">My working</button>'+
+ '<button type="button" id="study-tab-review" class="study-answer-mode" role="tab" aria-selected="false" tabindex="-1"'+
+ (timed?' disabled aria-disabled="true" title="Finish the timed paper before checking"':' aria-controls="study-panel-review"')+
+ '>Check &amp; mark</button></div>'+
+ '<section id="study-panel-work" class="study-work-panel" role="tabpanel" aria-labelledby="study-tab-work">'+
+ '<div id="question-working-space"></div>'+
+ (timed?'<div class="mock-exam-lock" role="note"><strong>Exam conditions are active.</strong><p>Hints, worked solutions and self-marking unlock when you finish the timed paper. Your working continues to save.</p></div>':
+ '<div class="study-hint-toolbar"><button class="btn ghost small" type="button" id="hint-toggle" aria-expanded="false" aria-controls="hint-box">Show first-step hint</button></div>'+
+ '<div id="hint-box" hidden class="helper"><h3>First-step hint</h3><p class="math">'+mathHtml(q.hint)+'</p></div>')+
+ '</section>'+
+ (timed?'':'<section id="study-panel-review" class="study-check-panel" role="tabpanel" aria-labelledby="study-tab-review" hidden>'+
+ '<div class="study-solution-area" role="region" tabindex="0" aria-label="Worked solution">'+
+ '<div class="study-solution-toolbar"><strong>Worked solution</strong>'+
+ '<button type="button" class="btn ghost small" id="solution-toggle" aria-expanded="false" aria-controls="solution-box">Show solution</button></div>'+
+ '<div id="solution-box" class="helper solution" hidden><ol>'+
+ q.steps.map(step=>'<li class="math">'+mathHtml(step)+'</li>').join('')+'</ol>'+
+ '<p class="math"><strong>Answer:</strong> '+mathHtml(q.answer)+'</p>'+
+ '<details class="study-solution-notes"><summary>Misconception &amp; reflection</summary>'+
+ '<p><strong>Common misconception:</strong> '+esc(q.misconception)+'</p>'+
+ '<p><strong>Reflect:</strong> '+esc(q.reflection)+'</p></details></div></div>'+
+ '<div class="study-marking-dock" role="region" tabindex="0" aria-label="Mark your attempt">'+
+ '<div id="question-assessment"></div></div></section>')+
+ '</section></div>'+
+ (timed?'':'<section class="study-review-and-more" aria-label="Additional review tools">'+
+ '<div id="attempt-history-root"></div>'+relatedSkillsMarkup(q)+'</section>')+
+ '</article></div></section>';
 }
 function progressPage(scope="internal",strand="all"){
  const published=releasedQuestions();
@@ -332,11 +345,22 @@ function render(){
         }
       });
     }
+    // Switching panels preserves the mounted working editor and its saved state.
+    mountStudyReviewModes(el.querySelector(".study-writing-pane"),{
+      onFirstReview(){
+        if(el.querySelector("#solution-box")?.hidden)el.querySelector("#solution-toggle")?.click();
+      },
+      onReturnToWork(){
+        // Refresh drawing layout after the hidden canvas becomes visible again.
+        window.requestAnimationFrame?.(()=>window.dispatchEvent(new window.Event("resize")));
+      }
+    });
     const assessment=el.querySelector("#question-assessment");
     if(q&&assessment&&released(week)){
       remountHistory(q);
       mountQuestionAssessment(assessment,{
         question:q,
+        compact:true,
         record:saved[q.id]||{},
         onChange(marking){
           const previous=saved[q.id]||{};
@@ -426,7 +450,7 @@ document.addEventListener('click',event=>{
  const week=event.target.closest('button[data-week]');if(week){navigate(week.dataset.destination||'#/study/'+week.dataset.week+'/R/0');return}
  const section=event.target.closest('[data-section]');if(section){navigate('#/study/'+section.dataset.week+'/'+section.dataset.section+'/0');return}
  const jump=event.target.closest('[data-jump]');if(jump){const p=routeInfo();navigate('#/study/'+p[1]+'/'+p[2]+'/'+jump.dataset.jump);return}
- const hint=event.target.closest('#hint-toggle');if(hint){const box=$('#hint-box');box.hidden=!box.hidden;hint.setAttribute('aria-expanded',String(!box.hidden));hint.textContent=box.hidden?'Show first-step hint':'Hide first-step hint';if(!box.hidden){const p=routeInfo(),q=(allQuestions[Number(p[1])]||[]).filter(q=>q.section===p[2])[Number(p[3])||0];if(q){saved[q.id]??={};saved[q.id].hintSeen=true;store()}}return}
+ const hint=event.target.closest('#hint-toggle');if(hint){const box=$('#hint-box');box.hidden=!box.hidden;hint.setAttribute('aria-expanded',String(!box.hidden));hint.textContent=box.hidden?'Show first-step hint':'Hide first-step hint';if(!box.hidden){typeset();const p=routeInfo(),q=(allQuestions[Number(p[1])]||[]).filter(q=>q.section===p[2])[Number(p[3])||0];if(q){saved[q.id]??={};saved[q.id].hintSeen=true;store()}}return}
  const solution=event.target.closest('#solution-toggle');if(solution){const box=$('#solution-box');box.hidden=!box.hidden;solution.setAttribute('aria-expanded',String(!box.hidden));solution.textContent=box.hidden?'Show worked solution':'Hide worked solution';if(!box.hidden)typeset();return}
  const prev=event.target.closest('#previous,#next');if(prev&&!prev.disabled){const destination=prev.dataset.targetRoute;if(destination)navigate(destination);return;}
 });
