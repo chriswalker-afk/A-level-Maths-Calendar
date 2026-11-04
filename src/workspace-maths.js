@@ -144,7 +144,7 @@ export function mountMathsEditor(root,{state,save}){
         if(state.mode==="maths")updatePreview(slot,line.latex);
       }
     });
-    if(ready)message("Visual maths keyboard ready. Tap a line to enter symbols.");
+    if(ready)message("Maths keyboard ready.");
     if(focusId){
       const slot=$$(".maths-editor-slot").find(x=>x.dataset.mathSlot===focusId);
       slot?.querySelector("math-field,input")?.focus();
