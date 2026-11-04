@@ -11,7 +11,7 @@ test("workspace is concise without losing controls or an accessible notes label"
   assert.equal(doc.querySelector("#work-notes")?.getAttribute("aria-label"),"Written working and explanations");
   assert.ok(doc.querySelector("#work-notes")?.getAttribute("placeholder"));
   assert.ok(doc.querySelector("#work-save-status[role=status][aria-live=polite]"));
-  assert.ok(doc.querySelector("#work-expand"));
+  assert.equal(doc.querySelector("#work-expand"),null,"Expansion button is removed");
   assert.equal(doc.querySelectorAll(".work-mode-tabs [role=tab]").length,3);
   assert.ok(doc.querySelector("#maths-add-line"));
   assert.ok(doc.querySelector("#maths-copy"));
