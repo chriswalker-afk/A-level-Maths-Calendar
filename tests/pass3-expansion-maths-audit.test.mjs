@@ -33,7 +33,7 @@ test("Week 7: logarithmic branches, flat inflection, and integer-constrained pow
  close(xs[3],4.921553634567505);
  close(f(xs[3]),0);
  const curve=x=>(x*x+1)*Math.exp(-x);
- const deriv=x=>-(x-1)**2*Math.exp(-x);
+ const deriv=x=>-((x-1)**2)*Math.exp(-x);
  close(deriv(1),0);
  assert.ok(deriv(.5)<0&&deriv(1.5)<0);
  close(integrate(curve,0,2),3-11*Math.exp(-2));
