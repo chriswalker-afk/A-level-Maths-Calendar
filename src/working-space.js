@@ -62,12 +62,6 @@ export function mountWorkingSpace(root,{initial,legacyWorking="",questionId="wor
       $("#work-tab-"+WORKING_MODES[next]).focus();
     });
   });
-  $("#work-expand").addEventListener("click",()=>{
-    const expanded=$(".student-workspace").classList.toggle("work-expanded");
-    $("#work-expand").textContent=expanded?"Reduce space":"Expand space";
-    $("#work-expand").setAttribute("aria-pressed",String(expanded));
-    if(state.mode==="draw")drawing.resize();
-  });
   updateMode();
   return ()=>{
     drawing.dispose();maths.dispose();

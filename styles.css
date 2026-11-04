@@ -84,7 +84,6 @@ footer{border-top:1px solid var(--line);padding:27px 0 40px;display:flex;justify
   border:1px solid #cbded4;border-radius:12px;
 }
 .work-notes:focus{background:#fff}
-.work-expanded .work-notes{min-height:460px}
 .maths-work-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
 .maths-work-head strong{display:block;font-size:13px;color:var(--ink)}
 .maths-work-head p{font-size:11px;margin:4px 0 0;line-height:1.6}
@@ -161,8 +160,6 @@ footer{border-top:1px solid var(--line);padding:27px 0 40px;display:flex;justify
   min-height:38px;background:#f7faf8;border:1px dashed #d6e5da;
   padding:10px;border-radius:9px;margin-top:6px;overflow-x:auto;
 }
-.work-expanded .maths-row{padding:14px}
-.work-expanded .maths-mathfield{min-height:59px;font-size:22px}
 
 .ink-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:13px}
 .ink-toolset{
@@ -201,7 +198,6 @@ footer{border-top:1px solid var(--line);padding:27px 0 40px;display:flex;justify
   background:transparent;cursor:crosshair;touch-action:none;
   user-select:none;-webkit-user-select:none;
 }
-.work-expanded .ink-canvas{height:520px}
 .ink-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:11px}
 .ink-bottom .actions{gap:7px}
 .ink-bottom .btn:disabled{opacity:.35}
@@ -213,7 +209,6 @@ footer{border-top:1px solid var(--line);padding:27px 0 40px;display:flex;justify
   .maths-line-number{flex-basis:24px}
   .maths-mathfield,math-field.maths-mathfield{font-size:18px;padding:9px 8px}
   .ink-canvas{height:340px}
-  .work-expanded .ink-canvas{height:62vh;min-height:375px}
 }
 @media(max-width:480px){
   .work-mode-tabs button{font-size:11px;padding:9px 3px;min-height:43px}

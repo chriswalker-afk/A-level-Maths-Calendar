@@ -1,6 +1,6 @@
 import {
  attemptArchive,completedAttemptTimeline,attemptComparison,
- hasNewAttemptInProgress,MAX_PAST_ATTEMPTS
+ hasNewAttemptInProgress,hasFinishedAttempt,MAX_PAST_ATTEMPTS
 } from "./attempt-history.js";
 import {isQuestionFinished} from "./question-assessment.js";
 import {drawStrokes} from "./workspace-drawing.js";
@@ -23,6 +23,9 @@ function workingPreview(entry,index){
  '<canvas data-history-ink="'+index+'" width="640" height="250" role="img" aria-label="Drawing saved in an earlier question attempt"></canvas></div>':'');
 }
 export function renderAttemptHistory(question,record={}){
+ // No retry panel until a valid self-awarded mark exists (including zero).
+ // An archived finished attempt keeps it visible during an unmarked retry.
+ if(!hasFinishedAttempt(question,record))return "";
  const archive=attemptArchive(record);
  const timeline=completedAttemptTimeline(question,record);
  const comparison=attemptComparison(question,record);
@@ -64,6 +67,7 @@ export function renderAttemptHistory(question,record={}){
 export function mountAttemptHistory(root,{question,record,onStart}={}){
  if(!root||!question)return()=>{};
  root.innerHTML=renderAttemptHistory(question,record);
+ if(!root.firstElementChild)return()=>{};
  const win=root.ownerDocument.defaultView;
  const paint=details=>{
   const canvas=details.querySelector("canvas[data-history-ink]");
