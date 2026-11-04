@@ -35,17 +35,30 @@ function sample(){
  return validateTopicPracticeBank(catalogue).questions[0];
 }
 
-test("specification topic has three clearly unpublished AO cards",()=>{
+test("specification topic shows three live original AO questions",()=>{
  const {dom,root}=environment();
  const dispose=mountSpecification(root,{scope:"internal",topicId:"P02"});
  const cards=[...root.querySelectorAll(".topic-practice-card")];
  assert.equal(cards.length,3);
  assert.deepEqual(cards.map(card=>card.dataset.ao),["AO1","AO2","AO3"]);
- assert.equal(root.querySelectorAll(".topic-practice-card.is-ready").length,0);
- assert.equal(root.querySelectorAll('a[href^="#/topic-practice/"]').length,0);
+ assert.equal(root.querySelectorAll(".topic-practice-card.is-ready").length,3);
+ assert.equal(root.querySelectorAll('a[href^="#/topic-practice/internal/P02/"]').length,3);
  assert.match(root.textContent,/original exam-style questions/i);
- assert.match(root.textContent,/Not available yet/);
+ assert.match(root.textContent,/3 \/ 3 available/);
  assert.ok(root.querySelector(".spec-skill-list"),"Existing skill list remains");
+ close(dom,dispose);
+});
+
+test("a saved independent topic score appears on its card without changing weekly practice",()=>{
+ const {dom,root}=environment();
+ const dispose=mountSpecification(root,{
+  scope:"internal",topicId:"P02",records:{"TP-P02-AO1":{score:4,status:"I"}}
+ });
+ const card=root.querySelector('.topic-practice-card[data-ao="AO1"]');
+ assert.ok(card);
+ assert.match(card.textContent,/4 \/ 5 marks/);
+ assert.match(card.textContent,/Review or retry/);
+ assert.ok(root.querySelector('.topic-practice-card[data-ao="AO2"]'));
  close(dom,dispose);
 });
 

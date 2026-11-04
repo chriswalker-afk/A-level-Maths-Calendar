@@ -1,110 +1,119 @@
-# Fresh AO1 / AO2 / AO3 practice by specification topic
+# Original AO1 / AO2 / AO3 questions by specification topic
 
-## Purpose and status
+## Status — Pass B complete
 
-**Pass A: framework only. No original question is published yet.**
-Each of the 19 official Edexcel 9MA0 topic pages shows three independent
-question slots: AO1 technique, AO2 reasoning, and AO3 problem solving/modelling.
-These are intended as a **fresh second attempt** when a student has found
-weekly practice difficult. They are **not copies, revisions or reordered
-versions of the weekly questions**.
+**57 original, fully worked questions are published:** three (AO1 technique,
+AO2 reasoning, AO3 problem solving/modelling) for each of the 19 official
+9MA0 specification topic pages. These are a **fresh second question** to try
+after a difficult weekly exercise, not republished or rearranged weekly
+questions.
 
-The bank is entirely separate from the ten-week programme: its marks and
-attempts do not change weekly target hours, weekly completion totals, the Week
-10 mock or existing specification accuracy denominators. When a question is
-published, its working, maths editor, drawing, hints, worked solutions,
-self-marking, and retry history reuse the existing components and browser-local
-saved record format. Its own progress is displayed on the three AO cards.
+The 19 topic modules and their question data live in
+\`src/data/topic-practice/\`. Every module provides three original
+exam-style questions with part-specific marks, a first-step hint,
+full mathematical marking, final answer, common misconception, reflection
+prompt and primary/connected permanent 9MA0 skill IDs.
 
-## Content structure and publishing
+The independent bank is **not included** in the ten-week programme's mark
+and time budgets, completion statistics, release controls or Week 10 mock.
+Students' working, maths notation, ink, self-marks, first-step hints and
+reattempt history save under distinct \`TP-<topic>-<AO>\` local record keys,
+which are included in progress backup/restore.
 
-- Each topic has its own module: \`src/data/topic-practice/p01.js\` through
-  \`p10.js\`, \`s01.js\` through \`s05.js\`, and \`m06.js\` through \`m09.js\`.
-  These currently export empty arrays. **Pass B** edits a topic module at
-  a time; independent topic authoring need not touch weekly questions.
-- \`index.js\` registers all 19 modules, provides three slots per topic,
-  and resolves published URLs of the form
-  \`#/topic-practice/internal/P02/AO2\` or \`#/topic-practice/full/M09/AO3\`.
-- \`schema.js\` strictly validates published entries, stable IDs, syllabus
-  scope, exam-style question parts, AO mark totals, and specification tags.
-  An incomplete entry fails validation instead of silently loading.
-- The stable question key is \`TP-P02-AO2\` (topic and dominant AO). Do not
-  reuse weekly \`Wxx-\` IDs or change published keys: local attempts are
-  stored against these IDs.
-- Do **not** commit unpublished drafts to this public website's
-  JavaScript modules, even with a false flag: the JS is downloadable.
-  Review the question and mark scheme before adding it with
-  \`published: true\`. An empty module is the safe holding state.
+## Where students find questions
 
-## Example authoring shape (documentation only; NOT a published question)
+Go to **My Specification**, choose **Internal exam** or **Full A Level**,
+open a topic, and select the AO1, AO2 or AO3 card in **Try a fresh
+question**. A student can also use the direct route
+\`#/topic-practice/internal/P02/AO2\` (or \`full\` instead of \`internal\`).
+
+All ten Pure topics plus S01–S05 and M06–M08 have three published
+questions in the internal view. Moments (M09) is **Year 2-only**, and its
+three questions appear only in the Full A Level view. A direct link
+cannot bypass that restriction. Other year-two-only subskills are not
+assessed in the internal-bank questions.
+
+## Authoring format
+
+One file per topic:
+- Pure \`p01.js\` to \`p10.js\`
+- Statistics \`s01.js\` to \`s05.js\`
+- Mechanics \`m06.js\` to \`m09.js\`
+
+Each module calls \`originalTopicQuestions(topicId,[AO1,AO2,AO3])\`
+from \`authoring.js\`. Example **authoring shape**:
 
 \`\`\`js
-export default [
+import {originalTopicQuestions as topic} from "./authoring.js";
+
+export default topic("P02",[
   {
-    id:"TP-P02-AO1",
-    published:true,
-    topicId:"P02",
-    aoFocus:"AO1", // AO1 / AO2 / AO3 is the largest mark allocation
-    scope:"internal", // "full" for questions requiring Year 2 Applied
-    title:"Original question title",
-    marks:5,
-    minutes:7,
-    ao:{AO1:4,AO2:1,AO3:0},
-    stem:"Original exam-style situation, using \\( ... \\) for maths",
+    ao:"AO1",
+    title:"A new, verified exam-style question title",
+    stem:"The mathematical situation, in \\( ... \\) delimiters",
     parts:[
-      ["Original question part (a)",2,{primarySkillId:"P02-001"}],
-      ["Original question part (b)",3,{
-        primarySkillId:"P02-003",
-        secondarySkillIds:["P02-001"]
-      }]
+      ["Part (a) question",2,"P02-005"],
+      ["Part (b) question",3,"P02-011",["P02-005"]]
     ],
-    hint:"A short first-step nudge; no complete answer",
-    steps:["Worked marking for part (a) [2]","Worked marking for part (b) [3]"],
-    answer:"Exact final result",
-    misconception:"One realistic mistake",
-    reflection:"An insightful follow-up question"
-  }
-];
+    hint:"A short nudge without giving the final answer",
+    steps:[
+      "Full, mathematically correct working for part (a). [2]",
+      "Full, mathematically correct working for part (b). [3]"
+    ],
+    answer:"Exact or correctly rounded answer",
+    misconception:"A realistic error to avoid",
+    reflection:"A useful follow-up",
+    scope:"internal" // "full" if Year 2 Applied is required
+  },
+  // AO2 and AO3 original questions follow
+]);
 \`\`\`
 
-The illustrative content strings above **must be replaced with mathematically
-correct original questions and fully worked marking** before publication.
+This is a structural example, **not** content to publish without
+independent mathematical checking.
 
-## Syllabus and marking rules
+The helper assigns stable IDs, minutes (one more than the total marks),
+an AO mark allocation dominated by the question's declared AO, and
+part objects compatible with the shared question workspace. For specific
+questions, \`aoMarks\` and \`minutes\` may override these defaults.
 
-- AO focus is the **dominant AO**, not a claim that a whole question
-  assesses only AO1, AO2 or AO3. AO mark counts add to question marks.
-- Every part has exactly one primary permanent specification skill ID
-  and optional distinct connected skills. At least one tagged skill
-  belongs to the topic named on the question card. Never renumber
-  specification skill IDs.
-- Internal practice can only link to internal syllabus skills. Questions
-  using Year 2-only material must set \`scope:"full"\`; internal students
-  must not be able to access the question through a deep link.
-- The Moments topic is Year 2-only. The internal specification view
-  directs students to the Full A Level view, rather than promising
-  them an internal-exam exercise.
-- All questions must be genuinely fresh: not a weekly question with
-  different constants, a cosmetic change, or an uncredited reproduction
-  of an external examination paper.
-- Before publishing, verify the question is valid, has the stated
-  number of marks, has a complete solution *for every part*, has
-  suitable mathematical notation, and is difficult for the declared AO.
-- No solution or hint is displayed before the learner requests it.
-  Local progress and retry history are preserved by the existing app.
+The strict \`schema.js\` validator checks publication status, the ID,
+topic/scope, AO marks, positive part marks, a complete step for every
+part and valid skill IDs. An incomplete entry fails page-load validation
+instead of appearing as practice. Do **not** insert unreviewed drafts in
+public modules: public JavaScript is downloadable by students.
 
-## Next steps
+## Question-design rules
 
-**Pass B:** author and check the 57 new original questions, ideally in
-small batches (e.g. Pure P01-P05, then P06-P10, then Statistics and Mechanics)
-with systematic mathematical review. No weekly content should be modified.
-Questions become available independently once their topic module is completed.
+- The AO label gives the **dominant AO**, not the claim that every mark
+  assesses just one AO. AO1 prioritises accurate routine techniques;
+  AO2 prioritises reasoning and justification; AO3 requires identifying
+  and solving connected or unfamiliar problems, often modelling a context.
+- An original question must not be copied from a weekly exercise or
+  generated by changing only a few constants.
+- The full solution must account for every mark allocated to each part.
+  Check exactness, rounding, units, feasible domains and the interpretation
+  of contextual answers.
+- Every part has one primary specification skill and optional connected
+  skills. Connected skills do not receive extra accuracy credit.
+- Keep internal-exam questions free of Year 2-only Applied skills. Only
+  publish Moments in the Full A Level route.
+- The original hint and full solution remain hidden until specifically
+  requested by the student.
+- Keep IDs stable after publication, since saved records use these keys.
 
-**Pass C:** add robust topic practice analytics (separate from weekly
-benchmarks), check keyboard/mobile presentation with real long
-questions, review the AO balance and multi-skill demand, and extend
-progress reporting if desired without double-counting weekly marks.
+## Verification and next steps
 
-Tests: \`npm run check\`, \`npm run audit:release\`, plus
-\`tests/topic-practice-data.test.mjs\` and
-\`tests/topic-practice-ui.test.mjs\`.
+The Pass B regression suite checks the **57 expected question IDs**,
+independent bank status, syllabus restrictions, marks, step completeness,
+math notation delimiters, duplicate content, and in-app AO card links.
+Arithmetic/model checks cover the AO3 questions in all 19 topics.
+All existing weekly question and release tests should remain unchanged.
+
+Run \`npm run check\` and \`npm run audit:release\`; the GitHub PR also
+runs the student experience browser audit.
+
+**Pass C** can focus on optional topic-practice analytics (separate from
+weekly grade/progress denominators), extended real-device/mobile QA of
+long questions, improved written-feedback scaffolding and a final review
+of challenge level and syllabus coverage.
