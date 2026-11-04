@@ -1,51 +1,56 @@
 import {getSpecTopic,getSpecSkill,STRANDS} from "./data/specification.js";
 import {getTopicPracticeSlots,topicPracticeRoute} from "./data/topic-practice/index.js";
-import {isQuestionFinished} from "./question-assessment.js";
+import {originalPracticeState,originalPracticeSummary} from "./topic-practice-progress.js";
 
 const escape=value=>String(value??"").replace(/[&<>"']/g,char=>
  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 const topicHref=(scope,topicId)=>"#/specification/"+scope+"/"+topicId;
 
-/** The three AO question slots, independent from weekly programme completion. */
+/** Three independent AO alternatives to weekly practice with separate attempt states. */
 export function renderTopicPracticeSlots(topic,scope="internal",records={}){
  const slots=getTopicPracticeSlots(topic.id,scope);
  if(!slots.length)return "";
  const future=scope==="internal"&&topic.skills.every(skill=>skill.scope!=="internal");
  const ready=slots.filter(slot=>slot.question).length;
+ const summary=originalPracticeSummary(records,scope);
+ const topicProgress=summary.byTopic[topic.id];
  const title='<div class="spec-section-heading"><div><span class="eyebrow">Extra independent practice</span>'+
- '<h2>Try a fresh question</h2>'+
- '<p>Three original exam-style questions, separate from the weekly calendar. Use these when you want another attempt at a topic, without seeing the same problem twice.</p>'+
- '</div><span class="topic-practice-count">'+ready+' / 3 available</span></div>';
+ '<h2 id="topic-practice-title">Try a fresh question</h2>'+
+ '<p>Three original exam-style questions, separate from weekly practice. Choose a new challenge or continue where you left off.</p>'+
+ '</div><span class="topic-practice-count">'+(future?"Year 2 only":
+ topicProgress.completed+' / '+ready+' marked')+'</span></div>';
  if(future){
-  return '<section class="topic-practice-section" aria-labelledby="topic-practice-title">'+
-   '<div id="topic-practice-title">'+title+'</div>'+
+  return '<section class="topic-practice-section" aria-labelledby="topic-practice-title">'+title+
    '<div class="topic-practice-future"><strong>Year 2 topic</strong>'+
-   '<p>Original practice for this topic belongs to the Full A Level course, not the internal examination.</p>'+
+   '<p>Moments is part of the Full A Level course, not the internal examination.</p>'+
    '<a class="btn ghost small" href="'+topicHref("full",topic.id)+'">View Full A Level topic →</a></div></section>';
  }
  const cards=slots.map(slot=>{
   const q=slot.question,record=q?records[q.id]||{}:{};
-  const finished=q&&isQuestionFinished(record,q.marks);
-  const cardContents='<div class="topic-practice-card-top"><span class="topic-practice-ao">'+slot.id+'</span>'+
-   '<span class="topic-practice-state">'+(finished?'Marked':slot.status==="future"?"Full course":q?"Available":"Coming soon")+'</span></div>'+
+  const progress=q?originalPracticeState(q,record):null;
+  const state=progress?.state||"unavailable";
+  const label=state==="retry"?"Trying again":state==="marked"?"Marked":
+   state==="started"?"In progress":q?"Not started":"Coming soon";
+  const action=state==="retry"?"Continue retry →":state==="marked"?"Review or retry →":
+   state==="started"?"Continue question →":q?"Try question →":"Not available yet";
+  const detail=progress?.complete?
+   progress.score+' / '+q.marks+' marks'+(progress.independence?' · '+progress.independence:''):
+   q?q.marks+' marks · about '+q.minutes+' min':
+    slot.status==="future"?"Year 2 content":"Original question not published";
+  const contents='<div class="topic-practice-card-top"><span class="topic-practice-ao">'+slot.id+'</span>'+
+   '<span class="topic-practice-state">'+label+'</span></div>'+
    '<h3>'+escape(slot.name)+'</h3><p>'+escape(slot.description)+'</p>'+
    (q?'<div class="topic-practice-question-title">'+escape(q.title)+'</div>':'')+
-   '<div class="topic-practice-card-bottom"><span>'+
-   (finished?record.score+' / '+q.marks+' marks':q?q.marks+' marks · about '+q.minutes+' min':
-    slot.status==="future"?"Year 2 content":"Original question not published")+
-   '</span><strong>'+ (q?finished?"Review or retry →":"Try question →":"Not available yet")+
-   '</strong></div>';
-  return q?
-   '<a class="topic-practice-card is-ready" data-ao="'+slot.id+'" href="'+
-    topicPracticeRoute(scope,topic.id,slot.id)+'" aria-label="Try original '+slot.id+
-    ' question: '+escape(q.title)+'">'+cardContents+'</a>':
-   '<div class="topic-practice-card is-planned" data-ao="'+slot.id+
-    '" data-status="'+slot.status+'">'+cardContents+'</div>';
+   '<div class="topic-practice-card-bottom"><span>'+detail+'</span><strong>'+action+'</strong></div>';
+  return q?'<a class="topic-practice-card is-ready" data-ao="'+slot.id+
+   '" data-progress="'+state+'" href="'+topicPracticeRoute(scope,topic.id,slot.id)+
+   '" aria-label="Original '+slot.id+' '+escape(q.title)+', '+label+'">'+contents+'</a>':
+   '<div class="topic-practice-card is-planned" data-ao="'+slot.id+'">'+contents+'</div>';
  }).join("");
- return '<section class="topic-practice-section" aria-labelledby="topic-practice-title">'+
- '<div id="topic-practice-title">'+title+'</div>'+
+ return '<section class="topic-practice-section" aria-labelledby="topic-practice-title">'+title+
  '<div class="topic-practice-grid">'+cards+'</div>'+
- '<p class="topic-practice-footnote">Questions and self-marks here are kept separate from your ten-week study targets. Your working and scores save to this browser.</p>'+
+ '<p class="topic-practice-footnote">'+topicProgress.completed+' marked · '+topicProgress.started+
+ ' in progress in this topic. These self-marks do not affect your weekly calendar targets or specification skill accuracy.</p>'+
  '</section>';
 }
 
@@ -96,13 +101,17 @@ export function renderTopicPracticeQuestion({
  }
  const slots=getTopicPracticeSlots(topicId,scope);
  const progress=records[question.id]||{};
- const done=isQuestionFinished(progress,question.marks);
+ const attempt=originalPracticeState(question,progress);
+ const done=attempt.complete;
  const navigation=slots.map(slot=>
   slot.question?
   '<a class="topic-practice-nav-item'+(slot.id===aoFocus?' is-current':'')+
   '" href="'+topicPracticeRoute(scope,topicId,slot.id)+'"'+
   (slot.id===aoFocus?' aria-current="page"':'')+'><strong>'+slot.id+'</strong><span>'+
-  escape(slot.name)+'</span></a>':
+  escape(slot.name)+'</span><small>'+(
+   originalPracticeState(slot.question,records[slot.question.id]||{}).complete?"✓ Marked":
+   originalPracticeState(slot.question,records[slot.question.id]||{}).state==="started"?"In progress":
+   "Not started")+'</small></a>':
   '<span class="topic-practice-nav-item is-unavailable"><strong>'+slot.id+
   '</strong><span>'+ (slot.status==="future"?"Full course":"Coming soon")+
   '</span></span>').join('');
@@ -116,7 +125,9 @@ export function renderTopicPracticeQuestion({
   '<h1>'+escape(topic.title)+'</h1></div>'+
   '<div class="study-header-progress"><strong>'+question.marks+'</strong><small>AVAILABLE MARKS</small></div></header>'+
   '<div class="topic-practice-context">An original '+aoFocus+'-focused question, separate from your weekly practice.'+
-  (done?' Your latest self-mark is '+progress.score+' / '+question.marks+'.':'')+'</div>'+
+  (done?' Latest marked attempt: '+attempt.score+' / '+question.marks+
+   (attempt.retrying?' (new attempt in progress).':'.'):attempt.state==="started"?
+   ' Your unmarked work is saved on this device.':'')+'</div>'+
   '<div class="study-layout study-workbench">'+
   '<nav class="study-question-toolbar topic-practice-nav" aria-label="Fresh topic practice by assessment objective">'+navigation+'</nav>'+
   '<nav class="study-mobile-tabs" role="tablist" aria-label="Study view" hidden>'+
@@ -157,4 +168,31 @@ export function renderTopicPracticeQuestion({
   '<p class="topic-practice-footnote"><a href="'+back+'">← Return to '+escape(topic.title)+
   '</a> · This question does not count towards the ten-week calendar targets.</p></section>'+
   '</article></div></section>';
+}
+
+/** A separate progress report on the My Specification overview. */
+export function renderOriginalPracticeOverview(scope="internal",records={}){
+ const stats=originalPracticeSummary(records,scope);
+ const rows=["AO1","AO2","AO3"].map(id=>{
+  const part=stats.perAO[id];
+  const percentage=part.total?Math.round(100*part.completed/part.total):0;
+  return '<div class="topic-practice-metric">'+
+   '<div class="topic-practice-metric-top"><strong>'+id+'</strong><span>'+
+   part.completed+' / '+part.total+' marked</span></div>'+
+   '<div class="topic-practice-meter" role="progressbar" aria-label="'+id+' marked questions" '+
+   'aria-valuemin="0" aria-valuemax="'+part.total+'" aria-valuenow="'+part.completed+'">'+
+   '<span style="width:'+percentage+'%"></span></div></div>';
+ }).join("");
+ const scores=stats.possible?stats.earned+' / '+stats.possible+' marks across marked questions':
+  'No answers marked yet';
+ return '<section class="topic-practice-overview" aria-labelledby="topic-practice-overview-heading">'+
+  '<div class="topic-practice-overview-heading"><div><span class="eyebrow">Extra independent practice</span>'+
+  '<h2 id="topic-practice-overview-heading">My fresh-question progress</h2>'+
+  '<p>See the original AO questions you have marked. These results stay separate from your calendar targets and specification skill accuracy.</p>'+
+  '</div><div class="topic-practice-overview-total"><strong>'+stats.completed+
+  '<span> / '+stats.total+'</span></strong><small>QUESTIONS MARKED</small></div></div>'+
+  '<div class="topic-practice-metrics">'+rows+'</div>'+
+  '<p class="topic-practice-overview-foot">'+stats.started+' in progress · '+
+  stats.independent+' marked independently · '+scores+
+  '. Self-marked results are not predicted grades.</p></section>';
 }

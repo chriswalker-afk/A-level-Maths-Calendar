@@ -21,7 +21,7 @@ function escapeHtml(value) {
 
 const difficulties=["Technique","Method choice","Reasoning","Interpretation","Calculator","Time"];
 
-function partMarkingMarkup(question,record){
+function partMarkingMarkup(question,record,scope="internal"){
  if(!Array.isArray(question.parts)||question.parts.length<2)return "";
  const pieces=question.parts.map((part,index)=>{
   const key=partKey(question,index);
@@ -31,7 +31,7 @@ function partMarkingMarkup(question,record){
   const entered=Number.isInteger(existing)&&existing>=0&&existing<=part[1];
   return '<div class="detail-part-row"><div class="detail-part-label"><label for="self-part-'+key+'"><strong>Part ('+key+')</strong>'
    +'<span>'+part[1]+' available mark'+(part[1]===1?'':'s')+'</span></label>'
-   +(skill?'<a href="#/specification/internal/'+escapeHtml(skill.topicId)+'/'+escapeHtml(skill.id)+'" title="See this skill in My Specification">'+escapeHtml(skill.statement)+'</a>':'')+'</div>'
+   +(skill?'<a href="#/specification/'+scope+'/'+escapeHtml(skill.topicId)+'/'+escapeHtml(skill.id)+'" title="See this skill in My Specification">'+escapeHtml(skill.statement)+'</a>':'')+'</div>'
    +'<div class="detail-part-score"><input id="self-part-'+key+'" data-part-mark="'+key+'"'
    +' type="number" min="0" max="'+part[1]+'" step="1" inputmode="numeric"'
    +' aria-label="Marks earned for part ('+key+'), out of '+part[1]+'"'
@@ -47,7 +47,7 @@ function partMarkingMarkup(question,record){
   +'<p id="detail-part-info" class="detail-part-info" role="status" aria-live="polite"></p></div></details>';
 }
 
-function assessmentMarkup(question, record, compact=false) {
+function assessmentMarkup(question, record, compact=false, scope="internal") {
   const marks=question.marks;
   const hasScore=isQuestionFinished(record,marks);
   const score=hasScore?String(record.score):"";
@@ -79,7 +79,7 @@ function assessmentMarkup(question, record, compact=false) {
     +' value="'+escapeHtml(score)+'" aria-describedby="self-mark-message">'
     +'<span class="finish-out-of">/ '+marks+' marks</span>'
     +'<button type="button" class="clear-self-mark" id="clear-self-mark"'+(hasScore?'':' disabled')+'>Clear mark</button></div>'
-    +partMarkingMarkup(question,record)
+    +partMarkingMarkup(question,record,scope)
     +'<p id="self-mark-message" class="finish-mark-message" role="status" aria-live="polite">'
     +(hasScore?'Recorded. This question is finished.':'No mark entered yet. This question is still in progress.')+'</p>'
     +'</div></div></div>'
@@ -93,11 +93,11 @@ function assessmentMarkup(question, record, compact=false) {
 }
 
 /** Mount self-marking UI for one question. DOM listeners are scoped to root. */
-export function mountQuestionAssessment(root,{question,record={},onChange,onCompletionChange,compact=false}={}) {
+export function mountQuestionAssessment(root,{question,record={},onChange,onCompletionChange,compact=false,scope="internal"}={}) {
   if(!root||!question)return;
   // Preserve unrelated fields: workspace, hintSeen and legacy working.
   const state={...record};
-  root.innerHTML=assessmentMarkup(question,state,compact);
+  root.innerHTML=assessmentMarkup(question,state,compact,scope==="full"?"full":"internal");
   const score=root.querySelector("#self-mark-input");
   const badge=root.querySelector("#question-finish-badge");
   const markMessage=root.querySelector("#self-mark-message");

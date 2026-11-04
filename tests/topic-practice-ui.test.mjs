@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import {JSDOM} from "jsdom";
 import {mountSpecification} from "../src/specification-view.js";
 import {renderTopicPracticeQuestion} from "../src/topic-practice-view.js";
+import {getTopicPracticeQuestion} from "../src/data/topic-practice/index.js";
+import {mountQuestionAssessment} from "../src/question-assessment.js";
 import {validateTopicPracticeBank} from "../src/data/topic-practice/schema.js";
 import {specificationTopics} from "../src/data/specification.js";
 
@@ -44,7 +46,7 @@ test("specification topic shows three live original AO questions",()=>{
  assert.equal(root.querySelectorAll(".topic-practice-card.is-ready").length,3);
  assert.equal(root.querySelectorAll('a[href^="#/topic-practice/internal/P02/"]').length,3);
  assert.match(root.textContent,/original exam-style questions/i);
- assert.match(root.textContent,/3 \/ 3 available/);
+ assert.match(root.textContent,/0 \/ 3 marked/);
  assert.ok(root.querySelector(".spec-skill-list"),"Existing skill list remains");
  close(dom,dispose);
 });
@@ -98,5 +100,68 @@ test("a future published original question uses existing editor and review mount
  assert.equal(root.querySelector("#solution-box").hidden,true);
  assert.match(root.querySelector("#active-question-title").textContent,/Fresh practice example/);
  assert.match(root.textContent,/separate from your weekly practice/i);
+ close(dom);
+});
+
+test("original practice overview reports only the topic-bank scores and separate AO totals",()=>{
+ const {dom,root}=environment();
+ const saved={
+  "W01-P1":{score:5,status:"I"},
+  "TP-P02-AO1":{score:4,status:"I"},
+  "TP-P02-AO2":{workspace:{notes:"Working but not yet marked"}}
+ };
+ const dispose=mountSpecification(root,{scope:"internal",records:saved});
+ const summary=root.querySelector(".topic-practice-overview");
+ assert.ok(summary);
+ assert.match(summary.textContent,/1\s*\/\s*54/);
+ assert.match(summary.textContent,/1 in progress/);
+ const meters=[...summary.querySelectorAll('[role="progressbar"]')];
+ assert.equal(meters.length,3);
+ assert.deepEqual(meters.map(m=>m.getAttribute("aria-valuemax")),["18","18","18"]);
+ assert.deepEqual(meters.map(m=>m.getAttribute("aria-valuenow")),["1","0","0"]);
+ assert.match(summary.textContent,/marked independently/);
+ close(dom,dispose);
+});
+
+test("an unmarked original question displays Continue and preserves its separate record",()=>{
+ const {dom,root}=environment();
+ const saved={"TP-P02-AO2":{workspace:{notes:"I have started an attempt"}}};
+ const dispose=mountSpecification(root,{scope:"internal",topicId:"P02",records:saved});
+ const card=root.querySelector('.topic-practice-card[data-ao="AO2"]');
+ assert.equal(card.dataset.progress,"started");
+ assert.match(card.textContent,/Continue question/);
+ assert.match(card.textContent,/In progress/);
+ assert.match(root.textContent,/1 in progress/);
+ close(dom,dispose);
+});
+
+test("an archived marked attempt and an active retry appear separately",()=>{
+ const {dom,root}=environment();
+ const saved={"TP-P02-AO3":{
+  attemptHistory:[{score:7,status:"I",archivedAt:"2026-11-04T10:00:00Z"}],
+  workspace:{notes:"My second attempt"}
+ }};
+ const dispose=mountSpecification(root,{scope:"internal",topicId:"P02",records:saved});
+ const card=root.querySelector('.topic-practice-card[data-ao="AO3"]');
+ assert.equal(card.dataset.progress,"retry");
+ assert.match(card.textContent,/Trying again/);
+ assert.match(card.textContent,/Continue retry/);
+ assert.match(card.textContent,/7 \/ 9 marks/);
+ close(dom,dispose);
+});
+
+test("Full A Level Moments question's part-mark links stay inside the full specification",()=>{
+ const {dom,root}=environment();
+ const q=getTopicPracticeQuestion("M09","AO2","full");
+ root.innerHTML=renderTopicPracticeQuestion({
+  scope:"full",topicId:"M09",aoFocus:"AO2",question:q,records:{}
+ });
+ mountQuestionAssessment(root.querySelector("#question-assessment"),{
+  question:q,record:{},compact:true,scope:"full"
+ });
+ const detail=root.querySelector("#mark-by-parts");
+ assert.ok(detail);
+ assert.ok(detail.querySelector('a[href^="#/specification/full/M09/"]'));
+ assert.equal(detail.querySelector('a[href^="#/specification/internal/M09/"]'),null);
  close(dom);
 });

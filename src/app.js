@@ -382,6 +382,7 @@ function render(){
       mountQuestionAssessment(assessment,{
         question:q,
         compact:true,
+        scope:weekly?"internal":p[1],
         record:saved[q.id]||{},
         onChange(marking){
           const previous=saved[q.id]||{};
