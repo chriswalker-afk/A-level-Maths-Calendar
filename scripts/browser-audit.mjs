@@ -319,6 +319,46 @@ try{
    check(unlocked.disabled===false&&unlocked.solution&&unlocked.marks,
     "Finished timed sitting must unlock self-marking and solutions");
   }
+  // External study links: verify navigation, safe new-tab destinations, and
+  // responsive card layout without depending on an external site's network.
+  await page.evaluate(()=>{location.hash="#/links";});
+  await page.waitForSelector(".links-page-grid .links-resource");
+  const linkAudit=await page.evaluate(()=>{
+   const cards=[...document.querySelectorAll(".links-resource")];
+   const rects=cards.map(card=>{
+    const r=card.getBoundingClientRect();
+    return {top:r.top,bottom:r.bottom,left:r.left,right:r.right};
+   });
+   return {
+    current:document.querySelector('[data-nav="links"]')?.classList.contains("active"),
+    titles:cards.map(card=>card.querySelector("h2")?.textContent.trim()),
+    urls:cards.map(card=>card.href),
+    safe:cards.every(card=>card.target==="_blank"&&
+       card.rel.includes("noopener")&&card.rel.includes("noreferrer")),
+    pageWidth:document.documentElement.scrollWidth,
+    viewportWidth:document.documentElement.clientWidth,
+    rects
+   };
+  });
+  const expectedLinks=[
+   "https://statistics.mrwalkermaths.com/",
+   "https://mechanics.mrwalkermaths.com/",
+   "https://words.mrwalkermaths.com/",
+   "https://sampling.mrwalkermaths.com/"
+  ];
+  check(linkAudit.current&&linkAudit.safe&&
+    JSON.stringify(linkAudit.urls)===JSON.stringify(expectedLinks),
+    item.name+": resources page has missing, incorrect or unsafe links");
+  check(linkAudit.pageWidth<=linkAudit.viewportWidth+6,
+    item.name+": links page causes horizontal document overflow");
+  if(item.width<=760){
+   check(linkAudit.rects[1].top>=linkAudit.rects[0].bottom-2,
+    item.name+": resources should stack on a phone");
+  }else{
+   check(Math.abs(linkAudit.rects[1].top-linkAudit.rects[0].top)<3,
+    item.name+": resources should use the two-column grid");
+  }
+  await page.screenshot({path:join(output,item.name+"-links.png")});
   check(pageErrors.length===0,item.name+": page exceptions: "+pageErrors.join(" | "));
   summaries.push({name:item.name,size:item.width+"x"+item.height,
    dynamicHeight:dom.fitted,questionVisible:!dom.questionHidden,
