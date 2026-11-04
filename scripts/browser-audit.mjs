@@ -325,12 +325,15 @@ try{
   await page.waitForSelector(".links-page-grid .links-resource");
   const linkAudit=await page.evaluate(()=>{
    const cards=[...document.querySelectorAll(".links-resource")];
+   const navLink=document.querySelector('nav[aria-label="Main navigation"] [data-nav="links"]');
+   const navRect=navLink?.getBoundingClientRect();
    const rects=cards.map(card=>{
     const r=card.getBoundingClientRect();
     return {top:r.top,bottom:r.bottom,left:r.left,right:r.right};
    });
    return {
-    current:document.querySelector('[data-nav="links"]')?.classList.contains("active"),
+    current:navLink?.classList.contains("active"),
+    navVisible:navRect?.width>0&&navRect.left>=-1&&navRect.right<=innerWidth+1,
     titles:cards.map(card=>card.querySelector("h2")?.textContent.trim()),
     urls:cards.map(card=>card.href),
     safe:cards.every(card=>card.target==="_blank"&&
@@ -352,6 +355,8 @@ try{
   check(linkAudit.pageWidth<=linkAudit.viewportWidth+6,
     item.name+": links page causes horizontal document overflow");
   if(item.width<=760){
+   check(linkAudit.navVisible,
+    item.name+": Links navigation should be visible without horizontal scrolling");
    check(linkAudit.rects[1].top>=linkAudit.rects[0].bottom-2,
     item.name+": resources should stack on a phone");
   }else{
