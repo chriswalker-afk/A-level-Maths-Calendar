@@ -26,11 +26,11 @@ const sections={R:[10,20,24],P:[7,70,84],M:[3,40,48],A:[5,45,54],T:[4,40,48],X:[
 const toNew=q=>Number(q.id.match(/\d+$/)[0])>original[q.section];
 const same=(x,y)=>assert.deepEqual(x,y);
 
-test("Pass 2 updates exactly Weeks 4–6 to 175/215/245 without disturbing past or future publication",()=>{
+test("Pass 2 regression checks Weeks 4–6 while Pass 3 expands Weeks 7–9",()=>{
  same(programmeOne.weeks.slice(0,6).map(w=>w.targetMarks),Array(6).fill(175));
  same(programmeOne.weeks.slice(0,6).map(w=>w.recommendedMarks),Array(6).fill(215));
  same(programmeOne.weeks.slice(0,6).map(w=>w.optionalMarks),Array(6).fill(245));
- same(programmeOne.weeks.slice(6,9).map(w=>w.targetMarks),[98,98,98]);
+ same(programmeOne.weeks.slice(6,9).map(w=>w.targetMarks),[175,175,175]);
  assert.equal(programmeOne.weeks[9].targetMarks,150);
  assert.equal(programmeTwo.weekCount,20);
  assert.equal(siteConfig.stage1.releasedWeeks,10);
@@ -138,14 +138,14 @@ test("Core AO2/AO3 challenge is a majority without relabeling pre-existing marks
 test("New specification evidence navigates to released content without double-credit or fabricated zeros",()=>{
  const all=[taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,
   ...tagged,taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions,taggedWeek10Questions].flat();
- assert.equal(all.length,274);
- assert.equal(all.filter(q=>["R","P","M","A"].includes(q.section)||q.id.startsWith("W10-")).length,226);
+ assert.equal(all.length,301);
+ assert.equal(all.filter(q=>["R","P","M","A"].includes(q.section)||q.id.startsWith("W10-")).length,247);
  for(let i=0;i<3;i++)for(const q of tagged[i].filter(toNew)){
   const ref=getPublishedPracticeForSkill(q.parts[0][2].primarySkillId);
   assert.ok(ref.some(x=>x.questionId===q.id&&x.role==="primary"));
  }
  const empty=calculateSpecificationProgress({questions:all,records:{},scope:"internal"});
- assert.equal(empty.summary.releasedQuestions,274);
+ assert.equal(empty.summary.releasedQuestions,301);
  assert.equal(empty.summary.completedQuestions,0);
  assert.equal(empty.summary.verifiedAccuracy,null);
  const zero=calculateSpecificationProgress({
