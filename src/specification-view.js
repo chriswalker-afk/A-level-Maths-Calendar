@@ -4,7 +4,7 @@ import {
 } from "./data/specification.js";
 import {getPublishedPracticeForSkill} from "./data/skill-practice-index.js";
 import {calculateSpecificationProgress} from "./specification-analytics.js";
-import {renderTopicPracticeSlots} from "./topic-practice-view.js";
+import {renderTopicPracticeSlots,renderOriginalPracticeOverview} from "./topic-practice-view.js";
 import {renderProgressPulse,renderTopicCardProgress,renderTopicEvidence,renderSkillEvidence} from "./specification-progress-view.js";
 
 const escape=v=>String(v??"").replace(/[&<>"']/g,c=>
@@ -79,10 +79,10 @@ function themesSection(){
  '<article class="spec-theme"><span class="spec-ref">'+escape(item.id)+'</span><h3>'+escape(item.name)+'</h3>'+
  '<p>'+escape(item.description)+'</p><div class="spec-theme-demand"><strong>An examination might ask you to…</strong><span>'+escape(item.examDemand)+'</span></div></article>').join('')+'</div></section>';
 }
-function renderOverview(scope,report){
+function renderOverview(scope,report,records){
  const selectedCount=specificationCounts(scope);
  const initial=renderGroups(scope,report);
- return '<div class="page spec-page">'+intro(scope)+renderProgressPulse(report,{compact:true})+
+ return '<div class="page spec-page">'+intro(scope)+renderProgressPulse(report,{compact:true})+renderOriginalPracticeOverview(scope,records)+
  '<section class="spec-explainer"><div class="spec-explainer-icon" aria-hidden="true">i</div>'+
  '<div><strong>What do the progress numbers mean?</strong><p>Not a score report from your teacher: progress comes from your self-marks. Accuracy uses fully marked parts; missing practice is not 0%, and percentages are not predicted grades.</p></div></section>'+
  '<div class="spec-tools"><div class="spec-search-wrap"><label for="spec-search">Search skills and topics</label>'+
@@ -148,7 +148,7 @@ function renderTopic(scope,topicId,report,records){
 export function mountSpecification(root,{scope="internal",topicId=null,skillId=null,questions=[],records={}}={}){
  if(scope!=="internal"&&scope!=="full")scope="internal";
  const report=calculateSpecificationProgress({scope,questions,records});
- root.innerHTML=topicId?renderTopic(scope,topicId,report,records):renderOverview(scope,report);
+ root.innerHTML=topicId?renderTopic(scope,topicId,report,records):renderOverview(scope,report,records);
  function onClick(event){
   const strand=event.target.closest("[data-spec-strand]");
   if(strand){
