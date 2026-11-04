@@ -35,8 +35,8 @@ export function renderAttemptHistory(question,record={}){
   :"Same mark as the previous finished attempt; compare your methods to see what improved."
  ):"A score history appears here after you finish a second attempt.";
  return '<section class="reattempt-panel" id="reattempt-panel" aria-labelledby="reattempt-heading">'+
- '<div class="reattempt-head"><div><span class="eyebrow">Your learning journey</span><h3 id="reattempt-heading">Try again & track improvement</h3>'+
- '<p>Keep your previous attempt, including its maths working and drawing, then start again with a fresh workspace.</p></div>'+
+ '<div class="reattempt-head"><div><h3 id="reattempt-heading">Try again & track improvement</h3>'+
+ '</div>'+
  (canStart?'<button class="btn small" type="button" id="start-reattempt">Start a fresh attempt</button>':
   pending?'<span class="reattempt-state">Fresh attempt in progress</span>':
   currentFinished?'<span class="reattempt-state">History limit reached · export a backup</span>':
@@ -56,8 +56,8 @@ export function renderAttemptHistory(question,record={}){
    (entry.fromHistory?workingPreview(entry,index):'<p class="attempt-current-note">This is your current marked attempt. Your working is in the editor above.</p>')+
    '</div></details>';
  }).join('')+'</div>':
- '<p class="attempt-first-note">You have no archived attempts yet. Once you have marked this question, use <strong>Start a fresh attempt</strong> to save your current work and compare a new solution.</p>')+
- '<p class="attempt-history-privacy">Older attempts are stored only in this browser and included in progress backup downloads. Previous marks are not counted as extra questions in topic statistics.</p>'+
+ '')+
+ '<p class="attempt-history-privacy">Older attempts are included in your progress backup, but do not count as extra completed questions.</p>'+
  '<p class="attempt-history-status" id="attempt-history-status" role="status" aria-live="polite"></p>'+
  '</section>';
 }
