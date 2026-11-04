@@ -98,7 +98,7 @@ export function renderTopicProgressDashboard(report,{scope=report.scope,strand="
  '<nav class="progress-spec-scope" aria-label="Progress syllabus"><a href="'+boardUrl("internal")+'"'+(scope==="internal"?' aria-current="page" class="selected"':'')+'>Internal exam · Pure + Y1 Applied</a>'+
  '<a href="'+boardUrl("full")+'"'+(scope==="full"?' aria-current="page" class="selected"':'')+'>Full A Level</a></nav>'+
  renderProgressPulse(report)+
- '<div class="progress-spec-explain"><strong>Reading these numbers:</strong> “Skills encountered” includes linked skills on finished questions. “Accuracy” uses fully marked parts or single-part questions—not whole multi-part scores. Missing evidence is not 0%, percentages are not grade predictions, and mixed-topic questions may appear under multiple topics.</div>'+
+ '<div class="progress-spec-explain"><strong>Reading these numbers:</strong> “Skills encountered” includes linked skills on finished questions. “Accuracy” uses fully marked parts or single-part questions—not whole multi-part scores. Missing evidence is not 0%, percentages are not predicted exam grades, and mixed-topic questions may appear under multiple topics.</div>'+
  '<nav class="progress-spec-strands" aria-label="Filter topic progress">'+areas.map(([key,title])=>
  '<a href="'+boardUrl(scope,key)+'"'+(strand===key?' aria-current="page" class="selected"':'')+'>'+title+'</a>').join('')+'</nav>';
  for(const k of groups){
