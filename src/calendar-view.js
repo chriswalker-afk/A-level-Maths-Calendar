@@ -48,7 +48,7 @@ export function renderSectionNavigation({week,section,questions,isFinished=()=>f
    '<span class="study-section-progress">'+done+'/'+items.length+'</span></a>';
  }).join("");
  return '<nav class="study-section-nav" aria-label="Subsections in Week '+week+'">'+
- '<div class="study-section-nav-heading"><strong>THIS WEEK</strong><span>Switch sections</span></div>'+
+ '<div class="study-section-nav-heading"><strong>THIS WEEK</strong></div>'+
  '<div class="study-section-strip">'+links+'</div></nav>';
 }
 export function renderQuestionIndex({section,questions,index,isFinished=()=>false,isRetrying=()=>false}){
@@ -108,8 +108,7 @@ export function renderCalendarHome({weeks=[],getStatus=()=>({}),totalCompleted=0
  '<div class="planner-board-heading"><strong>WEEKLY PLANNER</strong><div class="planner-legend">'+
  '<span><i class="legend-open"></i> Open</span><span><i class="legend-future"></i> Not released</span></div></div>'+
  renderSpread(weeks.slice(0,5),getStatus,0)+renderSpread(weeks.slice(5,10),getStatus,1)+
- '<div class="planner-board-bottom"><span>SELECT AN OPEN WEEK TO START OR RESUME QUESTIONS</span>'+
- '<span>SELF-MARK · SAVE · RETURN</span></div></div>'+
+ '</div>'+
  '<nav class="planner-shortcuts" aria-label="Other study tools">'+
  '<a href="#/progress"><span class="planner-shortcut-num">01</span><span><strong>MY PROGRESS</strong><small>Marks, revision, backups</small></span><b aria-hidden="true">↗</b></a>'+
  '<a href="#/specification/internal"><span class="planner-shortcut-num">02</span><span><strong>SPECIFICATION</strong><small>Topics and skills</small></span><b aria-hidden="true">↗</b></a>'+
