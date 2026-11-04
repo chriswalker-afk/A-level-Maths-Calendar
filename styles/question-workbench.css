@@ -35,6 +35,7 @@
   display:flex;flex-direction:column;min-width:0;gap:0
 }
 .study-page .study-question-toolbar{
+  position:sticky;top:0;z-index:5;
   display:flex;align-items:stretch;min-width:0;
   border-bottom:2px solid var(--editorial-ink);
   background:var(--editorial-ink)
@@ -182,6 +183,7 @@
 .study-page .study-review-and-more>.actions{margin-top:0!important}
 .study-page .study-review-and-more .question-skill-links{margin-top:24px}
 .study-page .study-review-and-more .mock-exam-lock{margin-top:0}
+.study-page #hint-box,.study-page #solution-box,.study-page #question-assessment{scroll-margin-top:66px}
 
 /* Keep writing and drawing usable on narrow screens until the tabbed layout in Pass C. */
 @media(max-width:900px){
