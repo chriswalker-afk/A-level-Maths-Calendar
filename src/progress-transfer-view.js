@@ -6,13 +6,13 @@ import {
 export function renderProgressTransfer(records={}){
  const summary=summarizeProgressRecords(records);
  return '<section class="progress-transfer" id="progress-transfer" aria-labelledby="transfer-title">'+
- '<div class="transfer-title"><div><span class="eyebrow">Keep your work safe</span>'+
+ '<div class="transfer-title"><div>'+
  '<h2 id="transfer-title">Save or restore your progress</h2>'+
- '<p>Your marks, notes, typed mathematics, drawings and past attempts are kept on this device. Download a private backup to move them to another device or protect them if browser data is cleared.</p></div>'+
+ '<p>Download a backup before changing devices or clearing browser data.</p></div>'+
  '<button type="button" class="btn small" id="export-progress">Download my backup</button></div>'+
  '<p class="transfer-local-count">Stored here: '+summary.questions+' question records · '+summary.history+' archived attempts · '+summary.drawings+' with drawings.</p>'+
  '<div class="transfer-import"><h3>Restore a backup file</h3>'+
- '<label for="progress-import-file">Choose a backup you downloaded from this site</label>'+
+ '<label for="progress-import-file">Backup file</label>'+
  '<input type="file" id="progress-import-file" accept=".json,application/json">'+
  '<div class="transfer-import-preview" id="transfer-import-preview" hidden>'+
  '<p id="transfer-preview-summary" aria-live="polite"></p>'+
