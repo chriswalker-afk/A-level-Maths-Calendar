@@ -106,7 +106,7 @@ function studyPage(n,sec,idx){
  const questionNav=renderQuestionIndex({section:sec,questions:qs,index:i,isFinished:timed?()=>false:completed,
    isRetrying:item=>hasNewAttemptInProgress(item,saved[item.id]||{})});
  const marked=all.filter(everCompleted).length;
- return '<section class="page study-page">'+
+ return '<section class="page study-page'+(mock?' study-page-mock':'')+'">'+
  '<header class="study-header"><a class="study-back" href="#/calendar">← CALENDAR</a>'+
  '<div class="study-header-title"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+(mock?' / ORIGINAL MOCK':' / INTERNAL EXAM')+'</span>'+
  '<h1>'+esc(week.title)+'</h1></div>'+
