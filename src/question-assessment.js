@@ -40,7 +40,7 @@ function partMarkingMarkup(question,record){
  return '<details id="mark-by-parts" class="mark-by-parts"'+(record.scoreSource==="parts"?' open':'')+'>'
   +'<summary><span><strong>Optional: mark each part separately</strong>'
   +'<small>Useful for seeing which specification skills earned marks</small></span><span class="detail-chevron" aria-hidden="true">⌄</span></summary>'
-  +'<div class="mark-by-parts-body"><p>Enter a mark for every part, including 0 if no marks were earned. When all parts are scored, your total is calculated automatically. Only completed part breakdowns can provide precise skill-accuracy data.</p>'
+  +'<div class="mark-by-parts-body"><p>Mark every part (including 0). The total updates automatically; complete breakdowns also provide skill accuracy.</p>'
   +'<div class="detail-part-grid">'+pieces+'</div>'
   +'<div class="detail-part-bottom"><span id="detail-part-summary" aria-live="polite" role="status"></span>'
   +'<button type="button" id="clear-part-breakdown" class="btn ghost small">Clear part scores</button></div>'
@@ -58,22 +58,21 @@ function assessmentMarkup(question, record) {
     +'<span class="assessment-choice-tick" aria-hidden="true">✓</span></button>';
 
   return '<section class="finish-assessment" aria-labelledby="finish-assessment-title">'
-    +'<div class="finish-heading"><div><span class="eyebrow">When you finish the question</span>'
+    +'<div class="finish-heading"><div>'
     +'<h3 id="finish-assessment-title">Check, mark & finish</h3>'
-    +'<p>Compare your working with the solution, record how independently you worked, then enter a mark.</p></div>'
+    +'</div>'
     +'<span id="question-finish-badge" class="finish-state" data-finished="'+String(hasScore)+'" role="status" aria-live="polite">'
     +(hasScore?'✓ Finished':'○ Not yet finished')+'</span></div>'
     +'<div class="finish-flow">'
     +'<div class="finish-step"><div class="finish-number" aria-hidden="true">1</div><div class="finish-step-content">'
     +'<strong>How did you complete this question?</strong>'
-    +'<p>Select one. This records whether you needed support, but does <strong>not</strong> mark the question as finished.</p>'
     +'<div class="assessment-choices" role="group" aria-label="How independently did you work?">'
-    +choice("I","Independently","I worked it out without hints, notes or help during my attempt.","◇")
-    +choice("P","With help","I needed a hint, notes, a worked example or someone’s help during my attempt.","✦")
+    +choice("I","Independently","No hints, notes or help.","◇")
+    +choice("P","With help","Used a hint, notes, example or someone’s help.","✦")
     +'</div></div></div>'
     +'<div class="finish-step"><div class="finish-number" aria-hidden="true">2</div><div class="finish-step-content">'
     +'<strong>How many marks did you earn?</strong>'
-    +'<p>Open the worked solution, check each part and enter your mark. <strong>Entering a mark—including 0—automatically finishes the question.</strong></p>'
+    +'<p>Enter a mark—including 0—to finish the question.</p>'
     +'<button type="button" class="btn ghost small finish-review-button" id="mark-view-solution">View the worked solution ↑</button>'
     +'<div class="finish-score-row"><label for="self-mark-input">Your mark</label>'
     +'<input id="self-mark-input" class="finish-score" type="number" min="0" max="'+marks+'" step="1" inputmode="numeric"'
