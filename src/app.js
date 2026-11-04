@@ -40,7 +40,7 @@ function countDone(){return releasedQuestions().filter(q=>essentialSections.has(
 function coreQuestions(week){return (allQuestions[week]||[]).filter(q=>essentialSections.has(q.section))}
 function releasedQuestions(){return Object.entries(allQuestions).flatMap(([week,qs])=>released(Number(week))?qs:[])}
 function released(week){return isWeekReleased(week,allQuestions[week]||[]);}
-function heading(t,subtitle){return '<div class="section-heading"><div><span class="eyebrow">'+esc(subtitle||'Programme one')+'</span><h2>'+esc(t)+'</h2></div></div>'}
+function heading(t,subtitle){return '<div class="section-heading"><div>'+(subtitle?'<span class="eyebrow">'+esc(subtitle)+'</span>':'')+'<h2>'+esc(t)+'</h2></div></div>'}
 function mathHtml(t){return '<span class="math">'+esc(t)+'</span>'}
 function relatedSkillsMarkup(q){
  const all=[...q.primarySkillIds.map(id=>({id,role:"Main skill"})),
@@ -176,18 +176,18 @@ function progressPage(scope="internal",strand="all"){
      '<a class="link" href="#/study/'+w.number+'/'+code+'/0">Open Week '+w.number+' practice →</a></div>';
    }).join('')+'</div></section>';
  }).join('');
- return '<section class="page"><span class="eyebrow">Your independent study record</span>'+
+ return '<section class="page">'+
  '<h1 class="page-title">My progress</h1>'+
  '<p class="intro">Scores and working are saved in this browser. Use a backup to move them to another device.</p>'+
  (importNotice?'<p class="import-notice" role="status">'+esc(importNotice)+'</p>':'')+
- '<div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong><span>core questions</span></div>'+
- '<div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>lastStatus(q)==='I').length+'</strong><span>finished on own</span></div>'+
- '<div class="metric"><span>WITH HELP</span><strong>'+attempts.filter(q=>lastStatus(q)==='P').length+'</strong><span>marked with help</span></div>'+
- '<div class="metric"><span>CORE REMAINING</span><strong>'+(core.length-coreAttempts.length)+'</strong><span>essential questions still to mark</span></div></div>'+
+ '<div class="metrics"><div class="metric"><span>ESSENTIAL MARKED</span><strong>'+coreAttempts.length+'/'+core.length+'</strong></div>'+
+ '<div class="metric"><span>INDEPENDENT</span><strong>'+attempts.filter(q=>lastStatus(q)==='I').length+'</strong></div>'+
+ '<div class="metric"><span>WITH HELP</span><strong>'+attempts.filter(q=>lastStatus(q)==='P').length+'</strong></div>'+
+ '<div class="metric"><span>CORE REMAINING</span><strong>'+(core.length-coreAttempts.length)+'</strong></div></div>'+
  renderRevisionSuggestions({questions:published,records:saved,report,scope})+
  renderTopicProgressDashboard(report,{scope,strand})+
- heading('Weekly question record','A recorded mark finishes a question')+weeklyRecords+
- heading('Revision notes','For your next study session')+
+ heading('Weekly question record')+weeklyRecords+
+ heading('Revision notes')+
  '<div class="panel"><div class="reflection-row"><label for="strength">A method I can now use independently</label>'+
  '<textarea id="strength" class="reflection" placeholder="For example: I can justify a tangent using its perpendicular radius.">'+esc(saved.reflections?.strength||'')+'</textarea></div>'+
  '<div class="reflection-row"><label for="repair">My next misconception to repair</label>'+
@@ -212,21 +212,20 @@ function guidePage(){
   ["07","+60 min","Optional A/A* extension","30 marks · 36 working + 24 reflection"]
  ];
  return '<section class="page guide-page"><a class="back" href="#/calendar">← Calendar</a>'+
- '<span class="eyebrow">9MA0 / REFERENCE</span><h1 class="page-title">Study guide</h1>'+
- '<p class="intro">Open a week, work through its sections, then record your marks. Your progress saves on this device.</p>'+
+ '<h1 class="page-title">Study guide</h1>'+
  heading("Expanded Weeks 1–9","175 essential marks · 215 recommended · 245 optional")+
  '<p>These are examination-paced planning targets at approximately 1.2 working minutes per mark, not measured completion times. A four-hour core includes 30 minutes of marking and reflection. The additional hour for each optional pathway also includes review.</p>'+
  '<div class="guide-routine">'+expandedPlan.map(row=>'<div class="guide-routine-row">'+
    '<span class="guide-routine-index">'+row[0]+'</span>'+
    '<strong>'+row[1]+'</strong><span>'+row[2]+'</span><p>'+row[3]+'</p></div>').join('')+'</div>'+
  '<div class="warning" style="margin:19px 0 25px"><strong>Week 10 uses a different format.</strong> The final week has a 100-mark Pure mock (120 minutes), a 50-mark Year 1 Applied mini-mock (60 minutes), and a separate 60-minute marking and repair plan. Its optional timer hides help and marking while active, but never erases work. Start from Week 10 on the calendar.</div>'+
- heading("Using a question","Working, hints and marking")+
+ heading("Using a question")+
  '<div class="guide-instructions">'+
  '<div><b>1</b><strong>Work independently</strong><p>Use Notes, Maths steps or Draw. Work is saved for each question.</p></div>'+
  '<div><b>2</b><strong>Check the solution</strong><p>Use a hint when needed, then compare your working with the mark scheme.</p></div>'+
  '<div><b>3</b><strong>Record your mark</strong><p>Enter an overall mark, or optionally score each part. Even 0 marks counts as finished.</p></div>'+
  '<div><b>4</b><strong>Retry or move on</strong><p>Archived attempts preserve previous working. Use My Progress to find questions to revisit.</p></div></div>'+
- heading("Assessment objectives","What the questions assess")+
+ heading("Assessment objectives")+
  '<div class="guide-ao"><div><strong>AO1</strong><p>Recall and carry out mathematical procedures.</p></div>'+
  '<div><strong>AO2</strong><p>Reason, explain, deduce and prove.</p></div>'+
  '<div><strong>AO3</strong><p>Model, solve problems, interpret and evaluate.</p></div></div>'+
