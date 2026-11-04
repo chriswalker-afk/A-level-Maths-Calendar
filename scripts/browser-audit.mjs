@@ -174,7 +174,7 @@ try{
   if(item.name==="phone-390"){
    // A smaller visual viewport must not overlap the study controls.
    const original=await page.$eval(".study-answer-layout",el=>el.getBoundingClientRect().height);
-   await page.setViewport({...item,width:390,height:570});
+   await page.setViewport({width:390,height:570,deviceScaleFactor:1,isMobile:true,hasTouch:true});
    await page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));
    const reduced=await page.$eval(".study-answer-layout",el=>el.getBoundingClientRect().height);
    check(reduced<=original+2&&reduced>185,"virtual-viewport resize did not keep the panel usable");
