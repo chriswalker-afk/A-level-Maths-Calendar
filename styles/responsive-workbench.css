@@ -191,3 +191,38 @@
    scroll-behavior:auto!important;transition:none!important
  }
 }
+
+/* Reduced chrome during question answering: the back-to-calendar control
+   remains available. Progress, guide and specification remain on calendar. */
+@media(max-width:900px){
+ .study-page{padding-top:7px}
+ .study-page .study-header{
+   align-items:center;gap:9px;padding:3px 0 8px;margin-bottom:6px
+ }
+ .study-page .study-header-title{min-width:0;flex:1}
+ .study-page .study-header-title h1{
+   font-size:clamp(18px,2.45vw,25px);line-height:1.14;
+   margin:2px 0 0;overflow-wrap:anywhere
+ }
+ .study-page .study-header-title .eyebrow{font-size:9px}
+ .study-page .study-back{flex:none;padding:7px 8px;min-height:38px}
+ .study-page .study-header-progress{margin:0}
+ .study-page .study-header-progress strong{font-size:19px}
+ .study-page .study-header-progress small{font-size:9px}
+ .study-page .study-section-nav{margin-bottom:6px}
+}
+@media(max-width:600px), (max-width:900px) and (max-height:600px){
+ /* In the study workspace, the main site navigation is secondary and the
+    Calendar back control gives access to all main site pages. */
+ body:has(.study-page) .topbar{display:none}
+ .study-page{padding-top:5px}
+ .study-page .study-header{
+   display:flex;flex-wrap:nowrap;gap:8px;
+   margin:0 0 6px;padding:3px 0 7px
+ }
+ .study-page .study-header-title h1{font-size:20px}
+ .study-page .study-header-progress{display:none}
+ .study-page .study-header-title .eyebrow{font-size:8px;line-height:1.2}
+ .study-page .study-back{padding:6px 8px;font-size:10px;min-height:36px}
+ .study-page .study-section-nav{margin-bottom:5px}
+}
