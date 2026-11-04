@@ -93,6 +93,14 @@ Week 10’s 150-mark authored AO mix is **AO1 75 / AO2 38 / AO3 37** (roughly th
 
 See `docs/WEEK10_AUTHORING_AUDIT.md` for specification and independent mathematics checks, and `docs/QUESTION_BLUEPRINT.md` for the explicit Week 10 paper-format correction.
 
+## Release-quality review (November 2026)
+
+The ten-week calendar now publishes **301 original questions, 932 marked parts and 247 essential questions**. The current release-quality audit separates technical validation from evidence of full syllabus skill coverage and real student completion times. See **[Release-quality audit and remaining gaps](docs/RELEASE_QUALITY_AUDIT_2026_11.md)** and reproduce its results with `npm run audit:release`.
+
+Of the **222** in-scope Pure and Year 1 Applied skills in My Specification, **187 (84.2%)** have a directly credit-bearing published question part, **11** more have connected exposure, and **24** have no tagged published question. This is an honest measure of **question-to-skill links**, *not* student mastery or a claim that all techniques are absent from the prose of the other questions.
+
+Marking and progress remain browser-local. A recorded zero completes a question; unattempted or unmarked questions do **not** imply 0% accuracy. The four-, five- and six-hour plans are timetable **benchmarks**, not observed student timings. Before broader roll-out, moderate the missing skill evidence and pilot timing and rendering on real student devices.
+
 ## My Specification — Pass 4A
 
 The website now includes a permanent **My specification** page for Pearson Edexcel 9MA0, with **19 official topic groups** (10 Pure, 5 Statistics, 4 Mechanics) and a full original student-friendly *I can…* skills library.
@@ -265,7 +273,7 @@ Working, drawing strokes, self-awarded marks and reflections live **only in loca
 
 ## Next development phases
 
-1. **Pass 3 — ready for review:** verify GitHub Actions, inspect the student-facing Week 7–9 route and mathematical rendering, and merge the PR only after checks pass and it is approved.
-2. **Pass 4 — final release-quality audit:** independently moderate AO assignments and worked mathematics, audit specification coverage and accessibility, and pilot realistic student completion times before classroom use.
-3. **2027 final-exam preparation:** extend the February–June full-course plan to Year 2 Applied and complete-paper practice while retaining the same student-progress schema. This future programme remains unpublished.
-4. **Teacher features, only if authorised:** consider privacy-safe class summaries or multi-device sync separately; neither is enabled in this release.
+1. **Release-quality PR #22:** confirm automated tests, inspect the published question flow, and merge after review.
+2. **Student pilot and skill-evidence repair:** moderate the 35 in-scope skills without direct tagged question evidence, then add genuinely markable repair questions without silently expanding the fixed weekly workload. Check real completion times and mobile typesetting on student devices.
+3. **2027 full-course programme:** author Year 2 Applied and complete-paper preparation while retaining existing permanent skill IDs and browser-progress formats. Future content remains unpublished.
+4. **Optional privacy-safe teacher features:** only add class dashboards or multi-device sync after explicit school authorisation; neither is enabled by default.
