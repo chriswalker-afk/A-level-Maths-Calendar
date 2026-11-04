@@ -26,18 +26,24 @@ function fixture(){
 }
 const withQuestion=q=>{const data=empty();data[q.topicId]=[q];return data;};
 
-test("all 19 topics have three discoverable original-question slots",()=>{
+test("all 57 independent original questions are now available by main topic and AO",()=>{
  assert.equal(specificationTopics.length,19);
  assert.deepEqual(AO_INFO.map(a=>a.id),["AO1","AO2","AO3"]);
  for(const topic of specificationTopics){
   const full=getTopicPracticeSlots(topic.id,"full");
   assert.deepEqual(full.map(slot=>slot.id),["AO1","AO2","AO3"]);
-  assert.equal(getTopicPracticeSlots(topic.id,"internal").length,3);
-  assert.ok(full.every(slot=>slot.status==="planned"));
+  assert.ok(full.every(slot=>slot.status==="ready"));
+  assert.ok(full.every(slot=>slot.question?.id==="TP-"+topic.id+"-"+slot.id));
+  const internal=getTopicPracticeSlots(topic.id,"internal");
+  assert.equal(internal.length,3);
+  assert.ok(internal.every(slot=>slot.status===(topic.id==="M09"?"future":"ready")));
  }
  assert.equal(specificationTopics.length*AO_INFO.length,57);
- assert.equal(topicPracticeQuestions.length,0,"Pass A publishes no incomplete questions");
- assert.equal(getTopicPracticeQuestion("P02","AO2"),null);
+ assert.equal(topicPracticeQuestions.length,57);
+ assert.equal(new Set(topicPracticeQuestions.map(q=>q.id)).size,57);
+ assert.equal(getTopicPracticeQuestion("P02","AO2")?.id,"TP-P02-AO2");
+ assert.equal(getTopicPracticeQuestion("M09","AO3","internal"),null);
+ assert.equal(getTopicPracticeQuestion("M09","AO3","full")?.scope,"full");
  assert.equal(getTopicPracticeQuestion("INVALID","AO1"),null);
  assert.equal(getTopicPracticeSlots("INVALID").length,0);
  assert.equal(topicPracticeRoute("full","P02","AO2"),"#/topic-practice/full/P02/AO2");
