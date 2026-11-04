@@ -37,6 +37,14 @@ export const mathsLinks=Object.freeze([
     symbol:"n",
     description:"Practise sampling methods with games, exam questions and multiplayer activities.",
     href:"https://sampling.mrwalkermaths.com/"
+  },
+  {
+    id:"lds",
+    title:"Race Around the Large Data Set",
+    subject:"LARGE DATA SET GAME",
+    symbol:"LDS",
+    description:"Race through a team board game with weather-data questions, station cards and exam challenges.",
+    href:"https://lds.mrwalkermaths.com/"
   }
 ]);
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({
