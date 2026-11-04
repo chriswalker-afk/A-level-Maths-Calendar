@@ -38,10 +38,10 @@ export const week07ExpansionPure = [
     "steps": [
       "Differentiating gives \\(F_a'(x)=1/x-a/x^2=(x-a)/x^2\\). [1] The sign changes from negative to positive at \\(x=a\\). [1] Thus the unique minimum occurs at \\((a,\\ln a-a+1)\\). [1]",
       "For \\(a=2\\), \\(F_2(1)=0\\) and \\(F_2(2)=\\ln2-1<0\\); \\(F_2(4)=\\ln4-3/2<0\\) and \\(F_2(5)=\\ln5-8/5>0\\). [1] Since \\(F_2\\) is strictly increasing for \\(x>2\\), the sign change in \\((4,5)\\) gives exactly one additional root. [1]",
-      "Apply Newton to \\(F_2(x)=\\ln x-2+2/x\\) with derivative \\((x-2)/x^2\\). [1] Thus \\(x_{n+1}=x_n-\\frac{\\ln x_n-2+2/x_n}{(x_n-2)/x_n^2}\\). [1] From \\(x_0=5\\), successive iterates approach the larger root near \\(4.92\\); show both calculator values to five decimal places. [1]",
+      "Apply Newton to \\(F_2(x)=\\ln x-2+2/x\\) with derivative \\((x-2)/x^2\\). [1] Thus \\(x_{n+1}=x_n-\\frac{\\ln x_n-2+2/x_n}{(x_n-2)/x_n^2}\\). [1] From \\(x_0=5\\), the updates are \\(x_1=4.9213507297\\ldots\\) and \\(x_2=4.9215536332\\ldots\\). Thus the second root is \\(x\\approx4.92155\\). [1]",
       "The inequality \\(\\ln a<a-1\\) for \\(a>0,a\\ne1\\) gives \\(F_a(a)<0\\). [1] Since \\(F_a(x)\\to\\infty\\) as \\(x\\to0^+\\) and as \\(x\\to\\infty\\), and \\(F_a\\) strictly decreases then increases, it crosses zero once on either side of the minimum; one crossing is \\(x=1\\). [1]"
     ],
-    "answer": "\\(F_a'(x)=(x-a)/x^2\\); two positive roots for \\(a\\ne1\\); for \\(a=2\\) the second root lies in \\((4,5)\\).",
+    "answer": "\\(F_a'(x)=(x-a)/x^2\\); two positive roots for \\(a\\ne1\\); for \\(a=2\\) the second root is \\(4.92155\\ldots\\), in \\((4,5)\\).",
     "misconception": "An iteration near x=1 cannot find the larger root: Newton's method is local, and the derivative may be small near the minimum.",
     "reflection": "How would the number of roots change exactly at a=1, when the minimum touches the horizontal axis?"
   },
