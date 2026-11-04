@@ -224,7 +224,7 @@ try{
   if(item.name==="laptop-1366"||item.name==="phone-360"){
    await page.evaluate(route=>{location.hash=route;},longRoute);
    await page.waitForFunction(route=>
-    document.querySelector("#active-question-title")&&location.hash===route,longRoute);
+    document.querySelector("#active-question-title")&&location.hash===route,{},longRoute);
    const noOuterOverflow=await page.evaluate(()=>{
     const pane=document.querySelector("#study-question-pane");
     const before=window.scrollY;
