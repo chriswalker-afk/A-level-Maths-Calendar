@@ -347,7 +347,8 @@ try{
    "https://statistics.mrwalkermaths.com/",
    "https://mechanics.mrwalkermaths.com/",
    "https://words.mrwalkermaths.com/",
-   "https://sampling.mrwalkermaths.com/"
+   "https://sampling.mrwalkermaths.com/",
+   "https://lds.mrwalkermaths.com/"
   ];
   check(linkAudit.current&&linkAudit.safe&&
     JSON.stringify(linkAudit.urls)===JSON.stringify(expectedLinks),

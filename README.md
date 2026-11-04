@@ -14,7 +14,7 @@ The visual identity uses large week numerals, ruled graph-paper layouts, warm pa
 
 ## Links to other maths websites
 
-The **Links** tab (`#/links`) offers four independent resources: [Statistics Lab](https://statistics.mrwalkermaths.com/), [Mechanics Lab](https://mechanics.mrwalkermaths.com/), [Maths Words Lab](https://words.mrwalkermaths.com/), and [Sampling Arcade](https://sampling.mrwalkermaths.com/). Cards open in a new tab so students can return to their Calendar working without navigating away.
+The **Links** tab (`#/links`) offers five independent resources: [Statistics Lab](https://statistics.mrwalkermaths.com/), [Mechanics Lab](https://mechanics.mrwalkermaths.com/), [Maths Words Lab](https://words.mrwalkermaths.com/), [Sampling Arcade](https://sampling.mrwalkermaths.com/), and [Race Around the Large Data Set](https://lds.mrwalkermaths.com/). Cards open in a new tab so students can return to their Calendar working without navigating away.
 
 To add, rename or update a link, edit the data list in `src/links-view.js`; the route uses `styles/links-page.css` and is tested in `tests/links-page.test.mjs` and the Chrome browser audit. These are separate GitHub Pages sites with their own browser storage; saved calendar marks do not transfer.
 
