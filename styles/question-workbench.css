@@ -229,3 +229,229 @@
   }
   .study-page .study-review-and-more{border:0;padding:10px 0}
 }
+
+/* Pass B — a single right-hand surface for working, checking and marking.
+   Desktop keeps the question visible; solution and mark controls scroll separately. */
+.study-page .study-writing-pane{
+  display:flex;flex-direction:column;min-height:0;
+  padding:0;overflow:hidden
+}
+.study-page .study-answer-modes{
+  display:flex;align-items:stretch;gap:3px;flex:0 0 auto;
+  padding:7px 9px;border-bottom:2px solid var(--editorial-ink);
+  background:var(--editorial-ink)
+}
+.study-page .study-answer-mode{
+  flex:1;min-width:0;min-height:41px;padding:9px 12px;
+  border:1.5px solid #56676a;border-radius:2px;
+  background:#293c44;color:#f1f5ef;
+  font:700 12px var(--editorial-font-index);
+}
+.study-page .study-answer-mode:hover:not(:disabled){background:#43585a;color:#fff}
+.study-page .study-answer-mode.is-active,
+.study-page .study-answer-mode[aria-selected=true]{
+  border-color:var(--editorial-lime);background:var(--editorial-lime);
+  color:var(--editorial-ink)
+}
+.study-page .study-answer-mode:disabled{
+  cursor:not-allowed;background:#36464b;color:#b2c0bc;opacity:1
+}
+.study-page .study-answer-mode:focus-visible{
+  outline:3px solid var(--editorial-orange);outline-offset:-3px
+}
+.study-page .study-work-panel[hidden],.study-page .study-check-panel[hidden],
+.study-page #hint-box[hidden],.study-page #solution-box[hidden]{
+  display:none!important
+}
+.study-page .study-work-panel:not([hidden]){
+  display:flex;flex:1;flex-direction:column;min-height:0;
+  padding:12px clamp(11px,1.6vw,20px) 13px;
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain
+}
+.study-page .study-work-panel #question-working-space{
+  flex:1;min-height:0;display:flex
+}
+.study-page .study-work-panel .student-workspace{
+  min-height:100%;flex:1
+}
+.study-page .study-hint-toolbar{
+  position:sticky;bottom:-1px;z-index:1;
+  margin-top:8px;padding:7px 0 1px;
+  background:var(--editorial-wash)
+}
+.study-page .study-hint-toolbar .btn{min-height:39px}
+.study-page #hint-box{margin:9px 0 0;flex:0 0 auto}
+.study-page .study-check-panel:not([hidden]){
+  display:flex;flex:1;flex-direction:column;min-height:0;min-width:0;
+  background:var(--editorial-paper)
+}
+.study-page .study-solution-area{
+  flex:1 1 0;min-height:112px;min-width:0;overflow:auto;
+  overscroll-behavior:contain;scrollbar-width:thin;scrollbar-gutter:stable;
+  padding:12px clamp(12px,1.5vw,19px);
+  background:var(--editorial-paper)
+}
+.study-page .study-solution-area:focus-visible,
+.study-page .study-marking-dock:focus-visible{
+  outline:3px solid var(--editorial-cobalt);outline-offset:-3px
+}
+.study-page .study-solution-toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:9px;margin-bottom:8px
+}
+.study-page .study-solution-toolbar strong{
+  color:var(--editorial-ink);font:700 17px var(--editorial-font-display)
+}
+.study-page .study-solution-toolbar button{flex:0 0 auto;min-height:34px;padding:5px 8px}
+.study-page .study-solution-area .helper.solution{
+  margin:0;padding:11px 13px;min-width:0;box-shadow:none
+}
+.study-page .study-solution-area .helper.solution ol{
+  margin:0;padding-left:23px
+}
+.study-page .study-solution-area .helper.solution li{
+  margin:7px 0;font-size:13px;line-height:1.6;overflow-wrap:anywhere
+}
+.study-page .study-solution-area .helper.solution p{
+  margin:8px 0 0;font-size:13px;line-height:1.6
+}
+.study-page .study-solution-notes{
+  margin:12px 0 0;border-top:1px solid var(--editorial-rule);
+  padding:10px 0 0;font-size:12px
+}
+.study-page .study-solution-notes summary{
+  cursor:pointer;font-size:11px;font-weight:800;color:var(--editorial-cobalt)
+}
+.study-page .study-solution-notes p{margin:10px 0 0}
+.study-page .study-marking-dock{
+  flex:0 1 auto;min-height:150px;max-height:56%;
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-gutter:stable;
+  border-top:3px solid var(--editorial-ink);
+  background:var(--editorial-wash)
+}
+.study-page .finish-compact{
+  margin:0;padding:10px clamp(10px,1.3vw,16px) 12px;
+  background:transparent;border:0;border-radius:0;box-shadow:none
+}
+.study-page .finish-compact .finish-heading{
+  align-items:center;gap:7px;border:0;margin:0 0 8px;padding:0
+}
+.study-page .finish-compact .finish-heading h3{
+  margin:0;font:700 15px/1.2 var(--editorial-font-display)
+}
+.study-page .finish-compact .finish-state{
+  padding:5px 8px;font-size:10px;white-space:nowrap
+}
+.study-page .finish-compact .finish-flow{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:12px;align-items:start
+}
+.study-page .finish-compact .finish-step{
+  display:block;min-width:0;margin:0;padding:0;border:0;
+  border-radius:0;background:transparent
+}
+.study-page .finish-compact .finish-number{display:none}
+.study-page .finish-compact .finish-step-content{min-width:0}
+.study-page .finish-compact .finish-step-content>strong{
+  font:700 11px/1.4 var(--editorial-font-index);display:block;margin:0 0 5px
+}
+.study-page .finish-compact .finish-step-content>p{display:none}
+.study-page .finish-compact .assessment-choices{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px
+}
+.study-page .finish-compact .assessment-choice{
+  min-width:0;min-height:39px;padding:5px 6px;gap:3px;
+  border-radius:3px;justify-content:center
+}
+.study-page .finish-compact .assessment-choice-symbol,
+.study-page .finish-compact .assessment-choice-tick,
+.study-page .finish-compact .assessment-choice small{display:none}
+.study-page .finish-compact .assessment-choice strong{
+  font-size:11px;line-height:1.15;text-align:center;overflow-wrap:anywhere
+}
+.study-page .finish-compact .finish-score-row{
+  display:flex;flex-wrap:wrap;gap:5px;align-items:center
+}
+.study-page .finish-compact .finish-score-row label{
+  font-size:11px;flex-basis:100%
+}
+.study-page .finish-compact .finish-score{
+  width:61px;height:39px;border-radius:3px;font-size:17px
+}
+.study-page .finish-compact .finish-out-of{font-size:11px;white-space:nowrap}
+.study-page .finish-compact .clear-self-mark{
+  margin:0 0 0 auto;padding:5px 3px;font-size:10px
+}
+.study-page .finish-compact .mark-by-parts{margin:8px 0 0;border-radius:3px}
+.study-page .finish-compact .mark-by-parts>summary{
+  padding:7px 9px;gap:6px;border-radius:2px
+}
+.study-page .finish-compact .mark-by-parts>summary strong{font-size:11px}
+.study-page .finish-compact .mark-by-parts>summary small{display:none}
+.study-page .finish-compact .mark-by-parts-body{padding:9px}
+.study-page .finish-compact .mark-by-parts-body>p{
+  margin:0 0 8px;font-size:11px;line-height:1.4
+}
+.study-page .finish-compact .detail-part-row{padding:7px;gap:7px;border-radius:3px}
+.study-page .finish-compact .detail-part-label label span,
+.study-page .finish-compact .detail-part-label>a{display:none}
+.study-page .finish-compact .detail-part-score input{height:35px;width:50px}
+.study-page .finish-compact .detail-part-bottom{margin-top:7px;padding-top:6px}
+.study-page .finish-compact .detail-part-bottom span{font-size:11px}
+.study-page .finish-compact .finish-extra{margin:8px 0 0}
+.study-page .finish-compact .finish-extra summary{
+  cursor:pointer;font-size:11px;font-weight:700;color:var(--editorial-cobalt)
+}
+.study-page .finish-compact .finish-followup{margin:8px 0 3px;gap:6px}
+.study-page .finish-compact .finish-followup select{width:100%;min-height:37px}
+.study-page .finish-compact .finish-mark-message:not(.mark-error),
+.study-page .finish-compact .finish-saving:not(.save-error){
+  position:absolute;width:1px;height:1px;padding:0;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);
+}
+.study-page .finish-compact .finish-mark-message.mark-error,
+.study-page .finish-compact .finish-saving.save-error{
+  display:block;margin:8px 0 0!important;font-size:11px
+}
+.study-page .finish-compact .finish-saving.save-error{color:var(--editorial-error)!important}
+.study-page .study-review-and-more:empty{display:none}
+.study-page .study-review-and-more .question-skill-links{margin-top:15px}
+
+/* The dedicated mobile workflow is Pass C. Until then keep all panels reachable
+   and prevent fixed-height clipping with the on-screen maths keyboard. */
+@media(max-width:900px){
+ .study-page .study-writing-pane{overflow:visible;display:flex;min-height:0}
+ .study-page .study-work-panel:not([hidden]){
+   min-height:285px;max-height:none;overflow:visible;padding:14px 18px 17px
+ }
+ .study-page .study-work-panel #question-working-space{min-height:245px}
+ .study-page .study-hint-toolbar{position:static}
+ .study-page .study-check-panel:not([hidden]){display:block;min-height:0}
+ .study-page .study-solution-area{
+   min-height:0;max-height:min(50vh,470px);overflow-y:auto;
+   border-bottom:1px solid var(--editorial-rule)
+ }
+ .study-page .study-marking-dock{
+   min-height:0;max-height:none;overflow:visible
+ }
+ .study-page .finish-compact .finish-flow{
+   grid-template-columns:repeat(2,minmax(0,1fr))
+ }
+}
+@media(max-width:600px){
+ .study-page .study-answer-modes{padding:5px}
+ .study-page .study-answer-mode{min-height:44px;padding:10px 7px;font-size:12px}
+ .study-page .study-work-panel:not([hidden]){padding:12px}
+ .study-page .study-solution-area{padding:11px}
+ .study-page .finish-compact{padding:12px}
+ .study-page .finish-compact .finish-flow{grid-template-columns:1fr;gap:9px}
+ .study-page .finish-compact .assessment-choice{min-height:44px}
+ .study-page .finish-compact .finish-score-row label{flex-basis:auto}
+}
+@media print{
+ .study-page .study-answer-modes,.study-page .study-check-panel,
+ .study-page .study-hint-toolbar{display:none!important}
+ .study-page .study-work-panel{display:block!important;padding:0!important;overflow:visible!important}
+ .study-page .study-writing-pane{display:block!important;overflow:visible!important}
+}

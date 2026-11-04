@@ -65,13 +65,30 @@ test("Pass A keeps question and saved working side by side with compact navigati
   assert.equal(root.querySelector(".study-workbench .side.question-index"),null);
 
   const review=root.querySelector(".study-review-and-more");
-  assert.ok(review);
-  assert.ok(review.contains(root.querySelector("#hint-toggle")));
-  assert.ok(review.contains(root.querySelector("#solution-toggle")));
-  assert.ok(review.contains(root.querySelector("#question-assessment")));
+  const workPanel=root.querySelector("#study-panel-work");
+  const checkPanel=root.querySelector("#study-panel-review");
+  assert.ok(review&&workPanel&&checkPanel);
+  assert.ok(writing.contains(root.querySelector(".study-answer-modes")));
+  assert.ok(workPanel.contains(root.querySelector("#hint-toggle")));
+  assert.ok(workPanel.contains(root.querySelector("#question-working-space")));
+  assert.ok(checkPanel.contains(root.querySelector("#solution-toggle")));
+  assert.ok(checkPanel.contains(root.querySelector("#solution-box")));
+  assert.ok(checkPanel.contains(root.querySelector("#question-assessment")));
+  assert.ok(checkPanel.contains(root.querySelector("#self-mark-input")));
   assert.ok(review.contains(root.querySelector("#attempt-history-root")));
   assert.ok(review.contains(root.querySelector(".question-skill-links")));
-  assert.ok(!pane.contains(root.querySelector("#question-assessment")));
+  assert.ok(pane.contains(root.querySelector("#question-assessment")));
+  assert.equal(root.querySelector("#study-tab-work").getAttribute("aria-selected"),"true");
+  assert.equal(root.querySelector("#study-tab-review").getAttribute("aria-selected"),"false");
+  assert.equal(checkPanel.hidden,true,"review is initially closed");
+  root.querySelector("#study-tab-review").click();
+  assert.equal(checkPanel.hidden,false,"checking happens within the right panel");
+  assert.equal(workPanel.hidden,true,"work is retained but not shown");
+  assert.equal(root.querySelector("#solution-box").hidden,false,"the scheme opens with Check & mark");
+  assert.equal(root.querySelector("#mark-view-solution"),null,"no scroll-to-solution link in compact marking");
+  root.querySelector("#study-tab-work").click();
+  assert.equal(workPanel.hidden,false);
+  assert.equal(checkPanel.hidden,true);
 
   const note=root.querySelector("#work-notes");
   note.value="My saved reasoning";
@@ -92,6 +109,8 @@ test("Pass A keeps question and saved working side by side with compact navigati
   assert.ok(root.querySelector(".study-writing-pane"),"timed paper retains the workspace");
   assert.ok(root.querySelector("#work-notes"));
   assert.ok(root.querySelector(".mock-exam-lock"));
+  assert.equal(root.querySelector("#study-tab-review").disabled,true,"the check tab is locked");
+  assert.equal(root.querySelector("#study-panel-review"),null,"no hidden marking panel is mounted");
   assert.equal(root.querySelector("#solution-toggle"),null,"timer still locks solutions");
   assert.equal(root.querySelector("#question-assessment"),null,"timer still locks marking");
  }finally{
@@ -111,5 +130,8 @@ test("study viewport scrolls panes separately while smaller screens and print ar
  assert.match(css,/\.study-page \.study-question-pane,\s*\.study-page \.study-writing-pane\s*\{[\s\S]*?overflow-y:auto/);
  assert.match(css,/@media\(max-width:900px\)/);
  assert.match(css,/display:flex;flex-direction:column;height:auto/);
+ assert.match(css,/\.study-page \.study-solution-area\s*\{[\s\S]*?overflow:auto/);
+ assert.match(css,/\.study-page \.study-marking-dock\s*\{[\s\S]*?max-height:56%/);
+ assert.match(css,/\.study-page \.study-work-panel\[hidden\]/);
  assert.match(css,/@media print/);
 });
