@@ -104,10 +104,35 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
   const clear=root.querySelector("#clear-self-mark");
   const saveStatus=root.querySelector("#finish-save-status");
 
+  // A failed browser write must never leave a new score or finished badge
+  // appearing to be saved. Preserve unrelated working, hints and history.
+  const MARKING_FIELDS=["status","error","score","scoreSource","partMarks"];
+  const snapshot=()=>Object.fromEntries(MARKING_FIELDS
+    .filter(key=>Object.hasOwn(state,key))
+    .map(key=>[key,key==="partMarks"?{...state[key]}:state[key]]));
+  let lastSaved=snapshot();
+  function restoreMarking(){
+    for(const key of MARKING_FIELDS)delete state[key];
+    Object.assign(state,lastSaved);
+    score.value=isQuestionFinished(state,question.marks)?String(state.score):"";
+    root.querySelectorAll("[data-attempt-support]").forEach(button=>
+      button.setAttribute("aria-pressed",String(button.dataset.attemptSupport===state.status)));
+    root.querySelectorAll("[data-part-mark]").forEach(part=>{
+      const value=state.partMarks?.[part.dataset.partMark];
+      part.value=Number.isInteger(value)?String(value):"";
+      part.removeAttribute("aria-invalid");
+    });
+    root.querySelector("#self-error").value=state.error||"";
+    updateCompletion("Could not save this change. Your previously saved result is unchanged.");
+    markMessage.classList.add("mark-error");
+    refreshDetailed("Storage write failed. Your previous part marks remain recorded.");
+  }
   function persist(){
     const ok=typeof onChange==="function"?onChange({...state}):true;
+    if(ok===false)restoreMarking();
+    else lastSaved=snapshot();
     saveStatus.textContent=ok===false
-      ?"Could not save: browser storage may be full."
+      ?"Could not save this change. Check browser storage and export a backup."
       :"Your choices and mark are saved on this device.";
     saveStatus.classList.toggle("save-error",ok===false);
     return ok;
@@ -184,7 +209,7 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
     replaceMarkState(next);
     // A manual total deliberately supersedes partial marks.
     for(const input of partInputs)input.value="";
-    persist();
+    if(!persist())return;
     refreshMark(invalid
       ?"Enter a whole number from 0 to "+question.marks+" to finish this question.":"",invalid);
   }
@@ -197,7 +222,7 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
       const {record:next,summary,invalid}=applyPartMark(state,question,key,input.value);
       replaceMarkState(next);
       input.setAttribute("aria-invalid",String(invalid));
-      persist();
+      if(!persist())return;
       const message=invalid
         ?"Enter a whole number between 0 and "+input.max+" for part ("+key+")."
         :summary.complete
@@ -222,7 +247,7 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
       input.value="";
       input.removeAttribute("aria-invalid");
     }
-    persist();
+    if(!persist())return;
     refreshMark();
   });
   clear.addEventListener("click",()=>{
@@ -232,7 +257,8 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
       input.value="";
       input.removeAttribute("aria-invalid");
     }
-    persist();refreshMark();
+    if(!persist())return;
+    refreshMark();
     if(detail&&!detail.open)score.focus();
     else partInputs[0]?.focus();
   });
