@@ -4,6 +4,7 @@ import {JSDOM} from "jsdom";
 import {mountSpecification} from "../src/specification-view.js";
 import {renderTopicPracticeQuestion} from "../src/topic-practice-view.js";
 import {getTopicPracticeQuestion} from "../src/data/topic-practice/index.js";
+import {mountQuestionAssessment} from "../src/question-assessment.js";
 import {validateTopicPracticeBank} from "../src/data/topic-practice/schema.js";
 import {specificationTopics} from "../src/data/specification.js";
 
@@ -155,7 +156,6 @@ test("Full A Level Moments question's part-mark links stay inside the full speci
  root.innerHTML=renderTopicPracticeQuestion({
   scope:"full",topicId:"M09",aoFocus:"AO2",question:q,records:{}
  });
- const {mountQuestionAssessment}=await import("../src/question-assessment.js");
  mountQuestionAssessment(root.querySelector("#question-assessment"),{
   question:q,record:{},compact:true,scope:"full"
  });
