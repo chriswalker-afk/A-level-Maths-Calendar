@@ -122,9 +122,15 @@ function studyPage(n,sec,idx){
  questionNav+
  '<button type="button" class="btn small study-step-nav" id="next" aria-label="'+(nextSection?'Next section':'Next question')+'"'+
   (next?' data-target-route="'+next+'"':' disabled')+'><span>Next</span> →</button></div>'+
+ '<nav class="study-mobile-tabs" role="tablist" aria-label="Study view" hidden>'+
+ '<button type="button" id="study-mobile-question" class="study-mobile-tab is-active" role="tab" aria-controls="study-question-pane" aria-selected="true" tabindex="0">Question</button>'+
+ '<button type="button" id="study-mobile-work" class="study-mobile-tab" role="tab" aria-controls="study-panel-work" aria-selected="false" tabindex="-1">My working</button>'+
+ '<button type="button" id="study-mobile-review" class="study-mobile-tab" role="tab" aria-selected="false" tabindex="-1"'+
+ (timed?' disabled aria-disabled="true" title="Finish the timed paper to unlock checking"':' aria-controls="study-panel-review"')+
+ '>Check &amp; mark</button></nav>'+
  '<article class="paper exam-sheet" aria-labelledby="active-question-title">'+
  '<div class="study-answer-layout">'+
- '<section class="study-question-pane" role="region" tabindex="0" aria-label="Question prompt">'+
+ '<section id="study-question-pane" class="study-question-pane" role="region" tabindex="0" aria-label="Question prompt">'+
  '<div class="exam-sheet-topline"><span class="exam-question-number">QUESTION '+String(i+1).padStart(2,"0")+
  ' / '+String(qs.length).padStart(2,"0")+'</span>'+
  '<span class="exam-sheet-points">'+q.marks+' MARKS</span>'+
@@ -137,7 +143,7 @@ function studyPage(n,sec,idx){
   '<li><span class="letter">('+'abcdefghijklmnopqrstuvwxyz'[j]+')</span>'+
   '<div class="question-part math">'+mathHtml(part[0])+'</div>'+
   '<span class="marks">['+part[1]+']</span></li>').join('')+'</ol>'+
- '</section><section class="study-writing-pane" role="region" tabindex="0" aria-label="Working and review">'+
+ '</section><section id="study-writing-pane" class="study-writing-pane" role="region" tabindex="0" aria-label="Working and review">'+
  '<div class="study-answer-modes" role="tablist" aria-label="Question workspace">'+
  '<button type="button" id="study-tab-work" class="study-answer-mode is-active" role="tab" aria-controls="study-panel-work" aria-selected="true" tabindex="0">My working</button>'+
  '<button type="button" id="study-tab-review" class="study-answer-mode" role="tab" aria-selected="false" tabindex="-1"'+
@@ -347,6 +353,8 @@ function render(){
     }
     // Switching panels preserves the mounted working editor and its saved state.
     mountStudyReviewModes(el.querySelector(".study-writing-pane"),{
+      questionPane:el.querySelector("#study-question-pane"),
+      mobileTabs:el.querySelector(".study-mobile-tabs"),
       onFirstReview(){
         if(el.querySelector("#solution-box")?.hidden)el.querySelector("#solution-toggle")?.click();
       },
