@@ -48,9 +48,9 @@ test('exactly Weeks 1–10 are authored and released',()=>{
  assert.equal(week04Questions.length,31);
  assert.equal(week05Questions.length,31);
  assert.equal(week06Questions.length,31);
- assert.equal(week07Questions.length,22);
- assert.equal(week08Questions.length,22);
- assert.equal(week09Questions.length,22);
+ assert.equal(week07Questions.length,31);
+ assert.equal(week08Questions.length,31);
+ assert.equal(week09Questions.length,31);
  assert.equal(week10Questions.length,22);
  assert.equal(siteConfig.stage2.published,false);
 });
