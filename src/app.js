@@ -16,6 +16,7 @@ import {renderCalendarHome,firstWeekQuestionRoute,adjacentQuestionRoute,renderSe
 import {mockPaperForSection,mockTimerInfo,mockTimerUpdate,formatMockClock} from "./mock-week.js";
 import {renderMockPaperBanner,renderMockReview} from "./mock-week-view.js";
 import {mountStudyReviewModes} from "./study-review-modes.js";
+import {renderLinksPage} from "./links-view.js";
 
 const $=s=>document.querySelector(s);
 const el=$('#app');
@@ -311,11 +312,12 @@ function render(){
   else if(top==="progress")el.innerHTML=progressPage(p[1]||"internal",p[2]||"all");
   else if(top==="specification")disposeSpecification=mountSpecification(el,{scope:p[1]||"internal",topicId:p[2]||null,skillId:p[3]||null,questions:releasedQuestions(),records:saved});
   else if(top==="guide")el.innerHTML=guidePage();
+  else if(top==="links")el.innerHTML=renderLinksPage();
   else if(top==="final")el.innerHTML=finalPage();
   else el.innerHTML=notFound();
 
   document.title=(top==="home"?"A Level Maths Calendar":
-    top==="study"?"Questions":top==="mock-review"?"Mock marking & review":top==="week"?"Weekly questions":top==="specification"?"My Specification":
+    top==="study"?"Questions":top==="mock-review"?"Mock marking & review":top==="week"?"Weekly questions":top==="specification"?"My Specification":top==="links"?"More maths tools":
     top.charAt(0).toUpperCase()+top.slice(1))+" — A Level Maths Calendar";
 
   if(top==="progress"){
