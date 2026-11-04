@@ -49,7 +49,7 @@ The working-time allocations are **1.2 minutes per mark as an examination-paced 
 
 **Week 5 (Pass 2):** exact trigonometric integration, repeated-pole partial fractions and bounds, separable differential equations, area between curves, finite exponential accumulation, Year 1 binomial distributions and hypothesis testing.
 
-**Week 6 (Pass 2):** AP/GP comparison proofs, fractional binomial approximations, nonlinear recurrence convergence, financial sequence modelling, a recurring-pollutant threshold, Year 1 histogram interpretation and connected particles. The extension connects Pure binomial identities to a simple Year 1 binomial distribution.
+**Week 6 (Pass 2):** AP/GP comparison proofs, fractional binomial approximations, nonlinear recurrence convergence, financial sequence modelling, a recurring-pollutant threshold, Year 1 histogram interpretation and connected particles. The optional extension proves weighted binomial-coefficient identities without requiring out-of-specification discrete-distribution variance.
 
 **Weeks 7–9 remain at 22 questions and a 98-mark essential core** until Pass 3; **Week 10 remains an authentic 100-mark Pure and 50-mark Year 1 Applied assessment** with a 60-minute diagnostic review. The 2027 final-examination programme is still unpublished. Across all ten weeks there are now **274 published questions, including 226 essential**.
 
