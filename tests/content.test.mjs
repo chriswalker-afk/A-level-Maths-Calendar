@@ -45,9 +45,9 @@ test('exactly Weeks 1–10 are authored and released',()=>{
  assert.ok(programmeOne.weeks.slice(10).every(w=>!w.hasPublishedContent));
  assert.equal(week02Questions.length,31);
  assert.equal(week03Questions.length,31);
- assert.equal(week04Questions.length,22);
- assert.equal(week05Questions.length,22);
- assert.equal(week06Questions.length,22);
+ assert.equal(week04Questions.length,31);
+ assert.equal(week05Questions.length,31);
+ assert.equal(week06Questions.length,31);
  assert.equal(week07Questions.length,22);
  assert.equal(week08Questions.length,22);
  assert.equal(week09Questions.length,22);

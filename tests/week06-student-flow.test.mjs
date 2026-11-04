@@ -84,13 +84,13 @@ test("Week 6 calendar, maths, self-marking and integration skill evidence preser
  assert.match(app.querySelector(".exam-sheet-code").textContent,/W06-P1/);
  assert.equal(app.querySelector("#previous").dataset.targetRoute,"#/study/6/R/9");
  navigate("#/progress/internal");
- assert.equal(app.querySelector(".metric strong").textContent,"7/205");
+ assert.equal(app.querySelector(".metric strong").textContent,"7/226");
  const weeks=app.querySelectorAll(".weekly-progress-group");
  assert.equal(weeks.length,10);
  assert.match(weeks[5].textContent,/Sequences, series and binomial expansion/);
  assert.match(weeks[5].textContent,/2 \/ 10 questions marked/);
  assert.ok(weeks[5].querySelector('a[href="#/study/6/R/0"]'));
- assert.match(app.querySelector(".spec-progress-pulse").textContent,/7 \/ 247/);
+ assert.match(app.querySelector(".spec-progress-pulse").textContent,/7 \/ 274/);
  navigate("#/specification/internal/P04");
  assert.match(app.querySelector(".spec-topic-evidence").textContent,/2 \/ /);
  assert.match(app.querySelector("#P04-009").textContent,/50% of verified part marks/);

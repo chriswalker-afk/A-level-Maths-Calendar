@@ -115,7 +115,7 @@ test("publication-safe practice navigation and accurate no-data evidence for Wee
  assert.deepEqual(getPublishedPracticeForSkill("M09-001"),[],"Year 2 Moments remain locked");
  const allQuestions=all.flat();
  const report=calculateSpecificationProgress({questions:allQuestions,records:{},scope:"internal"});
- assert.equal(report.summary.releasedQuestions,181);
+ assert.equal(report.summary.releasedQuestions,208);
  assert.equal(report.summary.completedQuestions,0,"Unattempted work is not zero accuracy");
  const zero=calculateSpecificationProgress({questions:taggedWeek07Questions,records:{"W07-R1":{score:0,status:"I"}},scope:"internal"});
  assert.equal(zero.summary.releasedQuestions,22);

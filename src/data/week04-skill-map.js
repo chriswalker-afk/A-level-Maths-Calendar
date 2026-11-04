@@ -1,3 +1,4 @@
+import {week04ExpansionSkillMap} from "./week04-expansion-skill-map.js";
 /**
  * Week 4 permanent 9MA0 skill tags per mark-bearing question part.
  * One primary ID receives attributable marks; secondary skills are exposure only.
@@ -374,5 +375,6 @@ export const week04SkillMap = {
         "P07-018"
       ]
     ]
-  ]
+  ],
+  ...week04ExpansionSkillMap
 };

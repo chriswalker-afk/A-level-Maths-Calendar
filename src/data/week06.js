@@ -1,3 +1,5 @@
+import {week06Expansion} from "./week06-expansion.js";
+import {pacedExpandedWeek} from "./expanded-week-budget.js";
 import {week06Retrieval} from "./week06-retrieval.js";
 import {week06PureProblems} from "./week06-pure.js";
 import {week06Modelling} from "./week06-modelling.js";
@@ -6,7 +8,11 @@ import {week06Timed} from "./week06-timed.js";
 import {week06Extension} from "./week06-extension.js";
 
 /** All 22 original Week 6 questions in existing in-question section order. */
-export const week06Questions=[
- ...week06Retrieval,...week06PureProblems,...week06Modelling,
- ...week06Applied,...week06Timed,...week06Extension
-];
+export const week06Questions=pacedExpandedWeek([
+ ...week06Retrieval,
+ ...week06PureProblems,...week06Expansion.P,
+ ...week06Modelling,...week06Expansion.M,
+ ...week06Applied,...week06Expansion.A,
+ ...week06Timed,...week06Expansion.T,
+ ...week06Extension,...week06Expansion.X
+]);

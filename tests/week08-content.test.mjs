@@ -109,7 +109,7 @@ test("released practice routes, no-data states and completed zero-mark work stay
  assert.deepEqual(getPublishedPracticeForSkill("M08-016"),[],"Unpublished Year 2 mechanics has no questions");
  const full=allWeeks.flat();
  const empty=calculateSpecificationProgress({questions:full,records:{},scope:"internal"});
- assert.equal(empty.summary.releasedQuestions,203);
+ assert.equal(empty.summary.releasedQuestions,230);
  assert.equal(empty.summary.completedQuestions,0,"Unattempted work is not demonstrated zero accuracy");
  const zero=calculateSpecificationProgress({questions:taggedWeek08Questions,records:{"W08-R1":{score:0,status:"I"}},scope:"internal"});
  assert.equal(zero.summary.releasedQuestions,22);

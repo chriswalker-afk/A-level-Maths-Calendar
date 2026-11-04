@@ -12,12 +12,12 @@ import {recommendRevision} from "../src/revision-recommendations.js";
 import {isWeekReleased} from "../src/publication.js";
 
 const groups={
- R:{questions:10,marks:20,minutes:30},
- P:{questions:3,marks:30,minutes:70},
- M:{questions:2,marks:26,minutes:70},
- A:{questions:3,marks:22,minutes:50},
- T:{questions:3,marks:32,minutes:45},
- X:{questions:1,marks:14,minutes:40}
+ R:{questions:10,marks:20,minutes:24},
+ P:{questions:7,marks:70,minutes:84},
+ M:{questions:3,marks:40,minutes:48},
+ A:{questions:5,marks:45,minutes:54},
+ T:{questions:4,marks:40,minutes:48},
+ X:{questions:2,marks:30,minutes:36}
 };
 const core=new Set(["R","P","M","A"]);
 const all=[taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions];
@@ -34,15 +34,15 @@ test("exactly ten complete weeks publish, without permitting Week 11 or Year 2",
  assert.equal(isWeekReleased(6,[]),false,"No phantom content");
  assert.equal(siteConfig.stage2.published,false);
 });
-test("22 original questions exactly meet six-section quotas and four-hour plan",()=>{
- assert.equal(week06Questions.length,22);
- assert.equal(new Set(week06Questions.map(q=>q.id)).size,22);
- assert.equal(week06Questions.reduce((sum,q)=>sum+q.marks,0),144);
+test("31 original questions exactly meet six-section quotas and four-hour plan",()=>{
+ assert.equal(week06Questions.length,31);
+ assert.equal(new Set(week06Questions.map(q=>q.id)).size,31);
+ assert.equal(week06Questions.reduce((sum,q)=>sum+q.marks,0),245);
  const essential=week06Questions.filter(q=>core.has(q.section));
- assert.equal(essential.length,18);
- assert.equal(essential.reduce((s,q)=>s+q.marks,0),98);
- assert.equal(essential.reduce((s,q)=>s+q.minutes,0),213);
- assert.equal(213+20+7,240);
+ assert.equal(essential.length,25);
+ assert.equal(essential.reduce((s,q)=>s+q.marks,0),175);
+ assert.equal(essential.reduce((s,q)=>s+q.minutes,0),210);
+ assert.equal(210+30,240);
  for(const [section,expected]of Object.entries(groups)){
   const qs=week06Questions.filter(q=>q.section===section);
   assert.equal(qs.length,expected.questions,section+" count");
@@ -55,7 +55,7 @@ test("the essential questions carry the exact planned 26/39/33 AO mark allocatio
  const totals={AO1:0,AO2:0,AO3:0};
  for(const q of week06Questions.filter(q=>core.has(q.section)))
   for(const [key,n]of Object.entries(q.ao))totals[key]+=n;
- assert.deepEqual(totals,{AO1:26,AO2:39,AO3:33});
+ assert.deepEqual(totals,{AO1:41,AO2:76,AO3:58});
 });
 test("every part has coherent mark allocations, full working and MathJax-ready notation",()=>{
  for(const q of week06Questions){
@@ -80,8 +80,8 @@ test("every part has coherent mark allocations, full working and MathJax-ready n
   }
  }
 });
-test("60 marked parts each receive exactly one real in-scope skill without double credit",()=>{
- assert.equal(Object.keys(week06SkillMap).length,22);
+test("95 marked parts each receive exactly one real in-scope skill without double credit",()=>{
+ assert.equal(Object.keys(week06SkillMap).length,31);
  assert.deepEqual(taggedWeek06Questions.map(q=>q.id),week06Questions.map(q=>q.id));
  let parts=0,marks=0;
  for(const q of taggedWeek06Questions){
@@ -96,14 +96,14 @@ test("60 marked parts each receive exactly one real in-scope skill without doubl
    for(const secondary of tag.secondarySkillIds)
     assert.equal(getSpecSkill(secondary)?.scope,"internal",q.id+" secondary "+secondary);
    if(q.section==="A"){
-    assert.equal(skill.topicId,"M07",q.id+" Year 1 kinematics only");
+    assert.ok(["S02","M07","M08"].includes(skill.topicId),q.id+" Year 1 statistics or mechanics only");
     assert.equal(skill.year,1,q.id);
    }
    parts++;marks+=n;
   }
  }
- assert.equal(parts,60);
- assert.equal(marks,144);
+ assert.equal(parts,95);
+ assert.equal(marks,245);
 });
 test("publication-safe practice navigation and score evidence include Week 6 exactly once",()=>{
  const index=createPracticeIndex(all.map((questions,i)=>({week:i+1,questions})));
@@ -115,10 +115,10 @@ test("publication-safe practice navigation and score evidence include Week 6 exa
  assert.deepEqual(getPublishedPracticeForSkill("M09-001"),[],"Year 2 Moments remain unavailable");
  const six=all.flat();
  const report=calculateSpecificationProgress({questions:six,records:{},scope:"internal"});
- assert.equal(report.summary.releasedQuestions,159);
+ assert.equal(report.summary.releasedQuestions,186);
  assert.equal(report.summary.completedQuestions,0);
  const zero=calculateSpecificationProgress({questions:taggedWeek06Questions,records:{"W06-R1":{score:0,status:"I"}},scope:"internal"});
- assert.equal(zero.summary.releasedQuestions,22);
+ assert.equal(zero.summary.releasedQuestions,31);
  assert.equal(zero.summary.completedQuestions,1,"Entered zero is finished");
  const recs=recommendRevision({questions:six,records:{},report,scope:"internal",limit:10});
  for(const rec of recs)assert.match(rec.href,/^#\/study\/[1-6]\/[RPMATX]\/\d+$/);

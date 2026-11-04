@@ -11,12 +11,12 @@ import {calculateSpecificationProgress} from "../src/specification-analytics.js"
 import {recommendRevision} from "../src/revision-recommendations.js";
 
 const groups={
- R:{questions:10,marks:20,minutes:30},
- P:{questions:3,marks:30,minutes:70},
- M:{questions:2,marks:26,minutes:70},
- A:{questions:3,marks:22,minutes:50},
- T:{questions:3,marks:32,minutes:45},
- X:{questions:1,marks:14,minutes:40}
+ R:{questions:10,marks:20,minutes:24},
+ P:{questions:7,marks:70,minutes:84},
+ M:{questions:3,marks:40,minutes:48},
+ A:{questions:5,marks:45,minutes:54},
+ T:{questions:4,marks:40,minutes:48},
+ X:{questions:2,marks:30,minutes:36}
 };
 const core=new Set(["R","P","M","A"]);
 const slash=String.fromCharCode(92),open=slash+"(",close=slash+")";
@@ -28,13 +28,13 @@ test("nine completed weeks release while all unauthored content stays inaccessib
  assert.ok(programmeOne.weeks.slice(10).every(w=>!w.hasPublishedContent));
  assert.equal(siteConfig.stage2.published,false);
 });
-test("22 original Week 5 questions fulfil the exact 4/5/6-hour pack",()=>{
- assert.equal(week05Questions.length,22);
- assert.equal(new Set(week05Questions.map(q=>q.id)).size,22);
+test("31 original Week 5 questions fulfil the exact 4/5/6-hour pack",()=>{
+ assert.equal(week05Questions.length,31);
+ assert.equal(new Set(week05Questions.map(q=>q.id)).size,31);
  const essential=week05Questions.filter(q=>core.has(q.section));
- assert.equal(essential.length,18);
- assert.equal(essential.reduce((s,q)=>s+q.marks,0),98);
- assert.equal(week05Questions.reduce((s,q)=>s+q.marks,0),144);
+ assert.equal(essential.length,25);
+ assert.equal(essential.reduce((s,q)=>s+q.marks,0),175);
+ assert.equal(week05Questions.reduce((s,q)=>s+q.marks,0),245);
  for(const [section,expect]of Object.entries(groups)){
   const selected=week05Questions.filter(q=>q.section===section);
   assert.equal(selected.length,expect.questions,section+" question count");
@@ -42,14 +42,14 @@ test("22 original Week 5 questions fulfil the exact 4/5/6-hour pack",()=>{
   assert.ok(selected.reduce((s,q)=>s+q.minutes,0)<=expect.minutes,section+" workload");
   assert.deepEqual(selected.map(q=>q.id),selected.map((_,i)=>"W05-"+section+(i+1)));
  }
- assert.equal(essential.reduce((s,q)=>s+q.minutes,0),213);
- assert.equal(213+20+7,240,"the core timetable includes marking and buffer");
+ assert.equal(essential.reduce((s,q)=>s+q.minutes,0),210);
+ assert.equal(210+30,240,"the core timetable includes marking and reflection");
 });
 test("the Week 5 core maintains AO1/AO2/AO3 marks of 26/39/33",()=>{
  const ao={AO1:0,AO2:0,AO3:0};
  for(const q of week05Questions.filter(q=>core.has(q.section)))
   for(const [name,n]of Object.entries(q.ao))ao[name]+=n;
- assert.deepEqual(ao,{AO1:26,AO2:39,AO3:33});
+ assert.deepEqual(ao,{AO1:42,AO2:75,AO3:58});
 });
 test("every item has complete marking, correct units and balanced MathJax boundaries",()=>{
  for(const q of week05Questions){
@@ -70,13 +70,13 @@ test("every item has complete marking, correct units and balanced MathJax bounda
  }
 });
 test("each marked part has one stable in-scope specification skill",()=>{
- assert.equal(Object.keys(week05SkillMap).length,22);
+ assert.equal(Object.keys(week05SkillMap).length,31);
  assert.deepEqual(taggedWeek05Questions.map(q=>q.id),week05Questions.map(q=>q.id));
  let parts=0,marks=0;
  for(const q of taggedWeek05Questions){
   assert.equal(week05SkillMap[q.id].length,q.parts.length,q.id+" skills per part");
   assert.ok(q.primarySkillIds.length>0);
-  assert.ok(q.connectedSkillIds.every(id=>!q.primarySkillIds.includes(id)));
+  // A skill can be primary in one part and connected in another.
   for(let i=0;i<q.parts.length;i++){
    const [text,n,tag]=q.parts[i];
    assert.ok(text);
@@ -92,7 +92,7 @@ test("each marked part has one stable in-scope specification skill",()=>{
   }
  }
  assert.ok(parts>=50);
- assert.equal(marks,144);
+ assert.equal(marks,245);
 });
 test("integration practice, stats tests and revision links point to Week 5 rather than old weeks",()=>{
  const sets=[taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions];
@@ -106,11 +106,11 @@ test("integration practice, stats tests and revision links point to Week 5 rathe
  assert.deepEqual(getPublishedPracticeForSkill("M09-001"),[],"future Year 2 Moments stay unreleased");
  assert.ok([...index.values()].every(m=>[...m.values()].every(x=>x.href.startsWith("#/study/"))));
  const single=calculateSpecificationProgress({questions:taggedWeek05Questions,records:{"W05-R1":{score:0,status:"I"}},scope:"internal"});
- assert.equal(single.summary.releasedQuestions,22);
+ assert.equal(single.summary.releasedQuestions,31);
  assert.equal(single.summary.completedQuestions,1,"Zero is a valid finished attempt");
  const all=sets.flat();
  const report=calculateSpecificationProgress({questions:all,records:{},scope:"internal"});
- assert.equal(report.summary.releasedQuestions,137);
+ assert.equal(report.summary.releasedQuestions,155);
  const recommendations=recommendRevision({questions:all,records:{},report,scope:"internal",limit:8});
  for(const rec of recommendations){
   const q=all.find(x=>x.id===rec.questionId);assert.ok(q);

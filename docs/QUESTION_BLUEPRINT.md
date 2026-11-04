@@ -40,7 +40,29 @@ Working-time allocations are **planning benchmarks**: 1.2 minutes per mark, base
 
 **Next planned passes:** Weeks 4–6, then 7–9, then a final catalogue-wide skills audit and revised mock/reattempt recommendations. Week 10's genuine 100/50-mark paper and 60-minute diagnostic review remain unchanged.
 
-### Original 98-mark practice pattern (Weeks 4–9 while awaiting expansion)
+## Pass 2 expansion — Weeks 4–6 (November 2026)
+
+**Current and overriding authoring contract:** Weeks 1–6 all use the 31-question/245-mark structure described in Pass 1 above; the original 98-mark pattern below now applies **only to Weeks 7–9** until Pass 3. The Week 10 100-mark Pure/50-mark Year 1 Applied mock is unaffected.
+
+| Section | Existing IDs kept | New IDs appended | Total questions | Total marks | Planned solving minutes |
+|---|---|---|---:|---:|---:|
+| R: independent retrieval | R1–R10 | — | 10 | 20 | 24 |
+| P: connected Pure | P1–P3 | P4–P7 | 7 | 70 | 84 |
+| M: modelling | M1–M2 | M3 | 3 | 40 | 48 |
+| A: Year 1 Applied | A1–A3 | A4–A5 | 5 | 45 | 54 |
+| **Core four hours** | | | **25** | **175** | **210 + 30 marking/reflection** |
+| T: timed set | T1–T3 | T4 | 4 | 40 | 48 + 12 review |
+| **Cumulative five hours** | | | **29** | **215** | **300 total** |
+| X: optional extension | X1 | X2 | 2 | 30 | 36 + 24 reflection |
+| **Cumulative six hours** | | | **31** | **245** | **360 total** |
+
+**Pass 2 content:** Week 4 combines implicit and parametric differentiation, tangency, stationary-point and curvature reasoning, related rates and an authentic conical tank with physical constraints; Year 1 mechanics adds forces, vectors and connected bodies. Week 5 combines non-routine trig, rational and exponential integration, an initial-value ODE, a finite-rate accumulation model, and exclusively Year 1 binomial distributions and hypothesis testing. Week 6 combines an AP-versus-GP induction proof, fractional binomial convergence and error, nonlinear recurrence convergence, financial and pollutant sequence models, Year 1 grouped data and connected-particle mechanics, and an optional rigorous binomial identity challenge.
+
+**Unchanged assessment/data guarantees:** No original question or marked part is removed or renumbered. New modules are appended to P/M/A/T/X inside the existing section structure; R is unchanged. The student progress/local-storage schema is unchanged. Each added marked part has exactly one primary skill link with in-scope permanent 9MA0 skill ID; secondary tags are exposure only and must never double-count marks. Every new item has independently verifiable maths, step-by-step schemes, first-step hint, final answer, misconception and reflection. All Year 2 Applied techniques remain excluded.
+
+**Time honesty:** 1.2 working minutes per mark is a target benchmark, not measured completion speed. If student pilots show that sustained unstructured AO2/AO3 problems need longer, adjust the workload and marking time appropriately; do not silently mark incomplete work as zero. Week 10 remains the authentic 100/50-mark mock.
+
+### Original 98-mark practice pattern (Weeks 7–9 while awaiting expansion)
 
 | Block | IDs | Marks | Minutes | Status |
 |---|---|---:|---:|---|

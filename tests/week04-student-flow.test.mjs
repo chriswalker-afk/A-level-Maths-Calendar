@@ -82,13 +82,13 @@ test("Week 4 links, saved working, self-marking and specification evidence remai
  assert.match(app.querySelector(".exam-sheet-code").textContent,/W04-P1/);
  assert.equal(app.querySelector("#previous").dataset.targetRoute,"#/study/4/R/9");
  navigate("#/progress/internal");
- assert.equal(app.querySelector(".metric strong").textContent,"5/205");
+ assert.equal(app.querySelector(".metric strong").textContent,"5/226");
  const weeks=app.querySelectorAll(".weekly-progress-group");
  assert.equal(weeks.length,10);
  assert.match(weeks[3].textContent,/Differentiation and curve behaviour/);
  assert.match(weeks[3].textContent,/2 \/ 10 questions marked/);
  assert.ok(weeks[3].querySelector('a[href="#/study/4/R/0"]'));
- assert.match(app.querySelector(".spec-progress-pulse").textContent,/5 \/ 247/);
+ assert.match(app.querySelector(".spec-progress-pulse").textContent,/5 \/ 274/);
  navigate("#/specification/internal/P07");
  assert.match(app.querySelector(".spec-topic-evidence").textContent,/2 \/ /);
  assert.match(app.querySelector("#P07-002").textContent,/100% of verified part marks/);

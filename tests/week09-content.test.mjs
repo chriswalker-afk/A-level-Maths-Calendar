@@ -109,7 +109,7 @@ test("all published practice links are gated, and zero finishes while unattempte
  assert.deepEqual(getPublishedPracticeForSkill("S04-006"),[],"Year 2 Normal stays unavailable");
  const full=allWeeks.flat();
  const blank=calculateSpecificationProgress({questions:full,records:{},scope:"internal"});
- assert.equal(blank.summary.releasedQuestions,225);
+ assert.equal(blank.summary.releasedQuestions,252);
  assert.equal(blank.summary.completedQuestions,0);
  const zero=calculateSpecificationProgress({questions:taggedWeek09Questions,records:{"W09-R1":{score:0,status:"I"}},scope:"internal"});
  assert.equal(zero.summary.releasedQuestions,22);
