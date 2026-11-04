@@ -25,11 +25,11 @@ export const week05ExpansionApplied = [
         3
       ],
       [
-        "Find the expected number and variance of returned items.",
+        "Calculate the probability that exactly two items are returned, including the binomial coefficient in your working.",
         2
       ],
       [
-        "Calculate the probability of at least two returns, and explain why predicting exactly 2.4 returned items on a particular shipment would misuse the model.",
+        "Calculate the probability of at least two returns. A manager claims that most shipments contain at most one return. Evaluate the claim, including a limitation of the binomial model.",
         4
       ]
     ],
@@ -37,12 +37,12 @@ export const week05ExpansionApplied = [
     "steps": [
       "The eight return indicators are assumed independent. [1] They have the same fixed return probability 0.3 for each item (binary return/no-return outcome). [1]",
       "\\(P(X=0)=0.7^8=0.05764801\\). [1] Also \\(P(X=1)=\\binom81(0.3)(0.7)^7=0.19765032\\). [1] Thus \\(P(X\\le1)=0.7^8+8(0.3)(0.7)^7=0.25529833\\). [1]",
-      "\\(E(X)=np=8(0.3)=2.4\\). [1] The variance is \\(\\mathrm{Var}(X)=np(1-p)=8(0.3)(0.7)=1.68\\). [1]",
-      "\\(P(X\\ge2)=1-P(X\\le1)=1-0.25529833=0.74470167\\). [2] The value 2.4 is the *long-run mean across repetitions* of eight-item shipments, not a possible integer return count on one shipment. [1] Independence or constant p could break down if shipments share a faulty batch, so even the distributional assumption should be checked. [1]"
+      "\\(P(X=2)=\\binom82(0.3)^2(0.7)^6\\) is the binomial probability formula with the correct coefficient. [1] Evaluating gives \\(P(X=2)=28(0.09)(0.117649)=0.29647548\\). [1]",
+      "\\(P(X\\ge2)=1-P(X\\le1)\\) using the complement. [1] Therefore \\(P(X\\ge2)=1-0.25529833=0.74470167\\). [1] The manager's claim is false under the model because only about 25.53% of shipments have at most one return. [1] A common faulty batch could make individual returns dependent, weakening the model's predictions. [1]"
     ],
-    "answer": "\\(P(X=0)=0.05764801,\\ P(X\\le1)=0.25529833,\\ P(X\\ge2)=0.74470167,\\ E(X)=2.4,\\ \\mathrm{Var}(X)=1.68\\).",
-    "misconception": "Expected value need not be a possible observation; 2.4 returns does not mean a shipment can contain a fraction of a returned item.",
-    "reflection": "What evidence would suggest items from the same production batch are not independent?"
+    "answer": "\\(P(X=0)=0.05764801,\\ P(X\\le1)=0.25529833,\\ P(X=2)=0.29647548,\\ P(X\\ge2)=0.74470167\\); the manager's majority claim is not supported by the binomial model.",
+    "misconception": "The complement of 'at most one' is 'at least two'; it is not 'exactly two'. A shared faulty batch may violate independence.",
+    "reflection": "How could a faulty batch cause more shipments with several returns than this independent-trials model predicts?"
   },
   {
     "id": "W05-A5",
