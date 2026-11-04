@@ -14,3 +14,6 @@ jobs:
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Check JavaScript syntax and run tests
         run: npm run check
+
+      - name: Audit published 9MA0 skill evidence
+        run: npm run audit:release
