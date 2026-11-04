@@ -75,7 +75,7 @@ test("Pass B answers, checks, marks and returns to saved working without page ju
   assert.equal(read()["W01-R1"].workspace.notes,"Find the derivative first");
 
   // Multi-part scoring uses the unchanged scoring engine and auto-calculates the total.
-  const multi=taggedWeek01Questions.find(q=>Array.isArray(q.parts)&&q.parts.length>=2);
+  const multi=taggedWeek01Questions.find(q=>q.id!=="W01-R1"&&Array.isArray(q.parts)&&q.parts.length>=2);
   assert.ok(multi,"a multi-part question exists in the published set");
   const idx=taggedWeek01Questions.filter(q=>q.section===multi.section).findIndex(q=>q.id===multi.id);
   nav("#/study/1/"+multi.section+"/"+idx);
