@@ -1,3 +1,4 @@
+import {week08ExpansionSkillMap} from "./week08-expansion-skill-map.js";
 /** Week 8 permanent 9MA0 part links. Primary-only attribution prevents double counting.
  * The Year 1 M08-008 pulley skill and M07 motion skills are distinct from Year 2 friction/inclines.
  */
@@ -276,5 +277,6 @@ export const week08SkillMap = {
     [
       "P09-009"
     ]
-  ]
+  ],
+  ...week08ExpansionSkillMap
 };

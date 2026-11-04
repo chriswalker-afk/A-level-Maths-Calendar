@@ -1,3 +1,4 @@
+import {week07ExpansionSkillMap} from "./week07-expansion-skill-map.js";
 /**
  * Week 7 stable Pearson 9MA0 part-level skill tags.
  * Primary skills receive part marks; secondary tags are navigational links only.
@@ -296,5 +297,6 @@ export const week07SkillMap = {
     [
       "P09-010"
     ]
-  ]
+  ],
+  ...week07ExpansionSkillMap
 };

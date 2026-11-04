@@ -1,6 +1,6 @@
 # A Level Maths Calendar — Detailed Question Blueprint
 
-> **Version 1 with Pass 1 revision · 4 November 2026 · Pearson Edexcel A Level Mathematics (9MA0)**
+> **Current through Pass 3 · 4 November 2026 · Pearson Edexcel A Level Mathematics (9MA0)**
 > This is the **authoritative content/authoring blueprint** for the first programme. It records the agreed design. It is not a claim that all questions have already been written.
 > Programme 1 prepares for **internal exams: all Pure + Year 1 Statistics & Mechanics**. Programme 2 will extend from **1 February to 16 June 2027** to **the full 9MA0 syllabus**, with both years of Applied.
 > Teacher-set Stage 1 dates are **not yet specified**. Do not assume a date for the first ten-week programme; the site starts with a configurable **manual release count**.
@@ -18,7 +18,7 @@ A deliberately more challenging alternative to the existing 29-week *Fluency & R
 
 ## Pass 1 expansion (November 2026): Weeks 1–3, overriding the original Week 1–8 target
 
-This section is the **current** authoring contract for Weeks 1–3, not an extrapolation of the initial 98-mark plan. The earlier table below remains only as a record of the unchanged Weeks 4–9 design until their own expansion passes. All earlier question IDs, marked parts and historical student data are preserved.
+This section established the shared 31-question authoring structure. Passes 2 and 3 subsequently extended that identical structure to Weeks 4–9; the superseded original 98-mark table below is historical only. All earlier question IDs, marked parts and historical student data are preserved.
 
 | Section | Existing IDs | New IDs | Questions | Marks | Target question-working time |
 |---|---|---|---:|---:|---:|
@@ -38,11 +38,11 @@ Working-time allocations are **planning benchmarks**: 1.2 minutes per mark, base
 
 **Pass 1 topic emphasis:** Week 1 proof by contradiction, surd rationalisation, function-order/domain, repeated-factor partial fractions, nonlinear simultaneous constraints, physical optimisation, stratification, coded data, outliers; Week 2 parametric/Cartesian segment restrictions, vector median geometry, line-circle tangents and accessible routes, Year 1 velocity and relative motion; Week 3 exact reciprocal trig identities, R-form and circle intersections, small-angle/sector error, periodic thresholds and Year 1 probability trees. All completed work is now in dedicated additive `week0X-expansion-*.js` modules.
 
-**Next planned passes:** Weeks 4–6, then 7–9, then a final catalogue-wide skills audit and revised mock/reattempt recommendations. Week 10's genuine 100/50-mark paper and 60-minute diagnostic review remain unchanged.
+**Completed expansion passes:** Weeks 1–3, 4–6, then 7–9. Next: a final catalogue-wide skills audit, student timing pilot and revised mock/reattempt recommendations. Week 10's genuine 100/50-mark paper and 60-minute diagnostic review remain unchanged.
 
 ## Pass 2 expansion — Weeks 4–6 (November 2026)
 
-**Current and overriding authoring contract:** Weeks 1–6 all use the 31-question/245-mark structure described in Pass 1 above; the original 98-mark pattern below now applies **only to Weeks 7–9** until Pass 3. The Week 10 100-mark Pure/50-mark Year 1 Applied mock is unaffected.
+**Authoring record:** Weeks 1–6 use the 31-question/245-mark structure described in Pass 1 above; Pass 3 now extends the same structure to Weeks 7–9. The original 98-mark pattern below is retained **only for historical comparison**. The Week 10 100-mark Pure/50-mark Year 1 Applied mock is unaffected.
 
 | Section | Existing IDs kept | New IDs appended | Total questions | Total marks | Planned solving minutes |
 |---|---|---|---:|---:|---:|
@@ -62,7 +62,23 @@ Working-time allocations are **planning benchmarks**: 1.2 minutes per mark, base
 
 **Time honesty:** 1.2 working minutes per mark is a target benchmark, not measured completion speed. If student pilots show that sustained unstructured AO2/AO3 problems need longer, adjust the workload and marking time appropriately; do not silently mark incomplete work as zero. Week 10 remains the authentic 100/50-mark mock.
 
-### Original 98-mark practice pattern (Weeks 7–9 while awaiting expansion)
+## Pass 3 expansion — Weeks 7–9 (November 2026)
+
+**Current scope:** Weeks **1–9** now share the same six-section, **31-question** pathway. In every week: **25 essential questions / 175 marks / 210 minutes of question working + 30 minutes review**, **29 recommended / 215 marks / 300 minutes cumulative**, **31 optional / 245 marks / 360 minutes cumulative**. There are no invented extra tests or hidden homework in the mark budgets. **Week 10 remains a separate 150-mark authentic mock** and the full February–June 2027 programme remains unpublished.
+
+**Pass 3 new question IDs, all appended:** P4–P7 (four ten-mark connected Pure problems), M3 (one fourteen-mark modelling problem), A4–A5 (eleven- and twelve-mark Year 1 Applied), T4 (one eight-mark timed task) and X2 (one sixteen-mark challenging extension). The new 27 questions contribute 303 marks across three weeks. Earlier questions, parts, route indices, marking, saved working, help flags and version-1 exports retain their original IDs and semantics.
+
+**Week 7:** non-routine logarithmic root counts, stationary inflection proof, variable-exponent optimisation, differentiation/integration bounds on logarithms; competing exponential-growth models with unique positive crossover and Newton iteration; Year 1 regression with an influential point and 5%/1% binomial hypothesis testing; rigorous inequalities in the extension.
+
+**Week 8:** independent root counting before Newton iteration, double roots and missing sign changes, definite integrals and concavity-controlled numerical error, a nonzero trigonometric threshold; a motion model where per-strip trapezium errors cancel; Year 1 vertical SUVAT and binomial batch reliability; a parameter-dependent logarithmic-ratio threshold and exact area.
+
+**Week 9:** inverse function inequalities, trigonometric lobe symmetry, partial fractions and sharp minima, geometric versus signed parametric area; bounded operating-cost optimisation and parameter sensitivity; Year 1 stratified sample/hypothesis test and variable-force particle motion; rigorous cubic root-count transition.
+
+**AO2/AO3 resource allocation (essential only):** Week 7 39/75/61, Week 8 39/76/60, Week 9 39/77/59 for AO1/AO2/AO3, respectively. In each case AO2+AO3 accounts for 136 of 175 core marks, a deliberate challenge-heavy profile. These are resource-design allocations, **not** official qualification paper weightings. All new Applied content and permanent skill tags are Year 1 scope.
+
+**Honest timing:** 1.2 minutes per mark remains a benchmark, not a measured rate for students. Conduct a classroom pilot before interpreting the targets as realistic for sustained unfamiliar AO2/AO3 work. See [Pass 3 authoring and QA audit](PASS3_WEEKS07_09_EXPANSION_AUDIT.md).
+
+### Superseded original 98-mark practice pattern (historical record, not current)
 
 | Block | IDs | Marks | Minutes | Status |
 |---|---|---:|---:|---|
@@ -213,7 +229,7 @@ Question design gradient:
 - **Year 1 Applied:** 10 original questions `W10-A1`–`W10-A10`; **50 marks / 60 minutes**, split precisely into **25 marks of Year 1 Statistics** (sampling, grouped data, probability, binomial and binomial testing) and **25 marks of Year 1 Mechanics** (straight-line motion, variable acceleration, force models, gravity and connected particles).
 - **60-minute review:** dedicated `#/mock-review/10` marking and diagnostic workspace (20 minutes self-marking + 20 minutes identifying the first lost mark + 20 minutes specifying reattempts). This is a *review task*, not a fake 60-mark mathematics question.
 - **Exam interface:** Week 10 uses the same calendar and saved question work, but section P is the complete Pure paper and section A the Applied paper. Students may opt into a 120/60-minute timed sitting which hides hints, worked schemes, scores and marking controls while it runs. Each question is self-marked afterwards; absent scores remain unattempted, while a genuine zero counts as marked. Paper totals are shown only once every question has a recorded mark.
-- **Total:** 22 original questions, 150 marks over 180 minutes of examination, followed by 60 minutes of review. This is a deliberate *exception* to the 98-mark essential practice-week template used in Weeks 1–9. The optional five- and six-hour practice can target error-based reattempts, rather than fabricate extra mock marks.
+- **Total:** 22 original questions, 150 marks over 180 minutes of examination, followed by 60 minutes of review. This is a deliberate *exception* to the 175-mark essential practice-week template now used in Weeks 1–9. The optional five- and six-hour practice can target error-based reattempts, rather than fabricate extra mock marks.
 - **AO profile:** the full 150-mark paper set has resource-authored approximate AO allocation **AO1 75 / AO2 38 / AO3 37**, close to Pearson's 50% / 25% / 25% qualification-level weighting. This is an authoring target, not a claim of official examination status.
 
 
@@ -222,7 +238,7 @@ Question design gradient:
 
 **Week 9 (240 min core, as authored):** 30 min mixed retrieval (10 × 2 marks); 67 min connected Pure (8 + 10 + 12 marks); 68 min unstructured modelling and error analysis (12 + 14 marks); 48 min Year 1 Applied synthesis (4 + 8 + 10 marks); 20 min self-marking and 7 min buffer. This totals 213 minutes of questions plus 27 minutes for marking/buffer, and the essential marks remain 98 with AO1/AO2/AO3 = 26/39/33. T1–T3 add 32 marks of recommended timed work (45 min), and X1 adds 14 optional extension marks. Students select methods without topic labels inside the question prompts; separate full-length mocks require a different format and belong to a future mock-paper flow.
 
-**Week 10 (240 min core, as authored):** **120 minutes / 100 marks** across 12 actual Pure mock questions, **60 minutes / 50 marks** across ten Year 1 Applied mock questions (25 Statistics / 25 Mechanics), and **60 minutes** in a dedicated marking, diagnosis and repair-planning workspace. Questions use original published IDs and the established permanent per-part skill tags. Unlike Weeks 1–9, there is no 10-question R section or additional T/X mock mark allocation; the conventional 98-mark practice blueprint has been explicitly superseded for the authentic two-paper assessment.
+**Week 10 (240 min core, as authored):** **120 minutes / 100 marks** across 12 actual Pure mock questions, **60 minutes / 50 marks** across ten Year 1 Applied mock questions (25 Statistics / 25 Mechanics), and **60 minutes** in a dedicated marking, diagnosis and repair-planning workspace. Questions use original published IDs and the established permanent per-part skill tags. Unlike Weeks 1–9, there is no 10-question R section or additional T/X mock mark allocation; the 175-mark practice blueprint has been explicitly superseded for the authentic two-paper assessment.
 
 ## Guaranteed specification coverage and retrieval
 
@@ -280,12 +296,11 @@ Provision a distinct second programme, not a forced continuation of Week 10:
 - Future data model supports programme-switching, item reuse, persistent student progress and configurable releases and examination dates.
 - **Do not publish the unpublished February–June question content yet.**
 
-## Planned implementation passes
+## Implementation status and remaining checks
 
-1. Save this blueprint, establish static site design system, accessible navigation, calendar, release configuration and question engine.
-2. Fully author and mathematically QA Week 1: 18 core questions, 1 timed set, 1 challenging optional extension, worked solutions, hints, reflection.
-3. Review pacing / user interface / maths rendering; correct before scaling.
-4. Author Weeks 2–8 incrementally with release dates controlled by teacher, then Weeks 9–10.
-5. Develop Programme 2 later without redesigning core architecture.
+1. **Implemented:** calendar-first flow, reusable six-section question engine, working/marking and backed-up local progress.
+2. **Implemented:** all 10 weeks authored and released; Weeks 1–9 expanded through Passes 1–3, Week 10 preserved as the real two-paper 100/50-mark mock.
+3. **Remaining before classroom release sign-off:** review Pass 3 CI, moderate the mathematics and AO labels, check accessible mathematical notation and mobile layouts, and pilot student completion time.
+4. **Future Programme 2:** author the 20-week full 9MA0 course only after the Stage 1 learning materials and test outcomes are accepted. Do not publish future Year 2 Applied material prematurely.
 
 **Reference:** [Pearson official Edexcel A Level Mathematics qualifications](https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/mathematics-2017.html); [Pearson examination timetable](https://qualifications.pearson.com/en/support/support-topics/exams/exam-timetables.html).

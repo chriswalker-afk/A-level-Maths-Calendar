@@ -12,9 +12,9 @@ import {recommendRevision} from "../src/revision-recommendations.js";
 import {isWeekReleased} from "../src/publication.js";
 
 const groups={
- R:{n:10,marks:20,minutes:30},P:{n:3,marks:30,minutes:70},
- M:{n:2,marks:26,minutes:70},A:{n:3,marks:22,minutes:50},
- T:{n:3,marks:32,minutes:45},X:{n:1,marks:14,minutes:40}
+ R:{n:10,marks:20,minutes:24},P:{n:7,marks:70,minutes:84},
+ M:{n:3,marks:40,minutes:48},A:{n:5,marks:45,minutes:54},
+ T:{n:4,marks:40,minutes:48},X:{n:2,marks:30,minutes:36}
 };
 const essential=new Set(["R","P","M","A"]);
 const allWeeks=[taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions];
@@ -32,14 +32,14 @@ test("ten authored weeks are released, with Week 11 and programme two inaccessib
  assert.equal(siteConfig.stage2.published,false);
 });
 test("Week 8 fulfils exact question count, part marks, section quotas and four-hour timing",()=>{
- assert.equal(week08Questions.length,22);
- assert.equal(new Set(week08Questions.map(q=>q.id)).size,22);
- assert.equal(week08Questions.reduce((sum,q)=>sum+q.marks,0),144);
+ assert.equal(week08Questions.length,31);
+ assert.equal(new Set(week08Questions.map(q=>q.id)).size,31);
+ assert.equal(week08Questions.reduce((sum,q)=>sum+q.marks,0),245);
  const core=week08Questions.filter(q=>essential.has(q.section));
- assert.equal(core.length,18);
- assert.equal(core.reduce((sum,q)=>sum+q.marks,0),98);
- assert.equal(core.reduce((sum,q)=>sum+q.minutes,0),213);
- assert.equal(213+20+7,240);
+ assert.equal(core.length,25);
+ assert.equal(core.reduce((sum,q)=>sum+q.marks,0),175);
+ assert.equal(core.reduce((sum,q)=>sum+q.minutes,0),210);
+ assert.equal(210+30,240);
  for(const [section,expected]of Object.entries(groups)){
   const qs=week08Questions.filter(q=>q.section===section);
   assert.equal(qs.length,expected.n,section+" count");
@@ -52,7 +52,7 @@ test("essential AO1/AO2/AO3 resource allocation is exactly 26/39/33",()=>{
  const totals={AO1:0,AO2:0,AO3:0};
  for(const q of week08Questions.filter(q=>essential.has(q.section)))
   for(const [k,v]of Object.entries(q.ao))totals[k]+=v;
- assert.deepEqual(totals,{AO1:26,AO2:39,AO3:33});
+ assert.deepEqual(totals,{AO1:39,AO2:76,AO3:60});
 });
 test("every Week 8 question has full worked scheme, feedback and valid TeX delimiters",()=>{
  for(const q of week08Questions){
@@ -75,8 +75,8 @@ test("every Week 8 question has full worked scheme, feedback and valid TeX delim
   }
  }
 });
-test("all 63 marked parts map to one real permanent 9MA0 skill with no duplicated credit",()=>{
- assert.equal(Object.keys(week08SkillMap).length,22);
+test("all 100 marked parts map to one real permanent 9MA0 skill with no duplicated credit",()=>{
+ assert.equal(Object.keys(week08SkillMap).length,31);
  assert.deepEqual(taggedWeek08Questions.map(q=>q.id),week08Questions.map(q=>q.id));
  let partCount=0,score=0;
  for(const q of taggedWeek08Questions){
@@ -91,14 +91,14 @@ test("all 63 marked parts map to one real permanent 9MA0 skill with no duplicate
    for(const secondary of tag.secondarySkillIds)
     assert.equal(getSpecSkill(secondary)?.scope,"internal",q.id+" "+secondary);
    if(q.section==="A"){
-    assert.ok(["M08","M07"].includes(skill.topicId),q.id+" Year 1 mechanics only");
+    assert.ok(["M08","M07","S04"].includes(skill.topicId),q.id+" Year 1 mechanics only");
     assert.equal(skill.year,1,q.id);
    }
    partCount++;score+=marks;
   }
  }
- assert.equal(partCount,63);
- assert.equal(score,144);
+ assert.equal(partCount,100);
+ assert.equal(score,245);
 });
 test("released practice routes, no-data states and completed zero-mark work stay correct",()=>{
  const index=createPracticeIndex(allWeeks.map((questions,i)=>({week:i+1,questions})));
@@ -109,17 +109,17 @@ test("released practice routes, no-data states and completed zero-mark work stay
  assert.deepEqual(getPublishedPracticeForSkill("M08-016"),[],"Unpublished Year 2 mechanics has no questions");
  const full=allWeeks.flat();
  const empty=calculateSpecificationProgress({questions:full,records:{},scope:"internal"});
- assert.equal(empty.summary.releasedQuestions,230);
+ assert.equal(empty.summary.releasedQuestions,248);
  assert.equal(empty.summary.completedQuestions,0,"Unattempted work is not demonstrated zero accuracy");
  const zero=calculateSpecificationProgress({questions:taggedWeek08Questions,records:{"W08-R1":{score:0,status:"I"}},scope:"internal"});
- assert.equal(zero.summary.releasedQuestions,22);
+ assert.equal(zero.summary.releasedQuestions,31);
  assert.equal(zero.summary.completedQuestions,1,"Zero entered is still a completed question");
  const suggestions=recommendRevision({questions:full,records:{},report:empty,scope:"internal",limit:10});
  for(const s of suggestions)assert.match(s.href,/^#\/study\/[1-8]\/[RPMATX]\/\d+$/);
 });
-test("Week 8 uses Year 1 smooth-pulley forces and avoids Year 2 inclined-plane/friction content",()=>{
+test("Week 8 uses Year 1 mechanics and binomial models without Year 2 Applied",()=>{
  const applied=taggedWeek08Questions.filter(q=>q.section==="A");
- assert.equal(applied.length,3);
+ assert.equal(applied.length,5);
  assert.ok(applied.some(q=>q.id==="W08-A3"&&/slack/i.test(q.title)));
  for(const q of applied){
   const text=[q.stem,...q.parts.map(p=>p[0])].join(" ");

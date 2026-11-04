@@ -86,13 +86,13 @@ test("Week 8 calendar, maths, self-marking and integration skill evidence preser
  assert.match(app.querySelector(".exam-sheet-code").textContent,/W08-P1/);
  assert.equal(app.querySelector("#previous").dataset.targetRoute,"#/study/8/R/9");
  navigate("#/progress/internal");
- assert.equal(app.querySelector(".metric strong").textContent,"9/226");
+ assert.equal(app.querySelector(".metric strong").textContent,"9/247");
  const weeks=app.querySelectorAll(".weekly-progress-group");
  assert.equal(weeks.length,10);
  assert.match(weeks[7].textContent,/Numerical methods and synthesis/);
  assert.match(weeks[7].textContent,/2 \/ 10 questions marked/);
  assert.ok(weeks[7].querySelector('a[href="#/study/8/R/0"]'));
- assert.match(app.querySelector(".spec-progress-pulse").textContent,/9 \/ 274/);
+ assert.match(app.querySelector(".spec-progress-pulse").textContent,/9 \/ 301/);
  navigate("#/specification/internal/P09");
  assert.match(app.querySelector(".spec-topic-evidence").textContent,/2 \/ /);
  assert.ok(app.querySelector("#P09-001"),"Change-of-sign primary skill evidence exists");

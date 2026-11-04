@@ -12,9 +12,9 @@ import {recommendRevision} from "../src/revision-recommendations.js";
 import {isWeekReleased} from "../src/publication.js";
 
 const groups={
- R:{n:10,marks:20,minutes:30},P:{n:3,marks:30,minutes:70},
- M:{n:2,marks:26,minutes:70},A:{n:3,marks:22,minutes:50},
- T:{n:3,marks:32,minutes:45},X:{n:1,marks:14,minutes:40}
+ R:{n:10,marks:20,minutes:24},P:{n:7,marks:70,minutes:84},
+ M:{n:3,marks:40,minutes:48},A:{n:5,marks:45,minutes:54},
+ T:{n:4,marks:40,minutes:48},X:{n:2,marks:30,minutes:36}
 };
 const essential=new Set(["R","P","M","A"]);
 const allWeeks=[taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions];
@@ -26,21 +26,21 @@ test("exactly ten authored weeks are released and Week 11 plus programme two sta
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
  assert.ok(programmeOne.weeks.slice(0,10).every(w=>w.hasPublishedContent));
  assert.ok(programmeOne.weeks.slice(10).every(w=>!w.hasPublishedContent));
- assert.equal(programmeOne.weeks[8].targetMarks,98);
+ assert.equal(programmeOne.weeks[8].targetMarks,175);
  assert.ok(isWeekReleased(9,taggedWeek09Questions));
  assert.equal(isWeekReleased(11,taggedWeek09Questions),false);
  assert.equal(isWeekReleased(9,[]),false);
  assert.equal(siteConfig.stage2.published,false);
 });
-test("22 original questions satisfy six section quotas and the exact four-hour essential programme",()=>{
- assert.equal(week09Questions.length,22);
- assert.equal(new Set(week09Questions.map(q=>q.id)).size,22);
- assert.equal(week09Questions.reduce((sum,q)=>sum+q.marks,0),144);
+test("31 original questions satisfy six section quotas and the exact four-hour essential programme",()=>{
+ assert.equal(week09Questions.length,31);
+ assert.equal(new Set(week09Questions.map(q=>q.id)).size,31);
+ assert.equal(week09Questions.reduce((sum,q)=>sum+q.marks,0),245);
  const core=week09Questions.filter(q=>essential.has(q.section));
- assert.equal(core.length,18);
- assert.equal(core.reduce((sum,q)=>sum+q.marks,0),98);
- assert.equal(core.reduce((sum,q)=>sum+q.minutes,0),213);
- assert.equal(213+20+7,240);
+ assert.equal(core.length,25);
+ assert.equal(core.reduce((sum,q)=>sum+q.marks,0),175);
+ assert.equal(core.reduce((sum,q)=>sum+q.minutes,0),210);
+ assert.equal(210+30,240);
  for(const [section,expected]of Object.entries(groups)){
   const qs=week09Questions.filter(q=>q.section===section);
   assert.equal(qs.length,expected.n,section+" count");
@@ -53,7 +53,7 @@ test("essential AO allocation is exactly 26/39/33 across all four sections",()=>
  const totals={AO1:0,AO2:0,AO3:0};
  for(const q of week09Questions.filter(q=>essential.has(q.section)))
   for(const [k,v]of Object.entries(q.ao))totals[k]+=v;
- assert.deepEqual(totals,{AO1:26,AO2:39,AO3:33});
+ assert.deepEqual(totals,{AO1:39,AO2:77,AO3:59});
 });
 test("every question has part marks, student feedback, detailed steps and parseable TeX delimiters",()=>{
  for(const q of week09Questions){
@@ -75,8 +75,8 @@ test("every question has part marks, student feedback, detailed steps and parsea
   }
  }
 });
-test("all 66 part-level primary skills are unique per part, in scope and give no connected double-credit",()=>{
- assert.equal(Object.keys(week09SkillMap).length,22);
+test("all 103 part-level primary skills are unique per part, in scope and give no connected double-credit",()=>{
+ assert.equal(Object.keys(week09SkillMap).length,31);
  assert.deepEqual(taggedWeek09Questions.map(q=>q.id),week09Questions.map(q=>q.id));
  let partCount=0,score=0;
  for(const q of taggedWeek09Questions){
@@ -95,8 +95,8 @@ test("all 66 part-level primary skills are unique per part, in scope and give no
    partCount++;score+=marks;
   }
  }
- assert.equal(partCount,66);
- assert.equal(score,144);
+ assert.equal(partCount,103);
+ assert.equal(score,245);
 });
 test("all published practice links are gated, and zero finishes while unattempted work does not become zero accuracy",()=>{
  const index=createPracticeIndex(allWeeks.map((questions,i)=>({week:i+1,questions})));
@@ -109,10 +109,10 @@ test("all published practice links are gated, and zero finishes while unattempte
  assert.deepEqual(getPublishedPracticeForSkill("S04-006"),[],"Year 2 Normal stays unavailable");
  const full=allWeeks.flat();
  const blank=calculateSpecificationProgress({questions:full,records:{},scope:"internal"});
- assert.equal(blank.summary.releasedQuestions,252);
+ assert.equal(blank.summary.releasedQuestions,279);
  assert.equal(blank.summary.completedQuestions,0);
  const zero=calculateSpecificationProgress({questions:taggedWeek09Questions,records:{"W09-R1":{score:0,status:"I"}},scope:"internal"});
- assert.equal(zero.summary.releasedQuestions,22);
+ assert.equal(zero.summary.releasedQuestions,31);
  assert.equal(zero.summary.completedQuestions,1);
  const recs=recommendRevision({questions:full,records:{},report:blank,scope:"internal",limit:10});
  for(const rec of recs)assert.match(rec.href,/^#\/study\/[1-9]\/[RPMATX]\/\d+$/);

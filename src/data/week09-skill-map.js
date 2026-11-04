@@ -1,3 +1,4 @@
+import {week09ExpansionSkillMap} from "./week09-expansion-skill-map.js";
 /**
  * Week 9 permanent per-part 9MA0 skill tags.
  * Marks accrue only to primarySkillId; connected secondarySkillIds are navigation-only.
@@ -290,5 +291,6 @@ export const week09SkillMap = {
     [
       "P09-011"
     ]
-  ]
+  ],
+  ...week09ExpansionSkillMap
 };

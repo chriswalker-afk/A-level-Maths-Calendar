@@ -125,8 +125,10 @@ export const programmeOne = {
         5,
         6
       ],
-      "targetMarks": 98,
-      "hasPublishedContent": true
+      "targetMarks": 175,
+      "hasPublishedContent": true,
+      "recommendedMarks": 215,
+      "optionalMarks": 245
     },
     {
       "number": 8,
@@ -141,8 +143,10 @@ export const programmeOne = {
         5,
         6
       ],
-      "targetMarks": 98,
-      "hasPublishedContent": true
+      "targetMarks": 175,
+      "hasPublishedContent": true,
+      "recommendedMarks": 215,
+      "optionalMarks": 245
     },
     {
       "number": 9,
@@ -157,8 +161,10 @@ export const programmeOne = {
         5,
         6
       ],
-      "targetMarks": 98,
-      "hasPublishedContent": true
+      "targetMarks": 175,
+      "hasPublishedContent": true,
+      "recommendedMarks": 215,
+      "optionalMarks": 245
     },
     {
       "number": 10,

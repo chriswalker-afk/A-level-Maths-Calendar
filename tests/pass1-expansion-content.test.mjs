@@ -35,7 +35,7 @@ test("Pass 1 preserves the full programme release boundary and every existing st
   assert.equal(wk.recommendedMarks,215);
   assert.equal(wk.optionalMarks,245);
  }
- assert.ok(programmeOne.weeks.slice(3,6).every(w=>w.targetMarks===175) && programmeOne.weeks.slice(6,9).every(w=>w.targetMarks===98));
+ assert.ok(programmeOne.weeks.slice(3,9).every(w=>w.targetMarks===175));
  assert.equal(programmeOne.weeks[9].targetMarks,150);
 });
 test("Weeks 1–3 each supply 175/215/245 marks in genuine 4/5/6-hour planning pathways",()=>{
@@ -145,9 +145,9 @@ test("More demanding resource intent: core AO2/AO3 majority and independent evid
   taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions,
   taggedWeek10Questions
  ].flat();
- assert.equal(allReleased.length,274);
+ assert.equal(allReleased.length,301);
  const blank=calculateSpecificationProgress({questions:allReleased,records:{},scope:"internal"});
- assert.equal(blank.summary.releasedQuestions,274);
+ assert.equal(blank.summary.releasedQuestions,301);
  assert.equal(blank.summary.completedQuestions,0);
  const zero=calculateSpecificationProgress({questions:taggedWeek01Questions,
   records:{"W01-P4":{score:0,status:"I"}},scope:"internal"});
