@@ -261,6 +261,39 @@ try{
    check(noOuterOverflow.outerScroll===0,
     item.name+": scrolling a long question moved the whole page");
    await page.screenshot({path:join(output,item.name+"-long-question.png")});
+   if(small)await page.click("#study-mobile-review");
+   else await page.click("#study-tab-review");
+   await page.waitForSelector("#solution-box",{visible:true});
+   const solutionScroll=await page.evaluate(()=>{
+    const solution=document.querySelector(".study-solution-area");
+    const before=window.scrollY;
+    if(solution.scrollHeight>solution.clientHeight)solution.scrollTop=120;
+    return {overflow:getComputedStyle(solution).overflowY,
+     pageDelta:window.scrollY-before,
+     schemeHeight:solution.scrollHeight,visibleHeight:solution.clientHeight};
+   });
+   check(solutionScroll.overflow==="auto"&&solutionScroll.pageDelta===0,
+    item.name+": long mark scheme should scroll without moving the page");
+   await page.screenshot({path:join(output,item.name+"-long-review.png")});
+   // Detailed marks retain their precision even inside the compact dock.
+   const partCount=await page.evaluate(()=>{
+    const detail=document.querySelector("#mark-by-parts");
+    if(!detail)return 0;
+    detail.open=true;
+    const inputs=[...detail.querySelectorAll("[data-part-mark]")];
+    inputs.forEach(input=>{
+     input.value="0";input.dispatchEvent(new Event("input",{bubbles:true}));
+    });
+    return inputs.length;
+   });
+   if(partCount>1){
+    const detailed=await page.evaluate(id=>{
+     const rec=JSON.parse(localStorage.getItem("alevel-maths-calendar-progress-v1")||"{}");
+     return {score:rec[id]?.score,source:rec[id]?.scoreSource};
+    },longest.q.id);
+    check(detailed.score===0&&detailed.source==="parts",
+     item.name+": zero-valued part breakdown did not calculate correctly");
+   }
   }
   if(item.name==="phone-360"){
    // Timed Week 10 must not leak a solution or marking panel.
@@ -276,6 +309,15 @@ try{
    check(locked.disabled===true&&!locked.solution&&!locked.marks,
     "Timed mock must block solutions and marking");
    await page.screenshot({path:join(output,item.name+"-timed-mock.png")});
+   await page.click('[data-mock-action="finish"][data-mock-section="P"]');
+   await page.waitForSelector("#study-panel-review");
+   const unlocked=await page.evaluate(()=>({
+    disabled:document.querySelector("#study-mobile-review")?.disabled,
+    solution:document.querySelector("#solution-box")!==null,
+    marks:document.querySelector("#question-assessment")!==null
+   }));
+   check(unlocked.disabled===false&&unlocked.solution&&unlocked.marks,
+    "Finished timed sitting must unlock self-marking and solutions");
   }
   check(pageErrors.length===0,item.name+": page exceptions: "+pageErrors.join(" | "));
   summaries.push({name:item.name,size:item.width+"x"+item.height,
