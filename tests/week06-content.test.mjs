@@ -96,7 +96,7 @@ test("95 marked parts each receive exactly one real in-scope skill without doubl
    for(const secondary of tag.secondarySkillIds)
     assert.equal(getSpecSkill(secondary)?.scope,"internal",q.id+" secondary "+secondary);
    if(q.section==="A"){
-    assert.ok(["M07","M08"].includes(skill.topicId),q.id+" Year 1 mechanics only");
+    assert.ok(["S02","M07","M08"].includes(skill.topicId),q.id+" Year 1 statistics or mechanics only");
     assert.equal(skill.year,1,q.id);
    }
    parts++;marks+=n;
