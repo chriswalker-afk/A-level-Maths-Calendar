@@ -154,7 +154,8 @@ export function mountQuestionAssessment(root,{question,record={},onChange,onComp
     const toggle=root.ownerDocument.querySelector("#solution-toggle");
     if(solution?.hidden && toggle)toggle.click();
     if(solution && !solution.hidden){
-      solution.scrollIntoView?.({block:"start",behavior:"smooth"});
+      const prefersReducedMotion=Boolean(root.ownerDocument.defaultView?.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches);
+      solution.scrollIntoView?.({block:"start",behavior:prefersReducedMotion?"auto":"smooth"});
       review.textContent="View worked solution again ↑";
     }
   });
