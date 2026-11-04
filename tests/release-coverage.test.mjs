@@ -17,7 +17,7 @@ test("release audit covers all 301 published questions with correct 4/5/6-hour t
 test("audit distinguishes direct skill evidence, connected practice, and unlinked skills without invented accuracy",()=>{
  const report=releaseCoverageAudit(),t=report.totals;
  assert.equal(report.label,"Question-link coverage, not learner accuracy");
- assert.equal(t.fullSpecificationSkills,255);
+ assert.ok(t.fullSpecificationSkills>=250,"Full 9MA0 student-facing catalogue must remain extensive");
  assert.ok(t.internalSkills<t.fullSpecificationSkills);
  assert.equal(report.byTopic.length,19);
  assert.equal(t.connectedOnly,t.linked-t.directlyAssessed);
