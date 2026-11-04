@@ -19,9 +19,7 @@ import {renderMockPaperBanner,renderMockReview} from "./mock-week-view.js";
 const $=s=>document.querySelector(s);
 const el=$('#app');
 const sections={R:'Quick retrieval',P:'Connected problems',M:'Modelling & reasoning',A:'Year 1 Applied',T:'Timed mixed set',X:'Extension / repair'};
-const target={R:10,P:3,M:2,A:3,T:3,X:1};
 const essentialSections=new Set(['R','P','M','A']);
-const studyTimes={R:'30 min',P:'70 min',M:'70 min',A:'50 min',T:'45 min + 15 min marking',X:'40 min + 20 min review'};
 const allQuestions={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions,4:taggedWeek04Questions,5:taggedWeek05Questions,6:taggedWeek06Questions,7:taggedWeek07Questions,8:taggedWeek08Questions,9:taggedWeek09Questions,10:taggedWeek10Questions};
 let mockClockId=null;
 let disposeWorkspace=null;
@@ -38,7 +36,7 @@ function completed(q){return isQuestionFinished(saved[q.id],q.marks)}
 function everCompleted(q){return latestFinishedRecord(q,saved[q.id]||{})!==null}
 function lastStatus(q){return latestFinishedRecord(q,saved[q.id]||{})?.status||""}
 function status(q){return saved[q.id]?.status||''}
-function countDone(){return Object.values(allQuestions).flat().filter(q=>essentialSections.has(q.section)&&everCompleted(q)).length}
+function countDone(){return releasedQuestions().filter(q=>essentialSections.has(q.section)&&everCompleted(q)).length}
 function coreQuestions(week){return (allQuestions[week]||[]).filter(q=>essentialSections.has(q.section))}
 function releasedQuestions(){return Object.entries(allQuestions).flatMap(([week,qs])=>released(Number(week))?qs:[])}
 function released(week){return isWeekReleased(week,allQuestions[week]||[]);}
@@ -117,13 +115,13 @@ function studyPage(n,sec,idx){
  (mock?renderMockPaperBanner({section:sec,questions:all,records:saved,reflections:saved.reflections}):"")+
  sectionNav+
  '<div class="study-layout study-workbench">'+questionNav+
- '<article class="paper exam-sheet">'+
+ '<article class="paper exam-sheet" aria-labelledby="active-question-title">'+
  '<div class="exam-sheet-topline"><span class="exam-question-number">QUESTION '+String(i+1).padStart(2,"0")+
  ' / '+String(qs.length).padStart(2,"0")+'</span>'+
  '<span class="exam-sheet-points">'+q.marks+' MARKS</span>'+
  '<span class="exam-sheet-time">ABOUT '+q.minutes+' MIN</span></div>'+
  '<div class="exam-sheet-title"><span class="exam-sheet-code">'+esc(q.id)+'</span>'+
- '<h2>'+esc(q.title)+'</h2></div>'+
+ '<h2 id="active-question-title" aria-label="Question '+esc(q.id)+', '+q.marks+' marks: '+esc(q.title)+'">'+esc(q.title)+'</h2></div>'+
  '<p class="stem math">'+mathHtml(q.stem)+'</p>'+
  questionTable(q.table)+
  '<ol class="parts">'+q.parts.map((part,j)=>
@@ -404,7 +402,7 @@ window.addEventListener('hashchange',()=>{
   render();
   window.scrollTo({top:0,behavior:'instant'});
   // A route change is also an accessibility landmark change.
-  const title=el.querySelector('h1');
+  const title=el.querySelector(routeInfo()[0]==='study'?'#active-question-title':'h1');
   if(title){title.setAttribute('tabindex','-1');title.focus({preventScroll:true});}
 });
 document.addEventListener('click',event=>{
