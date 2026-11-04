@@ -144,9 +144,9 @@ export const week05ExpansionSkillMap = {
       ]
     ],
     [
-      "S04-003",
+      "S04-004",
       [
-        "S04-004"
+        "S04-003"
       ]
     ],
     [
