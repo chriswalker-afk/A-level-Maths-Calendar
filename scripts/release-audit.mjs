@@ -22,8 +22,10 @@ const empty=()=>({questions:new Set(),marks:0,parts:0});
 const pct=(part,total)=>total?Math.round(1000*part/total)/10:null;
 
 export function releaseCoverageAudit(){
+ // Always audit ALL authored weeks, including those not yet student-facing.
+ const authoredStage={releaseMode:"manual",releasedWeeks:programmeOne.weeks.length};
  const published=programmeOne.weeks
-  .filter(week=>isWeekReleased(week.number,sets[week.number-1]||[]))
+  .filter(week=>isWeekReleased(week.number,sets[week.number-1]||[],{stage:authoredStage}))
   .map(week=>({week:week.number,questions:sets[week.number-1]}));
  const scoped=specificationTopics.flatMap(t=>t.skills.filter(s=>s.scope==="internal"));
  const direct=new Map(scoped.map(s=>[s.id,empty()]));

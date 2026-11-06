@@ -39,7 +39,7 @@ export function createPracticeIndex(publishedSets){
  }
  return lookup;
 }
-const publishedPractice=createPracticeIndex([
+const practiceSets=[
  {week:1,questions:taggedWeek01Questions},
  {week:2,questions:taggedWeek02Questions},
  {week:3,questions:taggedWeek03Questions},
@@ -50,7 +50,11 @@ const publishedPractice=createPracticeIndex([
  {week:8,questions:taggedWeek08Questions},
  {week:9,questions:taggedWeek09Questions},
  {week:10,questions:taggedWeek10Questions}
-].filter(set=>isWeekReleased(set.week,set.questions)));
+];
+const practiceIndex=createPracticeIndex(practiceSets);
+const questionsByWeek=new Map(practiceSets.map(set=>[set.week,set.questions]));
 export function getPublishedPracticeForSkill(skillId){
- return [...(publishedPractice.get(skillId)?.values()||[])];
+ // The specification must update after Monday even without a page reload.
+ return [...(practiceIndex.get(skillId)?.values()||[])].filter(ref=>
+  isWeekReleased(ref.week,questionsByWeek.get(ref.week)));
 }

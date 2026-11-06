@@ -18,8 +18,8 @@ const weeks=[taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,t
 const slash=String.fromCharCode(92),open=slash+"(",close=slash+")";
 
 test("all 10 authored weeks are released but the 2027 final programme stays unpublished",()=>{
- assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,10);
+ assert.equal(siteConfig.stage1.releaseMode,"scheduled");
+ assert.equal(siteConfig.stage1.startDate,"2026-11-09");
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
  assert.equal(programmeOne.weeks.length,10);
  assert.ok(programmeOne.weeks.every(w=>w.hasPublishedContent));

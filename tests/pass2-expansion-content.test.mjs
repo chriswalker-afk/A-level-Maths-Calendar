@@ -33,7 +33,7 @@ test("Pass 2 regression checks Weeks 4–6 while Pass 3 expands Weeks 7–9",()=
  same(programmeOne.weeks.slice(6,9).map(w=>w.targetMarks),[175,175,175]);
  assert.equal(programmeOne.weeks[9].targetMarks,150);
  assert.equal(programmeTwo.weekCount,20);
- assert.equal(siteConfig.stage1.releasedWeeks,10);
+ assert.equal(siteConfig.stage1.startDate,"2026-11-09");
  assert.equal(siteConfig.stage2.published,false);
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
 });
