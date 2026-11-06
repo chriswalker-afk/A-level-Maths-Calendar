@@ -1,5 +1,5 @@
 import {siteConfig} from "./config.js";
-import {isWeekReleased} from "./publication.js";
+import {isWeekReleased,weekReleaseDate,publicationClock} from "./publication.js";
 import {programmeOne,programmeTwo} from "./data/programmes.js";
 import {taggedWeek01Questions,taggedWeek02Questions,taggedWeek03Questions,taggedWeek04Questions,taggedWeek05Questions,taggedWeek06Questions,taggedWeek07Questions,taggedWeek08Questions,taggedWeek09Questions,taggedWeek10Questions} from "./data/tagged-questions.js";
 import {getSpecSkill} from "./data/specification.js";
@@ -26,6 +26,7 @@ const sections={R:'Quick retrieval',P:'Connected problems',M:'Modelling & reason
 const essentialSections=new Set(['R','P','M','A']);
 const allQuestions={1:taggedWeek01Questions,2:taggedWeek02Questions,3:taggedWeek03Questions,4:taggedWeek04Questions,5:taggedWeek05Questions,6:taggedWeek06Questions,7:taggedWeek07Questions,8:taggedWeek08Questions,9:taggedWeek09Questions,10:taggedWeek10Questions};
 let mockClockId=null;
+let releaseRefreshId=null;
 let disposeWorkspace=null;
 let disposeStudyModes=null;
 let disposeSpecification=null;
@@ -45,6 +46,26 @@ function countDone(){return releasedQuestions().filter(q=>essentialSections.has(
 function coreQuestions(week){return (allQuestions[week]||[]).filter(q=>essentialSections.has(q.section))}
 function releasedQuestions(){return Object.entries(allQuestions).flatMap(([week,qs])=>released(Number(week))?qs:[])}
 function released(week){return isWeekReleased(week,allQuestions[week]||[]);}
+function weekReleaseLabel(week){
+ const date=weekReleaseDate(week);
+ return date?date.toLocaleDateString("en-GB",{
+  timeZone:siteConfig.timezone,weekday:"short",day:"numeric",month:"short"
+ }).replace(",","").toUpperCase():null;
+}
+function scheduleReleaseRefresh(){
+ if(releaseRefreshId!==null){window.clearTimeout(releaseRefreshId);releaseRefreshId=null;}
+ const now=publicationClock.now();
+ if(!Number.isFinite(now))return;
+ const next=programmeOne.weeks.filter(w=>w.hasPublishedContent)
+  .map(w=>weekReleaseDate(w.number)?.getTime())
+  .filter(at=>Number.isFinite(at)&&at>now).sort((a,b)=>a-b)[0];
+ if(next===undefined)return;
+ // A tab left open across Monday refreshes; visibilitychange also catches
+ // suspended devices and corrected clocks.
+ releaseRefreshId=window.setTimeout(()=>{
+  releaseRefreshId=null;render();
+ },Math.max(1,Math.min(2147483647,next-now+100)));
+}
 function heading(t,subtitle){return '<div class="section-heading"><div>'+(subtitle?'<span class="eyebrow">'+esc(subtitle)+'</span>':'')+'<h2>'+esc(t)+'</h2></div></div>'}
 function mathHtml(t){return '<span class="math">'+esc(t)+'</span>'}
 function relatedSkillsMarkup(q){
@@ -68,6 +89,7 @@ function weekStatus(w){
  const core=coreQuestions(w.number);
  return {
   released:released(w.number),
+  opensOn:weekReleaseLabel(w.number),
   done:core.filter(everCompleted).length,
   total:core.length,
   url:firstWeekQuestionRoute(w.number,qs,everCompleted,
@@ -86,7 +108,7 @@ function weekPage(n){
  return '<section class="page locked-week-page"><a class="back" href="#/calendar">← Study calendar</a>'+
   '<div class="locked-week-notice"><span class="eyebrow">WEEK '+String(n).padStart(2,"0")+' · NOT RELEASED</span>'+
   '<h1>'+esc(w.title)+'</h1>'+
-  '<p>Questions for this week are not available yet.</p>'+
+  '<p>Questions for this week are not available yet.'+(weekReleaseLabel(n)?' They open on '+esc(weekReleaseLabel(n))+' at midnight (Brunei time).':'')+'</p>'+
   '<div class="locked-week-topics"><div><strong>PURE</strong><p>'+esc(w.pure)+'</p></div>'+
   '<div><strong>APPLIED</strong><p>'+esc(w.applied)+'</p></div></div>'+
   buttonLink("#/calendar","Return to calendar","ghost")+'</div></section>';
@@ -448,7 +470,9 @@ function render(){
     }
   }
   typeset();
+  scheduleReleaseRefresh();
 }
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)render();});
 window.addEventListener('hashchange',()=>{
   render();
   window.scrollTo({top:0,behavior:'instant'});

@@ -79,6 +79,12 @@ try{
  for(const item of cases){
   const context=await browser.createBrowserContext();
   const page=await context.newPage();
+  // Browser QA intentionally covers all authored questions, even in weeks
+  // not yet released to students.
+  await page.evaluateOnNewDocument(()=>{
+   const auditNow=Date.parse("2027-01-12T12:00:00+08:00");
+   Date.now=()=>auditNow;
+  });
   const pageErrors=[];
   page.on("pageerror",error=>pageErrors.push(error.message));
   await page.setViewport({width:item.width,height:item.height,deviceScaleFactor:1,

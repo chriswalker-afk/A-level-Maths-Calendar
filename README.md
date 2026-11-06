@@ -95,7 +95,7 @@ Week 10’s 150-mark authored AO mix is **AO1 75 / AO2 38 / AO3 37** (roughly th
 
 **Evidence-led review:** Visit **Mark & review both papers** after the timed sittings. The 60-minute screen shows per-question marking status, independent versus help-supported attempts, 25/25 Applied submarks and only evidence-backed repair priorities. **An unanswered or unmarked question is not treated as a zero.** Overall paper scores are shown only when every paper question has been scored; a recorded zero is a completed question. Three review notes (first error, repair method and reattempt plan) are included in the existing version-1 progress backup.
 
-**Published course:** All **ten weeks** are open through the calendar, with **301 original questions** (including **247 essential**). The separate February–June 2027 full A Level programme remains planned but **unpublished**. All earlier saved notes, maths input, drawings, scores, attempts/history, topic evidence, local storage key and version-1 backup/restore are preserved.
+**Authored course:** All **ten weeks** contain **301 original questions** (including **247 essential**). Student access starts on **Monday 9 November 2026** with Week 1 only, then opens one additional week each Monday at midnight Brunei time, finishing with Week 10 on **11 January 2027**. The separate February–June 2027 full A Level programme remains planned but **unpublished**. All earlier saved notes, maths input, drawings, scores, attempts/history, topic evidence, local storage key and version-1 backup/restore are preserved.
 
 See `docs/WEEK10_AUTHORING_AUDIT.md` for specification and independent mathematics checks, and `docs/QUESTION_BLUEPRINT.md` for the explicit Week 10 paper-format correction.
 
@@ -211,15 +211,14 @@ The repository is GitHub Pages-compatible and needs no frontend build step. Page
 
 ### Progressive weekly release
 
-Edit `src/config.js`: the default is `stage1.releaseMode = "manual"` with `releasedWeeks = 5`. To release a future week:
+Student-facing access is scheduled in `src/config.js` with `stage1.releaseMode = "scheduled"` and `startDate = "2026-11-09"`: Week 1 opens at **00:00 Monday 9 November 2026 (Asia/Brunei, UTC+08:00)**, and one extra week opens every following Monday; Week 10 opens **11 January 2027**. Previously opened weeks stay accessible.
 
-1. Fully author and validate that week's questions and mark schemes.
-2. Add its own content module and import it through `src/app.js`.
-3. Mark the corresponding week `hasPublishedContent: true` in `src/data/programmes.js`.
-4. Increase `releasedWeeks` and merge the release.
-5. Check MathJax, accessibility, device widths and the actual deployed website.
+- Locked weeks remain on the planner with an **OPENS** date, but are blocked from direct `#/week/N` and `#/study/N/...` routes and from My Progress and weekly links in My Specification.
+- The planner updates automatically across a scheduled release and when the tab becomes visible. The independent AO1/AO2/AO3 **original topic practice** remains available.
+- To change the dates, edit `startDate`; to pause scheduled releases, switch to `releaseMode = "manual"` and set `releasedWeeks`. Keep `hasPublishedContent` false until a week is authored.
+- The automated tests simulate a date after Week 10, while targeted tests check each release boundary. Content and browser audits continue to check all authored weeks.
 
-Future-week topics may be previewed but **unreleased question files must not be bundled in the public website**. Merely hiding a loaded JavaScript question object with a browser lock is not a secure embargo.
+**Security limitation:** This is a student-interface release schedule, **not** a secure content embargo. The public GitHub repository and Pages assets already include the later-week questions; someone inspecting the source can read ahead. Real secrecy requires storing unpublished questions outside public assets and deploying them later.
 
 ## Student working space (Pass 3)
 

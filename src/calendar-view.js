@@ -80,7 +80,7 @@ function renderCell(week,status){
   '<div class="planner-cell-bottom">'+(ready
     ?'<div class="planner-cell-meter"><span style="width:'+Math.max(0,Math.min(100,100*status.done/Math.max(1,status.total)))+'%"></span></div>'+
      '<span>'+status.done+'/'+status.total+' ESSENTIAL MARKED</span>'
-    :'<span>NOT RELEASED</span>')+
+    :'<span>'+(status?.opensOn?'OPENS '+esc(status.opensOn):'NOT RELEASED')+'</span>')+
    '<strong aria-hidden="true">'+(ready?'↗':'—')+'</strong></div>';
  if(ready){
   const link=status.url||weekPath(n,"R",0);
