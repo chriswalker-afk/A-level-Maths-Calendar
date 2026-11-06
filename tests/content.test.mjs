@@ -30,8 +30,8 @@ test('two programmes are distinct and correctly sized',()=>{
  assert.equal(programmeTwo.endDate,'2027-06-16');
 });
 test('exactly Weeks 1–10 are authored and released',()=>{
- assert.equal(siteConfig.stage1.releaseMode,'manual');
- assert.equal(siteConfig.stage1.releasedWeeks,10);
+ assert.equal(siteConfig.stage1.releaseMode,"scheduled");
+ assert.equal(siteConfig.stage1.startDate,"2026-11-09");
  assert.ok(programmeOne.weeks[0].hasPublishedContent);
  assert.equal(programmeOne.weeks[1].hasPublishedContent,true);
  assert.equal(programmeOne.weeks[2].hasPublishedContent,true);

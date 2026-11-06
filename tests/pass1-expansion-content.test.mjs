@@ -25,7 +25,7 @@ const sectionPattern={R:[10,20,24],P:[7,70,84],M:[3,40,48],A:[5,45,54],T:[4,40,4
 const bracket=String.fromCharCode(92)+"(";
 const close=String.fromCharCode(92)+")";
 test("Pass 1 preserves the full programme release boundary and every existing storage key",()=>{
- assert.equal(siteConfig.stage1.releasedWeeks,10);
+ assert.equal(siteConfig.stage1.startDate,"2026-11-09");
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
  assert.equal(siteConfig.stage2.published,false);
  assert.equal(programmeTwo.weekCount,20);

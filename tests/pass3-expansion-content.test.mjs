@@ -42,8 +42,8 @@ test("Pass 3 completes 175/215/245-mark Weeks 1–9, preserving Week 10 authenti
  assert.equal(programmeOne.weeks[9].targetMarks,150);
  assert.equal(week10Questions.length,22);
  assert.equal(week10Questions.reduce((s,q)=>s+q.marks,0),150);
- assert.equal(siteConfig.stage1.releaseMode,"manual");
- assert.equal(siteConfig.stage1.releasedWeeks,10);
+ assert.equal(siteConfig.stage1.releaseMode,"scheduled");
+ assert.equal(siteConfig.stage1.startDate,"2026-11-09");
  assert.equal(siteConfig.stage2.published,false);
  assert.equal(siteConfig.storageKey,"alevel-maths-calendar-progress-v1");
  assert.equal(programmeTwo.weekCount,20);
